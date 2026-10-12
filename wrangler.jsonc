@@ -1,0 +1,11 @@
+// Cloudflare（Workers の静的配信）の設定（20260808_decisions.md D-22・launch-backlog.md D-6）。
+// サーバー処理は持たない。`npm run build` で作られる out/ をそのまま配信するだけ。
+// 存在しないURLは out/404.html を返す（C-3 のカスタム404）。
+{
+  "name": "jichitai-watch",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page"
+  }
+}

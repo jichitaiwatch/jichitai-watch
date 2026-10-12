@@ -1,0 +1,1542 @@
+{
+  "record_keys": [
+    "pref_code",
+    "pref_name",
+    "氏名",
+    "当選回数",
+    "当選年月日",
+    "投票率",
+    "得票数",
+    "得票率",
+    "当日有権者数",
+    "絶対得票率",
+    "党派",
+    "無投票",
+    "status"
+  ],
+  "unit_note": {
+    "投票率": "％（無投票の場合null）",
+    "得票率": "％（無投票の場合null。自治総研Excel値をそのまま百分率化）",
+    "絶対得票率": "％（得票数÷当日有権者数×100。無投票の場合null）",
+    "得票数": "票",
+    "当日有権者数": "人"
+  },
+  "field_definitions": {
+    "当選回数": "自治総研Excel「回」列の値をそのまま採用。厳密な『期数』とは一致しない場合がある（市区町村首長データ0-2で美濃加茂市の実例あり、同様のずれが知事データでも起こりうる前提）。",
+    "絶対得票率": "得票数÷当日有権者数×100",
+    "無投票": "Excel「無投票」列に値がある場合。投票率・得票率・絶対得票率はnullとしtoken='無投票'を立てる（0埋めしない）。2018-2025の8年分で該当事例なし（0件、コード上は保持）。",
+    "status": "'data'固定（本データセットは47/47現職を確認済みのため欠損状態は発生しない）。"
+  },
+  "coverage": {
+    "target": 47,
+    "matched": 47,
+    "missing_prefectures": []
+  },
+  "sources": {
+    "provider": "地方自治総合研究所（自治体選挙結果調査）",
+    "dataset": "全国首長名簿（都道府県版・知事シート）",
+    "note_scope": "市区町村版（data/m2_1_chief.jsonが使用）とは別ファイル系列。都道府県版Excelの「知事」シートのみを使用（「議会」シートは対象外）。",
+    "download_page": "https://jichisoken.jp/jichitaisenkyo/",
+    "years_stacked": [
+      "2018",
+      "2019",
+      "2020",
+      "2021",
+      "2022",
+      "2023",
+      "2024",
+      "2025"
+    ],
+    "files": [
+      {
+        "year": "2018",
+        "source_url": "https://jichisoken.jp/file/jichitaisenkyo/2018%E5%B9%B4%E5%BA%A6%E9%83%BD%E9%81%93%E5%BA%9C%E7%9C%8C.xlsx",
+        "source_page": "https://jichisoken.jp/jichitaisenkyo/2018/",
+        "download_page": "https://jichisoken.jp/jichitaisenkyo/",
+        "file_name": "2018年度都道府県.xlsx",
+        "sheet": "知事",
+        "sha256": "1e2f008f15f97952aea73f05984b6aae6c3c48d81f9fbf07a0510ad3d49ed59c",
+        "bytes": 546536
+      },
+      {
+        "year": "2019",
+        "source_url": "https://jichisoken.jp/file/jichitaisenkyo/2019%E5%B9%B4%E5%BA%A6%E9%83%BD%E9%81%93%E5%BA%9C%E7%9C%8C.xlsx",
+        "source_page": "https://jichisoken.jp/jichitaisenkyo/2019/",
+        "download_page": "https://jichisoken.jp/jichitaisenkyo/",
+        "file_name": "2019年度都道府県.xlsx",
+        "sheet": "知事2019",
+        "sha256": "ecfbcd5ecff1e407b303686d0f10418a3f721ea8a0aaea0336a591d67f3397df",
+        "bytes": 305409
+      },
+      {
+        "year": "2020",
+        "source_url": "https://jichisoken.jp/file/jichitaisenkyo/2020%E5%B9%B4%E5%BA%A6%E9%83%BD%E9%81%93%E5%BA%9C%E7%9C%8C_02.xlsx",
+        "source_page": "https://jichisoken.jp/jichitaisenkyo/2020/",
+        "download_page": "https://jichisoken.jp/jichitaisenkyo/",
+        "file_name": "2020年度都道府県_02.xlsx",
+        "sheet": "知事選挙",
+        "sha256": "166f7c265485093cc87aa3221ca92de8be51dd697906416d71bef724a627bc5d",
+        "bytes": 180525
+      },
+      {
+        "year": "2021",
+        "source_url": "https://jichisoken.jp/file/jichitaisenkyo/2021_todoufuken_20221129.xlsx",
+        "source_page": "https://jichisoken.jp/jichitaisenkyo/2021/",
+        "download_page": "https://jichisoken.jp/jichitaisenkyo/",
+        "file_name": "2021_todoufuken_20221129.xlsx",
+        "sheet": "都道府県知事",
+        "sha256": "c43d2c444ee35027e59d255fad8bbcad681459d95dd337ee6b226e61fe0802a1",
+        "bytes": 193654
+      },
+      {
+        "year": "2022",
+        "source_url": "https://jichisoken.jp/file/jichitaisenkyo/2022_todoufuken_20230131.xlsx",
+        "source_page": "https://jichisoken.jp/jichitaisenkyo/2022/",
+        "download_page": "https://jichisoken.jp/jichitaisenkyo/",
+        "file_name": "2022_todoufuken_20230131.xlsx",
+        "sheet": "都道府県知事",
+        "sha256": "0142b76cb11bc2e37d337ef2fe351a8bf4bd6062334fe31f6b846970ea93eb43",
+        "bytes": 185604
+      },
+      {
+        "year": "2023",
+        "source_url": "https://jichisoken.jp/file/jichitaisenkyo/2023_todoufuken_20240422.xlsx",
+        "source_page": "https://jichisoken.jp/jichitaisenkyo/2023/",
+        "download_page": "https://jichisoken.jp/jichitaisenkyo/",
+        "file_name": "2023_todoufuken_20240422.xlsx",
+        "sheet": "都道府県知事",
+        "sha256": "5bf2a60f7b4b12136d949edf8f1663eee5cde5136d448fcf390979e96f6d4725",
+        "bytes": 266043
+      },
+      {
+        "year": "2024",
+        "source_url": "https://jichisoken.jp/file/jichitaisenkyo/2024_todoufuken_20250219.xlsx",
+        "source_page": "https://jichisoken.jp/jichitaisenkyo/2024/",
+        "download_page": "https://jichisoken.jp/jichitaisenkyo/",
+        "file_name": "2024_todoufuken_20250219.xlsx",
+        "sheet": "都道府県知事",
+        "sha256": "599b5dadba81d2b3de2fbddc775f0189452afde6f8d0b03f5000c10c5208ee3b",
+        "bytes": 122354
+      },
+      {
+        "year": "2025",
+        "source_url": "https://jichisoken.jp/file/jichitaisenkyo/2025_todoufuken_20260106.xlsx",
+        "source_page": "https://jichisoken.jp/jichitaisenkyo/2025/",
+        "download_page": "https://jichisoken.jp/jichitaisenkyo/",
+        "file_name": "2025_todoufuken_20260106.xlsx",
+        "sheet": "都道府県知事",
+        "sha256": "0bfb0b46b2b6c3a5dc566d9febdedaa1f82d6d156934a7c56c3b703b7e7ad374",
+        "bytes": 132554
+      }
+    ],
+    "usage_note_url": "https://jichisoken.jp/using-data-note/",
+    "usage_note": "利用申込・承認は不要。ただし成果物に実施機関名（地方自治総合研究所）と「自治体選挙結果調査」に基づく旨の明記が必須。",
+    "fetched_at": "2026-09-02T20:21:15+09:00",
+    "known_coverage_gap_2026": "2025年版（2026-01-06公開）が現時点(2026-09-02)の最新公開版。ただし2025年秋以降〜2026年に行われた知事選（石川2026-03-08・福井2026-01-25・広島2025-11-28任期満了・長崎2026-02-08、和歌山は2025-04死去に伴う2025-06-03就任）は自治総研側が未収録のため本データに反映されない。Wikipedia等一次情報と突合し確認済み（5道県：石川・福井・和歌山・広島・長崎）。次回データ更新時に要再取得。"
+  },
+  "data_correction_log": {
+    "note": "自治総研Excelの実日付セル（'選挙執行日'ラベル列の直後・無名列）に、一部の行で年が+1される既知の不具合を発見（実選挙結果と突合し複数件で確認：宮城2017→誤2018、東京2024→誤2025、兵庫2024→誤2025、福島2018→誤2019、静岡2024→誤2025。一方、大阪2023は誤りなし=不具合は行単位で不定期に発生）。ラベル列の年（テキスト表記、例'2017年'）が正しい選挙年と一致することを確認済みのため、ラベル年とセル年が食い違う行は月日を保持しラベル年で置換して補正した。補正対象行数と対象自治体は下記の通り。",
+    "corrected_rows": [
+      {
+        "year_file": "2018",
+        "code6": "040002",
+        "pref_name": "宮城県",
+        "corrected_date": "2017-10-22"
+      },
+      {
+        "year_file": "2018",
+        "code6": "080004",
+        "pref_name": "茨城県",
+        "corrected_date": "2017-08-27"
+      },
+      {
+        "year_file": "2018",
+        "code6": "220001",
+        "pref_name": "静岡県",
+        "corrected_date": "2017-06-25"
+      },
+      {
+        "year_file": "2018",
+        "code6": "280009",
+        "pref_name": "兵庫県",
+        "corrected_date": "2017-07-02"
+      },
+      {
+        "year_file": "2018",
+        "code6": "340006",
+        "pref_name": "広島県",
+        "corrected_date": "2017-11-12"
+      },
+      {
+        "year_file": "2019",
+        "code6": "070009",
+        "pref_name": "福島県",
+        "corrected_date": "2018-10-28"
+      },
+      {
+        "year_file": "2019",
+        "code6": "140007",
+        "pref_name": "神奈川県",
+        "corrected_date": "2019-04-17"
+      },
+      {
+        "year_file": "2019",
+        "code6": "150002",
+        "pref_name": "新潟県",
+        "corrected_date": "2018-06-10"
+      },
+      {
+        "year_file": "2019",
+        "code6": "200000",
+        "pref_name": "長野県",
+        "corrected_date": "2018-08-05"
+      },
+      {
+        "year_file": "2019",
+        "code6": "250007",
+        "pref_name": "滋賀県",
+        "corrected_date": "2018-06-24"
+      },
+      {
+        "year_file": "2019",
+        "code6": "300004",
+        "pref_name": "和歌山県",
+        "corrected_date": "2018-11-25"
+      },
+      {
+        "year_file": "2019",
+        "code6": "370002",
+        "pref_name": "香川県",
+        "corrected_date": "2018-08-26"
+      },
+      {
+        "year_file": "2019",
+        "code6": "380008",
+        "pref_name": "愛媛県",
+        "corrected_date": "2018-11-18"
+      },
+      {
+        "year_file": "2019",
+        "code6": "410004",
+        "pref_name": "佐賀県",
+        "corrected_date": "2018-12-16"
+      },
+      {
+        "year_file": "2019",
+        "code6": "450006",
+        "pref_name": "宮崎県",
+        "corrected_date": "2018-12-23"
+      },
+      {
+        "year_file": "2019",
+        "code6": "470007",
+        "pref_name": "沖縄県",
+        "corrected_date": "2018-09-30"
+      },
+      {
+        "year_file": "2020",
+        "code6": "020001",
+        "pref_name": "青森県",
+        "corrected_date": "2019-06-02"
+      },
+      {
+        "year_file": "2020",
+        "code6": "030007",
+        "pref_name": "岩手県",
+        "corrected_date": "2019-09-08"
+      },
+      {
+        "year_file": "2020",
+        "code6": "100005",
+        "pref_name": "群馬県",
+        "corrected_date": "2019-07-21"
+      },
+      {
+        "year_file": "2020",
+        "code6": "110001",
+        "pref_name": "埼玉県",
+        "corrected_date": "2019-08-25"
+      },
+      {
+        "year_file": "2020",
+        "code6": "390003",
+        "pref_name": "高知県",
+        "corrected_date": "2019-11-24"
+      },
+      {
+        "year_file": "2021",
+        "code6": "090000",
+        "pref_name": "栃木県",
+        "corrected_date": "2020-11-15"
+      },
+      {
+        "year_file": "2021",
+        "code6": "130001",
+        "pref_name": "東京都",
+        "corrected_date": "2020-07-05"
+      },
+      {
+        "year_file": "2021",
+        "code6": "160008",
+        "pref_name": "富山県",
+        "corrected_date": "2020-10-25"
+      },
+      {
+        "year_file": "2021",
+        "code6": "330001",
+        "pref_name": "岡山県",
+        "corrected_date": "2020-10-25"
+      },
+      {
+        "year_file": "2021",
+        "code6": "460001",
+        "pref_name": "鹿児島県",
+        "corrected_date": "2020-07-12"
+      },
+      {
+        "year_file": "2022",
+        "code6": "040002",
+        "pref_name": "宮城県",
+        "corrected_date": "2021-10-31"
+      },
+      {
+        "year_file": "2022",
+        "code6": "080004",
+        "pref_name": "茨城県",
+        "corrected_date": "2021-09-05"
+      },
+      {
+        "year_file": "2022",
+        "code6": "220001",
+        "pref_name": "静岡県",
+        "corrected_date": "2021-06-20"
+      },
+      {
+        "year_file": "2022",
+        "code6": "240001",
+        "pref_name": "三重県",
+        "corrected_date": "2021-09-12"
+      },
+      {
+        "year_file": "2022",
+        "code6": "280009",
+        "pref_name": "兵庫県",
+        "corrected_date": "2021-07-18"
+      },
+      {
+        "year_file": "2022",
+        "code6": "340006",
+        "pref_name": "広島県",
+        "corrected_date": "2021-11-14"
+      },
+      {
+        "year_file": "2023",
+        "code6": "020001",
+        "pref_name": "青森県",
+        "corrected_date": "2019-06-02"
+      },
+      {
+        "year_file": "2023",
+        "code6": "030007",
+        "pref_name": "岩手県",
+        "corrected_date": "2019-09-08"
+      },
+      {
+        "year_file": "2023",
+        "code6": "040002",
+        "pref_name": "宮城県",
+        "corrected_date": "2021-10-31"
+      },
+      {
+        "year_file": "2023",
+        "code6": "070009",
+        "pref_name": "福島県",
+        "corrected_date": "2022-10-30"
+      },
+      {
+        "year_file": "2023",
+        "code6": "080004",
+        "pref_name": "茨城県",
+        "corrected_date": "2021-09-05"
+      },
+      {
+        "year_file": "2023",
+        "code6": "090000",
+        "pref_name": "栃木県",
+        "corrected_date": "2020-11-15"
+      },
+      {
+        "year_file": "2023",
+        "code6": "100005",
+        "pref_name": "群馬県",
+        "corrected_date": "2019-07-21"
+      },
+      {
+        "year_file": "2023",
+        "code6": "110001",
+        "pref_name": "埼玉県",
+        "corrected_date": "2019-08-25"
+      },
+      {
+        "year_file": "2023",
+        "code6": "130001",
+        "pref_name": "東京都",
+        "corrected_date": "2020-07-05"
+      },
+      {
+        "year_file": "2023",
+        "code6": "150002",
+        "pref_name": "新潟県",
+        "corrected_date": "2022-05-29"
+      },
+      {
+        "year_file": "2023",
+        "code6": "160008",
+        "pref_name": "富山県",
+        "corrected_date": "2020-10-25"
+      },
+      {
+        "year_file": "2023",
+        "code6": "200000",
+        "pref_name": "長野県",
+        "corrected_date": "2022-08-07"
+      },
+      {
+        "year_file": "2023",
+        "code6": "220001",
+        "pref_name": "静岡県",
+        "corrected_date": "2021-06-20"
+      },
+      {
+        "year_file": "2023",
+        "code6": "240001",
+        "pref_name": "三重県",
+        "corrected_date": "2021-09-12"
+      },
+      {
+        "year_file": "2023",
+        "code6": "250007",
+        "pref_name": "滋賀県",
+        "corrected_date": "2022-07-10"
+      },
+      {
+        "year_file": "2023",
+        "code6": "280009",
+        "pref_name": "兵庫県",
+        "corrected_date": "2021-07-18"
+      },
+      {
+        "year_file": "2023",
+        "code6": "300004",
+        "pref_name": "和歌山県",
+        "corrected_date": "2022-11-27"
+      },
+      {
+        "year_file": "2023",
+        "code6": "330001",
+        "pref_name": "岡山県",
+        "corrected_date": "2020-10-25"
+      },
+      {
+        "year_file": "2023",
+        "code6": "340006",
+        "pref_name": "広島県",
+        "corrected_date": "2021-11-14"
+      },
+      {
+        "year_file": "2023",
+        "code6": "370002",
+        "pref_name": "香川県",
+        "corrected_date": "2022-08-28"
+      },
+      {
+        "year_file": "2023",
+        "code6": "380008",
+        "pref_name": "愛媛県",
+        "corrected_date": "2022-11-20"
+      },
+      {
+        "year_file": "2023",
+        "code6": "390003",
+        "pref_name": "高知県",
+        "corrected_date": "2019-11-24"
+      },
+      {
+        "year_file": "2023",
+        "code6": "410004",
+        "pref_name": "佐賀県",
+        "corrected_date": "2022-12-18"
+      },
+      {
+        "year_file": "2023",
+        "code6": "450006",
+        "pref_name": "宮崎県",
+        "corrected_date": "2022-12-25"
+      },
+      {
+        "year_file": "2023",
+        "code6": "460001",
+        "pref_name": "鹿児島県",
+        "corrected_date": "2020-07-12"
+      },
+      {
+        "year_file": "2023",
+        "code6": "470007",
+        "pref_name": "沖縄県",
+        "corrected_date": "2022-09-11"
+      },
+      {
+        "year_file": "2024",
+        "code6": "020001",
+        "pref_name": "青森県",
+        "corrected_date": "2023-06-04"
+      },
+      {
+        "year_file": "2024",
+        "code6": "030007",
+        "pref_name": "岩手県",
+        "corrected_date": "2023-09-03"
+      },
+      {
+        "year_file": "2024",
+        "code6": "100005",
+        "pref_name": "群馬県",
+        "corrected_date": "2023-07-23"
+      },
+      {
+        "year_file": "2024",
+        "code6": "110001",
+        "pref_name": "埼玉県",
+        "corrected_date": "2023-08-06"
+      },
+      {
+        "year_file": "2024",
+        "code6": "390003",
+        "pref_name": "高知県",
+        "corrected_date": "2023-11-26"
+      },
+      {
+        "year_file": "2025",
+        "code6": "090000",
+        "pref_name": "栃木県",
+        "corrected_date": "2024-11-17"
+      },
+      {
+        "year_file": "2025",
+        "code6": "130001",
+        "pref_name": "東京都",
+        "corrected_date": "2024-07-07"
+      },
+      {
+        "year_file": "2025",
+        "code6": "160008",
+        "pref_name": "富山県",
+        "corrected_date": "2024-10-27"
+      },
+      {
+        "year_file": "2025",
+        "code6": "220001",
+        "pref_name": "静岡県",
+        "corrected_date": "2024-05-26"
+      },
+      {
+        "year_file": "2025",
+        "code6": "280009",
+        "pref_name": "兵庫県",
+        "corrected_date": "2024-11-17"
+      },
+      {
+        "year_file": "2025",
+        "code6": "330001",
+        "pref_name": "岡山県",
+        "corrected_date": "2024-10-27"
+      },
+      {
+        "year_file": "2025",
+        "code6": "460001",
+        "pref_name": "鹿児島県",
+        "corrected_date": "2024-07-07"
+      }
+    ],
+    "web_patch_2026_09_02": {
+      "note": "自治総研2025年度版が未反映の直近首長交代5件を、公式選挙結果を報じる複数の報道機関・情報源の突合により手動補正した。自治総研本体データではないため status='web_patched_pending_primary_resync' で明示区別。自治総研の次回更新版（2027年頭見込み）公開時に一次データで再同期し、このpatchログは監査用に保持する。",
+      "patched_prefectures": [
+        {
+          "pref_name": "石川県",
+          "old": {
+            "氏名": "馳　浩",
+            "当選回数": 1,
+            "当選年月日": "2022-03-13",
+            "投票率": 61.82,
+            "得票数": 196432,
+            "得票率": 34.13,
+            "党派": "無所属",
+            "_source_year_file": "2022"
+          },
+          "patched_at": "2026-09-02T20:26:24.990379+09:00",
+          "patch_source": "複数報道・選管発表の突合（web_search, 2026-09-02実施）"
+        },
+        {
+          "pref_name": "福井県",
+          "old": {
+            "氏名": "杉本　達治",
+            "当選回数": 2,
+            "当選年月日": "2023-04-09",
+            "投票率": 51.08,
+            "得票数": 282097,
+            "得票率": 89.59,
+            "党派": "無所属",
+            "_source_year_file": "2023"
+          },
+          "patched_at": "2026-09-02T20:26:24.990379+09:00",
+          "patch_source": "複数報道・選管発表の突合（web_search, 2026-09-02実施）"
+        },
+        {
+          "pref_name": "和歌山県",
+          "old": {
+            "氏名": "岸本　周平",
+            "当選回数": 1,
+            "当選年月日": "2022-11-27",
+            "投票率": 39.86,
+            "得票数": 246519,
+            "得票率": 80.12,
+            "党派": "無所属",
+            "_source_year_file": "2023"
+          },
+          "patched_at": "2026-09-02T20:26:24.990379+09:00",
+          "patch_source": "複数報道・選管発表の突合（web_search, 2026-09-02実施）"
+        },
+        {
+          "pref_name": "広島県",
+          "old": {
+            "氏名": "湯﨑　英彦",
+            "当選回数": 4,
+            "当選年月日": "2021-11-14",
+            "投票率": 34.67,
+            "得票数": 707371,
+            "得票率": 89.52,
+            "党派": "無所属",
+            "_source_year_file": "2022"
+          },
+          "patched_at": "2026-09-02T20:26:24.990379+09:00",
+          "patch_source": "複数報道・選管発表の突合（web_search, 2026-09-02実施）"
+        },
+        {
+          "pref_name": "長崎県",
+          "old": {
+            "氏名": "大石　賢吾",
+            "当選回数": 1,
+            "当選年月日": "2022-02-20",
+            "投票率": 47.83,
+            "得票数": 239415,
+            "得票率": 45.6,
+            "党派": "無所属",
+            "_source_year_file": "2022"
+          },
+          "patched_at": "2026-09-02T20:26:24.990379+09:00",
+          "patch_source": "複数報道・選管発表の突合（web_search, 2026-09-02実施）"
+        }
+      ]
+    }
+  },
+  "data": [
+    {
+      "pref_code": "01",
+      "pref_name": "北海道",
+      "氏名": "鈴木　直道",
+      "当選回数": 2,
+      "当選年月日": "2023-04-09",
+      "投票率": 51.7,
+      "得票数": 1692436,
+      "得票率": 75.63,
+      "当日有権者数": 4368708,
+      "絶対得票率": 38.74,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2023"
+    },
+    {
+      "pref_code": "02",
+      "pref_name": "青森県",
+      "氏名": "宮下　宗一郎",
+      "当選回数": 1,
+      "当選年月日": "2023-06-04",
+      "投票率": 57.05,
+      "得票数": 404358,
+      "得票率": 68.1,
+      "当日有権者数": 1044657,
+      "絶対得票率": 38.71,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2024"
+    },
+    {
+      "pref_code": "03",
+      "pref_name": "岩手県",
+      "氏名": "達増　拓也",
+      "当選回数": 5,
+      "当選年月日": "2023-09-03",
+      "投票率": 56.63,
+      "得票数": 336502,
+      "得票率": 59.18,
+      "当日有権者数": 1010038,
+      "絶対得票率": 33.32,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2024"
+    },
+    {
+      "pref_code": "04",
+      "pref_name": "宮城県",
+      "氏名": "村井　嘉浩",
+      "当選回数": 5,
+      "当選年月日": "2021-10-31",
+      "投票率": 56.29,
+      "得票数": 683111,
+      "得票率": 64.68,
+      "当日有権者数": 1910525,
+      "絶対得票率": 35.76,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2022"
+    },
+    {
+      "pref_code": "05",
+      "pref_name": "秋田県",
+      "氏名": "鈴木　健太",
+      "当選回数": 1,
+      "当選年月日": "2025-04-06",
+      "投票率": 59.59,
+      "得票数": 273270,
+      "得票率": 58.39,
+      "当日有権者数": 789908,
+      "絶対得票率": 34.6,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2025"
+    },
+    {
+      "pref_code": "06",
+      "pref_name": "山形県",
+      "氏名": "吉村　美栄子",
+      "当選回数": 5,
+      "当選年月日": "2025-01-26",
+      "投票率": 39.67,
+      "得票数": 318364,
+      "得票率": 94.71,
+      "当日有権者数": 864892,
+      "絶対得票率": 36.81,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2025"
+    },
+    {
+      "pref_code": "07",
+      "pref_name": "福島県",
+      "氏名": "内堀　雅雄",
+      "当選回数": 3,
+      "当選年月日": "2022-10-30",
+      "投票率": 42.58,
+      "得票数": 576221,
+      "得票率": 88.19,
+      "当日有権者数": 1548260,
+      "絶対得票率": 37.22,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2023"
+    },
+    {
+      "pref_code": "08",
+      "pref_name": "茨城県",
+      "氏名": "大井川　和彦",
+      "当選回数": 2,
+      "当選年月日": "2021-09-05",
+      "投票率": 35.02,
+      "得票数": 659459,
+      "得票率": 79.61,
+      "当日有権者数": 2399395,
+      "絶対得票率": 27.48,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2022"
+    },
+    {
+      "pref_code": "09",
+      "pref_name": "栃木県",
+      "氏名": "福田　富一",
+      "当選回数": 6,
+      "当選年月日": "2024-11-17",
+      "投票率": 32.05,
+      "得票数": 413985,
+      "得票率": 83.65,
+      "当日有権者数": 1585379,
+      "絶対得票率": 26.11,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2025"
+    },
+    {
+      "pref_code": "10",
+      "pref_name": "群馬県",
+      "氏名": "山本　一太",
+      "当選回数": 2,
+      "当選年月日": "2023-07-23",
+      "投票率": 29.65,
+      "得票数": 363559,
+      "得票率": 79.16,
+      "当日有権者数": 1582318,
+      "絶対得票率": 22.98,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2024"
+    },
+    {
+      "pref_code": "11",
+      "pref_name": "埼玉県",
+      "氏名": "大野　元裕",
+      "当選回数": 2,
+      "当選年月日": "2023-08-06",
+      "投票率": 23.76,
+      "得票数": 1138973,
+      "得票率": 80.21,
+      "当日有権者数": 6077006,
+      "絶対得票率": 18.74,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2024"
+    },
+    {
+      "pref_code": "12",
+      "pref_name": "千葉県",
+      "氏名": "熊谷　俊人",
+      "当選回数": 2,
+      "当選年月日": "2025-03-16",
+      "投票率": 31.93,
+      "得票数": 1404905,
+      "得票率": 85.91,
+      "当日有権者数": 5186664,
+      "絶対得票率": 27.09,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2025"
+    },
+    {
+      "pref_code": "13",
+      "pref_name": "東京都",
+      "氏名": "小池　百合子",
+      "当選回数": 3,
+      "当選年月日": "2024-07-07",
+      "投票率": 60.62,
+      "得票数": 2918015,
+      "得票率": 42.77,
+      "当日有権者数": 11349278,
+      "絶対得票率": 25.71,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2025"
+    },
+    {
+      "pref_code": "14",
+      "pref_name": "神奈川県",
+      "氏名": "黒岩　祐治",
+      "当選回数": 4,
+      "当選年月日": "2023-04-09",
+      "投票率": 40.35,
+      "得票数": 1933753,
+      "得票率": 67.6,
+      "当日有権者数": 7615608,
+      "絶対得票率": 25.39,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2023"
+    },
+    {
+      "pref_code": "15",
+      "pref_name": "新潟県",
+      "氏名": "花角　英世",
+      "当選回数": 2,
+      "当選年月日": "2022-05-29",
+      "投票率": 49.64,
+      "得票数": 703694,
+      "得票率": 77.54,
+      "当日有権者数": 1844619,
+      "絶対得票率": 38.15,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2023"
+    },
+    {
+      "pref_code": "16",
+      "pref_name": "富山県",
+      "氏名": "新田　八朗",
+      "当選回数": 2,
+      "当選年月日": "2024-10-27",
+      "投票率": 54.82,
+      "得票数": 369908,
+      "得票率": 81.29,
+      "当日有権者数": 853877,
+      "絶対得票率": 43.32,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2025"
+    },
+    {
+      "pref_code": "17",
+      "pref_name": "石川県",
+      "氏名": "山野　之義",
+      "当選回数": 1,
+      "当選年月日": "2026-03-08",
+      "投票率": 54.68,
+      "得票数": 245674,
+      "得票率": 49.65,
+      "当日有権者数": null,
+      "絶対得票率": null,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "web_patched_pending_primary_resync",
+      "_source_year_file": null,
+      "_patch_note": "元金沢市長。馳浩(前職)を破り初当選。就任2026-03-27。"
+    },
+    {
+      "pref_code": "18",
+      "pref_name": "福井県",
+      "氏名": "石田　嵩人",
+      "当選回数": 1,
+      "当選年月日": "2026-01-25",
+      "投票率": null,
+      "得票数": null,
+      "得票率": null,
+      "当日有権者数": null,
+      "絶対得票率": null,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "web_patched_pending_primary_resync",
+      "_source_year_file": null,
+      "_patch_note": "元外務省職員。杉本達治(前職・セクハラ問題で辞職)の後任。就任2026-01-28。得票数等は複数報道で未確認のためnull。"
+    },
+    {
+      "pref_code": "19",
+      "pref_name": "山梨県",
+      "氏名": "長崎　幸太郎",
+      "当選回数": 2,
+      "当選年月日": "2023-01-22",
+      "投票率": 52.29,
+      "得票数": 215517,
+      "得票率": 61.31,
+      "当日有権者数": 679320,
+      "絶対得票率": 31.73,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2023"
+    },
+    {
+      "pref_code": "20",
+      "pref_name": "長野県",
+      "氏名": "阿部　守一",
+      "当選回数": 4,
+      "当選年月日": "2022-08-07",
+      "投票率": 40.94,
+      "得票数": 615728,
+      "得票率": 88.84,
+      "当日有権者数": 1706682,
+      "絶対得票率": 36.08,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2023"
+    },
+    {
+      "pref_code": "21",
+      "pref_name": "岐阜県",
+      "氏名": "江崎　禎英",
+      "当選回数": 1,
+      "当選年月日": "2025-01-26",
+      "投票率": 36.21,
+      "得票数": 436418,
+      "得票率": 76.34,
+      "当日有権者数": 1601505,
+      "絶対得票率": 27.25,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2025"
+    },
+    {
+      "pref_code": "22",
+      "pref_name": "静岡県",
+      "氏名": "鈴木　康友",
+      "当選回数": 1,
+      "当選年月日": "2024-05-26",
+      "投票率": 52.47,
+      "得票数": 728500,
+      "得票率": 47.42,
+      "当日有権者数": 2956024,
+      "絶対得票率": 24.64,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2025"
+    },
+    {
+      "pref_code": "23",
+      "pref_name": "愛知県",
+      "氏名": "大村　秀章",
+      "当選回数": 4,
+      "当選年月日": "2023-02-05",
+      "投票率": 36.43,
+      "得票数": 1452648,
+      "得票率": 67.53,
+      "当日有権者数": 6056791,
+      "絶対得票率": 23.98,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2023"
+    },
+    {
+      "pref_code": "24",
+      "pref_name": "三重県",
+      "氏名": "一見　勝之",
+      "当選回数": 1,
+      "当選年月日": "2021-09-12",
+      "投票率": 37.93,
+      "得票数": 391767,
+      "得票率": 71.54,
+      "当日有権者数": 1473018,
+      "絶対得票率": 26.6,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2022"
+    },
+    {
+      "pref_code": "25",
+      "pref_name": "滋賀県",
+      "氏名": "三日月　大造",
+      "当選回数": 3,
+      "当選年月日": "2022-07-10",
+      "投票率": 55.28,
+      "得票数": 530460,
+      "得票率": 86.85,
+      "当日有権者数": 1137832,
+      "絶対得票率": 46.62,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2023"
+    },
+    {
+      "pref_code": "26",
+      "pref_name": "京都府",
+      "氏名": "西脇　隆俊",
+      "当選回数": 2,
+      "当選年月日": "2022-04-10",
+      "投票率": 37.58,
+      "得票数": 505651,
+      "得票率": 66.8,
+      "当日有権者数": 2063401,
+      "絶対得票率": 24.51,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2022"
+    },
+    {
+      "pref_code": "27",
+      "pref_name": "大阪府",
+      "氏名": "吉村　洋文",
+      "当選回数": 2,
+      "当選年月日": "2023-04-09",
+      "投票率": 46.98,
+      "得票数": 2439444,
+      "得票率": 73.69,
+      "当日有権者数": 7188665,
+      "絶対得票率": 33.93,
+      "党派": "諸派",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2023"
+    },
+    {
+      "pref_code": "28",
+      "pref_name": "兵庫県",
+      "氏名": "齋藤　元彦",
+      "当選回数": 2,
+      "当選年月日": "2024-11-17",
+      "投票率": 55.65,
+      "得票数": 1113911,
+      "得票率": 45.21,
+      "当日有権者数": 4463013,
+      "絶対得票率": 24.96,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2025"
+    },
+    {
+      "pref_code": "29",
+      "pref_name": "奈良県",
+      "氏名": "山下　真",
+      "当選回数": 1,
+      "当選年月日": "2023-04-09",
+      "投票率": 54.82,
+      "得票数": 266404,
+      "得票率": 44.41,
+      "当日有権者数": 1112680,
+      "絶対得票率": 23.94,
+      "党派": "日本維新の会",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2023"
+    },
+    {
+      "pref_code": "30",
+      "pref_name": "和歌山県",
+      "氏名": "宮﨑　泉",
+      "当選回数": 1,
+      "当選年月日": "2025-06-01",
+      "投票率": null,
+      "得票数": null,
+      "得票率": null,
+      "当日有権者数": null,
+      "絶対得票率": null,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "web_patched_pending_primary_resync",
+      "_source_year_file": null,
+      "_patch_note": "元副知事。岸本周平(前職・在職中death 2025-04-15)の後任。副知事として職務代理を経て2025-06-03就任。当選年月日はWikipedia記載の選挙日が不明瞭なため要再確認（就任日のみ確度高）。"
+    },
+    {
+      "pref_code": "31",
+      "pref_name": "鳥取県",
+      "氏名": "平井　伸治",
+      "当選回数": 5,
+      "当選年月日": "2023-04-09",
+      "投票率": 48.85,
+      "得票数": 200442,
+      "得票率": 91.83,
+      "当日有権者数": 452764,
+      "絶対得票率": 44.27,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2023"
+    },
+    {
+      "pref_code": "32",
+      "pref_name": "島根県",
+      "氏名": "丸山　達也",
+      "当選回数": 2,
+      "当選年月日": "2023-04-09",
+      "投票率": 54.96,
+      "得票数": 251545,
+      "得票率": 86.27,
+      "当日有権者数": 543020,
+      "絶対得票率": 46.32,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2023"
+    },
+    {
+      "pref_code": "33",
+      "pref_name": "岡山県",
+      "氏名": "伊原木　隆太",
+      "当選回数": 4,
+      "当選年月日": "2024-10-27",
+      "投票率": 50.47,
+      "得票数": 634587,
+      "得票率": 84.41,
+      "当日有権者数": 1523373,
+      "絶対得票率": 41.66,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2025"
+    },
+    {
+      "pref_code": "34",
+      "pref_name": "広島県",
+      "氏名": "横田　美香",
+      "当選回数": 1,
+      "当選年月日": "2025-11-09",
+      "投票率": 30.09,
+      "得票数": 552614,
+      "得票率": 83.42,
+      "当日有権者数": null,
+      "絶対得票率": null,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "web_patched_pending_primary_resync",
+      "_source_year_file": null,
+      "_patch_note": "元副知事。湯﨑英彦(前職・4期16年で不出馬)の後任。就任2025-11-29。"
+    },
+    {
+      "pref_code": "35",
+      "pref_name": "山口県",
+      "氏名": "村岡　　嗣政",
+      "当選回数": 3,
+      "当選年月日": "2022-02-06",
+      "投票率": 34.91,
+      "得票数": 340503,
+      "得票率": 87.07,
+      "当日有権者数": 1130290,
+      "絶対得票率": 30.13,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2022"
+    },
+    {
+      "pref_code": "36",
+      "pref_name": "徳島県",
+      "氏名": "後藤田　正純",
+      "当選回数": 1,
+      "当選年月日": "2023-04-09",
+      "投票率": 54.6,
+      "得票数": 130993,
+      "得票率": 39.96,
+      "当日有権者数": 605914,
+      "絶対得票率": 21.62,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2023"
+    },
+    {
+      "pref_code": "37",
+      "pref_name": "香川県",
+      "氏名": "池田　豊人",
+      "当選回数": 1,
+      "当選年月日": "2022-08-28",
+      "投票率": 29.09,
+      "得票数": 166390,
+      "得票率": 73.59,
+      "当日有権者数": 800700,
+      "絶対得票率": 20.78,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2023"
+    },
+    {
+      "pref_code": "38",
+      "pref_name": "愛媛県",
+      "氏名": "中村　時広",
+      "当選回数": 4,
+      "当選年月日": "2022-11-20",
+      "投票率": 33.95,
+      "得票数": 341064,
+      "得票率": 90.33,
+      "当日有権者数": 1123562,
+      "絶対得票率": 30.36,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2023"
+    },
+    {
+      "pref_code": "39",
+      "pref_name": "高知県",
+      "氏名": "濵田　省司",
+      "当選回数": 2,
+      "当選年月日": "2023-11-26",
+      "投票率": 42.47,
+      "得票数": 197816,
+      "得票率": 81.51,
+      "当日有権者数": 579439,
+      "絶対得票率": 34.14,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2024"
+    },
+    {
+      "pref_code": "40",
+      "pref_name": "福岡県",
+      "氏名": "服部　誠太郎",
+      "当選回数": 2,
+      "当選年月日": "2025-03-23",
+      "投票率": 31.58,
+      "得票数": 1036280,
+      "得票率": 79.65,
+      "当日有権者数": 4169693,
+      "絶対得票率": 24.85,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2025"
+    },
+    {
+      "pref_code": "41",
+      "pref_name": "佐賀県",
+      "氏名": "山口　祥義",
+      "当選回数": 3,
+      "当選年月日": "2022-12-18",
+      "投票率": 33.28,
+      "得票数": 195907,
+      "得票率": 89.8,
+      "当日有権者数": 665028,
+      "絶対得票率": 29.46,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2023"
+    },
+    {
+      "pref_code": "42",
+      "pref_name": "長崎県",
+      "氏名": "平田　研",
+      "当選回数": 1,
+      "当選年月日": "2026-02-08",
+      "投票率": 57.27,
+      "得票数": 287134,
+      "得票率": 48.35,
+      "当日有権者数": null,
+      "絶対得票率": null,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "web_patched_pending_primary_resync",
+      "_source_year_file": null,
+      "_patch_note": "元副知事。大石賢吾(前職)を破り初当選。就任予定2026-03-02。"
+    },
+    {
+      "pref_code": "43",
+      "pref_name": "熊本県",
+      "氏名": "木村　敬",
+      "当選回数": 1,
+      "当選年月日": "2024-03-24",
+      "投票率": 49.63,
+      "得票数": 383010,
+      "得票率": 54.59,
+      "当日有権者数": 1420749,
+      "絶対得票率": 26.96,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2024"
+    },
+    {
+      "pref_code": "44",
+      "pref_name": "大分県",
+      "氏名": "佐藤　樹一郎",
+      "当選回数": 1,
+      "当選年月日": "2023-04-09",
+      "投票率": 51.45,
+      "得票数": 271400,
+      "得票率": 57.25,
+      "当日有権者数": 930813,
+      "絶対得票率": 29.16,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2023"
+    },
+    {
+      "pref_code": "45",
+      "pref_name": "宮崎県",
+      "氏名": "河野　俊嗣",
+      "当選回数": 4,
+      "当選年月日": "2022-12-25",
+      "投票率": 56.69,
+      "得票数": 258646,
+      "得票率": 51.53,
+      "当日有権者数": 887566,
+      "絶対得票率": 29.14,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2023"
+    },
+    {
+      "pref_code": "46",
+      "pref_name": "鹿児島県",
+      "氏名": "塩田　康一",
+      "当選回数": 2,
+      "当選年月日": "2024-07-07",
+      "投票率": 44.76,
+      "得票数": 337357,
+      "得票率": 59.05,
+      "当日有権者数": 1284427,
+      "絶対得票率": 26.27,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2025"
+    },
+    {
+      "pref_code": "47",
+      "pref_name": "沖縄県",
+      "氏名": "玉城　康裕　（玉城　デニー）",
+      "当選回数": 2,
+      "当選年月日": "2022-09-11",
+      "投票率": 57.92,
+      "得票数": 339767,
+      "得票率": 50.84,
+      "当日有権者数": 1165610,
+      "絶対得票率": 29.15,
+      "党派": "無所属",
+      "無投票": {
+        "is_mutou": false,
+        "token": null
+      },
+      "status": "data",
+      "_source_year_file": "2023"
+    }
+  ]
+}

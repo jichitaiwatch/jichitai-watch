@@ -1,0 +1,5519 @@
+{
+  "schema_version": "1.0",
+  "title": "住民一人あたり分野別支出（多年度）",
+  "provider": "総務省 市区町村別決算状況調",
+  "period": "FY2015〜FY2024（各年度10月頃公表の決算統計）",
+  "updated": "2026-09-08",
+  "unit_amount": "千円",
+  "unit_percapita": "円/人",
+  "population_source": "住民基本台帳登載人口（各年度概況表・年度により基準日表記が異なる。詳細はsources参照）",
+  "fields": [
+    "民生費",
+    "教育費",
+    "土木費",
+    "普通建設事業費"
+  ],
+  "notes": [
+    "列位置は年度により変わる（現物確認：普通建設事業費の列位置はFY2015=73列目・FY2024=151列目）。固定列インデックスではなく、各年度の見出しテキスト（団体コード/団体名/民生費/教育費/土木費/普通建設事業費/歳入総額/歳出総額/住民基本台帳登載人口）を毎年検出して抽出している。",
+    "national/prefectureは人口加重平均（合計千円÷合計人口×1000）。単純算術平均ではない（m3_expenditure.pyと同じ方式・理由）。",
+    "欠損（ファイルに団体コード自体が見つからない、または見出し検出に失敗した年度）はnullで保持しmissing_codes_by_yearに一覧する。0や前年値で埋めていない。"
+  ],
+  "sources": [
+    {
+      "fy": 2015,
+      "role": "shi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000473891.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "ec8ef39eac154b1a7194791384ea92bce570ea91081740283bcc0b1c0121d706",
+      "cache_file": "kessan_fy2015_shi_gaikyo.xls"
+    },
+    {
+      "fy": 2015,
+      "role": "shi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000473893.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "6bc7d86c246b473c2bb2ff68e95cc3281c66b8bf1a5fbf64b04329cf2a4ca1a1",
+      "cache_file": "kessan_fy2015_shi_mokuteki.xls"
+    },
+    {
+      "fy": 2015,
+      "role": "shi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000473894.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "261ad48e82c3844f1a8e40b1a01273b92a370996be5fdb0d942aff5bc844672c",
+      "cache_file": "kessan_fy2015_shi_seishitsu.xls"
+    },
+    {
+      "fy": 2015,
+      "role": "machi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000473896.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "bb3a1cf2e47e7860d3a4694b39f798e9686b7a89981b575e5c73a1dbfb314cbf",
+      "cache_file": "kessan_fy2015_machi_gaikyo.xls"
+    },
+    {
+      "fy": 2015,
+      "role": "machi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000473898.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "3d0d164c0a1f2ccd06c0e12fc1f242f6f1459ba3dc9dafcf912ac192915928bf",
+      "cache_file": "kessan_fy2015_machi_mokuteki.xls"
+    },
+    {
+      "fy": 2015,
+      "role": "machi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000473899.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "d14c136e8b8f6aaafbc2c5e4b3ca2273e83af74552d26a7e3a23b0d6604abb56",
+      "cache_file": "kessan_fy2015_machi_seishitsu.xls"
+    },
+    {
+      "fy": 2016,
+      "role": "shi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000539364.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "44574ba3edf76f71a15727ffdc9af602960962ca3385f401a806186600d03a2e",
+      "cache_file": "kessan_fy2016_shi_gaikyo.xls"
+    },
+    {
+      "fy": 2016,
+      "role": "shi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000539366.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "49ecab6e717251125858e20b637ee8a418022790c7bb633b3c315c3e611b28e8",
+      "cache_file": "kessan_fy2016_shi_mokuteki.xls"
+    },
+    {
+      "fy": 2016,
+      "role": "shi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000539367.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "ed5cb5df0a06e9469931f2760535299bae3d1065a18e25c9fd748afb36b2f727",
+      "cache_file": "kessan_fy2016_shi_seishitsu.xls"
+    },
+    {
+      "fy": 2016,
+      "role": "machi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000539369.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "f478a1eb9cff3db01501f25e361f5b607fa0355d86cab6d2bead82638fd7623b",
+      "cache_file": "kessan_fy2016_machi_gaikyo.xls"
+    },
+    {
+      "fy": 2016,
+      "role": "machi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000539371.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "f4d32e03b9a4848b849ad7f74317bae00d1843b5a92e003d0252885a259eb8be",
+      "cache_file": "kessan_fy2016_machi_mokuteki.xls"
+    },
+    {
+      "fy": 2016,
+      "role": "machi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000539372.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "97db1e1dfa1439b6540922567165d583d485d02a6613fd43225f800a84665855",
+      "cache_file": "kessan_fy2016_machi_seishitsu.xls"
+    },
+    {
+      "fy": 2017,
+      "role": "shi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000607403.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "c1d3c455c608fb51fd02c419a600eadcacde4c9f11ef6dca0b1154e0b71df899",
+      "cache_file": "kessan_fy2017_shi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2017,
+      "role": "shi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000607405.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "ce9b5b15041243b640ab80784a956efa610004dee2f12b461642062ffc366bab",
+      "cache_file": "kessan_fy2017_shi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2017,
+      "role": "shi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000607406.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "c186361b2200b01e11af02ad2a91b65b2cebc08c5677307fe72d89d95ebbb627",
+      "cache_file": "kessan_fy2017_shi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2017,
+      "role": "machi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000607408.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "a5c42ce02e13ab174f21fdcb318ab63e18cfb4f6759b8912ddd2f5fa35ae4d63",
+      "cache_file": "kessan_fy2017_machi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2017,
+      "role": "machi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000607410.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "1a15c5a5a3f92707fa962d357b633cf01d9733b85ee50513d01f24b6bfe0ebe1",
+      "cache_file": "kessan_fy2017_machi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2017,
+      "role": "machi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000607411.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "ae685b097930a390cbc068168e528695bdf372d4779a55c6a12e0e6b36b1060b",
+      "cache_file": "kessan_fy2017_machi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2018,
+      "role": "shi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000676020.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "488d76d47232ab378fe15698a55364cf31a6061347fb65d95fcdc4255105bce5",
+      "cache_file": "kessan_fy2018_shi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2018,
+      "role": "shi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000676022.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "b977e61e9ca44d8bbfb9015ab254ae7425c6a8022b5ac8ca61d6ccf11999901d",
+      "cache_file": "kessan_fy2018_shi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2018,
+      "role": "shi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000676023.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "9a4638a3cd2dffb1cb8ad342106cb4cda37fca8307c6b4f564de3ecedd00d448",
+      "cache_file": "kessan_fy2018_shi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2018,
+      "role": "machi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000676025.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "690cc64c26d0bafb3c64a26a19a3445bace3d45d8904b62127dd41903e9183e8",
+      "cache_file": "kessan_fy2018_machi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2018,
+      "role": "machi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000676027.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "4cd607168824997d5daf41ae8ff4c504e1474d6e2ea4be8b3d9e8d7711631c24",
+      "cache_file": "kessan_fy2018_machi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2018,
+      "role": "machi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000676028.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "672346376b32658825159cfa960ca221777783f8e60161c16a710b6f15246949",
+      "cache_file": "kessan_fy2018_machi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2019,
+      "role": "shi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000738076.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "ae479e9f12efaf909ce1dc88d9d7df8f44e3498206d91436c66ef10be84f57ce",
+      "cache_file": "kessan_fy2019_shi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2019,
+      "role": "shi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000738078.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "8a74352facd032dade8b9ae153d22daaf19c615f9c4bdb1c4547605bb6fd137c",
+      "cache_file": "kessan_fy2019_shi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2019,
+      "role": "shi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000738079.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "93a1783b151231e60e48c84e12ab2a94b11e0dbaaa5a1b50fd8ed944485fe56d",
+      "cache_file": "kessan_fy2019_shi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2019,
+      "role": "machi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000738081.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "536ef812740e726692e7dc4b6748f8fbf654d14a58023774ae61480d7ccc393a",
+      "cache_file": "kessan_fy2019_machi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2019,
+      "role": "machi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000738083.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "15621b169168872fe1fc7f4886e398a2bc9bc5cbd73e6951ca7bee7a93c63549",
+      "cache_file": "kessan_fy2019_machi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2019,
+      "role": "machi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000738084.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "c7729e721e17f2579f98f000a7adb30c05fdeb57cc97d25396753f1d26c0023a",
+      "cache_file": "kessan_fy2019_machi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2020,
+      "role": "shi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000800819.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "b2a9dc2dc3f4995df97c6cc42d0078a8b903987aa8f0d9ab1eb6af84c002a9e9",
+      "cache_file": "kessan_fy2020_shi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2020,
+      "role": "shi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000800822.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "711f1c576b9b7a4b1ff3824eb0f303f602fe070ba4646318ac809ded78c869d4",
+      "cache_file": "kessan_fy2020_shi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2020,
+      "role": "shi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000800823.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "c74d7ddc9fafc6f2358868e6cfc7ad3ac2369541cb6850bac20b6e8b3200024d",
+      "cache_file": "kessan_fy2020_shi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2020,
+      "role": "machi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000800826.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "426064dae1358c3fbaabddf6969c52223babec735f91b88f675f1934586240d6",
+      "cache_file": "kessan_fy2020_machi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2020,
+      "role": "machi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000800830.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "fd4fcf11c7eb7ff13a8e0ae6181654651be3b51fe8b094da7f7dd73e29072485",
+      "cache_file": "kessan_fy2020_machi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2020,
+      "role": "machi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000800832.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "e98c7271446ee82f6cb3509f11ccd183af2ab838a156a47cd667d792d3147ff1",
+      "cache_file": "kessan_fy2020_machi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2021,
+      "role": "shi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000871018.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "bb03a28b1aac66337f8d51d34b8593165d618af35ef5f341dca8f25a973c0acb",
+      "cache_file": "kessan_fy2021_shi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2021,
+      "role": "shi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000871020.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "75fb9b341570ec8928b26688aa24d23ea0a329b4c69de596da10710e9bc61c6b",
+      "cache_file": "kessan_fy2021_shi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2021,
+      "role": "shi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000871021.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "abeb333a42c923758b96a9b729ede75bc6365598d60ea07dd40fcadf3d36ea39",
+      "cache_file": "kessan_fy2021_shi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2021,
+      "role": "machi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000871023.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "8cc35c1e946769e00e1dc6bf0ca08e31f73bb9e1acdd1e718c54afebb18e6e7c",
+      "cache_file": "kessan_fy2021_machi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2021,
+      "role": "machi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000871025.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "18246ccfb29afc45bda162d04211f4a84094a6c9a168fbcaeb284e75ceae196f",
+      "cache_file": "kessan_fy2021_machi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2021,
+      "role": "machi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000871026.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "fe53ff9550c177bd05b44ccb1feeb8ea4e98991382cd45079e99dcceb7c224e9",
+      "cache_file": "kessan_fy2021_machi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2022,
+      "role": "shi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000937287.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "ef99b54fe09564e0fe9dccdf502c2814b47281000a2cd82661a872ac857f5fbe",
+      "cache_file": "kessan_fy2022_shi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2022,
+      "role": "shi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000937289.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "1258b17653882dae594fa2fe72b4a79638969587eb4924e307b3cb01e6ba7c8e",
+      "cache_file": "kessan_fy2022_shi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2022,
+      "role": "shi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000937290.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "7945df31289cd69781a78dfbc738edda74d5fd84741c3c81691df994d2e78b62",
+      "cache_file": "kessan_fy2022_shi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2022,
+      "role": "machi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000937292.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "35efd29b58ef8d56c01944e27b51a88c722a28ccb27c1311e2332921ec4f2d8f",
+      "cache_file": "kessan_fy2022_machi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2022,
+      "role": "machi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000937294.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "0e27938eead1becc77ff3caab18ccd991a9746e791ee873080ff3496808f50d9",
+      "cache_file": "kessan_fy2022_machi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2022,
+      "role": "machi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000937295.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "948c52309eafa417496498c1137223a217eb90018f49af36a1e181b49fb6902c",
+      "cache_file": "kessan_fy2022_machi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2023,
+      "role": "shi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000999900.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "fa95397dba35425c8ba7ef6ab71041ebc3ac77578b226be9ac092c5de7bcc240",
+      "cache_file": "kessan_fy2023_shi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2023,
+      "role": "shi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000999902.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "4961e05a6f8436daa89f96e090f6c1d57abe0fd35469413118c9a960e6bcf3bf",
+      "cache_file": "kessan_fy2023_shi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2023,
+      "role": "shi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000999903.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "9991c459ca1cf93550b72e4ebf9366a17ebd8fff42d4cce57be2ee69139a9454",
+      "cache_file": "kessan_fy2023_shi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2023,
+      "role": "machi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000999905.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "e59baacdc93b14c5e262d55405b0e6d1e79826e0746e50343cf5c830fbe9293c",
+      "cache_file": "kessan_fy2023_machi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2023,
+      "role": "machi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000999908.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "f3dfe992968fb1583261b75f8ff6b05cdd30224162badef6370bf6ebf1c02007",
+      "cache_file": "kessan_fy2023_machi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2023,
+      "role": "machi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000999910.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "1c41856dc39b9729f93fcc23489966e5aabb66590e40fae3820a5fa9cac77219",
+      "cache_file": "kessan_fy2023_machi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2024,
+      "role": "shi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/001061669.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "700fc73e7547cc7b0afafd597004489f7d9b1472667b7b576188350052eef96f",
+      "cache_file": "kessan_fy2024_shi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2024,
+      "role": "shi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/001061671.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "a5928ea0f8134d93f19273c263ee5baab525caa7db1ef5d1dd7db28327249778",
+      "cache_file": "kessan_fy2024_shi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2024,
+      "role": "shi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/001061672.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "05e6da4e1d2608915c4804fe24e24a6ea49f535247499bf1e85cd093b5d322fc",
+      "cache_file": "kessan_fy2024_shi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2024,
+      "role": "machi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/001061674.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "dbd2306e0814524e3127137001853403e210920aa7446e21db57283b541226dd",
+      "cache_file": "kessan_fy2024_machi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2024,
+      "role": "machi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/001061676.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "b1ecb4af94638244d51b920f37d0d4e4f8312386309d78d0a3f3a8801a44f49a",
+      "cache_file": "kessan_fy2024_machi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2024,
+      "role": "machi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/001061677.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "f46ffed96050722a92ae37ff7fc8fd51b206a8bbbae09a48aab4c8645d8cd8a8",
+      "cache_file": "kessan_fy2024_machi_seishitsu.xlsx"
+    }
+  ],
+  "data": [
+    {
+      "area_code": "212016",
+      "市区町村名": "岐阜市",
+      "fy2015": {
+        "人口_人": 413995,
+        "民生費_千円": 56848431,
+        "民生費_円/人": 137317,
+        "教育費_千円": 19077368,
+        "教育費_円/人": 46081,
+        "土木費_千円": 15115333,
+        "土木費_円/人": 36511,
+        "普通建設事業費_千円": 16838318,
+        "普通建設事業費_円/人": 40673
+      },
+      "fy2016": {
+        "人口_人": 413111,
+        "民生費_千円": 58363827,
+        "民生費_円/人": 141279,
+        "教育費_千円": 18254072,
+        "教育費_円/人": 44187,
+        "土木費_千円": 16072965,
+        "土木費_円/人": 38907,
+        "普通建設事業費_千円": 18345552,
+        "普通建設事業費_円/人": 44408
+      },
+      "fy2017": {
+        "人口_人": 411554,
+        "民生費_千円": 59960000,
+        "民生費_円/人": 145692,
+        "教育費_千円": 17133399,
+        "教育費_円/人": 41631,
+        "土木費_千円": 18102960,
+        "土木費_円/人": 43987,
+        "普通建設事業費_千円": 19481243,
+        "普通建設事業費_円/人": 47336
+      },
+      "fy2018": {
+        "人口_人": 409900,
+        "民生費_千円": 59518561,
+        "民生費_円/人": 145203,
+        "教育費_千円": 17067154,
+        "教育費_円/人": 41637,
+        "土木費_千円": 18548969,
+        "土木費_円/人": 45252,
+        "普通建設事業費_千円": 18155605,
+        "普通建設事業費_円/人": 44293
+      },
+      "fy2019": {
+        "人口_人": 408804,
+        "民生費_千円": 61271308,
+        "民生費_円/人": 149879,
+        "教育費_千円": 18292684,
+        "教育費_円/人": 44747,
+        "土木費_千円": 16035288,
+        "土木費_円/人": 39225,
+        "普通建設事業費_千円": 22246969,
+        "普通建設事業費_円/人": 54420
+      },
+      "fy2020": {
+        "人口_人": 407387,
+        "民生費_千円": 63323344,
+        "民生費_円/人": 155438,
+        "教育費_千円": 17948335,
+        "教育費_円/人": 44057,
+        "土木費_千円": 16084193,
+        "土木費_円/人": 39481,
+        "普通建設事業費_千円": 30765488,
+        "普通建設事業費_円/人": 75519
+      },
+      "fy2021": {
+        "人口_人": 404304,
+        "民生費_千円": 73297839,
+        "民生費_円/人": 181294,
+        "教育費_千円": 18368178,
+        "教育費_円/人": 45432,
+        "土木費_千円": 16747764,
+        "土木費_円/人": 41424,
+        "普通建設事業費_千円": 18121386,
+        "普通建設事業費_円/人": 44821
+      },
+      "fy2022": {
+        "人口_人": 402400,
+        "民生費_千円": 69799097,
+        "民生費_円/人": 173457,
+        "教育費_千円": 19543812,
+        "教育費_円/人": 48568,
+        "土木費_千円": 19876014,
+        "土木費_円/人": 49394,
+        "普通建設事業費_千円": 20564714,
+        "普通建設事業費_円/人": 51105
+      },
+      "fy2023": {
+        "人口_人": 400937,
+        "民生費_千円": 72348871,
+        "民生費_円/人": 180449,
+        "教育費_千円": 18724181,
+        "教育費_円/人": 46701,
+        "土木費_千円": 15483019,
+        "土木費_円/人": 38617,
+        "普通建設事業費_千円": 14507310,
+        "普通建設事業費_円/人": 36184
+      },
+      "fy2024": {
+        "人口_人": 399127,
+        "民生費_千円": 77901051,
+        "民生費_円/人": 195179,
+        "教育費_千円": 21453517,
+        "教育費_円/人": 53751,
+        "土木費_千円": 17485281,
+        "土木費_円/人": 43809,
+        "普通建設事業費_千円": 21987246,
+        "普通建設事業費_円/人": 55088
+      }
+    },
+    {
+      "area_code": "212024",
+      "市区町村名": "大垣市",
+      "fy2015": {
+        "人口_人": 162395,
+        "民生費_千円": 20256069,
+        "民生費_円/人": 124733,
+        "教育費_千円": 6879264,
+        "教育費_円/人": 42361,
+        "土木費_千円": 8542287,
+        "土木費_円/人": 52602,
+        "普通建設事業費_千円": 8657633,
+        "普通建設事業費_円/人": 53312
+      },
+      "fy2016": {
+        "人口_人": 162038,
+        "民生費_千円": 21846136,
+        "民生費_円/人": 134821,
+        "教育費_千円": 7865586,
+        "教育費_円/人": 48542,
+        "土木費_千円": 7845508,
+        "土木費_円/人": 48418,
+        "普通建設事業費_千円": 10203322,
+        "普通建設事業費_円/人": 62969
+      },
+      "fy2017": {
+        "人口_人": 161926,
+        "民生費_千円": 20788290,
+        "民生費_円/人": 128381,
+        "教育費_千円": 6659995,
+        "教育費_円/人": 41130,
+        "土木費_千円": 6689066,
+        "土木費_円/人": 41309,
+        "普通建設事業費_千円": 6404299,
+        "普通建設事業費_円/人": 39551
+      },
+      "fy2018": {
+        "人口_人": 161539,
+        "民生費_千円": 20999101,
+        "民生費_円/人": 129994,
+        "教育費_千円": 6791915,
+        "教育費_円/人": 42045,
+        "土木費_千円": 6389022,
+        "土木費_円/人": 39551,
+        "普通建設事業費_千円": 8937665,
+        "普通建設事業費_円/人": 55328
+      },
+      "fy2019": {
+        "人口_人": 161310,
+        "民生費_千円": 20920842,
+        "民生費_円/人": 129693,
+        "教育費_千円": 8149736,
+        "教育費_円/人": 50522,
+        "土木費_千円": 7300822,
+        "土木費_円/人": 45260,
+        "普通建設事業費_千円": 14065313,
+        "普通建設事業費_円/人": 87194
+      },
+      "fy2020": {
+        "人口_人": 160794,
+        "民生費_千円": 21602240,
+        "民生費_円/人": 134347,
+        "教育費_千円": 9213328,
+        "教育費_円/人": 57299,
+        "土木費_千円": 6754037,
+        "土木費_円/人": 42004,
+        "普通建設事業費_千円": 6981185,
+        "普通建設事業費_円/人": 43417
+      },
+      "fy2021": {
+        "人口_人": 159894,
+        "民生費_千円": 25211857,
+        "民生費_円/人": 157679,
+        "教育費_千円": 7402066,
+        "教育費_円/人": 46294,
+        "土木費_千円": 6275136,
+        "土木費_円/人": 39246,
+        "普通建設事業費_千円": 6431597,
+        "普通建設事業費_円/人": 40224
+      },
+      "fy2022": {
+        "人口_人": 159280,
+        "民生費_千円": 23133376,
+        "民生費_円/人": 145237,
+        "教育費_千円": 7735309,
+        "教育費_円/人": 48564,
+        "土木費_千円": 6372311,
+        "土木費_円/人": 40007,
+        "普通建設事業費_千円": 5393003,
+        "普通建設事業費_円/人": 33859
+      },
+      "fy2023": {
+        "人口_人": 158049,
+        "民生費_千円": 25623136,
+        "民生費_円/人": 162121,
+        "教育費_千円": 7644598,
+        "教育費_円/人": 48369,
+        "土木費_千円": 6437206,
+        "土木費_円/人": 40729,
+        "普通建設事業費_千円": 6499301,
+        "普通建設事業費_円/人": 41122
+      },
+      "fy2024": {
+        "人口_人": 156912,
+        "民生費_千円": 26774120,
+        "民生費_円/人": 170631,
+        "教育費_千円": 8826896,
+        "教育費_円/人": 56254,
+        "土木費_千円": 6885413,
+        "土木費_円/人": 43881,
+        "普通建設事業費_千円": 7060787,
+        "普通建設事業費_円/人": 44998
+      }
+    },
+    {
+      "area_code": "212032",
+      "市区町村名": "高山市",
+      "fy2015": {
+        "人口_人": 90763,
+        "民生費_千円": 12608314,
+        "民生費_円/人": 138915,
+        "教育費_千円": 4106008,
+        "教育費_円/人": 45239,
+        "土木費_千円": 6683699,
+        "土木費_円/人": 73639,
+        "普通建設事業費_千円": 7196666,
+        "普通建設事業費_円/人": 79291
+      },
+      "fy2016": {
+        "人口_人": 89913,
+        "民生費_千円": 13253871,
+        "民生費_円/人": 147408,
+        "教育費_千円": 3698946,
+        "教育費_円/人": 41139,
+        "土木費_千円": 8484986,
+        "土木費_円/人": 94369,
+        "普通建設事業費_千円": 7819598,
+        "普通建設事業費_円/人": 86968
+      },
+      "fy2017": {
+        "人口_人": 89208,
+        "民生費_千円": 13015837,
+        "民生費_円/人": 145904,
+        "教育費_千円": 5108539,
+        "教育費_円/人": 57265,
+        "土木費_千円": 7444816,
+        "土木費_円/人": 83455,
+        "普通建設事業費_千円": 7599143,
+        "普通建設事業費_円/人": 85185
+      },
+      "fy2018": {
+        "人口_人": 88482,
+        "民生費_千円": 13105815,
+        "民生費_円/人": 148118,
+        "教育費_千円": 4306080,
+        "教育費_円/人": 48666,
+        "土木費_千円": 5390310,
+        "土木費_円/人": 60920,
+        "普通建設事業費_千円": 4556870,
+        "普通建設事業費_円/人": 51501
+      },
+      "fy2019": {
+        "人口_人": 87595,
+        "民生費_千円": 13507006,
+        "民生費_円/人": 154198,
+        "教育費_千円": 5567608,
+        "教育費_円/人": 63561,
+        "土木費_千円": 5786990,
+        "土木費_円/人": 66065,
+        "普通建設事業費_千円": 6243729,
+        "普通建設事業費_円/人": 71280
+      },
+      "fy2020": {
+        "人口_人": 86683,
+        "民生費_千円": 13385303,
+        "民生費_円/人": 154417,
+        "教育費_千円": 7048569,
+        "教育費_円/人": 81314,
+        "土木費_千円": 5727519,
+        "土木費_円/人": 66074,
+        "普通建設事業費_千円": 6262821,
+        "普通建設事業費_円/人": 72250
+      },
+      "fy2021": {
+        "人口_人": 85463,
+        "民生費_千円": 15500712,
+        "民生費_円/人": 181373,
+        "教育費_千円": 4948523,
+        "教育費_円/人": 57903,
+        "土木費_千円": 6323918,
+        "土木費_円/人": 73996,
+        "普通建設事業費_千円": 4019194,
+        "普通建設事業費_円/人": 47028
+      },
+      "fy2022": {
+        "人口_人": 84338,
+        "民生費_千円": 14411073,
+        "民生費_円/人": 170873,
+        "教育費_千円": 6121736,
+        "教育費_円/人": 72586,
+        "土木費_千円": 6221825,
+        "土木費_円/人": 73772,
+        "普通建設事業費_千円": 5243074,
+        "普通建設事業費_円/人": 62167
+      },
+      "fy2023": {
+        "人口_人": 83281,
+        "民生費_千円": 14947231,
+        "民生費_円/人": 179479,
+        "教育費_千円": 5853015,
+        "教育費_円/人": 70280,
+        "土木費_千円": 6570794,
+        "土木費_円/人": 78899,
+        "普通建設事業費_千円": 5542855,
+        "普通建設事業費_円/人": 66556
+      },
+      "fy2024": {
+        "人口_人": 82486,
+        "民生費_千円": 16087495,
+        "民生費_円/人": 195033,
+        "教育費_千円": 8335168,
+        "教育費_円/人": 101049,
+        "土木費_千円": 7318581,
+        "土木費_円/人": 88725,
+        "普通建設事業費_千円": 14210004,
+        "普通建設事業費_円/人": 172272
+      }
+    },
+    {
+      "area_code": "212041",
+      "市区町村名": "多治見市",
+      "fy2015": {
+        "人口_人": 113419,
+        "民生費_千円": 12704013,
+        "民生費_円/人": 112010,
+        "教育費_千円": 4154760,
+        "教育費_円/人": 36632,
+        "土木費_千円": 3523031,
+        "土木費_円/人": 31062,
+        "普通建設事業費_千円": 6229847,
+        "普通建設事業費_円/人": 54928
+      },
+      "fy2016": {
+        "人口_人": 112786,
+        "民生費_千円": 12709125,
+        "民生費_円/人": 112684,
+        "教育費_千円": 4152840,
+        "教育費_円/人": 36821,
+        "土木費_千円": 3256975,
+        "土木費_円/人": 28877,
+        "普通建設事業費_千円": 3508751,
+        "普通建設事業費_円/人": 31110
+      },
+      "fy2017": {
+        "人口_人": 111811,
+        "民生費_千円": 13015125,
+        "民生費_円/人": 116403,
+        "教育費_千円": 4430113,
+        "教育費_円/人": 39621,
+        "土木費_千円": 3187581,
+        "土木費_円/人": 28509,
+        "普通建設事業費_千円": 3405072,
+        "普通建設事業費_円/人": 30454
+      },
+      "fy2018": {
+        "人口_人": 111090,
+        "民生費_千円": 12962628,
+        "民生費_円/人": 116686,
+        "教育費_千円": 4742395,
+        "教育費_円/人": 42690,
+        "土木費_千円": 3965684,
+        "土木費_円/人": 35698,
+        "普通建設事業費_千円": 4745038,
+        "普通建設事業費_円/人": 42713
+      },
+      "fy2019": {
+        "人口_人": 110308,
+        "民生費_千円": 13815401,
+        "民生費_円/人": 125244,
+        "教育費_千円": 6593972,
+        "教育費_円/人": 59778,
+        "土木費_千円": 4112244,
+        "土木費_円/人": 37280,
+        "普通建設事業費_千円": 6803701,
+        "普通建設事業費_円/人": 61679
+      },
+      "fy2020": {
+        "人口_人": 109453,
+        "民生費_千円": 13601644,
+        "民生費_円/人": 124269,
+        "教育費_千円": 8398075,
+        "教育費_円/人": 76728,
+        "土木費_千円": 4170294,
+        "土木費_円/人": 38101,
+        "普通建設事業費_千円": 8273136,
+        "普通建設事業費_円/人": 75586
+      },
+      "fy2021": {
+        "人口_人": 108158,
+        "民生費_千円": 16070210,
+        "民生費_円/人": 148581,
+        "教育費_千円": 6709637,
+        "教育費_円/人": 62036,
+        "土木費_千円": 6410300,
+        "土木費_円/人": 59268,
+        "普通建設事業費_千円": 8610889,
+        "普通建設事業費_円/人": 79614
+      },
+      "fy2022": {
+        "人口_人": 107278,
+        "民生費_千円": 15425202,
+        "民生費_円/人": 143787,
+        "教育費_千円": 4692728,
+        "教育費_円/人": 43744,
+        "土木費_千円": 6519057,
+        "土木費_円/人": 60768,
+        "普通建設事業費_千円": 9591648,
+        "普通建設事業費_円/人": 89409
+      },
+      "fy2023": {
+        "人口_人": 106181,
+        "民生費_千円": 16299172,
+        "民生費_円/人": 153504,
+        "教育費_千円": 5726032,
+        "教育費_円/人": 53927,
+        "土木費_千円": 2882037,
+        "土木費_円/人": 27143,
+        "普通建設事業費_千円": 5672270,
+        "普通建設事業費_円/人": 53421
+      },
+      "fy2024": {
+        "人口_人": 105048,
+        "民生費_千円": 17455520,
+        "民生費_円/人": 166167,
+        "教育費_千円": 7284979,
+        "教育費_円/人": 69349,
+        "土木費_千円": 2722543,
+        "土木費_円/人": 25917,
+        "普通建設事業費_千円": 7025677,
+        "普通建設事業費_円/人": 66881
+      }
+    },
+    {
+      "area_code": "212059",
+      "市区町村名": "関市",
+      "fy2015": {
+        "人口_人": 90879,
+        "民生費_千円": 11235450,
+        "民生費_円/人": 123631,
+        "教育費_千円": 5088558,
+        "教育費_円/人": 55993,
+        "土木費_千円": 3125018,
+        "土木費_円/人": 34387,
+        "普通建設事業費_千円": 4167801,
+        "普通建設事業費_円/人": 45861
+      },
+      "fy2016": {
+        "人口_人": 90156,
+        "民生費_千円": 11465045,
+        "民生費_円/人": 127169,
+        "教育費_千円": 4538854,
+        "教育費_円/人": 50344,
+        "土木費_千円": 2821528,
+        "土木費_円/人": 31296,
+        "普通建設事業費_千円": 3990276,
+        "普通建設事業費_円/人": 44260
+      },
+      "fy2017": {
+        "人口_人": 89444,
+        "民生費_千円": 11137334,
+        "民生費_円/人": 124517,
+        "教育費_千円": 4967032,
+        "教育費_円/人": 55532,
+        "土木費_千円": 2923278,
+        "土木費_円/人": 32683,
+        "普通建設事業費_千円": 3905916,
+        "普通建設事業費_円/人": 43669
+      },
+      "fy2018": {
+        "人口_人": 89024,
+        "民生費_千円": 10876743,
+        "民生費_円/人": 122178,
+        "教育費_千円": 5519371,
+        "教育費_円/人": 61999,
+        "土木費_千円": 3392590,
+        "土木費_円/人": 38109,
+        "普通建設事業費_千円": 4124930,
+        "普通建設事業費_円/人": 46335
+      },
+      "fy2019": {
+        "人口_人": 88272,
+        "民生費_千円": 11083093,
+        "民生費_円/人": 125556,
+        "教育費_千円": 6813186,
+        "教育費_円/人": 77184,
+        "土木費_千円": 3040406,
+        "土木費_円/人": 34444,
+        "普通建設事業費_千円": 5518318,
+        "普通建設事業費_円/人": 62515
+      },
+      "fy2020": {
+        "人口_人": 87245,
+        "民生費_千円": 11481237,
+        "民生費_円/人": 131598,
+        "教育費_千円": 6534622,
+        "教育費_円/人": 74900,
+        "土木費_千円": 3826463,
+        "土木費_円/人": 43859,
+        "普通建設事業費_千円": 5005743,
+        "普通建設事業費_円/人": 57376
+      },
+      "fy2021": {
+        "人口_人": 86273,
+        "民生費_千円": 13696675,
+        "民生費_円/人": 158760,
+        "教育費_千円": 5781389,
+        "教育費_円/人": 67013,
+        "土木費_千円": 3854570,
+        "土木費_円/人": 44679,
+        "普通建設事業費_千円": 4550506,
+        "普通建設事業費_円/人": 52745
+      },
+      "fy2022": {
+        "人口_人": 85537,
+        "民生費_千円": 12980928,
+        "民生費_円/人": 151758,
+        "教育費_千円": 12007152,
+        "教育費_円/人": 140374,
+        "土木費_千円": 3917609,
+        "土木費_円/人": 45800,
+        "普通建設事業費_千円": 5942755,
+        "普通建設事業費_円/人": 69476
+      },
+      "fy2023": {
+        "人口_人": 84825,
+        "民生費_千円": 15150682,
+        "民生費_円/人": 178611,
+        "教育費_千円": 5513004,
+        "教育費_円/人": 64993,
+        "土木費_千円": 4750921,
+        "土木費_円/人": 56008,
+        "普通建設事業費_千円": 5807757,
+        "普通建設事業費_円/人": 68468
+      },
+      "fy2024": {
+        "人口_人": 83930,
+        "民生費_千円": 15546101,
+        "民生費_円/人": 185227,
+        "教育費_千円": 5991378,
+        "教育費_円/人": 71385,
+        "土木費_千円": 3797878,
+        "土木費_円/人": 45251,
+        "普通建設事業費_千円": 4544371,
+        "普通建設事業費_円/人": 54145
+      }
+    },
+    {
+      "area_code": "212067",
+      "市区町村名": "中津川市",
+      "fy2015": {
+        "人口_人": 80894,
+        "民生費_千円": 10252550,
+        "民生費_円/人": 126741,
+        "教育費_千円": 3967005,
+        "教育費_円/人": 49040,
+        "土木費_千円": 4481644,
+        "土木費_円/人": 55401,
+        "普通建設事業費_千円": 4218146,
+        "普通建設事業費_円/人": 52144
+      },
+      "fy2016": {
+        "人口_人": 80295,
+        "民生費_千円": 10562749,
+        "民生費_円/人": 131549,
+        "教育費_千円": 3672009,
+        "教育費_円/人": 45731,
+        "土木費_千円": 4952261,
+        "土木費_円/人": 61676,
+        "普通建設事業費_千円": 4805617,
+        "普通建設事業費_円/人": 59850
+      },
+      "fy2017": {
+        "人口_人": 79633,
+        "民生費_千円": 10579153,
+        "民生費_円/人": 132849,
+        "教育費_千円": 3582570,
+        "教育費_円/人": 44989,
+        "土木費_千円": 5108744,
+        "土木費_円/人": 64154,
+        "普通建設事業費_千円": 5228015,
+        "普通建設事業費_円/人": 65651
+      },
+      "fy2018": {
+        "人口_人": 78950,
+        "民生費_千円": 10465211,
+        "民生費_円/人": 132555,
+        "教育費_千円": 3574598,
+        "教育費_円/人": 45277,
+        "土木費_千円": 5321029,
+        "土木費_円/人": 67397,
+        "普通建設事業費_千円": 5066879,
+        "普通建設事業費_円/人": 64178
+      },
+      "fy2019": {
+        "人口_人": 78304,
+        "民生費_千円": 10836757,
+        "民生費_円/人": 138393,
+        "教育費_千円": 5141627,
+        "教育費_円/人": 65662,
+        "土木費_千円": 5466099,
+        "土木費_円/人": 69806,
+        "普通建設事業費_千円": 7864802,
+        "普通建設事業費_円/人": 100439
+      },
+      "fy2020": {
+        "人口_人": 77320,
+        "民生費_千円": 11030304,
+        "民生費_円/人": 142658,
+        "教育費_千円": 5138077,
+        "教育費_円/人": 66452,
+        "土木費_千円": 5744007,
+        "土木費_円/人": 74289,
+        "普通建設事業費_千円": 6400234,
+        "普通建設事業費_円/人": 82776
+      },
+      "fy2021": {
+        "人口_人": 76348,
+        "民生費_千円": 12761090,
+        "民生費_円/人": 167144,
+        "教育費_千円": 4068914,
+        "教育費_円/人": 53294,
+        "土木費_千円": 5794097,
+        "土木費_円/人": 75891,
+        "普通建設事業費_千円": 7883162,
+        "普通建設事業費_円/人": 103253
+      },
+      "fy2022": {
+        "人口_人": 75401,
+        "民生費_千円": 12220256,
+        "民生費_円/人": 162070,
+        "教育費_千円": 5268231,
+        "教育費_円/人": 69870,
+        "土木費_千円": 5670183,
+        "土木費_円/人": 75200,
+        "普通建設事業費_千円": 7772285,
+        "普通建設事業費_円/人": 103079
+      },
+      "fy2023": {
+        "人口_人": 74532,
+        "民生費_千円": 12034171,
+        "民生費_円/人": 161463,
+        "教育費_千円": 5457175,
+        "教育費_円/人": 73219,
+        "土木費_千円": 6155953,
+        "土木費_円/人": 82595,
+        "普通建設事業費_千円": 10452550,
+        "普通建設事業費_円/人": 140242
+      },
+      "fy2024": {
+        "人口_人": 73535,
+        "民生費_千円": 13555332,
+        "民生費_円/人": 184339,
+        "教育費_千円": 5259701,
+        "教育費_円/人": 71526,
+        "土木費_千円": 6174931,
+        "土木費_円/人": 83973,
+        "普通建設事業費_千円": 8530185,
+        "普通建設事業費_円/人": 116002
+      }
+    },
+    {
+      "area_code": "212075",
+      "市区町村名": "美濃市",
+      "fy2015": {
+        "人口_人": 21653,
+        "民生費_千円": 2593733,
+        "民生費_円/人": 119786,
+        "教育費_千円": 916729,
+        "教育費_円/人": 42337,
+        "土木費_千円": 1053279,
+        "土木費_円/人": 48644,
+        "普通建設事業費_千円": 811838,
+        "普通建設事業費_円/人": 37493
+      },
+      "fy2016": {
+        "人口_人": 21350,
+        "民生費_千円": 2682040,
+        "民生費_円/人": 125622,
+        "教育費_千円": 950018,
+        "教育費_円/人": 44497,
+        "土木費_千円": 1413779,
+        "土木費_円/人": 66219,
+        "普通建設事業費_千円": 818994,
+        "普通建設事業費_円/人": 38360
+      },
+      "fy2017": {
+        "人口_人": 21052,
+        "民生費_千円": 2655759,
+        "民生費_円/人": 126152,
+        "教育費_千円": 1263059,
+        "教育費_円/人": 59997,
+        "土木費_千円": 1573454,
+        "土木費_円/人": 74741,
+        "普通建設事業費_千円": 1196359,
+        "普通建設事業費_円/人": 56829
+      },
+      "fy2018": {
+        "人口_人": 20752,
+        "民生費_千円": 2608891,
+        "民生費_円/人": 125718,
+        "教育費_千円": 1303081,
+        "教育費_円/人": 62793,
+        "土木費_千円": 1642821,
+        "土木費_円/人": 79164,
+        "普通建設事業費_千円": 1061974,
+        "普通建設事業費_円/人": 51175
+      },
+      "fy2019": {
+        "人口_人": 20461,
+        "民生費_千円": 2667963,
+        "民生費_円/人": 130393,
+        "教育費_千円": 1065234,
+        "教育費_円/人": 52062,
+        "土木費_千円": 2207748,
+        "土木費_円/人": 107900,
+        "普通建設事業費_千円": 1693751,
+        "普通建設事業費_円/人": 82779
+      },
+      "fy2020": {
+        "人口_人": 20162,
+        "民生費_千円": 2734133,
+        "民生費_円/人": 135608,
+        "教育費_千円": 1325957,
+        "教育費_円/人": 65765,
+        "土木費_千円": 2816838,
+        "土木費_円/人": 139710,
+        "普通建設事業費_千円": 2358356,
+        "普通建設事業費_円/人": 116970
+      },
+      "fy2021": {
+        "人口_人": 19785,
+        "民生費_千円": 3194646,
+        "民生費_円/人": 161468,
+        "教育費_千円": 1431504,
+        "教育費_円/人": 72353,
+        "土木費_千円": 1546924,
+        "土木費_円/人": 78187,
+        "普通建設事業費_千円": 1316125,
+        "普通建設事業費_円/人": 66521
+      },
+      "fy2022": {
+        "人口_人": 19494,
+        "民生費_千円": 3146978,
+        "民生費_円/人": 161433,
+        "教育費_千円": 1821176,
+        "教育費_円/人": 93422,
+        "土木費_千円": 1616110,
+        "土木費_円/人": 82903,
+        "普通建設事業費_千円": 1688903,
+        "普通建設事業費_円/人": 86637
+      },
+      "fy2023": {
+        "人口_人": 19279,
+        "民生費_千円": 3394016,
+        "民生費_円/人": 176047,
+        "教育費_千円": 1230547,
+        "教育費_円/人": 63828,
+        "土木費_千円": 1380879,
+        "土木費_円/人": 71626,
+        "普通建設事業費_千円": 880224,
+        "普通建設事業費_円/人": 45657
+      },
+      "fy2024": {
+        "人口_人": 18991,
+        "民生費_千円": 3509069,
+        "民生費_円/人": 184775,
+        "教育費_千円": 1182334,
+        "教育費_円/人": 62258,
+        "土木費_千円": 1670207,
+        "土木費_円/人": 87947,
+        "普通建設事業費_千円": 916360,
+        "普通建設事業費_円/人": 48252
+      }
+    },
+    {
+      "area_code": "212083",
+      "市区町村名": "瑞浪市",
+      "fy2015": {
+        "人口_人": 38968,
+        "民生費_千円": 4701991,
+        "民生費_円/人": 120663,
+        "教育費_千円": 2019455,
+        "教育費_円/人": 51823,
+        "土木費_千円": 1333726,
+        "土木費_円/人": 34226,
+        "普通建設事業費_千円": 2675731,
+        "普通建設事業費_円/人": 68665
+      },
+      "fy2016": {
+        "人口_人": 38427,
+        "民生費_千円": 4691048,
+        "民生費_円/人": 122077,
+        "教育費_千円": 1930631,
+        "教育費_円/人": 50242,
+        "土木費_千円": 1508697,
+        "土木費_円/人": 39261,
+        "普通建設事業費_千円": 3085981,
+        "普通建設事業費_円/人": 80308
+      },
+      "fy2017": {
+        "人口_人": 37979,
+        "民生費_千円": 4544721,
+        "民生費_円/人": 119664,
+        "教育費_千円": 2321011,
+        "教育費_円/人": 61113,
+        "土木費_千円": 1357343,
+        "土木費_円/人": 35739,
+        "普通建設事業費_千円": 2627371,
+        "普通建設事業費_円/人": 69180
+      },
+      "fy2018": {
+        "人口_人": 37705,
+        "民生費_千円": 4700272,
+        "民生費_円/人": 124659,
+        "教育費_千円": 4688364,
+        "教育費_円/人": 124343,
+        "土木費_千円": 1575778,
+        "土木費_円/人": 41792,
+        "普通建設事業費_千円": 4742014,
+        "普通建設事業費_円/人": 125766
+      },
+      "fy2019": {
+        "人口_人": 37240,
+        "民生費_千円": 4574313,
+        "民生費_円/人": 122833,
+        "教育費_千円": 1928374,
+        "教育費_円/人": 51782,
+        "土木費_千円": 1544424,
+        "土木費_円/人": 41472,
+        "普通建設事業費_千円": 2262948,
+        "普通建設事業費_円/人": 60767
+      },
+      "fy2020": {
+        "人口_人": 36985,
+        "民生費_千円": 4841256,
+        "民生費_円/人": 130898,
+        "教育費_千円": 2098569,
+        "教育費_円/人": 56741,
+        "土木費_千円": 1502618,
+        "土木費_円/人": 40628,
+        "普通建設事業費_千円": 2192649,
+        "普通建設事業費_円/人": 59285
+      },
+      "fy2021": {
+        "人口_人": 36482,
+        "民生費_千円": 5635840,
+        "民生費_円/人": 154483,
+        "教育費_千円": 1863473,
+        "教育費_円/人": 51079,
+        "土木費_千円": 1867330,
+        "土木費_円/人": 51185,
+        "普通建設事業費_千円": 2398531,
+        "普通建設事業費_円/人": 65746
+      },
+      "fy2022": {
+        "人口_人": 36105,
+        "民生費_千円": 5360822,
+        "民生費_円/人": 148479,
+        "教育費_千円": 2209501,
+        "教育費_円/人": 61197,
+        "土木費_千円": 1527877,
+        "土木費_円/人": 42318,
+        "普通建設事業費_千円": 2793760,
+        "普通建設事業費_円/人": 77379
+      },
+      "fy2023": {
+        "人口_人": 35731,
+        "民生費_千円": 5842987,
+        "民生費_円/人": 163527,
+        "教育費_千円": 1878174,
+        "教育費_円/人": 52564,
+        "土木費_千円": 1681817,
+        "土木費_円/人": 47069,
+        "普通建設事業費_千円": 2127121,
+        "普通建設事業費_円/人": 59532
+      },
+      "fy2024": {
+        "人口_人": 35279,
+        "民生費_千円": 5702853,
+        "民生費_円/人": 161650,
+        "教育費_千円": 2674112,
+        "教育費_円/人": 75799,
+        "土木費_千円": 1918658,
+        "土木費_円/人": 54385,
+        "普通建設事業費_千円": 2659040,
+        "普通建設事業費_円/人": 75372
+      }
+    },
+    {
+      "area_code": "212091",
+      "市区町村名": "羽島市",
+      "fy2015": {
+        "人口_人": 68620,
+        "民生費_千円": 7699436,
+        "民生費_円/人": 112204,
+        "教育費_千円": 2094126,
+        "教育費_円/人": 30518,
+        "土木費_千円": 2473599,
+        "土木費_円/人": 36048,
+        "普通建設事業費_千円": 2213304,
+        "普通建設事業費_円/人": 32255
+      },
+      "fy2016": {
+        "人口_人": 68408,
+        "民生費_千円": 7963125,
+        "民生費_円/人": 116406,
+        "教育費_千円": 3210231,
+        "教育費_円/人": 46928,
+        "土木費_千円": 2270317,
+        "土木費_円/人": 33188,
+        "普通建設事業費_千円": 2915573,
+        "普通建設事業費_円/人": 42620
+      },
+      "fy2017": {
+        "人口_人": 68219,
+        "民生費_千円": 7916805,
+        "民生費_円/人": 116050,
+        "教育費_千円": 1846464,
+        "教育費_円/人": 27067,
+        "土木費_千円": 2270708,
+        "土木費_円/人": 33286,
+        "普通建設事業費_千円": 1512863,
+        "普通建設事業費_円/人": 22177
+      },
+      "fy2018": {
+        "人口_人": 67957,
+        "民生費_千円": 7859949,
+        "民生費_円/人": 115661,
+        "教育費_千円": 2583704,
+        "教育費_円/人": 38020,
+        "土木費_千円": 2482422,
+        "土木費_円/人": 36529,
+        "普通建設事業費_千円": 1894162,
+        "普通建設事業費_円/人": 27873
+      },
+      "fy2019": {
+        "人口_人": 67807,
+        "民生費_千円": 8002051,
+        "民生費_円/人": 118012,
+        "教育費_千円": 2399889,
+        "教育費_円/人": 35393,
+        "土木費_千円": 2215462,
+        "土木費_円/人": 32673,
+        "普通建設事業費_千円": 3454584,
+        "普通建設事業費_円/人": 50947
+      },
+      "fy2020": {
+        "人口_人": 67595,
+        "民生費_千円": 8301135,
+        "民生費_円/人": 122807,
+        "教育費_千円": 3327744,
+        "教育費_円/人": 49231,
+        "土木費_千円": 2111129,
+        "土木費_円/人": 31232,
+        "普通建設事業費_千円": 2853423,
+        "普通建設事業費_円/人": 42214
+      },
+      "fy2021": {
+        "人口_人": 67106,
+        "民生費_千円": 9867836,
+        "民生費_円/人": 147048,
+        "教育費_千円": 2724089,
+        "教育費_円/人": 40594,
+        "土木費_千円": 1989268,
+        "土木費_円/人": 29644,
+        "普通建設事業費_千円": 3721188,
+        "普通建設事業費_円/人": 55452
+      },
+      "fy2022": {
+        "人口_人": 67076,
+        "民生費_千円": 9366721,
+        "民生費_円/人": 139643,
+        "教育費_千円": 2475545,
+        "教育費_円/人": 36907,
+        "土木費_千円": 2082160,
+        "土木費_円/人": 31042,
+        "普通建設事業費_千円": 1417473,
+        "普通建設事業費_円/人": 21132
+      },
+      "fy2023": {
+        "人口_人": 66775,
+        "民生費_千円": 9901542,
+        "民生費_円/人": 148282,
+        "教育費_千円": 2533815,
+        "教育費_円/人": 37946,
+        "土木費_千円": 1936797,
+        "土木費_円/人": 29005,
+        "普通建設事業費_千円": 1473701,
+        "普通建設事業費_円/人": 22070
+      },
+      "fy2024": {
+        "人口_人": 66517,
+        "民生費_千円": 10755435,
+        "民生費_円/人": 161695,
+        "教育費_千円": 2757386,
+        "教育費_円/人": 41454,
+        "土木費_千円": 1913020,
+        "土木費_円/人": 28760,
+        "普通建設事業費_千円": 1267103,
+        "普通建設事業費_円/人": 19049
+      }
+    },
+    {
+      "area_code": "212105",
+      "市区町村名": "恵那市",
+      "fy2015": {
+        "人口_人": 52339,
+        "民生費_千円": 6973913,
+        "民生費_円/人": 133245,
+        "教育費_千円": 2605870,
+        "教育費_円/人": 49788,
+        "土木費_千円": 1877706,
+        "土木費_円/人": 35876,
+        "普通建設事業費_千円": 2592256,
+        "普通建設事業費_円/人": 49528
+      },
+      "fy2016": {
+        "人口_人": 51667,
+        "民生費_千円": 7122950,
+        "民生費_円/人": 137863,
+        "教育費_千円": 2521747,
+        "教育費_円/人": 48808,
+        "土木費_千円": 1653100,
+        "土木費_円/人": 31995,
+        "普通建設事業費_千円": 2550641,
+        "普通建設事業費_円/人": 49367
+      },
+      "fy2017": {
+        "人口_人": 50934,
+        "民生費_千円": 7412152,
+        "民生費_円/人": 145525,
+        "教育費_千円": 3345817,
+        "教育費_円/人": 65689,
+        "土木費_千円": 1608360,
+        "土木費_円/人": 31577,
+        "普通建設事業費_千円": 3486152,
+        "普通建設事業費_円/人": 68444
+      },
+      "fy2018": {
+        "人口_人": 50463,
+        "民生費_千円": 7461859,
+        "民生費_円/人": 147868,
+        "教育費_千円": 3515487,
+        "教育費_円/人": 69665,
+        "土木費_千円": 2028346,
+        "土木費_円/人": 40195,
+        "普通建設事業費_千円": 4062282,
+        "普通建設事業費_円/人": 80500
+      },
+      "fy2019": {
+        "人口_人": 49821,
+        "民生費_千円": 7149551,
+        "民生費_円/人": 143505,
+        "教育費_千円": 3786614,
+        "教育費_円/人": 76004,
+        "土木費_千円": 2032549,
+        "土木費_円/人": 40797,
+        "普通建設事業費_千円": 3813648,
+        "普通建設事業費_円/人": 76547
+      },
+      "fy2020": {
+        "人口_人": 49096,
+        "民生費_千円": 7444643,
+        "民生費_円/人": 151634,
+        "教育費_千円": 3270631,
+        "教育費_円/人": 66617,
+        "土木費_千円": 2639111,
+        "土木費_円/人": 53754,
+        "普通建設事業費_千円": 3134563,
+        "普通建設事業費_円/人": 63846
+      },
+      "fy2021": {
+        "人口_人": 48371,
+        "民生費_千円": 8444116,
+        "民生費_円/人": 174570,
+        "教育費_千円": 3064911,
+        "教育費_円/人": 63363,
+        "土木費_千円": 2439352,
+        "土木費_円/人": 50430,
+        "普通建設事業費_千円": 3180522,
+        "普通建設事業費_円/人": 65753
+      },
+      "fy2022": {
+        "人口_人": 47564,
+        "民生費_千円": 8151188,
+        "民生費_円/人": 171373,
+        "教育費_千円": 3124982,
+        "教育費_円/人": 65701,
+        "土木費_千円": 3294642,
+        "土木費_円/人": 69268,
+        "普通建設事業費_千円": 3713314,
+        "普通建設事業費_円/人": 78070
+      },
+      "fy2023": {
+        "人口_人": 46868,
+        "民生費_千円": 8344108,
+        "民生費_円/人": 178034,
+        "教育費_千円": 3322473,
+        "教育費_円/人": 70890,
+        "土木費_千円": 3388422,
+        "土木費_円/人": 72297,
+        "普通建設事業費_千円": 3569039,
+        "普通建設事業費_円/人": 76151
+      },
+      "fy2024": {
+        "人口_人": 46054,
+        "民生費_千円": 8869404,
+        "民生費_円/人": 192587,
+        "教育費_千円": 5698404,
+        "教育費_円/人": 123733,
+        "土木費_千円": 3269902,
+        "土木費_円/人": 71001,
+        "普通建設事業費_千円": 5867215,
+        "普通建設事業費_円/人": 127399
+      }
+    },
+    {
+      "area_code": "212113",
+      "市区町村名": "美濃加茂市",
+      "fy2015": {
+        "人口_人": 55808,
+        "民生費_千円": 6587670,
+        "民生費_円/人": 118042,
+        "教育費_千円": 2648416,
+        "教育費_円/人": 47456,
+        "土木費_千円": 2150406,
+        "土木費_円/人": 38532,
+        "普通建設事業費_千円": 2100954,
+        "普通建設事業費_円/人": 37646
+      },
+      "fy2016": {
+        "人口_人": 56286,
+        "民生費_千円": 6692942,
+        "民生費_円/人": 118910,
+        "教育費_千円": 2411060,
+        "教育費_円/人": 42836,
+        "土木費_千円": 2095881,
+        "土木費_円/人": 37236,
+        "普通建設事業費_千円": 1606672,
+        "普通建設事業費_円/人": 28545
+      },
+      "fy2017": {
+        "人口_人": 56703,
+        "民生費_千円": 6821513,
+        "民生費_円/人": 120303,
+        "教育費_千円": 2740629,
+        "教育費_円/人": 48333,
+        "土木費_千円": 2928936,
+        "土木費_円/人": 51654,
+        "普通建設事業費_千円": 2735321,
+        "普通建設事業費_円/人": 48239
+      },
+      "fy2018": {
+        "人口_人": 56987,
+        "民生費_千円": 7265766,
+        "民生費_円/人": 127499,
+        "教育費_千円": 2653261,
+        "教育費_円/人": 46559,
+        "土木費_千円": 2205187,
+        "土木費_円/人": 38696,
+        "普通建設事業費_千円": 2365653,
+        "普通建設事業費_円/人": 41512
+      },
+      "fy2019": {
+        "人口_人": 57330,
+        "民生費_千円": 7287053,
+        "民生費_円/人": 127107,
+        "教育費_千円": 2385338,
+        "教育費_円/人": 41607,
+        "土木費_千円": 2166403,
+        "土木費_円/人": 37788,
+        "普通建設事業費_千円": 1588429,
+        "普通建設事業費_円/人": 27707
+      },
+      "fy2020": {
+        "人口_人": 57304,
+        "民生費_千円": 8117761,
+        "民生費_円/人": 141661,
+        "教育費_千円": 3283715,
+        "教育費_円/人": 57303,
+        "土木費_千円": 2331968,
+        "土木費_円/人": 40695,
+        "普通建設事業費_千円": 3830027,
+        "普通建設事業費_円/人": 66837
+      },
+      "fy2021": {
+        "人口_人": 57171,
+        "民生費_千円": 10750968,
+        "民生費_円/人": 188049,
+        "教育費_千円": 2724460,
+        "教育費_円/人": 47655,
+        "土木費_千円": 2434503,
+        "土木費_円/人": 42583,
+        "普通建設事業費_千円": 4235168,
+        "普通建設事業費_円/人": 74079
+      },
+      "fy2022": {
+        "人口_人": 57220,
+        "民生費_千円": 8483548,
+        "民生費_円/人": 148262,
+        "教育費_千円": 2794846,
+        "教育費_円/人": 48844,
+        "土木費_千円": 2285999,
+        "土木費_円/人": 39951,
+        "普通建設事業費_千円": 1798390,
+        "普通建設事業費_円/人": 31429
+      },
+      "fy2023": {
+        "人口_人": 57540,
+        "民生費_千円": 8790010,
+        "民生費_円/人": 152763,
+        "教育費_千円": 2881865,
+        "教育費_円/人": 50085,
+        "土木費_千円": 2534480,
+        "土木費_円/人": 44047,
+        "普通建設事業費_千円": 1892402,
+        "普通建設事業費_円/人": 32888
+      },
+      "fy2024": {
+        "人口_人": 57595,
+        "民生費_千円": 10111691,
+        "民生費_円/人": 175565,
+        "教育費_千円": 3738080,
+        "教育費_円/人": 64903,
+        "土木費_千円": 2531552,
+        "土木費_円/人": 43954,
+        "普通建設事業費_千円": 2436339,
+        "普通建設事業費_円/人": 42301
+      }
+    },
+    {
+      "area_code": "212121",
+      "市区町村名": "土岐市",
+      "fy2015": {
+        "人口_人": 59867,
+        "民生費_千円": 7042987,
+        "民生費_円/人": 117644,
+        "教育費_千円": 2132023,
+        "教育費_円/人": 35613,
+        "土木費_千円": 2161615,
+        "土木費_円/人": 36107,
+        "普通建設事業費_千円": 2072296,
+        "普通建設事業費_円/人": 34615
+      },
+      "fy2016": {
+        "人口_人": 59479,
+        "民生費_千円": 7446566,
+        "民生費_円/人": 125197,
+        "教育費_千円": 1824546,
+        "教育費_円/人": 30675,
+        "土木費_千円": 2868156,
+        "土木費_円/人": 48221,
+        "普通建設事業費_千円": 2007935,
+        "普通建設事業費_円/人": 33759
+      },
+      "fy2017": {
+        "人口_人": 59026,
+        "民生費_千円": 7468827,
+        "民生費_円/人": 126535,
+        "教育費_千円": 2149768,
+        "教育費_円/人": 36421,
+        "土木費_千円": 3584357,
+        "土木費_円/人": 60725,
+        "普通建設事業費_千円": 4411800,
+        "普通建設事業費_円/人": 74743
+      },
+      "fy2018": {
+        "人口_人": 58567,
+        "民生費_千円": 8160925,
+        "民生費_円/人": 139343,
+        "教育費_千円": 2083235,
+        "教育費_円/人": 35570,
+        "土木費_千円": 3734962,
+        "土木費_円/人": 63772,
+        "普通建設事業費_千円": 5899496,
+        "普通建設事業費_円/人": 100731
+      },
+      "fy2019": {
+        "人口_人": 57979,
+        "民生費_千円": 7506168,
+        "民生費_円/人": 129464,
+        "教育費_千円": 2635782,
+        "教育費_円/人": 45461,
+        "土木費_千円": 3720570,
+        "土木費_円/人": 64171,
+        "普通建設事業費_千円": 5032528,
+        "普通建設事業費_円/人": 86799
+      },
+      "fy2020": {
+        "人口_人": 57294,
+        "民生費_千円": 7895398,
+        "民生費_円/人": 137805,
+        "教育費_千円": 2867577,
+        "教育費_円/人": 50050,
+        "土木費_千円": 2565607,
+        "土木費_円/人": 44780,
+        "普通建設事業費_千円": 2882205,
+        "普通建設事業費_円/人": 50306
+      },
+      "fy2021": {
+        "人口_人": 56547,
+        "民生費_千円": 9149679,
+        "民生費_円/人": 161807,
+        "教育費_千円": 2829520,
+        "教育費_円/人": 50038,
+        "土木費_千円": 2216132,
+        "土木費_円/人": 39191,
+        "普通建設事業費_千円": 2603541,
+        "普通建設事業費_円/人": 46042
+      },
+      "fy2022": {
+        "人口_人": 55842,
+        "民生費_千円": 8655293,
+        "民生費_円/人": 154996,
+        "教育費_千円": 2960903,
+        "教育費_円/人": 53023,
+        "土木費_千円": 2846831,
+        "土木費_円/人": 50980,
+        "普通建設事業費_千円": 3046628,
+        "普通建設事業費_円/人": 54558
+      },
+      "fy2023": {
+        "人口_人": 54990,
+        "民生費_千円": 8662464,
+        "民生費_円/人": 157528,
+        "教育費_千円": 2740616,
+        "教育費_円/人": 49838,
+        "土木費_千円": 3408456,
+        "土木費_円/人": 61983,
+        "普通建設事業費_千円": 3404034,
+        "普通建設事業費_円/人": 61903
+      },
+      "fy2024": {
+        "人口_人": 54243,
+        "民生費_千円": 9329469,
+        "民生費_円/人": 171994,
+        "教育費_千円": 2638924,
+        "教育費_円/人": 48650,
+        "土木費_千円": 3122058,
+        "土木費_円/人": 57557,
+        "普通建設事業費_千円": 3620959,
+        "普通建設事業費_円/人": 66754
+      }
+    },
+    {
+      "area_code": "212130",
+      "市区町村名": "各務原市",
+      "fy2015": {
+        "人口_人": 148409,
+        "民生費_千円": 16162304,
+        "民生費_円/人": 108904,
+        "教育費_千円": 5592058,
+        "教育費_円/人": 37680,
+        "土木費_千円": 3894330,
+        "土木費_円/人": 26241,
+        "普通建設事業費_千円": 5891501,
+        "普通建設事業費_円/人": 39698
+      },
+      "fy2016": {
+        "人口_人": 148593,
+        "民生費_千円": 16984663,
+        "民生費_円/人": 114303,
+        "教育費_千円": 7622410,
+        "教育費_円/人": 51297,
+        "土木費_千円": 4312409,
+        "土木費_円/人": 29022,
+        "普通建設事業費_千円": 8964796,
+        "普通建設事業費_円/人": 60331
+      },
+      "fy2017": {
+        "人口_人": 148081,
+        "民生費_千円": 16807854,
+        "民生費_円/人": 113504,
+        "教育費_千円": 7597764,
+        "教育費_円/人": 51308,
+        "土木費_千円": 4794774,
+        "土木費_円/人": 32379,
+        "普通建設事業費_千円": 7654175,
+        "普通建設事業費_円/人": 51689
+      },
+      "fy2018": {
+        "人口_人": 148225,
+        "民生費_千円": 17034707,
+        "民生費_円/人": 114925,
+        "教育費_千円": 5739388,
+        "教育費_円/人": 38721,
+        "土木費_千円": 4580432,
+        "土木費_円/人": 30902,
+        "普通建設事業費_千円": 5539682,
+        "普通建設事業費_円/人": 37373
+      },
+      "fy2019": {
+        "人口_人": 147651,
+        "民生費_千円": 18191638,
+        "民生費_円/人": 123207,
+        "教育費_千円": 5975754,
+        "教育費_円/人": 40472,
+        "土木費_千円": 5121098,
+        "土木費_円/人": 34684,
+        "普通建設事業費_千円": 8186395,
+        "普通建設事業費_円/人": 55444
+      },
+      "fy2020": {
+        "人口_人": 146961,
+        "民生費_千円": 18412449,
+        "民生費_円/人": 125288,
+        "教育費_千円": 10097244,
+        "教育費_円/人": 68707,
+        "土木費_千円": 4528868,
+        "土木費_円/人": 30817,
+        "普通建設事業費_千円": 8692079,
+        "普通建設事業費_円/人": 59145
+      },
+      "fy2021": {
+        "人口_人": 146136,
+        "民生費_千円": 22626073,
+        "民生費_円/人": 154829,
+        "教育費_千円": 7918908,
+        "教育費_円/人": 54189,
+        "土木費_千円": 4540327,
+        "土木費_円/人": 31069,
+        "普通建設事業費_千円": 10864411,
+        "普通建設事業費_円/人": 74345
+      },
+      "fy2022": {
+        "人口_人": 145570,
+        "民生費_千円": 20584113,
+        "民生費_円/人": 141404,
+        "教育費_千円": 9514144,
+        "教育費_円/人": 65358,
+        "土木費_千円": 4895274,
+        "土木費_円/人": 33628,
+        "普通建設事業費_千円": 6848461,
+        "普通建設事業費_円/人": 47046
+      },
+      "fy2023": {
+        "人口_人": 144940,
+        "民生費_千円": 22574248,
+        "民生費_円/人": 155749,
+        "教育費_千円": 11605691,
+        "教育費_円/人": 80072,
+        "土木費_千円": 5260090,
+        "土木費_円/人": 36291,
+        "普通建設事業費_千円": 13196297,
+        "普通建設事業費_円/人": 91047
+      },
+      "fy2024": {
+        "人口_人": 144195,
+        "民生費_千円": 23129085,
+        "民生費_円/人": 160401,
+        "教育費_千円": 15204759,
+        "教育費_円/人": 105446,
+        "土木費_千円": 5288592,
+        "土木費_円/人": 36677,
+        "普通建設事業費_千円": 14904647,
+        "普通建設事業費_円/人": 103365
+      }
+    },
+    {
+      "area_code": "212148",
+      "市区町村名": "可児市",
+      "fy2015": {
+        "人口_人": 101148,
+        "民生費_千円": 9750077,
+        "民生費_円/人": 96394,
+        "教育費_千円": 4175240,
+        "教育費_円/人": 41279,
+        "土木費_千円": 4290601,
+        "土木費_円/人": 42419,
+        "普通建設事業費_千円": 3145479,
+        "普通建設事業費_円/人": 31098
+      },
+      "fy2016": {
+        "人口_人": 101516,
+        "民生費_千円": 10531416,
+        "民生費_円/人": 103741,
+        "教育費_千円": 3859175,
+        "教育費_円/人": 38015,
+        "土木費_千円": 6087220,
+        "土木費_円/人": 59963,
+        "普通建設事業費_千円": 4786673,
+        "普通建設事業費_円/人": 47152
+      },
+      "fy2017": {
+        "人口_人": 101566,
+        "民生費_千円": 11021598,
+        "民生費_円/人": 108517,
+        "教育費_千円": 4082269,
+        "教育費_円/人": 40193,
+        "土木費_千円": 7214568,
+        "土木費_円/人": 71033,
+        "普通建設事業費_千円": 6132523,
+        "普通建設事業費_円/人": 60380
+      },
+      "fy2018": {
+        "人口_人": 102175,
+        "民生費_千円": 10977377,
+        "民生費_円/人": 107437,
+        "教育費_千円": 3361255,
+        "教育費_円/人": 32897,
+        "土木費_千円": 4418444,
+        "土木費_円/人": 43244,
+        "普通建設事業費_千円": 3001106,
+        "普通建設事業費_円/人": 29372
+      },
+      "fy2019": {
+        "人口_人": 102327,
+        "民生費_千円": 11051619,
+        "民生費_円/人": 108003,
+        "教育費_千円": 4313793,
+        "教育費_円/人": 42157,
+        "土木費_千円": 4477917,
+        "土木費_円/人": 43761,
+        "普通建設事業費_千円": 5515076,
+        "普通建設事業費_円/人": 53897
+      },
+      "fy2020": {
+        "人口_人": 101557,
+        "民生費_千円": 11377364,
+        "民生費_円/人": 112029,
+        "教育費_千円": 6028204,
+        "教育費_円/人": 59358,
+        "土木費_千円": 3346633,
+        "土木費_円/人": 32953,
+        "普通建設事業費_千円": 3462938,
+        "普通建設事業費_円/人": 34098
+      },
+      "fy2021": {
+        "人口_人": 100765,
+        "民生費_千円": 13385801,
+        "民生費_円/人": 132842,
+        "教育費_千円": 4756875,
+        "教育費_円/人": 47208,
+        "土木費_千円": 3206813,
+        "土木費_円/人": 31825,
+        "普通建設事業費_千円": 2517264,
+        "普通建設事業費_円/人": 24982
+      },
+      "fy2022": {
+        "人口_人": 100612,
+        "民生費_千円": 12582470,
+        "民生費_円/人": 125059,
+        "教育費_千円": 4156659,
+        "教育費_円/人": 41314,
+        "土木費_千円": 3061484,
+        "土木費_円/人": 30429,
+        "普通建設事業費_千円": 1646466,
+        "普通建設事業費_円/人": 16365
+      },
+      "fy2023": {
+        "人口_人": 100207,
+        "民生費_千円": 12794622,
+        "民生費_円/人": 127682,
+        "教育費_千円": 5179734,
+        "教育費_円/人": 51690,
+        "土木費_千円": 3236543,
+        "土木費_円/人": 32299,
+        "普通建設事業費_千円": 2739891,
+        "普通建設事業費_円/人": 27342
+      },
+      "fy2024": {
+        "人口_人": 99779,
+        "民生費_千円": 14826994,
+        "民生費_円/人": 148598,
+        "教育費_千円": 5599975,
+        "教育費_円/人": 56124,
+        "土木費_千円": 3771790,
+        "土木費_円/人": 37801,
+        "普通建設事業費_千円": 4690905,
+        "普通建設事業費_円/人": 47013
+      }
+    },
+    {
+      "area_code": "212156",
+      "市区町村名": "山県市",
+      "fy2015": {
+        "人口_人": 28300,
+        "民生費_千円": 3515345,
+        "民生費_円/人": 124217,
+        "教育費_千円": 997880,
+        "教育費_円/人": 35261,
+        "土木費_千円": 1224793,
+        "土木費_円/人": 43279,
+        "普通建設事業費_千円": 803423,
+        "普通建設事業費_円/人": 28390
+      },
+      "fy2016": {
+        "人口_人": 27953,
+        "民生費_千円": 3655163,
+        "民生費_円/人": 130761,
+        "教育費_千円": 994318,
+        "教育費_円/人": 35571,
+        "土木費_千円": 1085301,
+        "土木費_円/人": 38826,
+        "普通建設事業費_千円": 758130,
+        "普通建設事業費_円/人": 27122
+      },
+      "fy2017": {
+        "人口_人": 27664,
+        "民生費_千円": 3694174,
+        "民生費_円/人": 133537,
+        "教育費_千円": 1250052,
+        "教育費_円/人": 45187,
+        "土木費_千円": 1095159,
+        "土木費_円/人": 39588,
+        "普通建設事業費_千円": 1418565,
+        "普通建設事業費_円/人": 51278
+      },
+      "fy2018": {
+        "人口_人": 27356,
+        "民生費_千円": 3698703,
+        "民生費_円/人": 135206,
+        "教育費_千円": 970184,
+        "教育費_円/人": 35465,
+        "土木費_千円": 1103675,
+        "土木費_円/人": 40345,
+        "普通建設事業費_千円": 890873,
+        "普通建設事業費_円/人": 32566
+      },
+      "fy2019": {
+        "人口_人": 26971,
+        "民生費_千円": 3820855,
+        "民生費_円/人": 141665,
+        "教育費_千円": 1042318,
+        "教育費_円/人": 38646,
+        "土木費_千円": 1349961,
+        "土木費_円/人": 50052,
+        "普通建設事業費_千円": 1352874,
+        "普通建設事業費_円/人": 50160
+      },
+      "fy2020": {
+        "人口_人": 26484,
+        "民生費_千円": 3833715,
+        "民生費_円/人": 144756,
+        "教育費_千円": 1578898,
+        "教育費_円/人": 59617,
+        "土木費_千円": 2166208,
+        "土木費_円/人": 81793,
+        "普通建設事業費_千円": 3035464,
+        "普通建設事業費_円/人": 114615
+      },
+      "fy2021": {
+        "人口_人": 25983,
+        "民生費_千円": 4423672,
+        "民生費_円/人": 170253,
+        "教育費_千円": 1075512,
+        "教育費_円/人": 41393,
+        "土木費_千円": 1487464,
+        "土木費_円/人": 57248,
+        "普通建設事業費_千円": 1870133,
+        "普通建設事業費_円/人": 71975
+      },
+      "fy2022": {
+        "人口_人": 25545,
+        "民生費_千円": 4247998,
+        "民生費_円/人": 166295,
+        "教育費_千円": 1178382,
+        "教育費_円/人": 46130,
+        "土木費_千円": 1291324,
+        "土木費_円/人": 50551,
+        "普通建設事業費_千円": 1461431,
+        "普通建設事業費_円/人": 57210
+      },
+      "fy2023": {
+        "人口_人": 25233,
+        "民生費_千円": 4371727,
+        "民生費_円/人": 173254,
+        "教育費_千円": 1219345,
+        "教育費_円/人": 48323,
+        "土木費_千円": 1285115,
+        "土木費_円/人": 50930,
+        "普通建設事業費_千円": 1525993,
+        "普通建設事業費_円/人": 60476
+      },
+      "fy2024": {
+        "人口_人": 24767,
+        "民生費_千円": 4898944,
+        "民生費_円/人": 197801,
+        "教育費_千円": 1288485,
+        "教育費_円/人": 52024,
+        "土木費_千円": 1221023,
+        "土木費_円/人": 49300,
+        "普通建設事業費_千円": 1595748,
+        "普通建設事業費_円/人": 64430
+      }
+    },
+    {
+      "area_code": "212164",
+      "市区町村名": "瑞穂市",
+      "fy2015": {
+        "人口_人": 53576,
+        "民生費_千円": 5965016,
+        "民生費_円/人": 111337,
+        "教育費_千円": 3149189,
+        "教育費_円/人": 58780,
+        "土木費_千円": 1579789,
+        "土木費_円/人": 29487,
+        "普通建設事業費_千円": 3000528,
+        "普通建設事業費_円/人": 56005
+      },
+      "fy2016": {
+        "人口_人": 53981,
+        "民生費_千円": 6219084,
+        "民生費_円/人": 115209,
+        "教育費_千円": 2113618,
+        "教育費_円/人": 39155,
+        "土木費_千円": 1741908,
+        "土木費_円/人": 32269,
+        "普通建設事業費_千円": 2272340,
+        "普通建設事業費_円/人": 42095
+      },
+      "fy2017": {
+        "人口_人": 54295,
+        "民生費_千円": 6488339,
+        "民生費_円/人": 119502,
+        "教育費_千円": 2523373,
+        "教育費_円/人": 46475,
+        "土木費_千円": 1733109,
+        "土木費_円/人": 31920,
+        "普通建設事業費_千円": 2424654,
+        "普通建設事業費_円/人": 44657
+      },
+      "fy2018": {
+        "人口_人": 54686,
+        "民生費_千円": 6725364,
+        "民生費_円/人": 122981,
+        "教育費_千円": 2265577,
+        "教育費_円/人": 41429,
+        "土木費_千円": 1847207,
+        "土木費_円/人": 33778,
+        "普通建設事業費_千円": 2340014,
+        "普通建設事業費_円/人": 42790
+      },
+      "fy2019": {
+        "人口_人": 55055,
+        "民生費_千円": 6727066,
+        "民生費_円/人": 122188,
+        "教育費_千円": 2251332,
+        "教育費_円/人": 40892,
+        "土木費_千円": 1487948,
+        "土木費_円/人": 27027,
+        "普通建設事業費_千円": 1621899,
+        "普通建設事業費_円/人": 29460
+      },
+      "fy2020": {
+        "人口_人": 55325,
+        "民生費_千円": 7057729,
+        "民生費_円/人": 127569,
+        "教育費_千円": 2580785,
+        "教育費_円/人": 46648,
+        "土木費_千円": 2045492,
+        "土木費_円/人": 36972,
+        "普通建設事業費_千円": 2067424,
+        "普通建設事業費_円/人": 37369
+      },
+      "fy2021": {
+        "人口_人": 55518,
+        "民生費_千円": 8458680,
+        "民生費_円/人": 152359,
+        "教育費_千円": 2519912,
+        "教育費_円/人": 45389,
+        "土木費_千円": 1845612,
+        "土木費_円/人": 33243,
+        "普通建設事業費_千円": 1993541,
+        "普通建設事業費_円/人": 35908
+      },
+      "fy2022": {
+        "人口_人": 55985,
+        "民生費_千円": 8293862,
+        "民生費_円/人": 148144,
+        "教育費_千円": 2577775,
+        "教育費_円/人": 46044,
+        "土木費_千円": 1887502,
+        "土木費_円/人": 33714,
+        "普通建設事業費_千円": 2186918,
+        "普通建設事業費_円/人": 39063
+      },
+      "fy2023": {
+        "人口_人": 56329,
+        "民生費_千円": 8702760,
+        "民生費_円/人": 154499,
+        "教育費_千円": 2423265,
+        "教育費_円/人": 43020,
+        "土木費_千円": 1609480,
+        "土木費_円/人": 28573,
+        "普通建設事業費_千円": 1420465,
+        "普通建設事業費_円/人": 25217
+      },
+      "fy2024": {
+        "人口_人": 56343,
+        "民生費_千円": 9893320,
+        "民生費_円/人": 175591,
+        "教育費_千円": 2682425,
+        "教育費_円/人": 47609,
+        "土木費_千円": 2279999,
+        "土木費_円/人": 40466,
+        "普通建設事業費_千円": 2553942,
+        "普通建設事業費_円/人": 45328
+      }
+    },
+    {
+      "area_code": "212172",
+      "市区町村名": "飛騨市",
+      "fy2015": {
+        "人口_人": 25561,
+        "民生費_千円": 3734636,
+        "民生費_円/人": 146107,
+        "教育費_千円": 1263388,
+        "教育費_円/人": 49426,
+        "土木費_千円": 2594016,
+        "土木費_円/人": 101483,
+        "普通建設事業費_千円": 2785858,
+        "普通建設事業費_円/人": 108989
+      },
+      "fy2016": {
+        "人口_人": 25127,
+        "民生費_千円": 4307612,
+        "民生費_円/人": 171434,
+        "教育費_千円": 1094280,
+        "教育費_円/人": 43550,
+        "土木費_千円": 2444084,
+        "土木費_円/人": 97269,
+        "普通建設事業費_千円": 2409459,
+        "普通建設事業費_円/人": 95891
+      },
+      "fy2017": {
+        "人口_人": 24704,
+        "民生費_千円": 4018255,
+        "民生費_円/人": 162656,
+        "教育費_千円": 1539317,
+        "教育費_円/人": 62310,
+        "土木費_千円": 2366198,
+        "土木費_円/人": 95782,
+        "普通建設事業費_千円": 2424245,
+        "普通建設事業費_円/人": 98132
+      },
+      "fy2018": {
+        "人口_人": 24272,
+        "民生費_千円": 3944116,
+        "民生費_円/人": 162497,
+        "教育費_千円": 1294091,
+        "教育費_円/人": 53316,
+        "土木費_千円": 2307844,
+        "土木費_円/人": 95083,
+        "普通建設事業費_千円": 2801981,
+        "普通建設事業費_円/人": 115441
+      },
+      "fy2019": {
+        "人口_人": 23745,
+        "民生費_千円": 4787630,
+        "民生費_円/人": 201627,
+        "教育費_千円": 1606613,
+        "教育費_円/人": 67661,
+        "土木費_千円": 2267879,
+        "土木費_円/人": 95510,
+        "普通建設事業費_千円": 3732127,
+        "普通建設事業費_円/人": 157175
+      },
+      "fy2020": {
+        "人口_人": 23467,
+        "民生費_千円": 4158305,
+        "民生費_円/人": 177198,
+        "教育費_千円": 1482587,
+        "教育費_円/人": 63178,
+        "土木費_千円": 2977817,
+        "土木費_円/人": 126894,
+        "普通建設事業費_千円": 2799906,
+        "普通建設事業費_円/人": 119312
+      },
+      "fy2021": {
+        "人口_人": 23028,
+        "民生費_千円": 4389253,
+        "民生費_円/人": 190605,
+        "教育費_千円": 1511001,
+        "教育費_円/人": 65616,
+        "土木費_千円": 2828354,
+        "土木費_円/人": 122822,
+        "普通建設事業費_千円": 2042092,
+        "普通建設事業費_円/人": 88679
+      },
+      "fy2022": {
+        "人口_人": 22527,
+        "民生費_千円": 4293456,
+        "民生費_円/人": 190592,
+        "教育費_千円": 1632520,
+        "教育費_円/人": 72469,
+        "土木費_千円": 2517752,
+        "土木費_円/人": 111766,
+        "普通建設事業費_千円": 2726445,
+        "普通建設事業費_円/人": 121030
+      },
+      "fy2023": {
+        "人口_人": 22106,
+        "民生費_千円": 4551148,
+        "民生費_円/人": 205878,
+        "教育費_千円": 1646376,
+        "教育費_円/人": 74476,
+        "土木費_千円": 2815555,
+        "土木費_円/人": 127366,
+        "普通建設事業費_千円": 2765275,
+        "普通建設事業費_円/人": 125092
+      },
+      "fy2024": {
+        "人口_人": 21674,
+        "民生費_千円": 4600500,
+        "民生費_円/人": 212259,
+        "教育費_千円": 1811209,
+        "教育費_円/人": 83566,
+        "土木費_千円": 3390849,
+        "土木費_円/人": 156448,
+        "普通建設事業費_千円": 3252257,
+        "普通建設事業費_円/人": 150053
+      }
+    },
+    {
+      "area_code": "212181",
+      "市区町村名": "本巣市",
+      "fy2015": {
+        "人口_人": 35175,
+        "民生費_千円": 4126212,
+        "民生費_円/人": 117305,
+        "教育費_千円": 2784382,
+        "教育費_円/人": 79158,
+        "土木費_千円": 1502301,
+        "土木費_円/人": 42709,
+        "普通建設事業費_千円": 2315347,
+        "普通建設事業費_円/人": 65824
+      },
+      "fy2016": {
+        "人口_人": 34960,
+        "民生費_千円": 4004729,
+        "民生費_円/人": 114552,
+        "教育費_千円": 2780449,
+        "教育費_円/人": 79532,
+        "土木費_千円": 2045780,
+        "土木費_円/人": 58518,
+        "普通建設事業費_千円": 2662607,
+        "普通建設事業費_円/人": 76162
+      },
+      "fy2017": {
+        "人口_人": 34586,
+        "民生費_千円": 3969974,
+        "民生費_円/人": 114786,
+        "教育費_千円": 2446447,
+        "教育費_円/人": 70735,
+        "土木費_千円": 1842680,
+        "土木費_円/人": 53278,
+        "普通建設事業費_千円": 2994954,
+        "普通建設事業費_円/人": 86594
+      },
+      "fy2018": {
+        "人口_人": 34412,
+        "民生費_千円": 3936939,
+        "民生費_円/人": 114406,
+        "教育費_千円": 2401634,
+        "教育費_円/人": 69791,
+        "土木費_千円": 2372170,
+        "土木費_円/人": 68934,
+        "普通建設事業費_千円": 2555782,
+        "普通建設事業費_円/人": 74270
+      },
+      "fy2019": {
+        "人口_人": 34183,
+        "民生費_千円": 4054761,
+        "民生費_円/人": 118619,
+        "教育費_千円": 2494451,
+        "教育費_円/人": 72973,
+        "土木費_千円": 2007333,
+        "土木費_円/人": 58723,
+        "普通建設事業費_千円": 2372667,
+        "普通建設事業費_円/人": 69411
+      },
+      "fy2020": {
+        "人口_人": 33764,
+        "民生費_千円": 4097676,
+        "民生費_円/人": 121362,
+        "教育費_千円": 3347408,
+        "教育費_円/人": 99141,
+        "土木費_千円": 2261857,
+        "土木費_円/人": 66990,
+        "普通建設事業費_千円": 2996502,
+        "普通建設事業費_円/人": 88748
+      },
+      "fy2021": {
+        "人口_人": 33302,
+        "民生費_千円": 4814576,
+        "民生費_円/人": 144573,
+        "教育費_千円": 2635550,
+        "教育費_円/人": 79141,
+        "土木費_千円": 2341093,
+        "土木費_円/人": 70299,
+        "普通建設事業費_千円": 3257485,
+        "普通建設事業費_円/人": 97816
+      },
+      "fy2022": {
+        "人口_人": 33092,
+        "民生費_千円": 4598870,
+        "民生費_円/人": 138972,
+        "教育費_千円": 2884073,
+        "教育費_円/人": 87153,
+        "土木費_千円": 2749415,
+        "土木費_円/人": 83084,
+        "普通建設事業費_千円": 5416765,
+        "普通建設事業費_円/人": 163688
+      },
+      "fy2023": {
+        "人口_人": 33109,
+        "民生費_千円": 4546794,
+        "民生費_円/人": 137328,
+        "教育費_千円": 3298612,
+        "教育費_円/人": 99629,
+        "土木費_千円": 2907188,
+        "土木費_円/人": 87807,
+        "普通建設事業費_千円": 7176688,
+        "普通建設事業費_円/人": 216759
+      },
+      "fy2024": {
+        "人口_人": 32885,
+        "民生費_千円": 5048994,
+        "民生費_円/人": 153535,
+        "教育費_千円": 2511856,
+        "教育費_円/人": 76383,
+        "土木費_千円": 2436000,
+        "土木費_円/人": 74076,
+        "普通建設事業費_千円": 2895473,
+        "普通建設事業費_円/人": 88048
+      }
+    },
+    {
+      "area_code": "212199",
+      "市区町村名": "郡上市",
+      "fy2015": {
+        "人口_人": 43940,
+        "民生費_千円": 6076797,
+        "民生費_円/人": 138298,
+        "教育費_千円": 3347427,
+        "教育費_円/人": 76182,
+        "土木費_千円": 3017613,
+        "土木費_円/人": 68676,
+        "普通建設事業費_千円": 4973211,
+        "普通建設事業費_円/人": 113182
+      },
+      "fy2016": {
+        "人口_人": 43306,
+        "民生費_千円": 6022341,
+        "民生費_円/人": 139065,
+        "教育費_千円": 2362673,
+        "教育費_円/人": 54558,
+        "土木費_千円": 3250454,
+        "土木費_円/人": 75058,
+        "普通建設事業費_千円": 4143318,
+        "普通建設事業費_円/人": 95675
+      },
+      "fy2017": {
+        "人口_人": 42666,
+        "民生費_千円": 6101581,
+        "民生費_円/人": 143008,
+        "教育費_千円": 3388433,
+        "教育費_円/人": 79418,
+        "土木費_千円": 4083272,
+        "土木費_円/人": 95703,
+        "普通建設事業費_千円": 7960272,
+        "普通建設事業費_円/人": 186572
+      },
+      "fy2018": {
+        "人口_人": 41933,
+        "民生費_千円": 5865717,
+        "民生費_円/人": 139883,
+        "教育費_千円": 2428248,
+        "教育費_円/人": 57908,
+        "土木費_千円": 3040110,
+        "土木費_円/人": 72499,
+        "普通建設事業費_千円": 5310285,
+        "普通建設事業費_円/人": 126637
+      },
+      "fy2019": {
+        "人口_人": 41264,
+        "民生費_千円": 5962682,
+        "民生費_円/人": 144501,
+        "教育費_千円": 2986265,
+        "教育費_円/人": 72370,
+        "土木費_千円": 3181592,
+        "土木費_円/人": 77103,
+        "普通建設事業費_千円": 6450102,
+        "普通建設事業費_円/人": 156313
+      },
+      "fy2020": {
+        "人口_人": 40573,
+        "民生費_千円": 5960977,
+        "民生費_円/人": 146920,
+        "教育費_千円": 2568088,
+        "教育費_円/人": 63295,
+        "土木費_千円": 3811185,
+        "土木費_円/人": 93934,
+        "普通建設事業費_千円": 4651280,
+        "普通建設事業費_円/人": 114640
+      },
+      "fy2021": {
+        "人口_人": 39761,
+        "民生費_千円": 6761575,
+        "民生費_円/人": 170055,
+        "教育費_千円": 2415892,
+        "教育費_円/人": 60760,
+        "土木費_千円": 3945572,
+        "土木費_円/人": 99232,
+        "普通建設事業費_千円": 3673380,
+        "普通建設事業費_円/人": 92387
+      },
+      "fy2022": {
+        "人口_人": 39115,
+        "民生費_千円": 6312682,
+        "民生費_円/人": 161388,
+        "教育費_千円": 3031520,
+        "教育費_円/人": 77503,
+        "土木費_千円": 3306038,
+        "土木費_円/人": 84521,
+        "普通建設事業費_千円": 4407548,
+        "普通建設事業費_円/人": 112682
+      },
+      "fy2023": {
+        "人口_人": 38450,
+        "民生費_千円": 6642548,
+        "民生費_円/人": 172758,
+        "教育費_千円": 3814406,
+        "教育費_円/人": 99204,
+        "土木費_千円": 3367444,
+        "土木費_円/人": 87580,
+        "普通建設事業費_千円": 5197352,
+        "普通建設事業費_円/人": 135172
+      },
+      "fy2024": {
+        "人口_人": 37728,
+        "民生費_千円": 6833899,
+        "民生費_円/人": 181136,
+        "教育費_千円": 2508151,
+        "教育費_円/人": 66480,
+        "土木費_千円": 4634394,
+        "土木費_円/人": 122837,
+        "普通建設事業費_千円": 3699544,
+        "普通建設事業費_円/人": 98058
+      }
+    },
+    {
+      "area_code": "212202",
+      "市区町村名": "下呂市",
+      "fy2015": {
+        "人口_人": 34351,
+        "民生費_千円": 4831796,
+        "民生費_円/人": 140660,
+        "教育費_千円": 1772479,
+        "教育費_円/人": 51599,
+        "土木費_千円": 2065246,
+        "土木費_円/人": 60122,
+        "普通建設事業費_千円": 1833750,
+        "普通建設事業費_円/人": 53383
+      },
+      "fy2016": {
+        "人口_人": 33808,
+        "民生費_千円": 5093007,
+        "民生費_円/人": 150645,
+        "教育費_千円": 1763150,
+        "教育費_円/人": 52152,
+        "土木費_千円": 2551856,
+        "土木費_円/人": 75481,
+        "普通建設事業費_千円": 2989530,
+        "普通建設事業費_円/人": 88427
+      },
+      "fy2017": {
+        "人口_人": 33232,
+        "民生費_千円": 5059265,
+        "民生費_円/人": 152241,
+        "教育費_千円": 2248206,
+        "教育費_円/人": 67652,
+        "土木費_千円": 2709221,
+        "土木費_円/人": 81524,
+        "普通建設事業費_千円": 5538395,
+        "普通建設事業費_円/人": 166658
+      },
+      "fy2018": {
+        "人口_人": 32576,
+        "民生費_千円": 5026630,
+        "民生費_円/人": 154305,
+        "教育費_千円": 2123978,
+        "教育費_円/人": 65201,
+        "土木費_千円": 1942668,
+        "土木費_円/人": 59635,
+        "普通建設事業費_千円": 4328008,
+        "普通建設事業費_円/人": 132859
+      },
+      "fy2019": {
+        "人口_人": 32008,
+        "民生費_千円": 5170206,
+        "民生費_円/人": 161529,
+        "教育費_千円": 2903513,
+        "教育費_円/人": 90712,
+        "土木費_千円": 2582964,
+        "土木費_円/人": 80697,
+        "普通建設事業費_千円": 3515269,
+        "普通建設事業費_円/人": 109825
+      },
+      "fy2020": {
+        "人口_人": 31385,
+        "民生費_千円": 5369114,
+        "民生費_円/人": 171073,
+        "教育費_千円": 1891752,
+        "教育費_円/人": 60276,
+        "土木費_千円": 2573818,
+        "土木費_円/人": 82008,
+        "普通建設事業費_千円": 3048095,
+        "普通建設事業費_円/人": 97119
+      },
+      "fy2021": {
+        "人口_人": 30738,
+        "民生費_千円": 5901520,
+        "民生費_円/人": 191994,
+        "教育費_千円": 2620293,
+        "教育費_円/人": 85246,
+        "土木費_千円": 2772369,
+        "土木費_円/人": 90194,
+        "普通建設事業費_千円": 4695596,
+        "普通建設事業費_円/人": 152762
+      },
+      "fy2022": {
+        "人口_人": 30118,
+        "民生費_千円": 5426069,
+        "民生費_円/人": 180160,
+        "教育費_千円": 2068103,
+        "教育費_円/人": 68667,
+        "土木費_千円": 2843281,
+        "土木費_円/人": 94405,
+        "普通建設事業費_千円": 3149504,
+        "普通建設事業費_円/人": 104572
+      },
+      "fy2023": {
+        "人口_人": 29495,
+        "民生費_千円": 5743672,
+        "民生費_円/人": 194734,
+        "教育費_千円": 1662186,
+        "教育費_円/人": 56355,
+        "土木費_千円": 2474090,
+        "土木費_円/人": 83882,
+        "普通建設事業費_千円": 2923971,
+        "普通建設事業費_円/人": 99134
+      },
+      "fy2024": {
+        "人口_人": 28915,
+        "民生費_千円": 6074156,
+        "民生費_円/人": 210069,
+        "教育費_千円": 1849585,
+        "教育費_円/人": 63966,
+        "土木費_千円": 2366706,
+        "土木費_円/人": 81850,
+        "普通建設事業費_千円": 4189943,
+        "普通建設事業費_円/人": 144906
+      }
+    },
+    {
+      "area_code": "212211",
+      "市区町村名": "海津市",
+      "fy2015": {
+        "人口_人": 36313,
+        "民生費_千円": 4808464,
+        "民生費_円/人": 132417,
+        "教育費_千円": 2461396,
+        "教育費_円/人": 67783,
+        "土木費_千円": 1999408,
+        "土木費_円/人": 55060,
+        "普通建設事業費_千円": 1869130,
+        "普通建設事業費_円/人": 51473
+      },
+      "fy2016": {
+        "人口_人": 35697,
+        "民生費_千円": 4495442,
+        "民生費_円/人": 125933,
+        "教育費_千円": 2339046,
+        "教育費_円/人": 65525,
+        "土木費_千円": 2198719,
+        "土木費_円/人": 61594,
+        "普通建設事業費_千円": 1784159,
+        "普通建設事業費_円/人": 49981
+      },
+      "fy2017": {
+        "人口_人": 35175,
+        "民生費_千円": 4444796,
+        "民生費_円/人": 126362,
+        "教育費_千円": 2460147,
+        "教育費_円/人": 69940,
+        "土木費_千円": 2238814,
+        "土木費_円/人": 63648,
+        "普通建設事業費_千円": 1764090,
+        "普通建設事業費_円/人": 50152
+      },
+      "fy2018": {
+        "人口_人": 34684,
+        "民生費_千円": 4406236,
+        "民生費_円/人": 127039,
+        "教育費_千円": 2169619,
+        "教育費_円/人": 62554,
+        "土木費_千円": 2025425,
+        "土木費_円/人": 58397,
+        "普通建設事業費_千円": 1223248,
+        "普通建設事業費_円/人": 35268
+      },
+      "fy2019": {
+        "人口_人": 34254,
+        "民生費_千円": 4671166,
+        "民生費_円/人": 136368,
+        "教育費_千円": 1872554,
+        "教育費_円/人": 54667,
+        "土木費_千円": 1841743,
+        "土木費_円/人": 53767,
+        "普通建設事業費_千円": 1211719,
+        "普通建設事業費_円/人": 35375
+      },
+      "fy2020": {
+        "人口_人": 33576,
+        "民生費_千円": 4636112,
+        "民生費_円/人": 138078,
+        "教育費_千円": 2634980,
+        "教育費_円/人": 78478,
+        "土木費_千円": 2457661,
+        "土木費_円/人": 73197,
+        "普通建設事業費_千円": 1733799,
+        "普通建設事業費_円/人": 51638
+      },
+      "fy2021": {
+        "人口_人": 32980,
+        "民生費_千円": 5066819,
+        "民生費_円/人": 153633,
+        "教育費_千円": 1775334,
+        "教育費_円/人": 53831,
+        "土木費_千円": 1545278,
+        "土木費_円/人": 46855,
+        "普通建設事業費_千円": 785610,
+        "普通建設事業費_円/人": 23821
+      },
+      "fy2022": {
+        "人口_人": 32582,
+        "民生費_千円": 5671007,
+        "民生費_円/人": 174053,
+        "教育費_千円": 2288523,
+        "教育費_円/人": 70239,
+        "土木費_千円": 1705440,
+        "土木費_円/人": 52343,
+        "普通建設事業費_千円": 1626769,
+        "普通建設事業費_円/人": 49928
+      },
+      "fy2023": {
+        "人口_人": 32084,
+        "民生費_千円": 5315186,
+        "民生費_円/人": 165665,
+        "教育費_千円": 2982478,
+        "教育費_円/人": 92958,
+        "土木費_千円": 1859527,
+        "土木費_円/人": 57958,
+        "普通建設事業費_千円": 2804535,
+        "普通建設事業費_円/人": 87412
+      },
+      "fy2024": {
+        "人口_人": 31505,
+        "民生費_千円": 5587019,
+        "民生費_円/人": 177338,
+        "教育費_千円": 2513265,
+        "教育費_円/人": 79774,
+        "土木費_千円": 1488720,
+        "土木費_円/人": 47253,
+        "普通建設事業費_千円": 1932654,
+        "普通建設事業費_円/人": 61344
+      }
+    },
+    {
+      "area_code": "213021",
+      "市区町村名": "羽島郡岐南町",
+      "fy2015": {
+        "人口_人": 24903,
+        "民生費_千円": 2629806,
+        "民生費_円/人": 105602,
+        "教育費_千円": 1061602,
+        "教育費_円/人": 42629,
+        "土木費_千円": 781947,
+        "土木費_円/人": 31400,
+        "普通建設事業費_千円": 2462327,
+        "普通建設事業費_円/人": 98877
+      },
+      "fy2016": {
+        "人口_人": 25270,
+        "民生費_千円": 2786178,
+        "民生費_円/人": 110256,
+        "教育費_千円": 1005498,
+        "教育費_円/人": 39790,
+        "土木費_千円": 736744,
+        "土木費_円/人": 29155,
+        "普通建設事業費_千円": 734251,
+        "普通建設事業費_円/人": 29056
+      },
+      "fy2017": {
+        "人口_人": 25525,
+        "民生費_千円": 3069495,
+        "民生費_円/人": 120254,
+        "教育費_千円": 2208075,
+        "教育費_円/人": 86506,
+        "土木費_千円": 808211,
+        "土木費_円/人": 31664,
+        "普通建設事業費_千円": 2028373,
+        "普通建設事業費_円/人": 79466
+      },
+      "fy2018": {
+        "人口_人": 25685,
+        "民生費_千円": 3028606,
+        "民生費_円/人": 117913,
+        "教育費_千円": 983764,
+        "教育費_円/人": 38301,
+        "土木費_千円": 736182,
+        "土木費_円/人": 28662,
+        "普通建設事業費_千円": 760775,
+        "普通建設事業費_円/人": 29619
+      },
+      "fy2019": {
+        "人口_人": 25923,
+        "民生費_千円": 3055160,
+        "民生費_円/人": 117855,
+        "教育費_千円": 1080438,
+        "教育費_円/人": 41679,
+        "土木費_千円": 774556,
+        "土木費_円/人": 29879,
+        "普通建設事業費_千円": 726566,
+        "普通建設事業費_円/人": 28028
+      },
+      "fy2020": {
+        "人口_人": 26123,
+        "民生費_千円": 3154135,
+        "民生費_円/人": 120742,
+        "教育費_千円": 1489370,
+        "教育費_円/人": 57014,
+        "土木費_千円": 975197,
+        "土木費_円/人": 37331,
+        "普通建設事業費_千円": 1061381,
+        "普通建設事業費_円/人": 40630
+      },
+      "fy2021": {
+        "人口_人": 26272,
+        "民生費_千円": 3893501,
+        "民生費_円/人": 148200,
+        "教育費_千円": 900918,
+        "教育費_円/人": 34292,
+        "土木費_千円": 770074,
+        "土木費_円/人": 29312,
+        "普通建設事業費_千円": 409232,
+        "普通建設事業費_円/人": 15577
+      },
+      "fy2022": {
+        "人口_人": 26243,
+        "民生費_千円": 3694910,
+        "民生費_円/人": 140796,
+        "教育費_千円": 1417591,
+        "教育費_円/人": 54018,
+        "土木費_千円": 837820,
+        "土木費_円/人": 31925,
+        "普通建設事業費_千円": 939281,
+        "普通建設事業費_円/人": 35792
+      },
+      "fy2023": {
+        "人口_人": 26227,
+        "民生費_千円": 3847705,
+        "民生費_円/人": 146708,
+        "教育費_千円": 1218315,
+        "教育費_円/人": 46453,
+        "土木費_千円": 753084,
+        "土木費_円/人": 28714,
+        "普通建設事業費_千円": 586487,
+        "普通建設事業費_円/人": 22362
+      },
+      "fy2024": {
+        "人口_人": 26366,
+        "民生費_千円": 4414498,
+        "民生費_円/人": 167431,
+        "教育費_千円": 1137521,
+        "教育費_円/人": 43143,
+        "土木費_千円": 809455,
+        "土木費_円/人": 30701,
+        "普通建設事業費_千円": 543891,
+        "普通建設事業費_円/人": 20628
+      }
+    },
+    {
+      "area_code": "213039",
+      "市区町村名": "羽島郡笠松町",
+      "fy2015": {
+        "人口_人": 22550,
+        "民生費_千円": 2438674,
+        "民生費_円/人": 108145,
+        "教育費_千円": 825695,
+        "教育費_円/人": 36616,
+        "土木費_千円": 939978,
+        "土木費_円/人": 41684,
+        "普通建設事業費_千円": 719158,
+        "普通建設事業費_円/人": 31892
+      },
+      "fy2016": {
+        "人口_人": 22451,
+        "民生費_千円": 2494184,
+        "民生費_円/人": 111095,
+        "教育費_千円": 948807,
+        "教育費_円/人": 42261,
+        "土木費_千円": 904340,
+        "土木費_円/人": 40281,
+        "普通建設事業費_千円": 787536,
+        "普通建設事業費_円/人": 35078
+      },
+      "fy2017": {
+        "人口_人": 22340,
+        "民生費_千円": 2488805,
+        "民生費_円/人": 111406,
+        "教育費_千円": 1328662,
+        "教育費_円/人": 59475,
+        "土木費_千円": 735039,
+        "土木費_円/人": 32902,
+        "普通建設事業費_千円": 1015128,
+        "普通建設事業費_円/人": 45440
+      },
+      "fy2018": {
+        "人口_人": 22273,
+        "民生費_千円": 2444046,
+        "民生費_円/人": 109731,
+        "教育費_千円": 616073,
+        "教育費_円/人": 27660,
+        "土木費_千円": 839696,
+        "土木費_円/人": 37700,
+        "普通建設事業費_千円": 407082,
+        "普通建設事業費_円/人": 18277
+      },
+      "fy2019": {
+        "人口_人": 22227,
+        "民生費_千円": 2467070,
+        "民生費_円/人": 110994,
+        "教育費_千円": 669660,
+        "教育費_円/人": 30128,
+        "土木費_千円": 754639,
+        "土木費_円/人": 33951,
+        "普通建設事業費_千円": 330086,
+        "普通建設事業費_円/人": 14851
+      },
+      "fy2020": {
+        "人口_人": 22096,
+        "民生費_千円": 2462742,
+        "民生費_円/人": 111456,
+        "教育費_千円": 1057393,
+        "教育費_円/人": 47854,
+        "土木費_千円": 505858,
+        "土木費_円/人": 22894,
+        "普通建設事業費_千円": 275236,
+        "普通建設事業費_円/人": 12456
+      },
+      "fy2021": {
+        "人口_人": 21985,
+        "民生費_千円": 3211492,
+        "民生費_円/人": 146077,
+        "教育費_千円": 830716,
+        "教育費_円/人": 37786,
+        "土木費_千円": 568182,
+        "土木費_円/人": 25844,
+        "普通建設事業費_千円": 467287,
+        "普通建設事業費_円/人": 21255
+      },
+      "fy2022": {
+        "人口_人": 21828,
+        "民生費_千円": 2789089,
+        "民生費_円/人": 127776,
+        "教育費_千円": 948495,
+        "教育費_円/人": 43453,
+        "土木費_千円": 839065,
+        "土木費_円/人": 38440,
+        "普通建設事業費_千円": 370584,
+        "普通建設事業費_円/人": 16977
+      },
+      "fy2023": {
+        "人口_人": 21816,
+        "民生費_千円": 2936659,
+        "民生費_円/人": 134610,
+        "教育費_千円": 1018435,
+        "教育費_円/人": 46683,
+        "土木費_千円": 679454,
+        "土木費_円/人": 31145,
+        "普通建設事業費_千円": 387149,
+        "普通建設事業費_円/人": 17746
+      },
+      "fy2024": {
+        "人口_人": 21829,
+        "民生費_千円": 3301745,
+        "民生費_円/人": 151255,
+        "教育費_千円": 968691,
+        "教育費_円/人": 44376,
+        "土木費_千円": 731277,
+        "土木費_円/人": 33500,
+        "普通建設事業費_千円": 470010,
+        "普通建設事業費_円/人": 21531
+      }
+    },
+    {
+      "area_code": "213411",
+      "市区町村名": "養老郡養老町",
+      "fy2015": {
+        "人口_人": 30548,
+        "民生費_千円": 3402293,
+        "民生費_円/人": 111375,
+        "教育費_千円": 1473164,
+        "教育費_円/人": 48225,
+        "土木費_千円": 1069436,
+        "土木費_円/人": 35008,
+        "普通建設事業費_千円": 1529058,
+        "普通建設事業費_円/人": 50054
+      },
+      "fy2016": {
+        "人口_人": 30054,
+        "民生費_千円": 3703438,
+        "民生費_円/人": 123226,
+        "教育費_千円": 1281098,
+        "教育費_円/人": 42627,
+        "土木費_千円": 932552,
+        "土木費_円/人": 31029,
+        "普通建設事業費_千円": 1402967,
+        "普通建設事業費_円/人": 46682
+      },
+      "fy2017": {
+        "人口_人": 29508,
+        "民生費_千円": 3710458,
+        "民生費_円/人": 125744,
+        "教育費_千円": 1374806,
+        "教育費_円/人": 46591,
+        "土木費_千円": 913955,
+        "土木費_円/人": 30973,
+        "普通建設事業費_千円": 1210625,
+        "普通建設事業費_円/人": 41027
+      },
+      "fy2018": {
+        "人口_人": 29121,
+        "民生費_千円": 3425595,
+        "民生費_円/人": 117633,
+        "教育費_千円": 1410200,
+        "教育費_円/人": 48426,
+        "土木費_千円": 905765,
+        "土木費_円/人": 31103,
+        "普通建設事業費_千円": 1335203,
+        "普通建設事業費_円/人": 45850
+      },
+      "fy2019": {
+        "人口_人": 28587,
+        "民生費_千円": 3870980,
+        "民生費_円/人": 135411,
+        "教育費_千円": 1310844,
+        "教育費_円/人": 45855,
+        "土木費_千円": 795828,
+        "土木費_円/人": 27839,
+        "普通建設事業費_千円": 1990455,
+        "普通建設事業費_円/人": 69628
+      },
+      "fy2020": {
+        "人口_人": 28021,
+        "民生費_千円": 3591582,
+        "民生費_円/人": 128175,
+        "教育費_千円": 1212148,
+        "教育費_円/人": 43259,
+        "土木費_千円": 744754,
+        "土木費_円/人": 26578,
+        "普通建設事業費_千円": 2483748,
+        "普通建設事業費_円/人": 88639
+      },
+      "fy2021": {
+        "人口_人": 27381,
+        "民生費_千円": 4143306,
+        "民生費_円/人": 151320,
+        "教育費_千円": 928432,
+        "教育費_円/人": 33908,
+        "土木費_千円": 668957,
+        "土木費_円/人": 24431,
+        "普通建設事業費_千円": 1008856,
+        "普通建設事業費_円/人": 36845
+      },
+      "fy2022": {
+        "人口_人": 26858,
+        "民生費_千円": 3715431,
+        "民生費_円/人": 138336,
+        "教育費_千円": 1031870,
+        "教育費_円/人": 38419,
+        "土木費_千円": 697573,
+        "土木費_円/人": 25973,
+        "普通建設事業費_千円": 695096,
+        "普通建設事業費_円/人": 25880
+      },
+      "fy2023": {
+        "人口_人": 26397,
+        "民生費_千円": 3919241,
+        "民生費_円/人": 148473,
+        "教育費_千円": 1027987,
+        "教育費_円/人": 38943,
+        "土木費_千円": 718324,
+        "土木費_円/人": 27212,
+        "普通建設事業費_千円": 656194,
+        "普通建設事業費_円/人": 24859
+      },
+      "fy2024": {
+        "人口_人": 25971,
+        "民生費_千円": 4196336,
+        "民生費_円/人": 161578,
+        "教育費_千円": 1008426,
+        "教育費_円/人": 38829,
+        "土木費_千円": 748665,
+        "土木費_円/人": 28827,
+        "普通建設事業費_千円": 697122,
+        "普通建設事業費_円/人": 26842
+      }
+    },
+    {
+      "area_code": "213616",
+      "市区町村名": "不破郡垂井町",
+      "fy2015": {
+        "人口_人": 28074,
+        "民生費_千円": 3017202,
+        "民生費_円/人": 107473,
+        "教育費_千円": 867983,
+        "教育費_円/人": 30918,
+        "土木費_千円": 1051523,
+        "土木費_円/人": 37455,
+        "普通建設事業費_千円": 1038296,
+        "普通建設事業費_円/人": 36984
+      },
+      "fy2016": {
+        "人口_人": 27885,
+        "民生費_千円": 3305912,
+        "民生費_円/人": 118555,
+        "教育費_千円": 873502,
+        "教育費_円/人": 31325,
+        "土木費_千円": 1130042,
+        "土木費_円/人": 40525,
+        "普通建設事業費_千円": 1552527,
+        "普通建設事業費_円/人": 55676
+      },
+      "fy2017": {
+        "人口_人": 27703,
+        "民生費_千円": 3703503,
+        "民生費_円/人": 133686,
+        "教育費_千円": 997805,
+        "教育費_円/人": 36018,
+        "土木費_千円": 926565,
+        "土木費_円/人": 33446,
+        "普通建設事業費_千円": 1616942,
+        "普通建設事業費_円/人": 58367
+      },
+      "fy2018": {
+        "人口_人": 27467,
+        "民生費_千円": 3111633,
+        "民生費_円/人": 113286,
+        "教育費_千円": 820718,
+        "教育費_円/人": 29880,
+        "土木費_千円": 937493,
+        "土木費_円/人": 34132,
+        "普通建設事業費_千円": 2199612,
+        "普通建設事業費_円/人": 80082
+      },
+      "fy2019": {
+        "人口_人": 27130,
+        "民生費_千円": 3255807,
+        "民生費_円/人": 120008,
+        "教育費_千円": 1004597,
+        "教育費_円/人": 37029,
+        "土木費_千円": 1010227,
+        "土木費_円/人": 37237,
+        "普通建設事業費_千円": 2459410,
+        "普通建設事業費_円/人": 90653
+      },
+      "fy2020": {
+        "人口_人": 26903,
+        "民生費_千円": 3230217,
+        "民生費_円/人": 120069,
+        "教育費_千円": 1387638,
+        "教育費_円/人": 51579,
+        "土木費_千円": 893392,
+        "土木費_円/人": 33208,
+        "普通建設事業費_千円": 1181327,
+        "普通建設事業費_円/人": 43911
+      },
+      "fy2021": {
+        "人口_人": 26547,
+        "民生費_千円": 3887778,
+        "民生費_円/人": 146449,
+        "教育費_千円": 1195518,
+        "教育費_円/人": 45034,
+        "土木費_千円": 868626,
+        "土木費_円/人": 32720,
+        "普通建設事業費_千円": 872195,
+        "普通建設事業費_円/人": 32855
+      },
+      "fy2022": {
+        "人口_人": 26255,
+        "民生費_千円": 3541502,
+        "民生費_円/人": 134889,
+        "教育費_千円": 1167678,
+        "教育費_円/人": 44475,
+        "土木費_千円": 993256,
+        "土木費_円/人": 37831,
+        "普通建設事業費_千円": 1257448,
+        "普通建設事業費_円/人": 47894
+      },
+      "fy2023": {
+        "人口_人": 26058,
+        "民生費_千円": 3601225,
+        "民生費_円/人": 138200,
+        "教育費_千円": 1185731,
+        "教育費_円/人": 45504,
+        "土木費_千円": 1034791,
+        "土木費_円/人": 39711,
+        "普通建設事業費_千円": 2200903,
+        "普通建設事業費_円/人": 84462
+      },
+      "fy2024": {
+        "人口_人": 25746,
+        "民生費_千円": 4046967,
+        "民生費_円/人": 157188,
+        "教育費_千円": 1360638,
+        "教育費_円/人": 52849,
+        "土木費_千円": 1009269,
+        "土木費_円/人": 39201,
+        "普通建設事業費_千円": 1222498,
+        "普通建設事業費_円/人": 47483
+      }
+    },
+    {
+      "area_code": "213624",
+      "市区町村名": "不破郡関ケ原町",
+      "fy2015": {
+        "人口_人": 7569,
+        "民生費_千円": 914451,
+        "民生費_円/人": 120815,
+        "教育費_千円": 517839,
+        "教育費_円/人": 68416,
+        "土木費_千円": 405060,
+        "土木費_円/人": 53516,
+        "普通建設事業費_千円": 465515,
+        "普通建設事業費_円/人": 61503
+      },
+      "fy2016": {
+        "人口_人": 7405,
+        "民生費_千円": 870333,
+        "民生費_円/人": 117533,
+        "教育費_千円": 397273,
+        "教育費_円/人": 53649,
+        "土木費_千円": 404402,
+        "土木費_円/人": 54612,
+        "普通建設事業費_千円": 335810,
+        "普通建設事業費_円/人": 45349
+      },
+      "fy2017": {
+        "人口_人": 7244,
+        "民生費_千円": 911159,
+        "民生費_円/人": 125781,
+        "教育費_千円": 392089,
+        "教育費_円/人": 54126,
+        "土木費_千円": 391134,
+        "土木費_円/人": 53994,
+        "普通建設事業費_千円": 299568,
+        "普通建設事業費_円/人": 41354
+      },
+      "fy2018": {
+        "人口_人": 7087,
+        "民生費_千円": 849365,
+        "民生費_円/人": 119848,
+        "教育費_千円": 420006,
+        "教育費_円/人": 59264,
+        "土木費_千円": 381571,
+        "土木費_円/人": 53841,
+        "普通建設事業費_千円": 328751,
+        "普通建設事業費_円/人": 46388
+      },
+      "fy2019": {
+        "人口_人": 7000,
+        "民生費_千円": 885584,
+        "民生費_円/人": 126512,
+        "教育費_千円": 668214,
+        "教育費_円/人": 95459,
+        "土木費_千円": 419826,
+        "土木費_円/人": 59975,
+        "普通建設事業費_千円": 546984,
+        "普通建設事業費_円/人": 78141
+      },
+      "fy2020": {
+        "人口_人": 6841,
+        "民生費_千円": 916699,
+        "民生費_円/人": 134001,
+        "教育費_千円": 560448,
+        "教育費_円/人": 81925,
+        "土木費_千円": 432295,
+        "土木費_円/人": 63192,
+        "普通建設事業費_千円": 368045,
+        "普通建設事業費_円/人": 53800
+      },
+      "fy2021": {
+        "人口_人": 6645,
+        "民生費_千円": 1101531,
+        "民生費_円/人": 165768,
+        "教育費_千円": 364112,
+        "教育費_円/人": 54795,
+        "土木費_千円": 486361,
+        "土木費_円/人": 73192,
+        "普通建設事業費_千円": 234648,
+        "普通建設事業費_円/人": 35312
+      },
+      "fy2022": {
+        "人口_人": 6466,
+        "民生費_千円": 1163515,
+        "民生費_円/人": 179944,
+        "教育費_千円": 407263,
+        "教育費_円/人": 62985,
+        "土木費_千円": 465560,
+        "土木費_円/人": 72001,
+        "普通建設事業費_千円": 337683,
+        "普通建設事業費_円/人": 52224
+      },
+      "fy2023": {
+        "人口_人": 6287,
+        "民生費_千円": 1152892,
+        "民生費_円/人": 183377,
+        "教育費_千円": 529363,
+        "教育費_円/人": 84200,
+        "土木費_千円": 467611,
+        "土木費_円/人": 74377,
+        "普通建設事業費_千円": 372078,
+        "普通建設事業費_円/人": 59182
+      },
+      "fy2024": {
+        "人口_人": 6135,
+        "民生費_千円": 1331601,
+        "民生費_円/人": 217050,
+        "教育費_千円": 719728,
+        "教育費_円/人": 117315,
+        "土木費_千円": 840419,
+        "土木費_円/人": 136988,
+        "普通建設事業費_千円": 739220,
+        "普通建設事業費_円/人": 120492
+      }
+    },
+    {
+      "area_code": "213811",
+      "市区町村名": "安八郡神戸町",
+      "fy2015": {
+        "人口_人": 19738,
+        "民生費_千円": 2192536,
+        "民生費_円/人": 111082,
+        "教育費_千円": 1204346,
+        "教育費_円/人": 61017,
+        "土木費_千円": 1279906,
+        "土木費_円/人": 64845,
+        "普通建設事業費_千円": 1642843,
+        "普通建設事業費_円/人": 83232
+      },
+      "fy2016": {
+        "人口_人": 19609,
+        "民生費_千円": 2301750,
+        "民生費_円/人": 117382,
+        "教育費_千円": 1086735,
+        "教育費_円/人": 55420,
+        "土木費_千円": 981516,
+        "土木費_円/人": 50054,
+        "普通建設事業費_千円": 1256372,
+        "普通建設事業費_円/人": 64071
+      },
+      "fy2017": {
+        "人口_人": 19504,
+        "民生費_千円": 2245021,
+        "民生費_円/人": 115106,
+        "教育費_千円": 1664931,
+        "教育費_円/人": 85364,
+        "土木費_千円": 893998,
+        "土木費_円/人": 45837,
+        "普通建設事業費_千円": 1544867,
+        "普通建設事業費_円/人": 79208
+      },
+      "fy2018": {
+        "人口_人": 19345,
+        "民生費_千円": 2216792,
+        "民生費_円/人": 114593,
+        "教育費_千円": 1021031,
+        "教育費_円/人": 52780,
+        "土木費_千円": 1020942,
+        "土木費_円/人": 52775,
+        "普通建設事業費_千円": 931771,
+        "普通建設事業費_円/人": 48166
+      },
+      "fy2019": {
+        "人口_人": 19183,
+        "民生費_千円": 2252937,
+        "民生費_円/人": 117444,
+        "教育費_千円": 764509,
+        "教育費_円/人": 39853,
+        "土木費_千円": 774792,
+        "土木費_円/人": 40390,
+        "普通建設事業費_千円": 549004,
+        "普通建設事業費_円/人": 28619
+      },
+      "fy2020": {
+        "人口_人": 18888,
+        "民生費_千円": 2293319,
+        "民生費_円/人": 121417,
+        "教育費_千円": 1111712,
+        "教育費_円/人": 58858,
+        "土木費_千円": 686651,
+        "土木費_円/人": 36354,
+        "普通建設事業費_千円": 638362,
+        "普通建設事業費_円/人": 33797
+      },
+      "fy2021": {
+        "人口_人": 18704,
+        "民生費_千円": 2747593,
+        "民生費_円/人": 146899,
+        "教育費_千円": 801452,
+        "教育費_円/人": 42849,
+        "土木費_千円": 604025,
+        "土木費_円/人": 32294,
+        "普通建設事業費_千円": 309868,
+        "普通建設事業費_円/人": 16567
+      },
+      "fy2022": {
+        "人口_人": 18577,
+        "民生費_千円": 2597987,
+        "民生費_円/人": 139850,
+        "教育費_千円": 812080,
+        "教育費_円/人": 43714,
+        "土木費_千円": 784022,
+        "土木費_円/人": 42204,
+        "普通建設事業費_千円": 420321,
+        "普通建設事業費_円/人": 22626
+      },
+      "fy2023": {
+        "人口_人": 18409,
+        "民生費_千円": 2682668,
+        "民生費_円/人": 145726,
+        "教育費_千円": 806247,
+        "教育費_円/人": 43796,
+        "土木費_千円": 940133,
+        "土木費_円/人": 51069,
+        "普通建設事業費_千円": 439615,
+        "普通建設事業費_円/人": 23880
+      },
+      "fy2024": {
+        "人口_人": 18210,
+        "民生費_千円": 3194239,
+        "民生費_円/人": 175411,
+        "教育費_千円": 986680,
+        "教育費_円/人": 54183,
+        "土木費_千円": 924913,
+        "土木費_円/人": 50791,
+        "普通建設事業費_千円": 844271,
+        "普通建設事業費_円/人": 46363
+      }
+    },
+    {
+      "area_code": "213829",
+      "市区町村名": "安八郡輪之内町",
+      "fy2015": {
+        "人口_人": 9943,
+        "民生費_千円": 1219411,
+        "民生費_円/人": 122640,
+        "教育費_千円": 592636,
+        "教育費_円/人": 59603,
+        "土木費_千円": 384695,
+        "土木費_円/人": 38690,
+        "普通建設事業費_千円": 560953,
+        "普通建設事業費_円/人": 56417
+      },
+      "fy2016": {
+        "人口_人": 9912,
+        "民生費_千円": 1196815,
+        "民生費_円/人": 120744,
+        "教育費_千円": 790670,
+        "教育費_円/人": 79769,
+        "土木費_千円": 439373,
+        "土木費_円/人": 44327,
+        "普通建設事業費_千円": 796963,
+        "普通建設事業費_円/人": 80404
+      },
+      "fy2017": {
+        "人口_人": 9784,
+        "民生費_千円": 1201863,
+        "民生費_円/人": 122840,
+        "教育費_千円": 611805,
+        "教育費_円/人": 62531,
+        "土木費_千円": 453990,
+        "土木費_円/人": 46401,
+        "普通建設事業費_千円": 603619,
+        "普通建設事業費_円/人": 61695
+      },
+      "fy2018": {
+        "人口_人": 9787,
+        "民生費_千円": 1143701,
+        "民生費_円/人": 116859,
+        "教育費_千円": 487261,
+        "教育費_円/人": 49787,
+        "土木費_千円": 589570,
+        "土木費_円/人": 60240,
+        "普通建設事業費_千円": 589235,
+        "普通建設事業費_円/人": 60206
+      },
+      "fy2019": {
+        "人口_人": 9664,
+        "民生費_千円": 1162447,
+        "民生費_円/人": 120286,
+        "教育費_千円": 723829,
+        "教育費_円/人": 74900,
+        "土木費_千円": 565980,
+        "土木費_円/人": 58566,
+        "普通建設事業費_千円": 933378,
+        "普通建設事業費_円/人": 96583
+      },
+      "fy2020": {
+        "人口_人": 9594,
+        "民生費_千円": 1209373,
+        "民生費_円/人": 126055,
+        "教育費_千円": 489790,
+        "教育費_円/人": 51052,
+        "土木費_千円": 562864,
+        "土木費_円/人": 58668,
+        "普通建設事業費_千円": 790795,
+        "普通建設事業費_円/人": 82426
+      },
+      "fy2021": {
+        "人口_人": 9403,
+        "民生費_千円": 1403615,
+        "民生費_円/人": 149273,
+        "教育費_千円": 490731,
+        "教育費_円/人": 52189,
+        "土木費_千円": 637029,
+        "土木費_円/人": 67747,
+        "普通建設事業費_千円": 577618,
+        "普通建設事業費_円/人": 61429
+      },
+      "fy2022": {
+        "人口_人": 9326,
+        "民生費_千円": 1262052,
+        "民生費_円/人": 135326,
+        "教育費_千円": 515456,
+        "教育費_円/人": 55271,
+        "土木費_千円": 592442,
+        "土木費_円/人": 63526,
+        "普通建設事業費_千円": 512786,
+        "普通建設事業費_円/人": 54985
+      },
+      "fy2023": {
+        "人口_人": 9267,
+        "民生費_千円": 1286170,
+        "民生費_円/人": 138790,
+        "教育費_千円": 714057,
+        "教育費_円/人": 77054,
+        "土木費_千円": 630423,
+        "土木費_円/人": 68029,
+        "普通建設事業費_千円": 711099,
+        "普通建設事業費_円/人": 76735
+      },
+      "fy2024": {
+        "人口_人": 9086,
+        "民生費_千円": 1469868,
+        "民生費_円/人": 161773,
+        "教育費_千円": 720159,
+        "教育費_円/人": 79260,
+        "土木費_千円": 731305,
+        "土木費_円/人": 80487,
+        "普通建設事業費_千円": 796540,
+        "普通建設事業費_円/人": 87667
+      }
+    },
+    {
+      "area_code": "213837",
+      "市区町村名": "安八郡安八町",
+      "fy2015": {
+        "人口_人": 15251,
+        "民生費_千円": 1854446,
+        "民生費_円/人": 121595,
+        "教育費_千円": 656379,
+        "教育費_円/人": 43038,
+        "土木費_千円": 1208515,
+        "土木費_円/人": 79242,
+        "普通建設事業費_千円": 1006732,
+        "普通建設事業費_円/人": 66011
+      },
+      "fy2016": {
+        "人口_人": 15211,
+        "民生費_千円": 1927265,
+        "民生費_円/人": 126702,
+        "教育費_千円": 731764,
+        "教育費_円/人": 48108,
+        "土木費_千円": 1206733,
+        "土木費_円/人": 79333,
+        "普通建設事業費_千円": 1088668,
+        "普通建設事業費_円/人": 71571
+      },
+      "fy2017": {
+        "人口_人": 15115,
+        "民生費_千円": 1904009,
+        "民生費_円/人": 125968,
+        "教育費_千円": 966974,
+        "教育費_円/人": 63974,
+        "土木費_千円": 1671485,
+        "土木費_円/人": 110585,
+        "普通建設事業費_千円": 1819675,
+        "普通建設事業費_円/人": 120389
+      },
+      "fy2018": {
+        "人口_人": 15076,
+        "民生費_千円": 1859959,
+        "民生費_円/人": 123372,
+        "教育費_千円": 600635,
+        "教育費_円/人": 39840,
+        "土木費_千円": 1301860,
+        "土木費_円/人": 86353,
+        "普通建設事業費_千円": 994839,
+        "普通建設事業費_円/人": 65988
+      },
+      "fy2019": {
+        "人口_人": 14971,
+        "民生費_千円": 1851881,
+        "民生費_円/人": 123698,
+        "教育費_千円": 592951,
+        "教育費_円/人": 39607,
+        "土木費_千円": 971346,
+        "土木費_円/人": 64882,
+        "普通建設事業費_千円": 554606,
+        "普通建設事業費_円/人": 37045
+      },
+      "fy2020": {
+        "人口_人": 14774,
+        "民生費_千円": 1904994,
+        "民生費_円/人": 128942,
+        "教育費_千円": 759754,
+        "教育費_円/人": 51425,
+        "土木費_千円": 689739,
+        "土木費_円/人": 46686,
+        "普通建設事業費_千円": 493365,
+        "普通建設事業費_円/人": 33394
+      },
+      "fy2021": {
+        "人口_人": 14623,
+        "民生費_千円": 2154035,
+        "民生費_円/人": 147305,
+        "教育費_千円": 704569,
+        "教育費_円/人": 48182,
+        "土木費_千円": 951538,
+        "土木費_円/人": 65071,
+        "普通建設事業費_千円": 849575,
+        "普通建設事業費_円/人": 58099
+      },
+      "fy2022": {
+        "人口_人": 14512,
+        "民生費_千円": 2101149,
+        "民生費_円/人": 144787,
+        "教育費_千円": 767462,
+        "教育費_円/人": 52885,
+        "土木費_千円": 1031653,
+        "土木費_円/人": 71090,
+        "普通建設事業費_千円": 932685,
+        "普通建設事業費_円/人": 64270
+      },
+      "fy2023": {
+        "人口_人": 14465,
+        "民生費_千円": 2066321,
+        "民生費_円/人": 142850,
+        "教育費_千円": 751224,
+        "教育費_円/人": 51934,
+        "土木費_千円": 669783,
+        "土木費_円/人": 46304,
+        "普通建設事業費_千円": 1104376,
+        "普通建設事業費_円/人": 76348
+      },
+      "fy2024": {
+        "人口_人": 14456,
+        "民生費_千円": 2403676,
+        "民生費_円/人": 166275,
+        "教育費_千円": 804780,
+        "教育費_円/人": 55671,
+        "土木費_千円": 687697,
+        "土木費_円/人": 47572,
+        "普通建設事業費_千円": 589693,
+        "普通建設事業費_円/人": 40792
+      }
+    },
+    {
+      "area_code": "214019",
+      "市区町村名": "揖斐郡揖斐川町",
+      "fy2015": {
+        "人口_人": 22476,
+        "民生費_千円": 3492881,
+        "民生費_円/人": 155405,
+        "教育費_千円": 1107741,
+        "教育費_円/人": 49286,
+        "土木費_千円": 887071,
+        "土木費_円/人": 39467,
+        "普通建設事業費_千円": 3549415,
+        "普通建設事業費_円/人": 157920
+      },
+      "fy2016": {
+        "人口_人": 22145,
+        "民生費_千円": 4093710,
+        "民生費_円/人": 184859,
+        "教育費_千円": 1200997,
+        "教育費_円/人": 54233,
+        "土木費_千円": 1113753,
+        "土木費_円/人": 50294,
+        "普通建設事業費_千円": 3376760,
+        "普通建設事業費_円/人": 152484
+      },
+      "fy2017": {
+        "人口_人": 21672,
+        "民生費_千円": 3068801,
+        "民生費_円/人": 141602,
+        "教育費_千円": 1153522,
+        "教育費_円/人": 53226,
+        "土木費_千円": 1007158,
+        "土木費_円/人": 46473,
+        "普通建設事業費_千円": 1672119,
+        "普通建設事業費_円/人": 77156
+      },
+      "fy2018": {
+        "人口_人": 21274,
+        "民生費_千円": 3021679,
+        "民生費_円/人": 142036,
+        "教育費_千円": 1277128,
+        "教育費_円/人": 60032,
+        "土木費_千円": 980432,
+        "土木費_円/人": 46086,
+        "普通建設事業費_千円": 1885279,
+        "普通建設事業費_円/人": 88619
+      },
+      "fy2019": {
+        "人口_人": 20862,
+        "民生費_千円": 2957441,
+        "民生費_円/人": 141762,
+        "教育費_千円": 2187105,
+        "教育費_円/人": 104837,
+        "土木費_千円": 1161395,
+        "土木費_円/人": 55670,
+        "普通建設事業費_千円": 2883229,
+        "普通建設事業費_円/人": 138205
+      },
+      "fy2020": {
+        "人口_人": 20459,
+        "民生費_千円": 2968289,
+        "民生費_円/人": 145085,
+        "教育費_千円": 1489822,
+        "教育費_円/人": 72820,
+        "土木費_千円": 1279619,
+        "土木費_円/人": 62546,
+        "普通建設事業費_千円": 2428070,
+        "普通建設事業費_円/人": 118680
+      },
+      "fy2021": {
+        "人口_人": 19953,
+        "民生費_千円": 3346962,
+        "民生費_円/人": 167742,
+        "教育費_千円": 1077590,
+        "教育費_円/人": 54006,
+        "土木費_千円": 1448975,
+        "土木費_円/人": 72619,
+        "普通建設事業費_千円": 1958745,
+        "普通建設事業費_円/人": 98168
+      },
+      "fy2022": {
+        "人口_人": 19536,
+        "民生費_千円": 3156108,
+        "民生費_円/人": 161553,
+        "教育費_千円": 1137774,
+        "教育費_円/人": 58240,
+        "土木費_千円": 1537121,
+        "土木費_円/人": 78681,
+        "普通建設事業費_千円": 2096720,
+        "普通建設事業費_円/人": 107326
+      },
+      "fy2023": {
+        "人口_人": 19062,
+        "民生費_千円": 3272847,
+        "民生費_円/人": 171695,
+        "教育費_千円": 1173969,
+        "教育費_円/人": 61587,
+        "土木費_千円": 1140230,
+        "土木費_円/人": 59817,
+        "普通建設事業費_千円": 1915859,
+        "普通建設事業費_円/人": 100507
+      },
+      "fy2024": {
+        "人口_人": 18633,
+        "民生費_千円": 3401786,
+        "民生費_円/人": 182568,
+        "教育費_千円": 1237527,
+        "教育費_円/人": 66416,
+        "土木費_千円": 1557281,
+        "土木費_円/人": 83577,
+        "普通建設事業費_千円": 1609441,
+        "普通建設事業費_円/人": 86376
+      }
+    },
+    {
+      "area_code": "214035",
+      "市区町村名": "揖斐郡大野町",
+      "fy2015": {
+        "人口_人": 23792,
+        "民生費_千円": 2594989,
+        "民生費_円/人": 109070,
+        "教育費_千円": 747331,
+        "教育費_円/人": 31411,
+        "土木費_千円": 523396,
+        "土木費_円/人": 21999,
+        "普通建設事業費_千円": 800129,
+        "普通建設事業費_円/人": 33630
+      },
+      "fy2016": {
+        "人口_人": 23493,
+        "民生費_千円": 2567559,
+        "民生費_円/人": 109290,
+        "教育費_千円": 1837388,
+        "教育費_円/人": 78210,
+        "土木費_千円": 1031181,
+        "土木費_円/人": 43893,
+        "普通建設事業費_千円": 2372427,
+        "普通建設事業費_円/人": 100984
+      },
+      "fy2017": {
+        "人口_人": 23339,
+        "民生費_千円": 2591603,
+        "民生費_円/人": 111042,
+        "教育費_千円": 1043147,
+        "教育費_円/人": 44695,
+        "土木費_千円": 1961867,
+        "土木費_円/人": 84060,
+        "普通建設事業費_千円": 2405681,
+        "普通建設事業費_円/人": 103076
+      },
+      "fy2018": {
+        "人口_人": 23139,
+        "民生費_千円": 2570680,
+        "民生費_円/人": 111097,
+        "教育費_千円": 1360025,
+        "教育費_円/人": 58776,
+        "土木費_千円": 917330,
+        "土木費_円/人": 39644,
+        "普通建設事業費_千円": 1760360,
+        "普通建設事業費_円/人": 76078
+      },
+      "fy2019": {
+        "人口_人": 22952,
+        "民生費_千円": 2629864,
+        "民生費_円/人": 114581,
+        "教育費_千円": 1397424,
+        "教育費_円/人": 60885,
+        "土木費_千円": 925016,
+        "土木費_円/人": 40302,
+        "普通建設事業費_千円": 1384934,
+        "普通建設事業費_円/人": 60340
+      },
+      "fy2020": {
+        "人口_人": 22695,
+        "民生費_千円": 2712532,
+        "民生費_円/人": 119521,
+        "教育費_千円": 1583545,
+        "教育費_円/人": 69775,
+        "土木費_千円": 573567,
+        "土木費_円/人": 25273,
+        "普通建設事業費_千円": 952867,
+        "普通建設事業費_円/人": 41986
+      },
+      "fy2021": {
+        "人口_人": 22347,
+        "民生費_千円": 3163823,
+        "民生費_円/人": 141577,
+        "教育費_千円": 1096684,
+        "教育費_円/人": 49075,
+        "土木費_千円": 525786,
+        "土木費_円/人": 23528,
+        "普通建設事業費_千円": 927372,
+        "普通建設事業費_円/人": 41499
+      },
+      "fy2022": {
+        "人口_人": 22056,
+        "民生費_千円": 2962157,
+        "民生費_円/人": 134302,
+        "教育費_千円": 1156856,
+        "教育費_円/人": 52451,
+        "土木費_千円": 536817,
+        "土木費_円/人": 24339,
+        "普通建設事業費_千円": 873286,
+        "普通建設事業費_円/人": 39594
+      },
+      "fy2023": {
+        "人口_人": 21798,
+        "民生費_千円": 3091956,
+        "民生費_円/人": 141846,
+        "教育費_千円": 1485630,
+        "教育費_円/人": 68154,
+        "土木費_千円": 513019,
+        "土木費_円/人": 23535,
+        "普通建設事業費_千円": 878390,
+        "普通建設事業費_円/人": 40297
+      },
+      "fy2024": {
+        "人口_人": 21449,
+        "民生費_千円": 3676333,
+        "民生費_円/人": 171399,
+        "教育費_千円": 1395289,
+        "教育費_円/人": 65051,
+        "土木費_千円": 815312,
+        "土木費_円/人": 38012,
+        "普通建設事業費_千円": 1290849,
+        "普通建設事業費_円/人": 60182
+      }
+    },
+    {
+      "area_code": "214043",
+      "市区町村名": "揖斐郡池田町",
+      "fy2015": {
+        "人口_人": 24572,
+        "民生費_千円": 2759021,
+        "民生費_円/人": 112283,
+        "教育費_千円": 1210740,
+        "教育費_円/人": 49273,
+        "土木費_千円": 573934,
+        "土木費_円/人": 23357,
+        "普通建設事業費_千円": 1052493,
+        "普通建設事業費_円/人": 42833
+      },
+      "fy2016": {
+        "人口_人": 24390,
+        "民生費_千円": 2863708,
+        "民生費_円/人": 117413,
+        "教育費_千円": 2982012,
+        "教育費_円/人": 122264,
+        "土木費_千円": 571978,
+        "土木費_円/人": 23451,
+        "普通建設事業費_千円": 2934670,
+        "普通建設事業費_円/人": 120323
+      },
+      "fy2017": {
+        "人口_人": 24231,
+        "民生費_千円": 3036986,
+        "民生費_円/人": 125335,
+        "教育費_千円": 1255694,
+        "教育費_円/人": 51822,
+        "土木費_千円": 585674,
+        "土木費_円/人": 24170,
+        "普通建設事業費_千円": 1192865,
+        "普通建設事業費_円/人": 49229
+      },
+      "fy2018": {
+        "人口_人": 24012,
+        "民生費_千円": 3169530,
+        "民生費_円/人": 131998,
+        "教育費_千円": 1367185,
+        "教育費_円/人": 56938,
+        "土木費_千円": 757655,
+        "土木費_円/人": 31553,
+        "普通建設事業費_千円": 1571074,
+        "普通建設事業費_円/人": 65429
+      },
+      "fy2019": {
+        "人口_人": 23779,
+        "民生費_千円": 2983390,
+        "民生費_円/人": 125463,
+        "教育費_千円": 1384207,
+        "教育費_円/人": 58211,
+        "土木費_千円": 715749,
+        "土木費_円/人": 30100,
+        "普通建設事業費_千円": 944056,
+        "普通建設事業費_円/人": 39701
+      },
+      "fy2020": {
+        "人口_人": 23563,
+        "民生費_千円": 3062880,
+        "民生費_円/人": 129987,
+        "教育費_千円": 1314172,
+        "教育費_円/人": 55773,
+        "土木費_千円": 757678,
+        "土木費_円/人": 32155,
+        "普通建設事業費_千円": 884986,
+        "普通建設事業費_円/人": 37558
+      },
+      "fy2021": {
+        "人口_人": 23186,
+        "民生費_千円": 3438488,
+        "民生費_円/人": 148300,
+        "教育費_千円": 1129866,
+        "教育費_円/人": 48731,
+        "土木費_千円": 694848,
+        "土木費_円/人": 29968,
+        "普通建設事業費_千円": 583220,
+        "普通建設事業費_円/人": 25154
+      },
+      "fy2022": {
+        "人口_人": 22990,
+        "民生費_千円": 3209441,
+        "民生費_円/人": 139602,
+        "教育費_千円": 1246224,
+        "教育費_円/人": 54207,
+        "土木費_千円": 801362,
+        "土木費_円/人": 34857,
+        "普通建設事業費_千円": 1101789,
+        "普通建設事業費_円/人": 47925
+      },
+      "fy2023": {
+        "人口_人": 22714,
+        "民生費_千円": 3315327,
+        "民生費_円/人": 145960,
+        "教育費_千円": 1178458,
+        "教育費_円/人": 51882,
+        "土木費_千円": 1018927,
+        "土木費_円/人": 44859,
+        "普通建設事業費_千円": 884483,
+        "普通建設事業費_円/人": 38940
+      },
+      "fy2024": {
+        "人口_人": 22461,
+        "民生費_千円": 3738734,
+        "民生費_円/人": 166454,
+        "教育費_千円": 1337429,
+        "教育費_円/人": 59544,
+        "土木費_千円": 838002,
+        "土木費_円/人": 37309,
+        "普通建設事業費_千円": 782970,
+        "普通建設事業費_円/人": 34859
+      }
+    },
+    {
+      "area_code": "214213",
+      "市区町村名": "本巣郡北方町",
+      "fy2015": {
+        "人口_人": 18344,
+        "民生費_千円": 2080845,
+        "民生費_円/人": 113435,
+        "教育費_千円": 531696,
+        "教育費_円/人": 28985,
+        "土木費_千円": 975457,
+        "土木費_円/人": 53176,
+        "普通建設事業費_千円": 1801576,
+        "普通建設事業費_円/人": 98211
+      },
+      "fy2016": {
+        "人口_人": 18389,
+        "民生費_千円": 2170465,
+        "民生費_円/人": 118031,
+        "教育費_千円": 725304,
+        "教育費_円/人": 39442,
+        "土木費_千円": 907412,
+        "土木費_円/人": 49345,
+        "普通建設事業費_千円": 732509,
+        "普通建設事業費_円/人": 39834
+      },
+      "fy2017": {
+        "人口_人": 18510,
+        "民生費_千円": 2168538,
+        "民生費_円/人": 117155,
+        "教育費_千円": 634274,
+        "教育費_円/人": 34267,
+        "土木費_千円": 1810375,
+        "土木費_円/人": 97805,
+        "普通建設事業費_千円": 556720,
+        "普通建設事業費_円/人": 30077
+      },
+      "fy2018": {
+        "人口_人": 18442,
+        "民生費_千円": 2207870,
+        "民生費_円/人": 119720,
+        "教育費_千円": 537119,
+        "教育費_円/人": 29125,
+        "土木費_千円": 1149679,
+        "土木費_円/人": 62340,
+        "普通建設事業費_千円": 154975,
+        "普通建設事業費_円/人": 8403
+      },
+      "fy2019": {
+        "人口_人": 18428,
+        "民生費_千円": 2198250,
+        "民生費_円/人": 119289,
+        "教育費_千円": 988136,
+        "教育費_円/人": 53621,
+        "土木費_千円": 654581,
+        "土木費_円/人": 35521,
+        "普通建設事業費_千円": 631762,
+        "普通建設事業費_円/人": 34283
+      },
+      "fy2020": {
+        "人口_人": 18495,
+        "民生費_千円": 2228209,
+        "民生費_円/人": 120476,
+        "教育費_千円": 1626212,
+        "教育費_円/人": 87927,
+        "土木費_千円": 1202559,
+        "土木費_円/人": 65021,
+        "普通建設事業費_千円": 2646515,
+        "普通建設事業費_円/人": 143094
+      },
+      "fy2021": {
+        "人口_人": 18550,
+        "民生費_千円": 2699909,
+        "民生費_円/人": 145548,
+        "教育費_千円": 1833052,
+        "教育費_円/人": 98817,
+        "土木費_千円": 1308405,
+        "土木費_円/人": 70534,
+        "普通建設事業費_千円": 2341274,
+        "普通建設事業費_円/人": 126214
+      },
+      "fy2022": {
+        "人口_人": 18695,
+        "民生費_千円": 2566541,
+        "民生費_円/人": 137285,
+        "教育費_千円": 1574064,
+        "教育費_円/人": 84197,
+        "土木費_千円": 612802,
+        "土木費_円/人": 32779,
+        "普通建設事業費_千円": 1612345,
+        "普通建設事業費_円/人": 86245
+      },
+      "fy2023": {
+        "人口_人": 18697,
+        "民生費_千円": 2790804,
+        "民生費_円/人": 149265,
+        "教育費_千円": 680782,
+        "教育費_円/人": 36411,
+        "土木費_千円": 695855,
+        "土木費_円/人": 37217,
+        "普通建設事業費_千円": 642706,
+        "普通建設事業費_円/人": 34375
+      },
+      "fy2024": {
+        "人口_人": 18568,
+        "民生費_千円": 3355732,
+        "民生費_円/人": 180727,
+        "教育費_千円": 837027,
+        "教育費_円/人": 45079,
+        "土木費_千円": 623542,
+        "土木費_円/人": 33582,
+        "普通建設事業費_千円": 872981,
+        "普通建設事業費_円/人": 47015
+      }
+    },
+    {
+      "area_code": "215015",
+      "市区町村名": "加茂郡坂祝町",
+      "fy2015": {
+        "人口_人": 8238,
+        "民生費_千円": 930649,
+        "民生費_円/人": 112970,
+        "教育費_千円": 522059,
+        "教育費_円/人": 63372,
+        "土木費_千円": 309306,
+        "土木費_円/人": 37546,
+        "普通建設事業費_千円": 464275,
+        "普通建設事業費_円/人": 56358
+      },
+      "fy2016": {
+        "人口_人": 8204,
+        "民生費_千円": 978077,
+        "民生費_円/人": 119220,
+        "教育費_千円": 421861,
+        "教育費_円/人": 51421,
+        "土木費_千円": 425613,
+        "土木費_円/人": 51879,
+        "普通建設事業費_千円": 458337,
+        "普通建設事業費_円/人": 55868
+      },
+      "fy2017": {
+        "人口_人": 8195,
+        "民生費_千円": 1011694,
+        "民生費_円/人": 123453,
+        "教育費_千円": 547439,
+        "教育費_円/人": 66802,
+        "土木費_千円": 301929,
+        "土木費_円/人": 36843,
+        "普通建設事業費_千円": 361285,
+        "普通建設事業費_円/人": 44086
+      },
+      "fy2018": {
+        "人口_人": 8253,
+        "民生費_千円": 1036205,
+        "民生費_円/人": 125555,
+        "教育費_千円": 553566,
+        "教育費_円/人": 67075,
+        "土木費_千円": 341172,
+        "土木費_円/人": 41339,
+        "普通建設事業費_千円": 339191,
+        "普通建設事業費_円/人": 41099
+      },
+      "fy2019": {
+        "人口_人": 8291,
+        "民生費_千円": 1113447,
+        "民生費_円/人": 134296,
+        "教育費_千円": 517751,
+        "教育費_円/人": 62447,
+        "土木費_千円": 366839,
+        "土木費_円/人": 44245,
+        "普通建設事業費_千円": 337943,
+        "普通建設事業費_円/人": 40760
+      },
+      "fy2020": {
+        "人口_人": 8166,
+        "民生費_千円": 1198435,
+        "民生費_円/人": 146759,
+        "教育費_千円": 511588,
+        "教育費_円/人": 62649,
+        "土木費_千円": 262694,
+        "土木費_円/人": 32169,
+        "普通建設事業費_千円": 327952,
+        "普通建設事業費_円/人": 40161
+      },
+      "fy2021": {
+        "人口_人": 8023,
+        "民生費_千円": 1426298,
+        "民生費_円/人": 177776,
+        "教育費_千円": 481777,
+        "教育費_円/人": 60049,
+        "土木費_千円": 320804,
+        "土木費_円/人": 39986,
+        "普通建設事業費_千円": 415343,
+        "普通建設事業費_円/人": 51769
+      },
+      "fy2022": {
+        "人口_人": 8084,
+        "民生費_千円": 1448868,
+        "民生費_円/人": 179227,
+        "教育費_千円": 541947,
+        "教育費_円/人": 67039,
+        "土木費_千円": 224715,
+        "土木費_円/人": 27798,
+        "普通建設事業費_千円": 434868,
+        "普通建設事業費_円/人": 53794
+      },
+      "fy2023": {
+        "人口_人": 8213,
+        "民生費_千円": 1224924,
+        "民生費_円/人": 149145,
+        "教育費_千円": 559548,
+        "教育費_円/人": 68130,
+        "土木費_千円": 448806,
+        "土木費_円/人": 54646,
+        "普通建設事業費_千円": 377415,
+        "普通建設事業費_円/人": 45953
+      },
+      "fy2024": {
+        "人口_人": 8264,
+        "民生費_千円": 1296219,
+        "民生費_円/人": 156851,
+        "教育費_千円": 709375,
+        "教育費_円/人": 85839,
+        "土木費_千円": 384900,
+        "土木費_円/人": 46576,
+        "普通建設事業費_千円": 307989,
+        "普通建設事業費_円/人": 37269
+      }
+    },
+    {
+      "area_code": "215023",
+      "市区町村名": "加茂郡富加町",
+      "fy2015": {
+        "人口_人": 5720,
+        "民生費_千円": 752827,
+        "民生費_円/人": 131613,
+        "教育費_千円": 371384,
+        "教育費_円/人": 64927,
+        "土木費_千円": 290341,
+        "土木費_円/人": 50759,
+        "普通建設事業費_千円": 484088,
+        "普通建設事業費_円/人": 84631
+      },
+      "fy2016": {
+        "人口_人": 5707,
+        "民生費_千円": 722361,
+        "民生費_円/人": 126575,
+        "教育費_千円": 299013,
+        "教育費_円/人": 52394,
+        "土木費_千円": 275247,
+        "土木費_円/人": 48230,
+        "普通建設事業費_千円": 253962,
+        "普通建設事業費_円/人": 44500
+      },
+      "fy2017": {
+        "人口_人": 5729,
+        "民生費_千円": 757597,
+        "民生費_円/人": 132239,
+        "教育費_千円": 281310,
+        "教育費_円/人": 49103,
+        "土木費_千円": 274501,
+        "土木費_円/人": 47914,
+        "普通建設事業費_千円": 242696,
+        "普通建設事業費_円/人": 42363
+      },
+      "fy2018": {
+        "人口_人": 5714,
+        "民生費_千円": 717077,
+        "民生費_円/人": 125495,
+        "教育費_千円": 292468,
+        "教育費_円/人": 51184,
+        "土木費_千円": 295229,
+        "土木費_円/人": 51668,
+        "普通建設事業費_千円": 317318,
+        "普通建設事業費_円/人": 55533
+      },
+      "fy2019": {
+        "人口_人": 5769,
+        "民生費_千円": 766424,
+        "民生費_円/人": 132852,
+        "教育費_千円": 371631,
+        "教育費_円/人": 64419,
+        "土木費_千円": 339865,
+        "土木費_円/人": 58912,
+        "普通建設事業費_千円": 382762,
+        "普通建設事業費_円/人": 66348
+      },
+      "fy2020": {
+        "人口_人": 5751,
+        "民生費_千円": 815815,
+        "民生費_円/人": 141856,
+        "教育費_千円": 360138,
+        "教育費_円/人": 62622,
+        "土木費_千円": 574329,
+        "土木費_円/人": 99866,
+        "普通建設事業費_千円": 326237,
+        "普通建設事業費_円/人": 56727
+      },
+      "fy2021": {
+        "人口_人": 5696,
+        "民生費_千円": 971850,
+        "民生費_円/人": 170620,
+        "教育費_千円": 282405,
+        "教育費_円/人": 49580,
+        "土木費_千円": 498823,
+        "土木費_円/人": 87574,
+        "普通建設事業費_千円": 340061,
+        "普通建設事業費_円/人": 59702
+      },
+      "fy2022": {
+        "人口_人": 5760,
+        "民生費_千円": 967432,
+        "民生費_円/人": 167957,
+        "教育費_千円": 382940,
+        "教育費_円/人": 66483,
+        "土木費_千円": 369049,
+        "土木費_円/人": 64071,
+        "普通建設事業費_千円": 254884,
+        "普通建設事業費_円/人": 44251
+      },
+      "fy2023": {
+        "人口_人": 5847,
+        "民生費_千円": 1012596,
+        "民生費_円/人": 173182,
+        "教育費_千円": 357960,
+        "教育費_円/人": 61221,
+        "土木費_千円": 434871,
+        "土木費_円/人": 74375,
+        "普通建設事業費_千円": 277535,
+        "普通建設事業費_円/人": 47466
+      },
+      "fy2024": {
+        "人口_人": 5884,
+        "民生費_千円": 1183136,
+        "民生費_円/人": 201077,
+        "教育費_千円": 375512,
+        "教育費_円/人": 63819,
+        "土木費_千円": 413108,
+        "土木費_円/人": 70209,
+        "普通建設事業費_千円": 316411,
+        "普通建設事業費_円/人": 53775
+      }
+    },
+    {
+      "area_code": "215031",
+      "市区町村名": "加茂郡川辺町",
+      "fy2015": {
+        "人口_人": 10543,
+        "民生費_千円": 1263207,
+        "民生費_円/人": 119815,
+        "教育費_千円": 511239,
+        "教育費_円/人": 48491,
+        "土木費_千円": 603278,
+        "土木費_円/人": 57221,
+        "普通建設事業費_千円": 402451,
+        "普通建設事業費_円/人": 38172
+      },
+      "fy2016": {
+        "人口_人": 10444,
+        "民生費_千円": 1398927,
+        "民生費_円/人": 133946,
+        "教育費_千円": 388498,
+        "教育費_円/人": 37198,
+        "土木費_千円": 648399,
+        "土木費_円/人": 62083,
+        "普通建設事業費_千円": 478549,
+        "普通建設事業費_円/人": 45820
+      },
+      "fy2017": {
+        "人口_人": 10346,
+        "民生費_千円": 1322991,
+        "民生費_円/人": 127875,
+        "教育費_千円": 584432,
+        "教育費_円/人": 56489,
+        "土木費_千円": 681165,
+        "土木費_円/人": 65838,
+        "普通建設事業費_千円": 649215,
+        "普通建設事業費_円/人": 62750
+      },
+      "fy2018": {
+        "人口_人": 10304,
+        "民生費_千円": 1317420,
+        "民生費_円/人": 127855,
+        "教育費_千円": 818506,
+        "教育費_円/人": 79436,
+        "土木費_千円": 658478,
+        "土木費_円/人": 63905,
+        "普通建設事業費_千円": 609882,
+        "普通建設事業費_円/人": 59189
+      },
+      "fy2019": {
+        "人口_人": 10222,
+        "民生費_千円": 1424884,
+        "民生費_円/人": 139394,
+        "教育費_千円": 634275,
+        "教育費_円/人": 62050,
+        "土木費_千円": 733745,
+        "土木費_円/人": 71781,
+        "普通建設事業費_千円": 657811,
+        "普通建設事業費_円/人": 64352
+      },
+      "fy2020": {
+        "人口_人": 10110,
+        "民生費_千円": 1437864,
+        "民生費_円/人": 142222,
+        "教育費_千円": 766293,
+        "教育費_円/人": 75796,
+        "土木費_千円": 704562,
+        "土木費_円/人": 69690,
+        "普通建設事業費_千円": 394104,
+        "普通建設事業費_円/人": 38982
+      },
+      "fy2021": {
+        "人口_人": 10013,
+        "民生費_千円": 1694207,
+        "民生費_円/人": 169201,
+        "教育費_千円": 872484,
+        "教育費_円/人": 87135,
+        "土木費_千円": 720709,
+        "土木費_円/人": 71977,
+        "普通建設事業費_千円": 537666,
+        "普通建設事業費_円/人": 53697
+      },
+      "fy2022": {
+        "人口_人": 9962,
+        "民生費_千円": 1611615,
+        "民生費_円/人": 161776,
+        "教育費_千円": 775920,
+        "教育費_円/人": 77888,
+        "土木費_千円": 843789,
+        "土木費_円/人": 84701,
+        "普通建設事業費_千円": 552033,
+        "普通建設事業費_円/人": 55414
+      },
+      "fy2023": {
+        "人口_人": 9843,
+        "民生費_千円": 1636539,
+        "民生費_円/人": 166264,
+        "教育費_千円": 661843,
+        "教育費_円/人": 67240,
+        "土木費_千円": 729864,
+        "土木費_円/人": 74151,
+        "普通建設事業費_千円": 353534,
+        "普通建設事業費_円/人": 35917
+      },
+      "fy2024": {
+        "人口_人": 9761,
+        "民生費_千円": 1666421,
+        "民生費_円/人": 170722,
+        "教育費_千円": 727412,
+        "教育費_円/人": 74522,
+        "土木費_千円": 730001,
+        "土木費_円/人": 74788,
+        "普通建設事業費_千円": 393494,
+        "普通建設事業費_円/人": 40313
+      }
+    },
+    {
+      "area_code": "215040",
+      "市区町村名": "加茂郡七宗町",
+      "fy2015": {
+        "人口_人": 4135,
+        "民生費_千円": 653392,
+        "民生費_円/人": 158015,
+        "教育費_千円": 315557,
+        "教育費_円/人": 76314,
+        "土木費_千円": 254448,
+        "土木費_円/人": 61535,
+        "普通建設事業費_千円": 514796,
+        "普通建設事業費_円/人": 124497
+      },
+      "fy2016": {
+        "人口_人": 4038,
+        "民生費_千円": 702819,
+        "民生費_円/人": 174051,
+        "教育費_千円": 312464,
+        "教育費_円/人": 77381,
+        "土木費_千円": 281295,
+        "土木費_円/人": 69662,
+        "普通建設事業費_千円": 435229,
+        "普通建設事業費_円/人": 107783
+      },
+      "fy2017": {
+        "人口_人": 3919,
+        "民生費_千円": 644702,
+        "民生費_円/人": 164507,
+        "教育費_千円": 235032,
+        "教育費_円/人": 59972,
+        "土木費_千円": 536006,
+        "土木費_円/人": 136771,
+        "普通建設事業費_千円": 579136,
+        "普通建設事業費_円/人": 147776
+      },
+      "fy2018": {
+        "人口_人": 3799,
+        "民生費_千円": 624476,
+        "民生費_円/人": 164379,
+        "教育費_千円": 335170,
+        "教育費_円/人": 88226,
+        "土木費_千円": 306995,
+        "土木費_円/人": 80809,
+        "普通建設事業費_千円": 471703,
+        "普通建設事業費_円/人": 124165
+      },
+      "fy2019": {
+        "人口_人": 3721,
+        "民生費_千円": 682273,
+        "民生費_円/人": 183357,
+        "教育費_千円": 329721,
+        "教育費_円/人": 88611,
+        "土木費_千円": 236027,
+        "土木費_円/人": 63431,
+        "普通建設事業費_千円": 520350,
+        "普通建設事業費_円/人": 139841
+      },
+      "fy2020": {
+        "人口_人": 3617,
+        "民生費_千円": 1028795,
+        "民生費_円/人": 284433,
+        "教育費_千円": 441427,
+        "教育費_円/人": 122042,
+        "土木費_千円": 205522,
+        "土木費_円/人": 56821,
+        "普通建設事業費_千円": 568326,
+        "普通建設事業費_円/人": 157126
+      },
+      "fy2021": {
+        "人口_人": 3511,
+        "民生費_千円": 769245,
+        "民生費_円/人": 219096,
+        "教育費_千円": 288120,
+        "教育費_円/人": 82062,
+        "土木費_千円": 207054,
+        "土木費_円/人": 58973,
+        "普通建設事業費_千円": 393540,
+        "普通建設事業費_円/人": 112088
+      },
+      "fy2022": {
+        "人口_人": 3373,
+        "民生費_千円": 728225,
+        "民生費_円/人": 215898,
+        "教育費_千円": 315478,
+        "教育費_円/人": 93530,
+        "土木費_千円": 204687,
+        "土木費_円/人": 60684,
+        "普通建設事業費_千円": 244050,
+        "普通建設事業費_円/人": 72354
+      },
+      "fy2023": {
+        "人口_人": 3290,
+        "民生費_千円": 784363,
+        "民生費_円/人": 238408,
+        "教育費_千円": 314031,
+        "教育費_円/人": 95450,
+        "土木費_千円": 331480,
+        "土木費_円/人": 100754,
+        "普通建設事業費_千円": 176968,
+        "普通建設事業費_円/人": 53790
+      },
+      "fy2024": {
+        "人口_人": 3186,
+        "民生費_千円": 883817,
+        "民生費_円/人": 277406,
+        "教育費_千円": 326046,
+        "教育費_円/人": 102337,
+        "土木費_千円": 562685,
+        "土木費_円/人": 176612,
+        "普通建設事業費_千円": 558963,
+        "普通建設事業費_円/人": 175444
+      }
+    },
+    {
+      "area_code": "215058",
+      "市区町村名": "加茂郡八百津町",
+      "fy2015": {
+        "人口_人": 11618,
+        "民生費_千円": 1608758,
+        "民生費_円/人": 138471,
+        "教育費_千円": 715155,
+        "教育費_円/人": 61556,
+        "土木費_千円": 831189,
+        "土木費_円/人": 71543,
+        "普通建設事業費_千円": 803280,
+        "普通建設事業費_円/人": 69141
+      },
+      "fy2016": {
+        "人口_人": 11435,
+        "民生費_千円": 1668474,
+        "民生費_円/人": 145909,
+        "教育費_千円": 799379,
+        "教育費_円/人": 69906,
+        "土木費_千円": 806900,
+        "土木費_円/人": 70564,
+        "普通建設事業費_千円": 1066367,
+        "普通建設事業費_円/人": 93255
+      },
+      "fy2017": {
+        "人口_人": 11252,
+        "民生費_千円": 1722907,
+        "民生費_円/人": 153120,
+        "教育費_千円": 646618,
+        "教育費_円/人": 57467,
+        "土木費_千円": 753521,
+        "土木費_円/人": 66968,
+        "普通建設事業費_千円": 868735,
+        "普通建設事業費_円/人": 77207
+      },
+      "fy2018": {
+        "人口_人": 11034,
+        "民生費_千円": 2007371,
+        "民生費_円/人": 181926,
+        "教育費_千円": 943546,
+        "教育費_円/人": 85513,
+        "土木費_千円": 792796,
+        "土木費_円/人": 71850,
+        "普通建設事業費_千円": 1392069,
+        "普通建設事業費_円/人": 126162
+      },
+      "fy2019": {
+        "人口_人": 10889,
+        "民生費_千円": 1692652,
+        "民生費_円/人": 155446,
+        "教育費_千円": 594253,
+        "教育費_円/人": 54574,
+        "土木費_千円": 961443,
+        "土木費_円/人": 88295,
+        "普通建設事業費_千円": 796109,
+        "普通建設事業費_円/人": 73111
+      },
+      "fy2020": {
+        "人口_人": 10663,
+        "民生費_千円": 1642379,
+        "民生費_円/人": 154026,
+        "教育費_千円": 590558,
+        "教育費_円/人": 55384,
+        "土木費_千円": 1172826,
+        "土木費_円/人": 109990,
+        "普通建設事業費_千円": 935867,
+        "普通建設事業費_円/人": 87768
+      },
+      "fy2021": {
+        "人口_人": 10446,
+        "民生費_千円": 2006939,
+        "民生費_円/人": 192125,
+        "教育費_千円": 605884,
+        "教育費_円/人": 58002,
+        "土木費_千円": 723908,
+        "土木費_円/人": 69300,
+        "普通建設事業費_千円": 699352,
+        "普通建設事業費_円/人": 66949
+      },
+      "fy2022": {
+        "人口_人": 10274,
+        "民生費_千円": 1925798,
+        "民生費_円/人": 187444,
+        "教育費_千円": 530429,
+        "教育費_円/人": 51628,
+        "土木費_千円": 767180,
+        "土木費_円/人": 74672,
+        "普通建設事業費_千円": 713077,
+        "普通建設事業費_円/人": 69406
+      },
+      "fy2023": {
+        "人口_人": 10092,
+        "民生費_千円": 1855992,
+        "民生費_円/人": 183907,
+        "教育費_千円": 540825,
+        "教育費_円/人": 53589,
+        "土木費_千円": 729429,
+        "土木費_円/人": 72278,
+        "普通建設事業費_千円": 493328,
+        "普通建設事業費_円/人": 48883
+      },
+      "fy2024": {
+        "人口_人": 9861,
+        "民生費_千円": 2000099,
+        "民生費_円/人": 202829,
+        "教育費_千円": 633404,
+        "教育費_円/人": 64233,
+        "土木費_千円": 821193,
+        "土木費_円/人": 83277,
+        "普通建設事業費_千円": 618139,
+        "普通建設事業費_円/人": 62685
+      }
+    },
+    {
+      "area_code": "215066",
+      "市区町村名": "加茂郡白川町",
+      "fy2015": {
+        "人口_人": 8916,
+        "民生費_千円": 1411570,
+        "民生費_円/人": 158319,
+        "教育費_千円": 547908,
+        "教育費_円/人": 61452,
+        "土木費_千円": 397140,
+        "土木費_円/人": 44542,
+        "普通建設事業費_千円": 891984,
+        "普通建設事業費_円/人": 100043
+      },
+      "fy2016": {
+        "人口_人": 8692,
+        "民生費_千円": 1470717,
+        "民生費_円/人": 169204,
+        "教育費_千円": 539085,
+        "教育費_円/人": 62021,
+        "土木費_千円": 468720,
+        "土木費_円/人": 53925,
+        "普通建設事業費_千円": 857999,
+        "普通建設事業費_円/人": 98711
+      },
+      "fy2017": {
+        "人口_人": 8545,
+        "民生費_千円": 1329068,
+        "民生費_円/人": 155538,
+        "教育費_千円": 627048,
+        "教育費_円/人": 73382,
+        "土木費_千円": 434139,
+        "土木費_円/人": 50806,
+        "普通建設事業費_千円": 1130592,
+        "普通建設事業費_円/人": 132310
+      },
+      "fy2018": {
+        "人口_人": 8289,
+        "民生費_千円": 1327872,
+        "民生費_円/人": 160197,
+        "教育費_千円": 554411,
+        "教育費_円/人": 66885,
+        "土木費_千円": 478415,
+        "土木費_円/人": 57717,
+        "普通建設事業費_千円": 873745,
+        "普通建設事業費_円/人": 105410
+      },
+      "fy2019": {
+        "人口_人": 8033,
+        "民生費_千円": 1295247,
+        "民生費_円/人": 161241,
+        "教育費_千円": 866698,
+        "教育費_円/人": 107892,
+        "土木費_千円": 495727,
+        "土木費_円/人": 61711,
+        "普通建設事業費_千円": 942846,
+        "普通建設事業費_円/人": 117372
+      },
+      "fy2020": {
+        "人口_人": 7816,
+        "民生費_千円": 1253274,
+        "民生費_円/人": 160347,
+        "教育費_千円": 645770,
+        "教育費_円/人": 82622,
+        "土木費_千円": 502110,
+        "土木費_円/人": 64241,
+        "普通建設事業費_千円": 868534,
+        "普通建設事業費_円/人": 111123
+      },
+      "fy2021": {
+        "人口_人": 7634,
+        "民生費_千円": 1438554,
+        "民生費_円/人": 188440,
+        "教育費_千円": 698801,
+        "教育費_円/人": 91538,
+        "土木費_千円": 503063,
+        "土木費_円/人": 65898,
+        "普通建設事業費_千円": 803563,
+        "普通建設事業費_円/人": 105261
+      },
+      "fy2022": {
+        "人口_人": 7421,
+        "民生費_千円": 1346538,
+        "民生費_円/人": 181450,
+        "教育費_千円": 676435,
+        "教育費_円/人": 91151,
+        "土木費_千円": 575471,
+        "土木費_円/人": 77546,
+        "普通建設事業費_千円": 1102684,
+        "普通建設事業費_円/人": 148590
+      },
+      "fy2023": {
+        "人口_人": 7194,
+        "民生費_千円": 1382096,
+        "民生費_円/人": 192118,
+        "教育費_千円": 660894,
+        "教育費_円/人": 91867,
+        "土木費_千円": 422696,
+        "土木費_円/人": 58757,
+        "普通建設事業費_千円": 822717,
+        "普通建設事業費_円/人": 114362
+      },
+      "fy2024": {
+        "人口_人": 6914,
+        "民生費_千円": 1445959,
+        "民生費_円/人": 209135,
+        "教育費_千円": 814363,
+        "教育費_円/人": 117785,
+        "土木費_千円": 516175,
+        "土木費_円/人": 74656,
+        "普通建設事業費_千円": 1359538,
+        "普通建設事業費_円/人": 196636
+      }
+    },
+    {
+      "area_code": "215074",
+      "市区町村名": "加茂郡東白川村",
+      "fy2015": {
+        "人口_人": 2432,
+        "民生費_千円": 497187,
+        "民生費_円/人": 204435,
+        "教育費_千円": 183597,
+        "教育費_円/人": 75492,
+        "土木費_千円": 167535,
+        "土木費_円/人": 68888,
+        "普通建設事業費_千円": 481018,
+        "普通建設事業費_円/人": 197787
+      },
+      "fy2016": {
+        "人口_人": 2375,
+        "民生費_千円": 512597,
+        "民生費_円/人": 215830,
+        "教育費_千円": 244903,
+        "教育費_円/人": 103117,
+        "土木費_千円": 229329,
+        "土木費_円/人": 96560,
+        "普通建設事業費_千円": 597885,
+        "普通建設事業費_円/人": 251741
+      },
+      "fy2017": {
+        "人口_人": 2330,
+        "民生費_千円": 463860,
+        "民生費_円/人": 199082,
+        "教育費_千円": 283824,
+        "教育費_円/人": 121813,
+        "土木費_千円": 192960,
+        "土木費_円/人": 82815,
+        "普通建設事業費_千円": 500963,
+        "普通建設事業費_円/人": 215006
+      },
+      "fy2018": {
+        "人口_人": 2277,
+        "民生費_千円": 430813,
+        "民生費_円/人": 189202,
+        "教育費_千円": 228430,
+        "教育費_円/人": 100321,
+        "土木費_千円": 200104,
+        "土木費_円/人": 87881,
+        "普通建設事業費_千円": 318592,
+        "普通建設事業費_円/人": 139917
+      },
+      "fy2019": {
+        "人口_人": 2214,
+        "民生費_千円": 446986,
+        "民生費_円/人": 201891,
+        "教育費_千円": 231799,
+        "教育費_円/人": 104697,
+        "土木費_千円": 201747,
+        "土木費_円/人": 91123,
+        "普通建設事業費_千円": 664975,
+        "普通建設事業費_円/人": 300350
+      },
+      "fy2020": {
+        "人口_人": 2178,
+        "民生費_千円": 480503,
+        "民生費_円/人": 220617,
+        "教育費_千円": 150756,
+        "教育費_円/人": 69218,
+        "土木費_千円": 195733,
+        "土木費_円/人": 89868,
+        "普通建設事業費_千円": 338704,
+        "普通建設事業費_円/人": 155511
+      },
+      "fy2021": {
+        "人口_人": 2141,
+        "民生費_千円": 546971,
+        "民生費_円/人": 255475,
+        "教育費_千円": 139088,
+        "教育費_円/人": 64964,
+        "土木費_千円": 194897,
+        "土木費_円/人": 91031,
+        "普通建設事業費_千円": 252321,
+        "普通建設事業費_円/人": 117852
+      },
+      "fy2022": {
+        "人口_人": 2109,
+        "民生費_千円": 495539,
+        "民生費_円/人": 234964,
+        "教育費_千円": 144010,
+        "教育費_円/人": 68284,
+        "土木費_千円": 236172,
+        "土木費_円/人": 111983,
+        "普通建設事業費_千円": 278185,
+        "普通建設事業費_円/人": 131904
+      },
+      "fy2023": {
+        "人口_人": 2072,
+        "民生費_千円": 483480,
+        "民生費_円/人": 233340,
+        "教育費_千円": 221836,
+        "教育費_円/人": 107064,
+        "土木費_千円": 200694,
+        "土木費_円/人": 96860,
+        "普通建設事業費_千円": 303986,
+        "普通建設事業費_円/人": 146711
+      },
+      "fy2024": {
+        "人口_人": 2011,
+        "民生費_千円": 483885,
+        "民生費_円/人": 240619,
+        "教育費_千円": 207978,
+        "教育費_円/人": 103420,
+        "土木費_千円": 192845,
+        "土木費_円/人": 95895,
+        "普通建設事業費_千円": 196090,
+        "普通建設事業費_円/人": 97509
+      }
+    },
+    {
+      "area_code": "215210",
+      "市区町村名": "可児郡御嵩町",
+      "fy2015": {
+        "人口_人": 18766,
+        "民生費_千円": 2028563,
+        "民生費_円/人": 108098,
+        "教育費_千円": 642792,
+        "教育費_円/人": 34253,
+        "土木費_千円": 903217,
+        "土木費_円/人": 48131,
+        "普通建設事業費_千円": 2713870,
+        "普通建設事業費_円/人": 144616
+      },
+      "fy2016": {
+        "人口_人": 18628,
+        "民生費_千円": 2147594,
+        "民生費_円/人": 115288,
+        "教育費_千円": 628899,
+        "教育費_円/人": 33761,
+        "土木費_千円": 838964,
+        "土木費_円/人": 45038,
+        "普通建設事業費_千円": 2455180,
+        "普通建設事業費_円/人": 131801
+      },
+      "fy2017": {
+        "人口_人": 18448,
+        "民生費_千円": 2117510,
+        "民生費_円/人": 114783,
+        "教育費_千円": 694040,
+        "教育費_円/人": 37621,
+        "土木費_千円": 797582,
+        "土木費_円/人": 43234,
+        "普通建設事業費_千円": 732761,
+        "普通建設事業費_円/人": 39720
+      },
+      "fy2018": {
+        "人口_人": 18371,
+        "民生費_千円": 2093989,
+        "民生費_円/人": 113983,
+        "教育費_千円": 689532,
+        "教育費_円/人": 37534,
+        "土木費_千円": 821484,
+        "土木費_円/人": 44716,
+        "普通建設事業費_千円": 2046718,
+        "普通建設事業費_円/人": 111410
+      },
+      "fy2019": {
+        "人口_人": 18348,
+        "民生費_千円": 2175318,
+        "民生費_円/人": 118559,
+        "教育費_千円": 881261,
+        "教育費_円/人": 48030,
+        "土木費_千円": 798881,
+        "土木費_円/人": 43540,
+        "普通建設事業費_千円": 2535398,
+        "普通建設事業費_円/人": 138184
+      },
+      "fy2020": {
+        "人口_人": 18133,
+        "民生費_千円": 2248512,
+        "民生費_円/人": 124001,
+        "教育費_千円": 1029540,
+        "教育費_円/人": 56777,
+        "土木費_千円": 956474,
+        "土木費_円/人": 52748,
+        "普通建設事業費_千円": 4626048,
+        "普通建設事業費_円/人": 255118
+      },
+      "fy2021": {
+        "人口_人": 17968,
+        "民生費_千円": 2626470,
+        "民生費_円/人": 146175,
+        "教育費_千円": 765072,
+        "教育費_円/人": 42580,
+        "土木費_千円": 989984,
+        "土木費_円/人": 55097,
+        "普通建設事業費_千円": 1123527,
+        "普通建設事業費_円/人": 62529
+      },
+      "fy2022": {
+        "人口_人": 17775,
+        "民生費_千円": 2411312,
+        "民生費_円/人": 135657,
+        "教育費_千円": 772916,
+        "教育費_円/人": 43483,
+        "土木費_千円": 817827,
+        "土木費_円/人": 46010,
+        "普通建設事業費_千円": 1984312,
+        "普通建設事業費_円/人": 111635
+      },
+      "fy2023": {
+        "人口_人": 17682,
+        "民生費_千円": 2566185,
+        "民生費_円/人": 145130,
+        "教育費_千円": 907906,
+        "教育費_円/人": 51346,
+        "土木費_千円": 914990,
+        "土木費_円/人": 51747,
+        "普通建設事業費_千円": 4348945,
+        "普通建設事業費_円/人": 245953
+      },
+      "fy2024": {
+        "人口_人": 17523,
+        "民生費_千円": 2734545,
+        "民生費_円/人": 156055,
+        "教育費_千円": 1725025,
+        "教育費_円/人": 98443,
+        "土木費_千円": 872460,
+        "土木費_円/人": 49789,
+        "普通建設事業費_千円": 3550864,
+        "普通建設事業費_円/人": 202640
+      }
+    },
+    {
+      "area_code": "216046",
+      "市区町村名": "大野郡白川村",
+      "fy2015": {
+        "人口_人": 1694,
+        "民生費_千円": 308354,
+        "民生費_円/人": 182027,
+        "教育費_千円": 373895,
+        "教育費_円/人": 220717,
+        "土木費_千円": 290875,
+        "土木費_円/人": 171709,
+        "普通建設事業費_千円": 741795,
+        "普通建設事業費_円/人": 437896
+      },
+      "fy2016": {
+        "人口_人": 1672,
+        "民生費_千円": 320513,
+        "民生費_円/人": 191694,
+        "教育費_千円": 317788,
+        "教育費_円/人": 190065,
+        "土木費_千円": 440927,
+        "土木費_円/人": 263712,
+        "普通建設事業費_千円": 752754,
+        "普通建設事業費_円/人": 450212
+      },
+      "fy2017": {
+        "人口_人": 1652,
+        "民生費_千円": 298947,
+        "民生費_円/人": 180961,
+        "教育費_千円": 322979,
+        "教育費_円/人": 195508,
+        "土木費_千円": 518959,
+        "土木費_円/人": 314140,
+        "普通建設事業費_千円": 564467,
+        "普通建設事業費_円/人": 341687
+      },
+      "fy2018": {
+        "人口_人": 1630,
+        "民生費_千円": 575911,
+        "民生費_円/人": 353320,
+        "教育費_千円": 320998,
+        "教育費_円/人": 196931,
+        "土木費_千円": 1056890,
+        "土木費_円/人": 648399,
+        "普通建設事業費_千円": 1459924,
+        "普通建設事業費_円/人": 895659
+      },
+      "fy2019": {
+        "人口_人": 1608,
+        "民生費_千円": 501453,
+        "民生費_円/人": 311849,
+        "教育費_千円": 304222,
+        "教育費_円/人": 189193,
+        "土木費_千円": 434886,
+        "土木費_円/人": 270451,
+        "普通建設事業費_千円": 799922,
+        "普通建設事業費_円/人": 497464
+      },
+      "fy2020": {
+        "人口_人": 1572,
+        "民生費_千円": 477500,
+        "民生費_円/人": 303753,
+        "教育費_千円": 484255,
+        "教育費_円/人": 308050,
+        "土木費_千円": 562958,
+        "土木費_円/人": 358116,
+        "普通建設事業費_千円": 515644,
+        "普通建設事業費_円/人": 328018
+      },
+      "fy2021": {
+        "人口_人": 1541,
+        "民生費_千円": 353271,
+        "民生費_円/人": 229248,
+        "教育費_千円": 306744,
+        "教育費_円/人": 199055,
+        "土木費_千円": 730231,
+        "土木費_円/人": 473868,
+        "普通建設事業費_千円": 731277,
+        "普通建設事業費_円/人": 474547
+      },
+      "fy2022": {
+        "人口_人": 1513,
+        "民生費_千円": 341341,
+        "民生費_円/人": 225605,
+        "教育費_千円": 565073,
+        "教育費_円/人": 373479,
+        "土木費_千円": 523896,
+        "土木費_円/人": 346263,
+        "普通建設事業費_千円": 556197,
+        "普通建設事業費_円/人": 367612
+      },
+      "fy2023": {
+        "人口_人": 1491,
+        "民生費_千円": 286349,
+        "民生費_円/人": 192052,
+        "教育費_千円": 376041,
+        "教育費_円/人": 252207,
+        "土木費_千円": 445973,
+        "土木費_円/人": 299110,
+        "普通建設事業費_千円": 469752,
+        "普通建設事業費_円/人": 315058
+      },
+      "fy2024": {
+        "人口_人": 1470,
+        "民生費_千円": 285727,
+        "民生費_円/人": 194372,
+        "教育費_千円": 397863,
+        "教育費_円/人": 270655,
+        "土木費_千円": 1063010,
+        "土木費_円/人": 723136,
+        "普通建設事業費_千円": 663365,
+        "普通建設事業費_円/人": 451269
+      }
+    }
+  ],
+  "averages_by_year": {
+    "fy2015": {
+      "national": {
+        "municipality_count": 1741,
+        "民生費_円/人": 157846,
+        "教育費_円/人": 46178,
+        "土木費_円/人": 51885,
+        "普通建設事業費_円/人": 60150
+      },
+      "prefecture": {
+        "municipality_count": 42,
+        "民生費_円/人": 123556,
+        "教育費_円/人": 46341,
+        "土木費_円/人": 42779,
+        "普通建設事業費_円/人": 53232
+      }
+    },
+    "fy2016": {
+      "national": {
+        "municipality_count": 1741,
+        "民生費_円/人": 163808,
+        "教育費_円/人": 45262,
+        "土木費_円/人": 51842,
+        "普通建設事業費_円/人": 58677
+      },
+      "prefecture": {
+        "municipality_count": 42,
+        "民生費_円/人": 128888,
+        "教育費_円/人": 47318,
+        "土木費_円/人": 46333,
+        "普通建設事業費_円/人": 56700
+      }
+    },
+    "fy2017": {
+      "national": {
+        "municipality_count": 1741,
+        "民生費_円/人": 165375,
+        "教育費_円/人": 55480,
+        "土木費_円/人": 51751,
+        "普通建設事業費_円/人": 59467
+      },
+      "prefecture": {
+        "municipality_count": 42,
+        "民生費_円/人": 129818,
+        "教育費_円/人": 49134,
+        "土木費_円/人": 49411,
+        "普通建設事業費_円/人": 59338
+      }
+    },
+    "fy2018": {
+      "national": {
+        "municipality_count": 1741,
+        "民生費_円/人": 165097,
+        "教育費_円/人": 55389,
+        "土木費_円/人": 50970,
+        "普通建設事業費_円/人": 57772
+      },
+      "prefecture": {
+        "municipality_count": 42,
+        "民生費_円/人": 130512,
+        "教育費_円/人": 47561,
+        "土木費_円/人": 46859,
+        "普通建設事業費_円/人": 55942
+      }
+    },
+    "fy2019": {
+      "national": {
+        "municipality_count": 1741,
+        "民生費_円/人": 171106,
+        "教育費_円/人": 59313,
+        "土木費_円/人": 50374,
+        "普通建設事業費_円/人": 61819
+      },
+      "prefecture": {
+        "municipality_count": 42,
+        "民生費_円/人": 134184,
+        "教育費_円/人": 52994,
+        "土木費_円/人": 46269,
+        "普通建設事業費_円/人": 66972
+      }
+    },
+    "fy2020": {
+      "national": {
+        "municipality_count": 1741,
+        "民生費_円/人": 177387,
+        "教育費_円/人": 63987,
+        "土木費_円/人": 51660,
+        "普通建設事業費_円/人": 62569
+      },
+      "prefecture": {
+        "municipality_count": 42,
+        "民生費_円/人": 138323,
+        "教育費_円/人": 60355,
+        "土木費_円/人": 48037,
+        "普通建設事業費_円/人": 67696
+      }
+    },
+    "fy2021": {
+      "national": {
+        "municipality_count": 1741,
+        "民生費_円/人": 202885,
+        "教育費_円/人": 61338,
+        "土木費_円/人": 51726,
+        "普通建設事業費_円/人": 59068
+      },
+      "prefecture": {
+        "municipality_count": 42,
+        "民生費_円/人": 163489,
+        "教育費_円/人": 52557,
+        "土木費_円/人": 48498,
+        "普通建設事業費_円/人": 57399
+      }
+    },
+    "fy2022": {
+      "national": {
+        "municipality_count": 1741,
+        "民生費_円/人": 196866,
+        "教育費_円/人": 63140,
+        "土木費_円/人": 51564,
+        "普通建設事業費_円/人": 56679
+      },
+      "prefecture": {
+        "municipality_count": 42,
+        "民生費_円/人": 154963,
+        "教育費_円/人": 59010,
+        "土木費_円/人": 50840,
+        "普通建設事業費_円/人": 58370
+      }
+    },
+    "fy2023": {
+      "national": {
+        "municipality_count": 1741,
+        "民生費_円/人": 207189,
+        "教育費_円/人": 65502,
+        "土木費_円/人": 51628,
+        "普通建設事業費_円/人": 60753
+      },
+      "prefecture": {
+        "municipality_count": 42,
+        "民生費_円/人": 163516,
+        "教育費_円/人": 57783,
+        "土木費_円/人": 48452,
+        "普通建設事業費_円/人": 60971
+      }
+    },
+    "fy2024": {
+      "national": {
+        "municipality_count": 1741,
+        "民生費_円/人": 217943,
+        "教育費_円/人": 71954,
+        "土木費_円/人": 53512,
+        "普通建設事業費_円/人": 65020
+      },
+      "prefecture": {
+        "municipality_count": 42,
+        "民生費_円/人": 177832,
+        "教育費_円/人": 66746,
+        "土木費_円/人": 52048,
+        "普通建設事業費_円/人": 70858
+      }
+    }
+  },
+  "data_check_log": {
+    "extraction_issues": [],
+    "missing_codes_by_year": {}
+  }
+}

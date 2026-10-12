@@ -1,0 +1,781 @@
+{
+  "sources": [
+    {
+      "source_url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000032214141&fileKind=0",
+      "source_page": "https://www.e-stat.go.jp/stat-search/files?page=1&layout=dataset&toukei=00200521&tstat=000001136464&tclass1=000001136469&stat_infid=000032214141",
+      "stat_name": "令和2年国勢調査 従業地・通学地による人口・就業状態等集計",
+      "table_title": "第１－１表　男女，年齢（5歳階級），常住地又は従業地・通学地別人口及び昼夜間人口比率－全国，都道府県，市区町村",
+      "statInfId": "000032214141",
+      "fetched_at": "2026-08-28T20:03:48+09:00",
+      "source_file_hash": "8c1a3b731617c421ddae723439531985308332d8941849e8a9b6dfa6b72b37a5"
+    }
+  ],
+  "period": "令和2年(2020)国勢調査",
+  "updated": "2026-09-26",
+  "notes": [
+    "昼夜間人口比率は統計表に算出済みの値（男女=『0_総数』・年齢=『00_総数』の行）をそのまま格納した。自前計算していない。",
+    "100が昼夜均衡。単位表記は原表にも無い。全国は100。",
+    "対象は岐阜県内の市区町村42件（地域コード先頭2桁=21・末尾3桁≠000）。都道府県行・全国行は含まない。",
+    "地域コードは国勢調査の5桁（例 21201=岐阜市、21000=岐阜県、00000=全国）。住民基本台帳の6桁体系（例 212016）とは別体系であり、data/m1_1a_population_timeseries.json の 市区町村コード と直接結合できない（先頭5桁での結合が必要）。",
+    "入力は取得済みのローカルファイルのみを使用し、本ファイル生成時に再ダウンロードはしていない。",
+    "comparison（全国平均・類似団体平均・全国順位・百分位）は2026-09-26追加（F-5・A-14）。docs/similar-group-aggregation-design.md §3・§4の集計段の定義に従う。母集団M = 区分マスタ（総務省 類似団体別市町村財政指数表・1741団体）∩ 全国集約ファイル（本ファイル冒頭sourcesと同一の統計表ID000032214141）に数値がある団体 = 1740団体。national_average は母集団Mの単純算術平均、group_average は束ね後区分ごとの単純算術平均（average_method=\"unweighted_mean\"）。束ね写像：政令指定都市・中核市・施行時特例市・特別区は『大都市』に統合。それ以外は類団区分の原ラベルをそのまま使う（一般市・町村で同一ラベルの区分は同一グループとして束ねる）。content-spec-v1.md §7.2の定義どおり本指標の主比較は類似団体平均（比較=類団）。rank は母集団M内での値の降順順位（1=最大値。同値は同順位・次の順位を飛ばすcompetition ranking）。percentile = (rank_out_of − rank + 1) / rank_out_of × 100（小数第1位）。評価語・評価色・複合スコアは付与していない（20260808_decisions.md D-4／D-6／D-18）。"
+  ],
+  "data": [
+    {
+      "area_code": "212016",
+      "市区町村コード": "21201",
+      "都道府県": "岐阜県",
+      "市区町村名": "岐阜市",
+      "昼夜間人口比率": 102.2208,
+      "comparison": {
+        "value": 102.2208,
+        "national_average": 98.4,
+        "group_code": "大都市",
+        "group_average": 115.8,
+        "rank": 384,
+        "rank_out_of": 1740,
+        "percentile": 78.0,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "212024",
+      "市区町村コード": "21202",
+      "都道府県": "岐阜県",
+      "市区町村名": "大垣市",
+      "昼夜間人口比率": 103.46335,
+      "comparison": {
+        "value": 103.46335,
+        "national_average": 98.4,
+        "group_code": "Ⅳ－２",
+        "group_average": 95.5,
+        "rank": 288,
+        "rank_out_of": 1740,
+        "percentile": 83.5,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "212032",
+      "市区町村コード": "21203",
+      "都道府県": "岐阜県",
+      "市区町村名": "高山市",
+      "昼夜間人口比率": 101.09691,
+      "comparison": {
+        "value": 101.09691,
+        "national_average": 98.4,
+        "group_code": "Ⅱ－１",
+        "group_average": 96.9,
+        "rank": 475,
+        "rank_out_of": 1740,
+        "percentile": 72.8,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "212041",
+      "市区町村コード": "21204",
+      "都道府県": "岐阜県",
+      "市区町村名": "多治見市",
+      "昼夜間人口比率": 90.67946,
+      "comparison": {
+        "value": 90.67946,
+        "national_average": 98.4,
+        "group_code": "Ⅲ－３",
+        "group_average": 94.0,
+        "rank": 1296,
+        "rank_out_of": 1740,
+        "percentile": 25.6,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "212059",
+      "市区町村コード": "21205",
+      "都道府県": "岐阜県",
+      "市区町村名": "関市",
+      "昼夜間人口比率": 102.31113,
+      "comparison": {
+        "value": 102.31113,
+        "national_average": 98.4,
+        "group_code": "Ⅱ－２",
+        "group_average": 97.3,
+        "rank": 377,
+        "rank_out_of": 1740,
+        "percentile": 78.4,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "212067",
+      "市区町村コード": "21206",
+      "都道府県": "岐阜県",
+      "市区町村名": "中津川市",
+      "昼夜間人口比率": 98.57255,
+      "comparison": {
+        "value": 98.57255,
+        "national_average": 98.4,
+        "group_code": "Ⅱ－２",
+        "group_average": 97.3,
+        "rank": 730,
+        "rank_out_of": 1740,
+        "percentile": 58.1,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "212075",
+      "市区町村コード": "21207",
+      "都道府県": "岐阜県",
+      "市区町村名": "美濃市",
+      "昼夜間人口比率": 105.07612,
+      "comparison": {
+        "value": 105.07612,
+        "national_average": 98.4,
+        "group_code": "Ⅰ－２",
+        "group_average": 102.2,
+        "rank": 209,
+        "rank_out_of": 1740,
+        "percentile": 88.0,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "212083",
+      "市区町村コード": "21208",
+      "都道府県": "岐阜県",
+      "市区町村名": "瑞浪市",
+      "昼夜間人口比率": 94.27187,
+      "comparison": {
+        "value": 94.27187,
+        "national_average": 98.4,
+        "group_code": "Ⅰ－２",
+        "group_average": 102.2,
+        "rank": 1084,
+        "rank_out_of": 1740,
+        "percentile": 37.8,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "212091",
+      "市区町村コード": "21209",
+      "都道府県": "岐阜県",
+      "市区町村名": "羽島市",
+      "昼夜間人口比率": 87.42555,
+      "comparison": {
+        "value": 87.42555,
+        "national_average": 98.4,
+        "group_code": "Ⅱ－２",
+        "group_average": 97.3,
+        "rank": 1460,
+        "rank_out_of": 1740,
+        "percentile": 16.1,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "212105",
+      "市区町村コード": "21210",
+      "都道府県": "岐阜県",
+      "市区町村名": "恵那市",
+      "昼夜間人口比率": 98.26056,
+      "comparison": {
+        "value": 98.26056,
+        "national_average": 98.4,
+        "group_code": "Ⅰ－２",
+        "group_average": 102.2,
+        "rank": 754,
+        "rank_out_of": 1740,
+        "percentile": 56.7,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "212113",
+      "市区町村コード": "21211",
+      "都道府県": "岐阜県",
+      "市区町村名": "美濃加茂市",
+      "昼夜間人口比率": 97.68738,
+      "comparison": {
+        "value": 97.68738,
+        "national_average": 98.4,
+        "group_code": "Ⅱ－２",
+        "group_average": 97.3,
+        "rank": 803,
+        "rank_out_of": 1740,
+        "percentile": 53.9,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "212121",
+      "市区町村コード": "21212",
+      "都道府県": "岐阜県",
+      "市区町村名": "土岐市",
+      "昼夜間人口比率": 96.11007,
+      "comparison": {
+        "value": 96.11007,
+        "national_average": 98.4,
+        "group_code": "Ⅱ－２",
+        "group_average": 97.3,
+        "rank": 935,
+        "rank_out_of": 1740,
+        "percentile": 46.3,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "212130",
+      "市区町村コード": "21213",
+      "都道府県": "岐阜県",
+      "市区町村名": "各務原市",
+      "昼夜間人口比率": 94.51775,
+      "comparison": {
+        "value": 94.51775,
+        "national_average": 98.4,
+        "group_code": "Ⅲ－２",
+        "group_average": 95.3,
+        "rank": 1065,
+        "rank_out_of": 1740,
+        "percentile": 38.9,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "212148",
+      "市区町村コード": "21214",
+      "都道府県": "岐阜県",
+      "市区町村名": "可児市",
+      "昼夜間人口比率": 96.31982,
+      "comparison": {
+        "value": 96.31982,
+        "national_average": 98.4,
+        "group_code": "Ⅱ－２",
+        "group_average": 97.3,
+        "rank": 917,
+        "rank_out_of": 1740,
+        "percentile": 47.4,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "212156",
+      "市区町村コード": "21215",
+      "都道府県": "岐阜県",
+      "市区町村名": "山県市",
+      "昼夜間人口比率": 87.59098,
+      "comparison": {
+        "value": 87.59098,
+        "national_average": 98.4,
+        "group_code": "Ⅰ－２",
+        "group_average": 102.2,
+        "rank": 1450,
+        "rank_out_of": 1740,
+        "percentile": 16.7,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "212164",
+      "市区町村コード": "21216",
+      "都道府県": "岐阜県",
+      "市区町村名": "瑞穂市",
+      "昼夜間人口比率": 81.90927,
+      "comparison": {
+        "value": 81.90927,
+        "national_average": 98.4,
+        "group_code": "Ⅱ－３",
+        "group_average": 91.4,
+        "rank": 1649,
+        "rank_out_of": 1740,
+        "percentile": 5.3,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "212172",
+      "市区町村コード": "21217",
+      "都道府県": "岐阜県",
+      "市区町村名": "飛騨市",
+      "昼夜間人口比率": 96.87195,
+      "comparison": {
+        "value": 96.87195,
+        "national_average": 98.4,
+        "group_code": "Ⅰ－２",
+        "group_average": 102.2,
+        "rank": 875,
+        "rank_out_of": 1740,
+        "percentile": 49.8,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "212181",
+      "市区町村コード": "21218",
+      "都道府県": "岐阜県",
+      "市区町村名": "本巣市",
+      "昼夜間人口比率": 100.40695,
+      "comparison": {
+        "value": 100.40695,
+        "national_average": 98.4,
+        "group_code": "Ⅰ－２",
+        "group_average": 102.2,
+        "rank": 540,
+        "rank_out_of": 1740,
+        "percentile": 69.0,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "212199",
+      "市区町村コード": "21219",
+      "都道府県": "岐阜県",
+      "市区町村名": "郡上市",
+      "昼夜間人口比率": 98.15114,
+      "comparison": {
+        "value": 98.15114,
+        "national_average": 98.4,
+        "group_code": "Ⅰ－２",
+        "group_average": 102.2,
+        "rank": 765,
+        "rank_out_of": 1740,
+        "percentile": 56.1,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "212202",
+      "市区町村コード": "21220",
+      "都道府県": "岐阜県",
+      "市区町村名": "下呂市",
+      "昼夜間人口比率": 99.56948,
+      "comparison": {
+        "value": 99.56948,
+        "national_average": 98.4,
+        "group_code": "Ⅰ－２",
+        "group_average": 102.2,
+        "rank": 627,
+        "rank_out_of": 1740,
+        "percentile": 64.0,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "212211",
+      "市区町村コード": "21221",
+      "都道府県": "岐阜県",
+      "市区町村名": "海津市",
+      "昼夜間人口比率": 88.94761,
+      "comparison": {
+        "value": 88.94761,
+        "national_average": 98.4,
+        "group_code": "Ⅰ－１",
+        "group_average": 99.5,
+        "rank": 1377,
+        "rank_out_of": 1740,
+        "percentile": 20.9,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "213021",
+      "市区町村コード": "21302",
+      "都道府県": "岐阜県",
+      "市区町村名": "岐南町",
+      "昼夜間人口比率": 96.3989,
+      "comparison": {
+        "value": 96.3989,
+        "national_average": 98.4,
+        "group_code": "Ⅴ－２",
+        "group_average": 89.4,
+        "rank": 911,
+        "rank_out_of": 1740,
+        "percentile": 47.7,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "213039",
+      "市区町村コード": "21303",
+      "都道府県": "岐阜県",
+      "市区町村名": "笠松町",
+      "昼夜間人口比率": 90.71506,
+      "comparison": {
+        "value": 90.71506,
+        "national_average": 98.4,
+        "group_code": "Ⅴ－２",
+        "group_average": 89.4,
+        "rank": 1293,
+        "rank_out_of": 1740,
+        "percentile": 25.7,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "213411",
+      "市区町村コード": "21341",
+      "都道府県": "岐阜県",
+      "市区町村名": "養老町",
+      "昼夜間人口比率": 90.83402,
+      "comparison": {
+        "value": 90.83402,
+        "national_average": 98.4,
+        "group_code": "Ⅴ－１",
+        "group_average": 94.6,
+        "rank": 1284,
+        "rank_out_of": 1740,
+        "percentile": 26.3,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "213616",
+      "市区町村コード": "21361",
+      "都道府県": "岐阜県",
+      "市区町村名": "垂井町",
+      "昼夜間人口比率": 89.22809,
+      "comparison": {
+        "value": 89.22809,
+        "national_average": 98.4,
+        "group_code": "Ⅴ－１",
+        "group_average": 94.6,
+        "rank": 1359,
+        "rank_out_of": 1740,
+        "percentile": 22.0,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "213624",
+      "市区町村コード": "21362",
+      "都道府県": "岐阜県",
+      "市区町村名": "関ケ原町",
+      "昼夜間人口比率": 98.3056,
+      "comparison": {
+        "value": 98.3056,
+        "national_average": 98.4,
+        "group_code": "Ⅱ－１",
+        "group_average": 96.9,
+        "rank": 749,
+        "rank_out_of": 1740,
+        "percentile": 57.0,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "213811",
+      "市区町村コード": "21381",
+      "都道府県": "岐阜県",
+      "市区町村名": "神戸町",
+      "昼夜間人口比率": 85.47215,
+      "comparison": {
+        "value": 85.47215,
+        "national_average": 98.4,
+        "group_code": "Ⅳ－１",
+        "group_average": 98.1,
+        "rank": 1544,
+        "rank_out_of": 1740,
+        "percentile": 11.3,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "213829",
+      "市区町村コード": "21382",
+      "都道府県": "岐阜県",
+      "市区町村名": "輪之内町",
+      "昼夜間人口比率": 97.69008,
+      "comparison": {
+        "value": 97.69008,
+        "national_average": 98.4,
+        "group_code": "Ⅱ－１",
+        "group_average": 96.9,
+        "rank": 802,
+        "rank_out_of": 1740,
+        "percentile": 54.0,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "213837",
+      "市区町村コード": "21383",
+      "都道府県": "岐阜県",
+      "市区町村名": "安八町",
+      "昼夜間人口比率": 87.25879,
+      "comparison": {
+        "value": 87.25879,
+        "national_average": 98.4,
+        "group_code": "Ⅲ－２",
+        "group_average": 95.3,
+        "rank": 1466,
+        "rank_out_of": 1740,
+        "percentile": 15.8,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "214019",
+      "市区町村コード": "21401",
+      "都道府県": "岐阜県",
+      "市区町村名": "揖斐川町",
+      "昼夜間人口比率": 97.48067,
+      "comparison": {
+        "value": 97.48067,
+        "national_average": 98.4,
+        "group_code": "Ⅳ－１",
+        "group_average": 98.1,
+        "rank": 823,
+        "rank_out_of": 1740,
+        "percentile": 52.8,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "214035",
+      "市区町村コード": "21403",
+      "都道府県": "岐阜県",
+      "市区町村名": "大野町",
+      "昼夜間人口比率": 81.16692,
+      "comparison": {
+        "value": 81.16692,
+        "national_average": 98.4,
+        "group_code": "Ⅴ－１",
+        "group_average": 94.6,
+        "rank": 1668,
+        "rank_out_of": 1740,
+        "percentile": 4.2,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "214043",
+      "市区町村コード": "21404",
+      "都道府県": "岐阜県",
+      "市区町村名": "池田町",
+      "昼夜間人口比率": 85.99743,
+      "comparison": {
+        "value": 85.99743,
+        "national_average": 98.4,
+        "group_code": "Ⅴ－１",
+        "group_average": 94.6,
+        "rank": 1514,
+        "rank_out_of": 1740,
+        "percentile": 13.0,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "214213",
+      "市区町村コード": "21421",
+      "都道府県": "岐阜県",
+      "市区町村名": "北方町",
+      "昼夜間人口比率": 81.4433,
+      "comparison": {
+        "value": 81.4433,
+        "national_average": 98.4,
+        "group_code": "Ⅳ－２",
+        "group_average": 95.5,
+        "rank": 1658,
+        "rank_out_of": 1740,
+        "percentile": 4.8,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "215015",
+      "市区町村コード": "21501",
+      "都道府県": "岐阜県",
+      "市区町村名": "坂祝町",
+      "昼夜間人口比率": 95.00681,
+      "comparison": {
+        "value": 95.00681,
+        "national_average": 98.4,
+        "group_code": "Ⅱ－１",
+        "group_average": 96.9,
+        "rank": 1021,
+        "rank_out_of": 1740,
+        "percentile": 41.4,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "215023",
+      "市区町村コード": "21502",
+      "都道府県": "岐阜県",
+      "市区町村名": "富加町",
+      "昼夜間人口比率": 104.87025,
+      "comparison": {
+        "value": 104.87025,
+        "national_average": 98.4,
+        "group_code": "Ⅱ－１",
+        "group_average": 96.9,
+        "rank": 216,
+        "rank_out_of": 1740,
+        "percentile": 87.6,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "215031",
+      "市区町村コード": "21503",
+      "都道府県": "岐阜県",
+      "市区町村名": "川辺町",
+      "昼夜間人口比率": 80.40568,
+      "comparison": {
+        "value": 80.40568,
+        "national_average": 98.4,
+        "group_code": "Ⅱ－１",
+        "group_average": 96.9,
+        "rank": 1684,
+        "rank_out_of": 1740,
+        "percentile": 3.3,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "215040",
+      "市区町村コード": "21504",
+      "都道府県": "岐阜県",
+      "市区町村名": "七宗町",
+      "昼夜間人口比率": 88.09524,
+      "comparison": {
+        "value": 88.09524,
+        "national_average": 98.4,
+        "group_code": "Ⅰ－１",
+        "group_average": 99.5,
+        "rank": 1418,
+        "rank_out_of": 1740,
+        "percentile": 18.6,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "215058",
+      "市区町村コード": "21505",
+      "都道府県": "岐阜県",
+      "市区町村名": "八百津町",
+      "昼夜間人口比率": 93.10446,
+      "comparison": {
+        "value": 93.10446,
+        "national_average": 98.4,
+        "group_code": "Ⅲ－１",
+        "group_average": 98.5,
+        "rank": 1166,
+        "rank_out_of": 1740,
+        "percentile": 33.0,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "215066",
+      "市区町村コード": "21506",
+      "都道府県": "岐阜県",
+      "市区町村名": "白川町",
+      "昼夜間人口比率": 94.40097,
+      "comparison": {
+        "value": 94.40097,
+        "national_average": 98.4,
+        "group_code": "Ⅱ－１",
+        "group_average": 96.9,
+        "rank": 1071,
+        "rank_out_of": 1740,
+        "percentile": 38.5,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "215074",
+      "市区町村コード": "21507",
+      "都道府県": "岐阜県",
+      "市区町村名": "東白川村",
+      "昼夜間人口比率": 92.36111,
+      "comparison": {
+        "value": 92.36111,
+        "national_average": 98.4,
+        "group_code": "Ⅰ－１",
+        "group_average": 99.5,
+        "rank": 1206,
+        "rank_out_of": 1740,
+        "percentile": 30.7,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "215210",
+      "市区町村コード": "21521",
+      "都道府県": "岐阜県",
+      "市区町村名": "御嵩町",
+      "昼夜間人口比率": 92.48687,
+      "comparison": {
+        "value": 92.48687,
+        "national_average": 98.4,
+        "group_code": "Ⅳ－１",
+        "group_average": 98.1,
+        "rank": 1199,
+        "rank_out_of": 1740,
+        "percentile": 31.1,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    },
+    {
+      "area_code": "216046",
+      "市区町村コード": "21604",
+      "都道府県": "岐阜県",
+      "市区町村名": "白川村",
+      "昼夜間人口比率": 102.51489,
+      "comparison": {
+        "value": 102.51489,
+        "national_average": 98.4,
+        "group_code": "Ⅰ－２",
+        "group_average": 102.2,
+        "rank": 362,
+        "rank_out_of": 1740,
+        "percentile": 79.3,
+        "average_method": "unweighted_mean",
+        "source_note": "全国1740市区町村中の順位（母集団=類似団体区分マスタ登載団体1741のうち、本統計に数値がある団体）。類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。"
+      }
+    }
+  ]
+}

@@ -1,0 +1,2951 @@
+{
+  "schema_version": "1.0",
+  "title": "財政規模（決算）— 歳入決算額・歳出決算額（多年度）",
+  "provider": "総務省 市区町村別決算状況調",
+  "period": "FY2015〜FY2024",
+  "updated": "2026-09-08",
+  "unit_amount": "千円",
+  "notes": [
+    "歳入総額・歳出総額は総額（実数）であり一人あたり額ではない。市町村規模がまちまちのため、totals_by_year配下は「平均」ではなく単純合計（歳入総額_合計_千円/歳出総額_合計_千円）として持たせている（このJSONを使う側で平均・一人あたり換算をする場合は人口_人と組み合わせて算出すること）。",
+    "列位置は年度により変わるため、m3_expenditure_multiyear.jsonと同じ見出しテキスト検出方式で抽出している。",
+    "欠損はnullで保持し missing_codes_by_year に一覧する。"
+  ],
+  "sources": [
+    {
+      "fy": 2015,
+      "role": "shi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000473891.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "ec8ef39eac154b1a7194791384ea92bce570ea91081740283bcc0b1c0121d706",
+      "cache_file": "kessan_fy2015_shi_gaikyo.xls"
+    },
+    {
+      "fy": 2015,
+      "role": "shi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000473893.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "6bc7d86c246b473c2bb2ff68e95cc3281c66b8bf1a5fbf64b04329cf2a4ca1a1",
+      "cache_file": "kessan_fy2015_shi_mokuteki.xls"
+    },
+    {
+      "fy": 2015,
+      "role": "shi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000473894.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "261ad48e82c3844f1a8e40b1a01273b92a370996be5fdb0d942aff5bc844672c",
+      "cache_file": "kessan_fy2015_shi_seishitsu.xls"
+    },
+    {
+      "fy": 2015,
+      "role": "machi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000473896.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "bb3a1cf2e47e7860d3a4694b39f798e9686b7a89981b575e5c73a1dbfb314cbf",
+      "cache_file": "kessan_fy2015_machi_gaikyo.xls"
+    },
+    {
+      "fy": 2015,
+      "role": "machi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000473898.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "3d0d164c0a1f2ccd06c0e12fc1f242f6f1459ba3dc9dafcf912ac192915928bf",
+      "cache_file": "kessan_fy2015_machi_mokuteki.xls"
+    },
+    {
+      "fy": 2015,
+      "role": "machi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000473899.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "d14c136e8b8f6aaafbc2c5e4b3ca2273e83af74552d26a7e3a23b0d6604abb56",
+      "cache_file": "kessan_fy2015_machi_seishitsu.xls"
+    },
+    {
+      "fy": 2016,
+      "role": "shi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000539364.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "44574ba3edf76f71a15727ffdc9af602960962ca3385f401a806186600d03a2e",
+      "cache_file": "kessan_fy2016_shi_gaikyo.xls"
+    },
+    {
+      "fy": 2016,
+      "role": "shi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000539366.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "49ecab6e717251125858e20b637ee8a418022790c7bb633b3c315c3e611b28e8",
+      "cache_file": "kessan_fy2016_shi_mokuteki.xls"
+    },
+    {
+      "fy": 2016,
+      "role": "shi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000539367.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "ed5cb5df0a06e9469931f2760535299bae3d1065a18e25c9fd748afb36b2f727",
+      "cache_file": "kessan_fy2016_shi_seishitsu.xls"
+    },
+    {
+      "fy": 2016,
+      "role": "machi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000539369.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "f478a1eb9cff3db01501f25e361f5b607fa0355d86cab6d2bead82638fd7623b",
+      "cache_file": "kessan_fy2016_machi_gaikyo.xls"
+    },
+    {
+      "fy": 2016,
+      "role": "machi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000539371.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "f4d32e03b9a4848b849ad7f74317bae00d1843b5a92e003d0252885a259eb8be",
+      "cache_file": "kessan_fy2016_machi_mokuteki.xls"
+    },
+    {
+      "fy": 2016,
+      "role": "machi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000539372.xls",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "97db1e1dfa1439b6540922567165d583d485d02a6613fd43225f800a84665855",
+      "cache_file": "kessan_fy2016_machi_seishitsu.xls"
+    },
+    {
+      "fy": 2017,
+      "role": "shi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000607403.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "c1d3c455c608fb51fd02c419a600eadcacde4c9f11ef6dca0b1154e0b71df899",
+      "cache_file": "kessan_fy2017_shi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2017,
+      "role": "shi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000607405.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "ce9b5b15041243b640ab80784a956efa610004dee2f12b461642062ffc366bab",
+      "cache_file": "kessan_fy2017_shi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2017,
+      "role": "shi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000607406.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "c186361b2200b01e11af02ad2a91b65b2cebc08c5677307fe72d89d95ebbb627",
+      "cache_file": "kessan_fy2017_shi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2017,
+      "role": "machi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000607408.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "a5c42ce02e13ab174f21fdcb318ab63e18cfb4f6759b8912ddd2f5fa35ae4d63",
+      "cache_file": "kessan_fy2017_machi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2017,
+      "role": "machi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000607410.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "1a15c5a5a3f92707fa962d357b633cf01d9733b85ee50513d01f24b6bfe0ebe1",
+      "cache_file": "kessan_fy2017_machi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2017,
+      "role": "machi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000607411.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "ae685b097930a390cbc068168e528695bdf372d4779a55c6a12e0e6b36b1060b",
+      "cache_file": "kessan_fy2017_machi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2018,
+      "role": "shi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000676020.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "488d76d47232ab378fe15698a55364cf31a6061347fb65d95fcdc4255105bce5",
+      "cache_file": "kessan_fy2018_shi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2018,
+      "role": "shi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000676022.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "b977e61e9ca44d8bbfb9015ab254ae7425c6a8022b5ac8ca61d6ccf11999901d",
+      "cache_file": "kessan_fy2018_shi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2018,
+      "role": "shi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000676023.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "9a4638a3cd2dffb1cb8ad342106cb4cda37fca8307c6b4f564de3ecedd00d448",
+      "cache_file": "kessan_fy2018_shi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2018,
+      "role": "machi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000676025.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "690cc64c26d0bafb3c64a26a19a3445bace3d45d8904b62127dd41903e9183e8",
+      "cache_file": "kessan_fy2018_machi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2018,
+      "role": "machi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000676027.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "4cd607168824997d5daf41ae8ff4c504e1474d6e2ea4be8b3d9e8d7711631c24",
+      "cache_file": "kessan_fy2018_machi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2018,
+      "role": "machi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000676028.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "672346376b32658825159cfa960ca221777783f8e60161c16a710b6f15246949",
+      "cache_file": "kessan_fy2018_machi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2019,
+      "role": "shi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000738076.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "ae479e9f12efaf909ce1dc88d9d7df8f44e3498206d91436c66ef10be84f57ce",
+      "cache_file": "kessan_fy2019_shi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2019,
+      "role": "shi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000738078.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "8a74352facd032dade8b9ae153d22daaf19c615f9c4bdb1c4547605bb6fd137c",
+      "cache_file": "kessan_fy2019_shi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2019,
+      "role": "shi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000738079.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "93a1783b151231e60e48c84e12ab2a94b11e0dbaaa5a1b50fd8ed944485fe56d",
+      "cache_file": "kessan_fy2019_shi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2019,
+      "role": "machi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000738081.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "536ef812740e726692e7dc4b6748f8fbf654d14a58023774ae61480d7ccc393a",
+      "cache_file": "kessan_fy2019_machi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2019,
+      "role": "machi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000738083.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "15621b169168872fe1fc7f4886e398a2bc9bc5cbd73e6951ca7bee7a93c63549",
+      "cache_file": "kessan_fy2019_machi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2019,
+      "role": "machi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000738084.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "c7729e721e17f2579f98f000a7adb30c05fdeb57cc97d25396753f1d26c0023a",
+      "cache_file": "kessan_fy2019_machi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2020,
+      "role": "shi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000800819.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "b2a9dc2dc3f4995df97c6cc42d0078a8b903987aa8f0d9ab1eb6af84c002a9e9",
+      "cache_file": "kessan_fy2020_shi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2020,
+      "role": "shi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000800822.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "711f1c576b9b7a4b1ff3824eb0f303f602fe070ba4646318ac809ded78c869d4",
+      "cache_file": "kessan_fy2020_shi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2020,
+      "role": "shi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000800823.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "c74d7ddc9fafc6f2358868e6cfc7ad3ac2369541cb6850bac20b6e8b3200024d",
+      "cache_file": "kessan_fy2020_shi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2020,
+      "role": "machi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000800826.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "426064dae1358c3fbaabddf6969c52223babec735f91b88f675f1934586240d6",
+      "cache_file": "kessan_fy2020_machi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2020,
+      "role": "machi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000800830.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "fd4fcf11c7eb7ff13a8e0ae6181654651be3b51fe8b094da7f7dd73e29072485",
+      "cache_file": "kessan_fy2020_machi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2020,
+      "role": "machi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000800832.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "e98c7271446ee82f6cb3509f11ccd183af2ab838a156a47cd667d792d3147ff1",
+      "cache_file": "kessan_fy2020_machi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2021,
+      "role": "shi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000871018.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "bb03a28b1aac66337f8d51d34b8593165d618af35ef5f341dca8f25a973c0acb",
+      "cache_file": "kessan_fy2021_shi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2021,
+      "role": "shi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000871020.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "75fb9b341570ec8928b26688aa24d23ea0a329b4c69de596da10710e9bc61c6b",
+      "cache_file": "kessan_fy2021_shi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2021,
+      "role": "shi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000871021.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "abeb333a42c923758b96a9b729ede75bc6365598d60ea07dd40fcadf3d36ea39",
+      "cache_file": "kessan_fy2021_shi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2021,
+      "role": "machi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000871023.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "8cc35c1e946769e00e1dc6bf0ca08e31f73bb9e1acdd1e718c54afebb18e6e7c",
+      "cache_file": "kessan_fy2021_machi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2021,
+      "role": "machi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000871025.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "18246ccfb29afc45bda162d04211f4a84094a6c9a168fbcaeb284e75ceae196f",
+      "cache_file": "kessan_fy2021_machi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2021,
+      "role": "machi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000871026.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "fe53ff9550c177bd05b44ccb1feeb8ea4e98991382cd45079e99dcceb7c224e9",
+      "cache_file": "kessan_fy2021_machi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2022,
+      "role": "shi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000937287.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "ef99b54fe09564e0fe9dccdf502c2814b47281000a2cd82661a872ac857f5fbe",
+      "cache_file": "kessan_fy2022_shi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2022,
+      "role": "shi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000937289.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "1258b17653882dae594fa2fe72b4a79638969587eb4924e307b3cb01e6ba7c8e",
+      "cache_file": "kessan_fy2022_shi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2022,
+      "role": "shi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000937290.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "7945df31289cd69781a78dfbc738edda74d5fd84741c3c81691df994d2e78b62",
+      "cache_file": "kessan_fy2022_shi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2022,
+      "role": "machi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000937292.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "35efd29b58ef8d56c01944e27b51a88c722a28ccb27c1311e2332921ec4f2d8f",
+      "cache_file": "kessan_fy2022_machi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2022,
+      "role": "machi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000937294.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "0e27938eead1becc77ff3caab18ccd991a9746e791ee873080ff3496808f50d9",
+      "cache_file": "kessan_fy2022_machi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2022,
+      "role": "machi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000937295.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "948c52309eafa417496498c1137223a217eb90018f49af36a1e181b49fb6902c",
+      "cache_file": "kessan_fy2022_machi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2023,
+      "role": "shi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000999900.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "fa95397dba35425c8ba7ef6ab71041ebc3ac77578b226be9ac092c5de7bcc240",
+      "cache_file": "kessan_fy2023_shi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2023,
+      "role": "shi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000999902.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "4961e05a6f8436daa89f96e090f6c1d57abe0fd35469413118c9a960e6bcf3bf",
+      "cache_file": "kessan_fy2023_shi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2023,
+      "role": "shi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000999903.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "9991c459ca1cf93550b72e4ebf9366a17ebd8fff42d4cce57be2ee69139a9454",
+      "cache_file": "kessan_fy2023_shi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2023,
+      "role": "machi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/000999905.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "e59baacdc93b14c5e262d55405b0e6d1e79826e0746e50343cf5c830fbe9293c",
+      "cache_file": "kessan_fy2023_machi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2023,
+      "role": "machi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/000999908.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "f3dfe992968fb1583261b75f8ff6b05cdd30224162badef6370bf6ebf1c02007",
+      "cache_file": "kessan_fy2023_machi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2023,
+      "role": "machi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/000999910.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "1c41856dc39b9729f93fcc23489966e5aabb66590e40fae3820a5fa9cac77219",
+      "cache_file": "kessan_fy2023_machi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2024,
+      "role": "shi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/001061669.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "700fc73e7547cc7b0afafd597004489f7d9b1472667b7b576188350052eef96f",
+      "cache_file": "kessan_fy2024_shi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2024,
+      "role": "shi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/001061671.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "a5928ea0f8134d93f19273c263ee5baab525caa7db1ef5d1dd7db28327249778",
+      "cache_file": "kessan_fy2024_shi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2024,
+      "role": "shi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/001061672.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "05e6da4e1d2608915c4804fe24e24a6ea49f535247499bf1e85cd093b5d322fc",
+      "cache_file": "kessan_fy2024_shi_seishitsu.xlsx"
+    },
+    {
+      "fy": 2024,
+      "role": "machi_gaikyo",
+      "source_url": "https://www.soumu.go.jp/main_content/001061674.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "dbd2306e0814524e3127137001853403e210920aa7446e21db57283b541226dd",
+      "cache_file": "kessan_fy2024_machi_gaikyo.xlsx"
+    },
+    {
+      "fy": 2024,
+      "role": "machi_mokuteki",
+      "source_url": "https://www.soumu.go.jp/main_content/001061676.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "b1ecb4af94638244d51b920f37d0d4e4f8312386309d78d0a3f3a8801a44f49a",
+      "cache_file": "kessan_fy2024_machi_mokuteki.xlsx"
+    },
+    {
+      "fy": 2024,
+      "role": "machi_seishitsu",
+      "source_url": "https://www.soumu.go.jp/main_content/001061677.xlsx",
+      "source_page": "https://www.soumu.go.jp/iken/kessan_jokyo_1.html",
+      "fetched_at": "2026-09-08",
+      "source_file_hash_sha256": "f46ffed96050722a92ae37ff7fc8fd51b206a8bbbae09a48aab4c8645d8cd8a8",
+      "cache_file": "kessan_fy2024_machi_seishitsu.xlsx"
+    }
+  ],
+  "data": [
+    {
+      "area_code": "212016",
+      "市区町村名": "岐阜市",
+      "fy2015": {
+        "人口_人": 413995,
+        "歳入総額_千円": 159900718,
+        "歳出総額_千円": 151584538
+      },
+      "fy2016": {
+        "人口_人": 413111,
+        "歳入総額_千円": 162748281,
+        "歳出総額_千円": 153175871
+      },
+      "fy2017": {
+        "人口_人": 411554,
+        "歳入総額_千円": 160925951,
+        "歳出総額_千円": 153690414
+      },
+      "fy2018": {
+        "人口_人": 409900,
+        "歳入総額_千円": 161081741,
+        "歳出総額_千円": 154084448
+      },
+      "fy2019": {
+        "人口_人": 408804,
+        "歳入総額_千円": 170074106,
+        "歳出総額_千円": 163116165
+      },
+      "fy2020": {
+        "人口_人": 407387,
+        "歳入総額_千円": 250156230,
+        "歳出総額_千円": 241894694
+      },
+      "fy2021": {
+        "人口_人": 404304,
+        "歳入総額_千円": 202888103,
+        "歳出総額_千円": 193507023
+      },
+      "fy2022": {
+        "人口_人": 402400,
+        "歳入総額_千円": 196878547,
+        "歳出総額_千円": 188492600
+      },
+      "fy2023": {
+        "人口_人": 400937,
+        "歳入総額_千円": 189505205,
+        "歳出総額_千円": 181350993
+      },
+      "fy2024": {
+        "人口_人": 399127,
+        "歳入総額_千円": 199953162,
+        "歳出総額_千円": 193109850
+      }
+    },
+    {
+      "area_code": "212024",
+      "市区町村名": "大垣市",
+      "fy2015": {
+        "人口_人": 162395,
+        "歳入総額_千円": 62428862,
+        "歳出総額_千円": 60064112
+      },
+      "fy2016": {
+        "人口_人": 162038,
+        "歳入総額_千円": 63201123,
+        "歳出総額_千円": 61028056
+      },
+      "fy2017": {
+        "人口_人": 161926,
+        "歳入総額_千円": 59557374,
+        "歳出総額_千円": 57331167
+      },
+      "fy2018": {
+        "人口_人": 161539,
+        "歳入総額_千円": 61715721,
+        "歳出総額_千円": 59148705
+      },
+      "fy2019": {
+        "人口_人": 161310,
+        "歳入総額_千円": 68394264,
+        "歳出総額_千円": 65396100
+      },
+      "fy2020": {
+        "人口_人": 160794,
+        "歳入総額_千円": 79960576,
+        "歳出総額_千円": 77446374
+      },
+      "fy2021": {
+        "人口_人": 159894,
+        "歳入総額_千円": 70103502,
+        "歳出総額_千円": 65001547
+      },
+      "fy2022": {
+        "人口_人": 159280,
+        "歳入総額_千円": 67952641,
+        "歳出総額_千円": 65604456
+      },
+      "fy2023": {
+        "人口_人": 158049,
+        "歳入総額_千円": 67323808,
+        "歳出総額_千円": 64365208
+      },
+      "fy2024": {
+        "人口_人": 156912,
+        "歳入総額_千円": 69612201,
+        "歳出総額_千円": 67360956
+      }
+    },
+    {
+      "area_code": "212032",
+      "市区町村名": "高山市",
+      "fy2015": {
+        "人口_人": 90763,
+        "歳入総額_千円": 52242792,
+        "歳出総額_千円": 48244590
+      },
+      "fy2016": {
+        "人口_人": 89913,
+        "歳入総額_千円": 49739572,
+        "歳出総額_千円": 46794563
+      },
+      "fy2017": {
+        "人口_人": 89208,
+        "歳入総額_千円": 48970204,
+        "歳出総額_千円": 46847718
+      },
+      "fy2018": {
+        "人口_人": 88482,
+        "歳入総額_千円": 46848083,
+        "歳出総額_千円": 44413313
+      },
+      "fy2019": {
+        "人口_人": 87595,
+        "歳入総額_千円": 50217196,
+        "歳出総額_千円": 48081484
+      },
+      "fy2020": {
+        "人口_人": 86683,
+        "歳入総額_千円": 63753062,
+        "歳出総額_千円": 60702970
+      },
+      "fy2021": {
+        "人口_人": 85463,
+        "歳入総額_千円": 59386113,
+        "歳出総額_千円": 54112798
+      },
+      "fy2022": {
+        "人口_人": 84338,
+        "歳入総額_千円": 58176489,
+        "歳出総額_千円": 52895871
+      },
+      "fy2023": {
+        "人口_人": 83281,
+        "歳入総額_千円": 56306750,
+        "歳出総額_千円": 52544618
+      },
+      "fy2024": {
+        "人口_人": 82486,
+        "歳入総額_千円": 64339655,
+        "歳出総額_千円": 61675021
+      }
+    },
+    {
+      "area_code": "212041",
+      "市区町村名": "多治見市",
+      "fy2015": {
+        "人口_人": 113419,
+        "歳入総額_千円": 39585795,
+        "歳出総額_千円": 36442690
+      },
+      "fy2016": {
+        "人口_人": 112786,
+        "歳入総額_千円": 37318672,
+        "歳出総額_千円": 34626762
+      },
+      "fy2017": {
+        "人口_人": 111811,
+        "歳入総額_千円": 37741194,
+        "歳出総額_千円": 34535820
+      },
+      "fy2018": {
+        "人口_人": 111090,
+        "歳入総額_千円": 39741162,
+        "歳出総額_千円": 35125931
+      },
+      "fy2019": {
+        "人口_人": 110308,
+        "歳入総額_千円": 42523420,
+        "歳出総額_千円": 38861422
+      },
+      "fy2020": {
+        "人口_人": 109453,
+        "歳入総額_千円": 56395515,
+        "歳出総額_千円": 51500856
+      },
+      "fy2021": {
+        "人口_人": 108158,
+        "歳入総額_千円": 49954798,
+        "歳出総額_千円": 44450340
+      },
+      "fy2022": {
+        "人口_人": 107278,
+        "歳入総額_千円": 49932938,
+        "歳出総額_千円": 44989859
+      },
+      "fy2023": {
+        "人口_人": 106181,
+        "歳入総額_千円": 45966708,
+        "歳出総額_千円": 40778465
+      },
+      "fy2024": {
+        "人口_人": 105048,
+        "歳入総額_千円": 49606979,
+        "歳出総額_千円": 44468684
+      }
+    },
+    {
+      "area_code": "212059",
+      "市区町村名": "関市",
+      "fy2015": {
+        "人口_人": 90879,
+        "歳入総額_千円": 39813866,
+        "歳出総額_千円": 37139228
+      },
+      "fy2016": {
+        "人口_人": 90156,
+        "歳入総額_千円": 38726062,
+        "歳出総額_千円": 36620178
+      },
+      "fy2017": {
+        "人口_人": 89444,
+        "歳入総額_千円": 39804783,
+        "歳出総額_千円": 37330396
+      },
+      "fy2018": {
+        "人口_人": 89024,
+        "歳入総額_千円": 42430825,
+        "歳出総額_千円": 39294372
+      },
+      "fy2019": {
+        "人口_人": 88272,
+        "歳入総額_千円": 42340513,
+        "歳出総額_千円": 38245160
+      },
+      "fy2020": {
+        "人口_人": 87245,
+        "歳入総額_千円": 55811030,
+        "歳出総額_千円": 50852353
+      },
+      "fy2021": {
+        "人口_人": 86273,
+        "歳入総額_千円": 49978750,
+        "歳出総額_千円": 45187160
+      },
+      "fy2022": {
+        "人口_人": 85537,
+        "歳入総額_千円": 54156592,
+        "歳出総額_千円": 49554242
+      },
+      "fy2023": {
+        "人口_人": 84825,
+        "歳入総額_千円": 51718639,
+        "歳出総額_千円": 46946154
+      },
+      "fy2024": {
+        "人口_人": 83930,
+        "歳入総額_千円": 49753691,
+        "歳出総額_千円": 44880385
+      }
+    },
+    {
+      "area_code": "212067",
+      "市区町村名": "中津川市",
+      "fy2015": {
+        "人口_人": 80894,
+        "歳入総額_千円": 39711483,
+        "歳出総額_千円": 36556371
+      },
+      "fy2016": {
+        "人口_人": 80295,
+        "歳入総額_千円": 40723398,
+        "歳出総額_千円": 38017277
+      },
+      "fy2017": {
+        "人口_人": 79633,
+        "歳入総額_千円": 41643857,
+        "歳出総額_千円": 38379115
+      },
+      "fy2018": {
+        "人口_人": 78950,
+        "歳入総額_千円": 41709841,
+        "歳出総額_千円": 37913346
+      },
+      "fy2019": {
+        "人口_人": 78304,
+        "歳入総額_千円": 44314672,
+        "歳出総額_千円": 39577091
+      },
+      "fy2020": {
+        "人口_人": 77320,
+        "歳入総額_千円": 52869416,
+        "歳出総額_千円": 47681807
+      },
+      "fy2021": {
+        "人口_人": 76348,
+        "歳入総額_千円": 50622440,
+        "歳出総額_千円": 44148884
+      },
+      "fy2022": {
+        "人口_人": 75401,
+        "歳入総額_千円": 49279547,
+        "歳出総額_千円": 43078716
+      },
+      "fy2023": {
+        "人口_人": 74532,
+        "歳入総額_千円": 51321964,
+        "歳出総額_千円": 45243842
+      },
+      "fy2024": {
+        "人口_人": 73535,
+        "歳入総額_千円": 51242830,
+        "歳出総額_千円": 44898346
+      }
+    },
+    {
+      "area_code": "212075",
+      "市区町村名": "美濃市",
+      "fy2015": {
+        "人口_人": 21653,
+        "歳入総額_千円": 9466224,
+        "歳出総額_千円": 8929754
+      },
+      "fy2016": {
+        "人口_人": 21350,
+        "歳入総額_千円": 9680917,
+        "歳出総額_千円": 9196824
+      },
+      "fy2017": {
+        "人口_人": 21052,
+        "歳入総額_千円": 10078879,
+        "歳出総額_千円": 9617212
+      },
+      "fy2018": {
+        "人口_人": 20752,
+        "歳入総額_千円": 9850035,
+        "歳出総額_千円": 9384064
+      },
+      "fy2019": {
+        "人口_人": 20461,
+        "歳入総額_千円": 10462003,
+        "歳出総額_千円": 9986723
+      },
+      "fy2020": {
+        "人口_人": 20162,
+        "歳入総額_千円": 13757841,
+        "歳出総額_千円": 12914959
+      },
+      "fy2021": {
+        "人口_人": 19785,
+        "歳入総額_千円": 11640601,
+        "歳出総額_千円": 10641335
+      },
+      "fy2022": {
+        "人口_人": 19494,
+        "歳入総額_千円": 11460252,
+        "歳出総額_千円": 10924849
+      },
+      "fy2023": {
+        "人口_人": 19279,
+        "歳入総額_千円": 11116257,
+        "歳出総額_千円": 10684510
+      },
+      "fy2024": {
+        "人口_人": 18991,
+        "歳入総額_千円": 11346301,
+        "歳出総額_千円": 10937280
+      }
+    },
+    {
+      "area_code": "212083",
+      "市区町村名": "瑞浪市",
+      "fy2015": {
+        "人口_人": 38968,
+        "歳入総額_千円": 16591207,
+        "歳出総額_千円": 15300043
+      },
+      "fy2016": {
+        "人口_人": 38427,
+        "歳入総額_千円": 16792391,
+        "歳出総額_千円": 15898192
+      },
+      "fy2017": {
+        "人口_人": 37979,
+        "歳入総額_千円": 16810100,
+        "歳出総額_千円": 15865913
+      },
+      "fy2018": {
+        "人口_人": 37705,
+        "歳入総額_千円": 18540672,
+        "歳出総額_千円": 17548873
+      },
+      "fy2019": {
+        "人口_人": 37240,
+        "歳入総額_千円": 16718530,
+        "歳出総額_千円": 16078114
+      },
+      "fy2020": {
+        "人口_人": 36985,
+        "歳入総額_千円": 22068431,
+        "歳出総額_千円": 21251675
+      },
+      "fy2021": {
+        "人口_人": 36482,
+        "歳入総額_千円": 18794702,
+        "歳出総額_千円": 17328756
+      },
+      "fy2022": {
+        "人口_人": 36105,
+        "歳入総額_千円": 18503129,
+        "歳出総額_千円": 17596035
+      },
+      "fy2023": {
+        "人口_人": 35731,
+        "歳入総額_千円": 18198250,
+        "歳出総額_千円": 17244570
+      },
+      "fy2024": {
+        "人口_人": 35279,
+        "歳入総額_千円": 19265045,
+        "歳出総額_千円": 18204762
+      }
+    },
+    {
+      "area_code": "212091",
+      "市区町村名": "羽島市",
+      "fy2015": {
+        "人口_人": 68620,
+        "歳入総額_千円": 22019461,
+        "歳出総額_千円": 21370749
+      },
+      "fy2016": {
+        "人口_人": 68408,
+        "歳入総額_千円": 23160662,
+        "歳出総額_千円": 22252876
+      },
+      "fy2017": {
+        "人口_人": 68219,
+        "歳入総額_千円": 21598901,
+        "歳出総額_千円": 20886935
+      },
+      "fy2018": {
+        "人口_人": 67957,
+        "歳入総額_千円": 22768045,
+        "歳出総額_千円": 22112710
+      },
+      "fy2019": {
+        "人口_人": 67807,
+        "歳入総額_千円": 24446582,
+        "歳出総額_千円": 23914896
+      },
+      "fy2020": {
+        "人口_人": 67595,
+        "歳入総額_千円": 31519074,
+        "歳出総額_千円": 30781507
+      },
+      "fy2021": {
+        "人口_人": 67106,
+        "歳入総額_千円": 29162283,
+        "歳出総額_千円": 27765276
+      },
+      "fy2022": {
+        "人口_人": 67076,
+        "歳入総額_千円": 26312709,
+        "歳出総額_千円": 24849234
+      },
+      "fy2023": {
+        "人口_人": 66775,
+        "歳入総額_千円": 26155397,
+        "歳出総額_千円": 24994929
+      },
+      "fy2024": {
+        "人口_人": 66517,
+        "歳入総額_千円": 29475572,
+        "歳出総額_千円": 28142780
+      }
+    },
+    {
+      "area_code": "212105",
+      "市区町村名": "恵那市",
+      "fy2015": {
+        "人口_人": 52339,
+        "歳入総額_千円": 31039959,
+        "歳出総額_千円": 29541054
+      },
+      "fy2016": {
+        "人口_人": 51667,
+        "歳入総額_千円": 30071932,
+        "歳出総額_千円": 28675502
+      },
+      "fy2017": {
+        "人口_人": 50934,
+        "歳入総額_千円": 28606113,
+        "歳出総額_千円": 27186116
+      },
+      "fy2018": {
+        "人口_人": 50463,
+        "歳入総額_千円": 28810317,
+        "歳出総額_千円": 27197977
+      },
+      "fy2019": {
+        "人口_人": 49821,
+        "歳入総額_千円": 29097940,
+        "歳出総額_千円": 27702896
+      },
+      "fy2020": {
+        "人口_人": 49096,
+        "歳入総額_千円": 35421787,
+        "歳出総額_千円": 33691617
+      },
+      "fy2021": {
+        "人口_人": 48371,
+        "歳入総額_千円": 32902752,
+        "歳出総額_千円": 29839454
+      },
+      "fy2022": {
+        "人口_人": 47564,
+        "歳入総額_千円": 32356201,
+        "歳出総額_千円": 29897911
+      },
+      "fy2023": {
+        "人口_人": 46868,
+        "歳入総額_千円": 31546878,
+        "歳出総額_千円": 29664124
+      },
+      "fy2024": {
+        "人口_人": 46054,
+        "歳入総額_千円": 35132941,
+        "歳出総額_千円": 32716644
+      }
+    },
+    {
+      "area_code": "212113",
+      "市区町村名": "美濃加茂市",
+      "fy2015": {
+        "人口_人": 55808,
+        "歳入総額_千円": 20762940,
+        "歳出総額_千円": 18808307
+      },
+      "fy2016": {
+        "人口_人": 56286,
+        "歳入総額_千円": 21741083,
+        "歳出総額_千円": 20325669
+      },
+      "fy2017": {
+        "人口_人": 56703,
+        "歳入総額_千円": 22948639,
+        "歳出総額_千円": 21662303
+      },
+      "fy2018": {
+        "人口_人": 56987,
+        "歳入総額_千円": 22255261,
+        "歳出総額_千円": 20749511
+      },
+      "fy2019": {
+        "人口_人": 57330,
+        "歳入総額_千円": 22124381,
+        "歳出総額_千円": 20354634
+      },
+      "fy2020": {
+        "人口_人": 57304,
+        "歳入総額_千円": 30729662,
+        "歳出総額_千円": 29226812
+      },
+      "fy2021": {
+        "人口_人": 57171,
+        "歳入総額_千円": 28934616,
+        "歳出総額_千円": 26646005
+      },
+      "fy2022": {
+        "人口_人": 57220,
+        "歳入総額_千円": 25030602,
+        "歳出総額_千円": 22877291
+      },
+      "fy2023": {
+        "人口_人": 57540,
+        "歳入総額_千円": 25088667,
+        "歳出総額_千円": 23417978
+      },
+      "fy2024": {
+        "人口_人": 57595,
+        "歳入総額_千円": 26619318,
+        "歳出総額_千円": 25111464
+      }
+    },
+    {
+      "area_code": "212121",
+      "市区町村名": "土岐市",
+      "fy2015": {
+        "人口_人": 59867,
+        "歳入総額_千円": 20305003,
+        "歳出総額_千円": 19360066
+      },
+      "fy2016": {
+        "人口_人": 59479,
+        "歳入総額_千円": 21106499,
+        "歳出総額_千円": 20454410
+      },
+      "fy2017": {
+        "人口_人": 59026,
+        "歳入総額_千円": 23740904,
+        "歳出総額_千円": 22798871
+      },
+      "fy2018": {
+        "人口_人": 58567,
+        "歳入総額_千円": 25361444,
+        "歳出総額_千円": 24405930
+      },
+      "fy2019": {
+        "人口_人": 57979,
+        "歳入総額_千円": 24382241,
+        "歳出総額_千円": 23608990
+      },
+      "fy2020": {
+        "人口_人": 57294,
+        "歳入総額_千円": 29832289,
+        "歳出総額_千円": 28820913
+      },
+      "fy2021": {
+        "人口_人": 56547,
+        "歳入総額_千円": 25924970,
+        "歳出総額_千円": 24637992
+      },
+      "fy2022": {
+        "人口_人": 55842,
+        "歳入総額_千円": 25928103,
+        "歳出総額_千円": 25390534
+      },
+      "fy2023": {
+        "人口_人": 54990,
+        "歳入総額_千円": 25409295,
+        "歳出総額_千円": 24775495
+      },
+      "fy2024": {
+        "人口_人": 54243,
+        "歳入総額_千円": 26553662,
+        "歳出総額_千円": 25499982
+      }
+    },
+    {
+      "area_code": "212130",
+      "市区町村名": "各務原市",
+      "fy2015": {
+        "人口_人": 148409,
+        "歳入総額_千円": 49714704,
+        "歳出総額_千円": 46040199
+      },
+      "fy2016": {
+        "人口_人": 148593,
+        "歳入総額_千円": 50722453,
+        "歳出総額_千円": 47886946
+      },
+      "fy2017": {
+        "人口_人": 148081,
+        "歳入総額_千円": 51158469,
+        "歳出総額_千円": 48705407
+      },
+      "fy2018": {
+        "人口_人": 148225,
+        "歳入総額_千円": 47828344,
+        "歳出総額_千円": 44770505
+      },
+      "fy2019": {
+        "人口_人": 147651,
+        "歳入総額_千円": 54163780,
+        "歳出総額_千円": 50638827
+      },
+      "fy2020": {
+        "人口_人": 146961,
+        "歳入総額_千円": 75376007,
+        "歳出総額_千円": 71301341
+      },
+      "fy2021": {
+        "人口_人": 146136,
+        "歳入総額_千円": 66224068,
+        "歳出総額_千円": 61390436
+      },
+      "fy2022": {
+        "人口_人": 145570,
+        "歳入総額_千円": 60091624,
+        "歳出総額_千円": 56570232
+      },
+      "fy2023": {
+        "人口_人": 144940,
+        "歳入総額_千円": 66409484,
+        "歳出総額_千円": 62725002
+      },
+      "fy2024": {
+        "人口_人": 144195,
+        "歳入総額_千円": 69907065,
+        "歳出総額_千円": 66010466
+      }
+    },
+    {
+      "area_code": "212148",
+      "市区町村名": "可児市",
+      "fy2015": {
+        "人口_人": 101148,
+        "歳入総額_千円": 31447645,
+        "歳出総額_千円": 29684359
+      },
+      "fy2016": {
+        "人口_人": 101516,
+        "歳入総額_千円": 33388309,
+        "歳出総額_千円": 31991109
+      },
+      "fy2017": {
+        "人口_人": 101566,
+        "歳入総額_千円": 34043678,
+        "歳出総額_千円": 32793087
+      },
+      "fy2018": {
+        "人口_人": 102175,
+        "歳入総額_千円": 33084573,
+        "歳出総額_千円": 29818613
+      },
+      "fy2019": {
+        "人口_人": 102327,
+        "歳入総額_千円": 35320176,
+        "歳出総額_千円": 33543088
+      },
+      "fy2020": {
+        "人口_人": 101557,
+        "歳入総額_千円": 47436865,
+        "歳出総額_千円": 45390341
+      },
+      "fy2021": {
+        "人口_人": 100765,
+        "歳入総額_千円": 37449265,
+        "歳出総額_千円": 34704966
+      },
+      "fy2022": {
+        "人口_人": 100612,
+        "歳入総額_千円": 39073554,
+        "歳出総額_千円": 36233940
+      },
+      "fy2023": {
+        "人口_人": 100207,
+        "歳入総額_千円": 38478695,
+        "歳出総額_千円": 35377652
+      },
+      "fy2024": {
+        "人口_人": 99779,
+        "歳入総額_千円": 43450852,
+        "歳出総額_千円": 40277640
+      }
+    },
+    {
+      "area_code": "212156",
+      "市区町村名": "山県市",
+      "fy2015": {
+        "人口_人": 28300,
+        "歳入総額_千円": 12675177,
+        "歳出総額_千円": 12313074
+      },
+      "fy2016": {
+        "人口_人": 27953,
+        "歳入総額_千円": 12360490,
+        "歳出総額_千円": 12034616
+      },
+      "fy2017": {
+        "人口_人": 27664,
+        "歳入総額_千円": 13201682,
+        "歳出総額_千円": 12969598
+      },
+      "fy2018": {
+        "人口_人": 27356,
+        "歳入総額_千円": 12741549,
+        "歳出総額_千円": 12505563
+      },
+      "fy2019": {
+        "人口_人": 26971,
+        "歳入総額_千円": 13232189,
+        "歳出総額_千円": 12972728
+      },
+      "fy2020": {
+        "人口_人": 26484,
+        "歳入総額_千円": 18032294,
+        "歳出総額_千円": 17828057
+      },
+      "fy2021": {
+        "人口_人": 25983,
+        "歳入総額_千円": 15458988,
+        "歳出総額_千円": 14662844
+      },
+      "fy2022": {
+        "人口_人": 25545,
+        "歳入総額_千円": 14742246,
+        "歳出総額_千円": 13978960
+      },
+      "fy2023": {
+        "人口_人": 25233,
+        "歳入総額_千円": 14594765,
+        "歳出総額_千円": 14189028
+      },
+      "fy2024": {
+        "人口_人": 24767,
+        "歳入総額_千円": 15374944,
+        "歳出総額_千円": 15028053
+      }
+    },
+    {
+      "area_code": "212164",
+      "市区町村名": "瑞穂市",
+      "fy2015": {
+        "人口_人": 53576,
+        "歳入総額_千円": 18563950,
+        "歳出総額_千円": 17269810
+      },
+      "fy2016": {
+        "人口_人": 53981,
+        "歳入総額_千円": 17783934,
+        "歳出総額_千円": 16825467
+      },
+      "fy2017": {
+        "人口_人": 54295,
+        "歳入総額_千円": 18460316,
+        "歳出総額_千円": 17619602
+      },
+      "fy2018": {
+        "人口_人": 54686,
+        "歳入総額_千円": 18924011,
+        "歳出総額_千円": 18023245
+      },
+      "fy2019": {
+        "人口_人": 55055,
+        "歳入総額_千円": 18157270,
+        "歳出総額_千円": 17460603
+      },
+      "fy2020": {
+        "人口_人": 55325,
+        "歳入総額_千円": 25861859,
+        "歳出総額_千円": 24713259
+      },
+      "fy2021": {
+        "人口_人": 55518,
+        "歳入総額_千円": 22810733,
+        "歳出総額_千円": 21368631
+      },
+      "fy2022": {
+        "人口_人": 55985,
+        "歳入総額_千円": 22268522,
+        "歳出総額_千円": 21083784
+      },
+      "fy2023": {
+        "人口_人": 56329,
+        "歳入総額_千円": 21687450,
+        "歳出総額_千円": 20789234
+      },
+      "fy2024": {
+        "人口_人": 56343,
+        "歳入総額_千円": 23239514,
+        "歳出総額_千円": 22533801
+      }
+    },
+    {
+      "area_code": "212172",
+      "市区町村名": "飛騨市",
+      "fy2015": {
+        "人口_人": 25561,
+        "歳入総額_千円": 20108453,
+        "歳出総額_千円": 18542099
+      },
+      "fy2016": {
+        "人口_人": 25127,
+        "歳入総額_千円": 19151302,
+        "歳出総額_千円": 17961080
+      },
+      "fy2017": {
+        "人口_人": 24704,
+        "歳入総額_千円": 20629751,
+        "歳出総額_千円": 19609391
+      },
+      "fy2018": {
+        "人口_人": 24272,
+        "歳入総額_千円": 19795572,
+        "歳出総額_千円": 18340071
+      },
+      "fy2019": {
+        "人口_人": 23745,
+        "歳入総額_千円": 21995575,
+        "歳出総額_千円": 20678721
+      },
+      "fy2020": {
+        "人口_人": 23467,
+        "歳入総額_千円": 25150833,
+        "歳出総額_千円": 23740916
+      },
+      "fy2021": {
+        "人口_人": 23028,
+        "歳入総額_千円": 23663314,
+        "歳出総額_千円": 21733763
+      },
+      "fy2022": {
+        "人口_人": 22527,
+        "歳入総額_千円": 23673262,
+        "歳出総額_千円": 22068907
+      },
+      "fy2023": {
+        "人口_人": 22106,
+        "歳入総額_千円": 25991985,
+        "歳出総額_千円": 24515477
+      },
+      "fy2024": {
+        "人口_人": 21674,
+        "歳入総額_千円": 24183488,
+        "歳出総額_千円": 22839287
+      }
+    },
+    {
+      "area_code": "212181",
+      "市区町村名": "本巣市",
+      "fy2015": {
+        "人口_人": 35175,
+        "歳入総額_千円": 16008005,
+        "歳出総額_千円": 14978496
+      },
+      "fy2016": {
+        "人口_人": 34960,
+        "歳入総額_千円": 17146953,
+        "歳出総額_千円": 15592434
+      },
+      "fy2017": {
+        "人口_人": 34586,
+        "歳入総額_千円": 17073505,
+        "歳出総額_千円": 16105663
+      },
+      "fy2018": {
+        "人口_人": 34412,
+        "歳入総額_千円": 17040722,
+        "歳出総額_千円": 15989294
+      },
+      "fy2019": {
+        "人口_人": 34183,
+        "歳入総額_千円": 17059051,
+        "歳出総額_千円": 16051664
+      },
+      "fy2020": {
+        "人口_人": 33764,
+        "歳入総額_千円": 21949063,
+        "歳出総額_千円": 21090508
+      },
+      "fy2021": {
+        "人口_人": 33302,
+        "歳入総額_千円": 20754338,
+        "歳出総額_千円": 19478389
+      },
+      "fy2022": {
+        "人口_人": 33092,
+        "歳入総額_千円": 22694096,
+        "歳出総額_千円": 21430252
+      },
+      "fy2023": {
+        "人口_人": 33109,
+        "歳入総額_千円": 24142809,
+        "歳出総額_千円": 23392683
+      },
+      "fy2024": {
+        "人口_人": 32885,
+        "歳入総額_千円": 21066421,
+        "歳出総額_千円": 19839226
+      }
+    },
+    {
+      "area_code": "212199",
+      "市区町村名": "郡上市",
+      "fy2015": {
+        "人口_人": 43940,
+        "歳入総額_千円": 30409813,
+        "歳出総額_千円": 29178708
+      },
+      "fy2016": {
+        "人口_人": 43306,
+        "歳入総額_千円": 28747592,
+        "歳出総額_千円": 27376447
+      },
+      "fy2017": {
+        "人口_人": 42666,
+        "歳入総額_千円": 32547096,
+        "歳出総額_千円": 31492239
+      },
+      "fy2018": {
+        "人口_人": 41933,
+        "歳入総額_千円": 29713814,
+        "歳出総額_千円": 28349164
+      },
+      "fy2019": {
+        "人口_人": 41264,
+        "歳入総額_千円": 30423422,
+        "歳出総額_千円": 29148577
+      },
+      "fy2020": {
+        "人口_人": 40573,
+        "歳入総額_千円": 33949452,
+        "歳出総額_千円": 32548776
+      },
+      "fy2021": {
+        "人口_人": 39761,
+        "歳入総額_千円": 30560690,
+        "歳出総額_千円": 28945016
+      },
+      "fy2022": {
+        "人口_人": 39115,
+        "歳入総額_千円": 30735282,
+        "歳出総額_千円": 29247711
+      },
+      "fy2023": {
+        "人口_人": 38450,
+        "歳入総額_千円": 31508481,
+        "歳出総額_千円": 30322182
+      },
+      "fy2024": {
+        "人口_人": 37728,
+        "歳入総額_千円": 32375618,
+        "歳出総額_千円": 31164190
+      }
+    },
+    {
+      "area_code": "212202",
+      "市区町村名": "下呂市",
+      "fy2015": {
+        "人口_人": 34351,
+        "歳入総額_千円": 21112252,
+        "歳出総額_千円": 20294940
+      },
+      "fy2016": {
+        "人口_人": 33808,
+        "歳入総額_千円": 22210093,
+        "歳出総額_千円": 21558788
+      },
+      "fy2017": {
+        "人口_人": 33232,
+        "歳入総額_千円": 25085367,
+        "歳出総額_千円": 24343427
+      },
+      "fy2018": {
+        "人口_人": 32576,
+        "歳入総額_千円": 25412384,
+        "歳出総額_千円": 24046511
+      },
+      "fy2019": {
+        "人口_人": 32008,
+        "歳入総額_千円": 24174219,
+        "歳出総額_千円": 23441233
+      },
+      "fy2020": {
+        "人口_人": 31385,
+        "歳入総額_千円": 28935562,
+        "歳出総額_千円": 27134257
+      },
+      "fy2021": {
+        "人口_人": 30738,
+        "歳入総額_千円": 29436582,
+        "歳出総額_千円": 27643606
+      },
+      "fy2022": {
+        "人口_人": 30118,
+        "歳入総額_千円": 27899046,
+        "歳出総額_千円": 25993985
+      },
+      "fy2023": {
+        "人口_人": 29495,
+        "歳入総額_千円": 26512445,
+        "歳出総額_千円": 25287434
+      },
+      "fy2024": {
+        "人口_人": 28915,
+        "歳入総額_千円": 26874620,
+        "歳出総額_千円": 25538522
+      }
+    },
+    {
+      "area_code": "212211",
+      "市区町村名": "海津市",
+      "fy2015": {
+        "人口_人": 36313,
+        "歳入総額_千円": 16921930,
+        "歳出総額_千円": 16007447
+      },
+      "fy2016": {
+        "人口_人": 35697,
+        "歳入総額_千円": 16189364,
+        "歳出総額_千円": 15561156
+      },
+      "fy2017": {
+        "人口_人": 35175,
+        "歳入総額_千円": 16484521,
+        "歳出総額_千円": 15713143
+      },
+      "fy2018": {
+        "人口_人": 34684,
+        "歳入総額_千円": 15773430,
+        "歳出総額_千円": 15043042
+      },
+      "fy2019": {
+        "人口_人": 34254,
+        "歳入総額_千円": 15393715,
+        "歳出総額_千円": 14765585
+      },
+      "fy2020": {
+        "人口_人": 33576,
+        "歳入総額_千円": 20559505,
+        "歳出総額_千円": 19565608
+      },
+      "fy2021": {
+        "人口_人": 32980,
+        "歳入総額_千円": 17458636,
+        "歳出総額_千円": 16262968
+      },
+      "fy2022": {
+        "人口_人": 32582,
+        "歳入総額_千円": 19049292,
+        "歳出総額_千円": 18208903
+      },
+      "fy2023": {
+        "人口_人": 32084,
+        "歳入総額_千円": 18717924,
+        "歳出総額_千円": 17949601
+      },
+      "fy2024": {
+        "人口_人": 31505,
+        "歳入総額_千円": 19009682,
+        "歳出総額_千円": 18409428
+      }
+    },
+    {
+      "area_code": "213021",
+      "市区町村名": "羽島郡岐南町",
+      "fy2015": {
+        "人口_人": 24903,
+        "歳入総額_千円": 9326776,
+        "歳出総額_千円": 8695467
+      },
+      "fy2016": {
+        "人口_人": 25270,
+        "歳入総額_千円": 7890926,
+        "歳出総額_千円": 7467850
+      },
+      "fy2017": {
+        "人口_人": 25525,
+        "歳入総額_千円": 9244040,
+        "歳出総額_千円": 8791040
+      },
+      "fy2018": {
+        "人口_人": 25685,
+        "歳入総額_千円": 7942422,
+        "歳出総額_千円": 7654895
+      },
+      "fy2019": {
+        "人口_人": 25923,
+        "歳入総額_千円": 8217044,
+        "歳出総額_千円": 7832548
+      },
+      "fy2020": {
+        "人口_人": 26123,
+        "歳入総額_千円": 12105755,
+        "歳出総額_千円": 11604008
+      },
+      "fy2021": {
+        "人口_人": 26272,
+        "歳入総額_千円": 10135643,
+        "歳出総額_千円": 9207944
+      },
+      "fy2022": {
+        "人口_人": 26243,
+        "歳入総額_千円": 10605693,
+        "歳出総額_千円": 9891581
+      },
+      "fy2023": {
+        "人口_人": 26227,
+        "歳入総額_千円": 10066655,
+        "歳出総額_千円": 9380671
+      },
+      "fy2024": {
+        "人口_人": 26366,
+        "歳入総額_千円": 10549403,
+        "歳出総額_千円": 10062080
+      }
+    },
+    {
+      "area_code": "213039",
+      "市区町村名": "羽島郡笠松町",
+      "fy2015": {
+        "人口_人": 22550,
+        "歳入総額_千円": 7722183,
+        "歳出総額_千円": 7104596
+      },
+      "fy2016": {
+        "人口_人": 22451,
+        "歳入総額_千円": 7883952,
+        "歳出総額_千円": 7450866
+      },
+      "fy2017": {
+        "人口_人": 22340,
+        "歳入総額_千円": 7835909,
+        "歳出総額_千円": 7440136
+      },
+      "fy2018": {
+        "人口_人": 22273,
+        "歳入総額_千円": 7296097,
+        "歳出総額_千円": 6831373
+      },
+      "fy2019": {
+        "人口_人": 22227,
+        "歳入総額_千円": 7128359,
+        "歳出総額_千円": 6774991
+      },
+      "fy2020": {
+        "人口_人": 22096,
+        "歳入総額_千円": 9917471,
+        "歳出総額_千円": 9416288
+      },
+      "fy2021": {
+        "人口_人": 21985,
+        "歳入総額_千円": 8820245,
+        "歳出総額_千円": 8161662
+      },
+      "fy2022": {
+        "人口_人": 21828,
+        "歳入総額_千円": 8619456,
+        "歳出総額_千円": 8132230
+      },
+      "fy2023": {
+        "人口_人": 21816,
+        "歳入総額_千円": 8378060,
+        "歳出総額_千円": 7895692
+      },
+      "fy2024": {
+        "人口_人": 21829,
+        "歳入総額_千円": 8833902,
+        "歳出総額_千円": 8242448
+      }
+    },
+    {
+      "area_code": "213411",
+      "市区町村名": "養老郡養老町",
+      "fy2015": {
+        "人口_人": 30548,
+        "歳入総額_千円": 11249422,
+        "歳出総額_千円": 10888412
+      },
+      "fy2016": {
+        "人口_人": 30054,
+        "歳入総額_千円": 10929066,
+        "歳出総額_千円": 10622162
+      },
+      "fy2017": {
+        "人口_人": 29508,
+        "歳入総額_千円": 10940901,
+        "歳出総額_千円": 10588584
+      },
+      "fy2018": {
+        "人口_人": 29121,
+        "歳入総額_千円": 11013040,
+        "歳出総額_千円": 10667902
+      },
+      "fy2019": {
+        "人口_人": 28587,
+        "歳入総額_千円": 12077241,
+        "歳出総額_千円": 11680221
+      },
+      "fy2020": {
+        "人口_人": 28021,
+        "歳入総額_千円": 16597610,
+        "歳出総額_千円": 15856786
+      },
+      "fy2021": {
+        "人口_人": 27381,
+        "歳入総額_千円": 13999811,
+        "歳出総額_千円": 12811628
+      },
+      "fy2022": {
+        "人口_人": 26858,
+        "歳入総額_千円": 13477033,
+        "歳出総額_千円": 12396961
+      },
+      "fy2023": {
+        "人口_人": 26397,
+        "歳入総額_千円": 13218221,
+        "歳出総額_千円": 12137051
+      },
+      "fy2024": {
+        "人口_人": 25971,
+        "歳入総額_千円": 12890600,
+        "歳出総額_千円": 11798325
+      }
+    },
+    {
+      "area_code": "213616",
+      "市区町村名": "不破郡垂井町",
+      "fy2015": {
+        "人口_人": 28074,
+        "歳入総額_千円": 9100854,
+        "歳出総額_千円": 8419545
+      },
+      "fy2016": {
+        "人口_人": 27885,
+        "歳入総額_千円": 9410289,
+        "歳出総額_千円": 8945731
+      },
+      "fy2017": {
+        "人口_人": 27703,
+        "歳入総額_千円": 9305294,
+        "歳出総額_千円": 8893982
+      },
+      "fy2018": {
+        "人口_人": 27467,
+        "歳入総額_千円": 10104024,
+        "歳出総額_千円": 9230336
+      },
+      "fy2019": {
+        "人口_人": 27130,
+        "歳入総額_千円": 10770479,
+        "歳出総額_千円": 10138268
+      },
+      "fy2020": {
+        "人口_人": 26903,
+        "歳入総額_千円": 12879782,
+        "歳出総額_千円": 12294120
+      },
+      "fy2021": {
+        "人口_人": 26547,
+        "歳入総額_千円": 11045474,
+        "歳出総額_千円": 10412309
+      },
+      "fy2022": {
+        "人口_人": 26255,
+        "歳入総額_千円": 10642435,
+        "歳出総額_千円": 10180279
+      },
+      "fy2023": {
+        "人口_人": 26058,
+        "歳入総額_千円": 11412160,
+        "歳出総額_千円": 10859680
+      },
+      "fy2024": {
+        "人口_人": 25746,
+        "歳入総額_千円": 11075595,
+        "歳出総額_千円": 10595562
+      }
+    },
+    {
+      "area_code": "213624",
+      "市区町村名": "不破郡関ケ原町",
+      "fy2015": {
+        "人口_人": 7569,
+        "歳入総額_千円": 4278766,
+        "歳出総額_千円": 3945714
+      },
+      "fy2016": {
+        "人口_人": 7405,
+        "歳入総額_千円": 4258695,
+        "歳出総額_千円": 4012149
+      },
+      "fy2017": {
+        "人口_人": 7244,
+        "歳入総額_千円": 3904847,
+        "歳出総額_千円": 3685060
+      },
+      "fy2018": {
+        "人口_人": 7087,
+        "歳入総額_千円": 4019065,
+        "歳出総額_千円": 3782618
+      },
+      "fy2019": {
+        "人口_人": 7000,
+        "歳入総額_千円": 4198433,
+        "歳出総額_千円": 3958572
+      },
+      "fy2020": {
+        "人口_人": 6841,
+        "歳入総額_千円": 5045422,
+        "歳出総額_千円": 4780884
+      },
+      "fy2021": {
+        "人口_人": 6645,
+        "歳入総額_千円": 4645157,
+        "歳出総額_千円": 4258046
+      },
+      "fy2022": {
+        "人口_人": 6466,
+        "歳入総額_千円": 4659812,
+        "歳出総額_千円": 4275474
+      },
+      "fy2023": {
+        "人口_人": 6287,
+        "歳入総額_千円": 4490603,
+        "歳出総額_千円": 4161412
+      },
+      "fy2024": {
+        "人口_人": 6135,
+        "歳入総額_千円": 5225008,
+        "歳出総額_千円": 5029614
+      }
+    },
+    {
+      "area_code": "213811",
+      "市区町村名": "安八郡神戸町",
+      "fy2015": {
+        "人口_人": 19738,
+        "歳入総額_千円": 7878275,
+        "歳出総額_千円": 7352550
+      },
+      "fy2016": {
+        "人口_人": 19609,
+        "歳入総額_千円": 7625934,
+        "歳出総額_千円": 7256613
+      },
+      "fy2017": {
+        "人口_人": 19504,
+        "歳入総額_千円": 7947411,
+        "歳出総額_千円": 7447655
+      },
+      "fy2018": {
+        "人口_人": 19345,
+        "歳入総額_千円": 7108591,
+        "歳出総額_千円": 6642615
+      },
+      "fy2019": {
+        "人口_人": 19183,
+        "歳入総額_千円": 6933843,
+        "歳出総額_千円": 6398246
+      },
+      "fy2020": {
+        "人口_人": 18888,
+        "歳入総額_千円": 9057750,
+        "歳出総額_千円": 8580858
+      },
+      "fy2021": {
+        "人口_人": 18704,
+        "歳入総額_千円": 7957214,
+        "歳出総額_千円": 7322766
+      },
+      "fy2022": {
+        "人口_人": 18577,
+        "歳入総額_千円": 7782351,
+        "歳出総額_千円": 7489233
+      },
+      "fy2023": {
+        "人口_人": 18409,
+        "歳入総額_千円": 7715813,
+        "歳出総額_千円": 7351069
+      },
+      "fy2024": {
+        "人口_人": 18210,
+        "歳入総額_千円": 8745280,
+        "歳出総額_千円": 8301173
+      }
+    },
+    {
+      "area_code": "213829",
+      "市区町村名": "安八郡輪之内町",
+      "fy2015": {
+        "人口_人": 9943,
+        "歳入総額_千円": 4230595,
+        "歳出総額_千円": 3803854
+      },
+      "fy2016": {
+        "人口_人": 9912,
+        "歳入総額_千円": 4423887,
+        "歳出総額_千円": 4026846
+      },
+      "fy2017": {
+        "人口_人": 9784,
+        "歳入総額_千円": 4285505,
+        "歳出総額_千円": 4038905
+      },
+      "fy2018": {
+        "人口_人": 9787,
+        "歳入総額_千円": 4125450,
+        "歳出総額_千円": 3993834
+      },
+      "fy2019": {
+        "人口_人": 9664,
+        "歳入総額_千円": 4656327,
+        "歳出総額_千円": 4521069
+      },
+      "fy2020": {
+        "人口_人": 9594,
+        "歳入総額_千円": 5625100,
+        "歳出総額_千円": 5497055
+      },
+      "fy2021": {
+        "人口_人": 9403,
+        "歳入総額_千円": 4873283,
+        "歳出総額_千円": 4638232
+      },
+      "fy2022": {
+        "人口_人": 9326,
+        "歳入総額_千円": 4786859,
+        "歳出総額_千円": 4595469
+      },
+      "fy2023": {
+        "人口_人": 9267,
+        "歳入総額_千円": 4754409,
+        "歳出総額_千円": 4615262
+      },
+      "fy2024": {
+        "人口_人": 9086,
+        "歳入総額_千円": 5161249,
+        "歳出総額_千円": 4977547
+      }
+    },
+    {
+      "area_code": "213837",
+      "市区町村名": "安八郡安八町",
+      "fy2015": {
+        "人口_人": 15251,
+        "歳入総額_千円": 6501328,
+        "歳出総額_千円": 6148426
+      },
+      "fy2016": {
+        "人口_人": 15211,
+        "歳入総額_千円": 6570891,
+        "歳出総額_千円": 6246605
+      },
+      "fy2017": {
+        "人口_人": 15115,
+        "歳入総額_千円": 7270629,
+        "歳出総額_千円": 6834386
+      },
+      "fy2018": {
+        "人口_人": 15076,
+        "歳入総額_千円": 6259237,
+        "歳出総額_千円": 5895987
+      },
+      "fy2019": {
+        "人口_人": 14971,
+        "歳入総額_千円": 6066439,
+        "歳出総額_千円": 5648059
+      },
+      "fy2020": {
+        "人口_人": 14774,
+        "歳入総額_千円": 7832192,
+        "歳出総額_千円": 7401322
+      },
+      "fy2021": {
+        "人口_人": 14623,
+        "歳入総額_千円": 7414121,
+        "歳出総額_千円": 6853334
+      },
+      "fy2022": {
+        "人口_人": 14512,
+        "歳入総額_千円": 7431714,
+        "歳出総額_千円": 6919484
+      },
+      "fy2023": {
+        "人口_人": 14465,
+        "歳入総額_千円": 7561102,
+        "歳出総額_千円": 7073214
+      },
+      "fy2024": {
+        "人口_人": 14456,
+        "歳入総額_千円": 7467218,
+        "歳出総額_千円": 6871572
+      }
+    },
+    {
+      "area_code": "214019",
+      "市区町村名": "揖斐郡揖斐川町",
+      "fy2015": {
+        "人口_人": 22476,
+        "歳入総額_千円": 16476551,
+        "歳出総額_千円": 15407547
+      },
+      "fy2016": {
+        "人口_人": 22145,
+        "歳入総額_千円": 15927699,
+        "歳出総額_千円": 15230447
+      },
+      "fy2017": {
+        "人口_人": 21672,
+        "歳入総額_千円": 14285931,
+        "歳出総額_千円": 13354493
+      },
+      "fy2018": {
+        "人口_人": 21274,
+        "歳入総額_千円": 14198821,
+        "歳出総額_千円": 13648798
+      },
+      "fy2019": {
+        "人口_人": 20862,
+        "歳入総額_千円": 15174287,
+        "歳出総額_千円": 14627077
+      },
+      "fy2020": {
+        "人口_人": 20459,
+        "歳入総額_千円": 17381064,
+        "歳出総額_千円": 16720316
+      },
+      "fy2021": {
+        "人口_人": 19953,
+        "歳入総額_千円": 15509725,
+        "歳出総額_千円": 14528174
+      },
+      "fy2022": {
+        "人口_人": 19536,
+        "歳入総額_千円": 15907924,
+        "歳出総額_千円": 15255815
+      },
+      "fy2023": {
+        "人口_人": 19062,
+        "歳入総額_千円": 14924298,
+        "歳出総額_千円": 14489770
+      },
+      "fy2024": {
+        "人口_人": 18633,
+        "歳入総額_千円": 15937936,
+        "歳出総額_千円": 15236839
+      }
+    },
+    {
+      "area_code": "214035",
+      "市区町村名": "揖斐郡大野町",
+      "fy2015": {
+        "人口_人": 23792,
+        "歳入総額_千円": 7276366,
+        "歳出総額_千円": 7002860
+      },
+      "fy2016": {
+        "人口_人": 23493,
+        "歳入総額_千円": 8863989,
+        "歳出総額_千円": 8549116
+      },
+      "fy2017": {
+        "人口_人": 23339,
+        "歳入総額_千円": 8804698,
+        "歳出総額_千円": 8645842
+      },
+      "fy2018": {
+        "人口_人": 23139,
+        "歳入総額_千円": 8451318,
+        "歳出総額_千円": 8258001
+      },
+      "fy2019": {
+        "人口_人": 22952,
+        "歳入総額_千円": 8285316,
+        "歳出総額_千円": 8108411
+      },
+      "fy2020": {
+        "人口_人": 22695,
+        "歳入総額_千円": 11128729,
+        "歳出総額_千円": 10774397
+      },
+      "fy2021": {
+        "人口_人": 22347,
+        "歳入総額_千円": 9443131,
+        "歳出総額_千円": 8999236
+      },
+      "fy2022": {
+        "人口_人": 22056,
+        "歳入総額_千円": 8815449,
+        "歳出総額_千円": 8671339
+      },
+      "fy2023": {
+        "人口_人": 21798,
+        "歳入総額_千円": 8956408,
+        "歳出総額_千円": 8807128
+      },
+      "fy2024": {
+        "人口_人": 21449,
+        "歳入総額_千円": 9839722,
+        "歳出総額_千円": 9708054
+      }
+    },
+    {
+      "area_code": "214043",
+      "市区町村名": "揖斐郡池田町",
+      "fy2015": {
+        "人口_人": 24572,
+        "歳入総額_千円": 8775278,
+        "歳出総額_千円": 8255165
+      },
+      "fy2016": {
+        "人口_人": 24390,
+        "歳入総額_千円": 11006112,
+        "歳出総額_千円": 10658909
+      },
+      "fy2017": {
+        "人口_人": 24231,
+        "歳入総額_千円": 11261690,
+        "歳出総額_千円": 10920243
+      },
+      "fy2018": {
+        "人口_人": 24012,
+        "歳入総額_千円": 11239234,
+        "歳出総額_千円": 10735268
+      },
+      "fy2019": {
+        "人口_人": 23779,
+        "歳入総額_千円": 9472177,
+        "歳出総額_千円": 9104600
+      },
+      "fy2020": {
+        "人口_人": 23563,
+        "歳入総額_千円": 12335481,
+        "歳出総額_千円": 11837417
+      },
+      "fy2021": {
+        "人口_人": 23186,
+        "歳入総額_千円": 10727908,
+        "歳出総額_千円": 9770710
+      },
+      "fy2022": {
+        "人口_人": 22990,
+        "歳入総額_千円": 10929452,
+        "歳出総額_千円": 10430112
+      },
+      "fy2023": {
+        "人口_人": 22714,
+        "歳入総額_千円": 10569741,
+        "歳出総額_千円": 10128273
+      },
+      "fy2024": {
+        "人口_人": 22461,
+        "歳入総額_千円": 10858230,
+        "歳出総額_千円": 10550322
+      }
+    },
+    {
+      "area_code": "214213",
+      "市区町村名": "本巣郡北方町",
+      "fy2015": {
+        "人口_人": 18344,
+        "歳入総額_千円": 7633964,
+        "歳出総額_千円": 7215433
+      },
+      "fy2016": {
+        "人口_人": 18389,
+        "歳入総額_千円": 7115685,
+        "歳出総額_千円": 6161884
+      },
+      "fy2017": {
+        "人口_人": 18510,
+        "歳入総額_千円": 7448105,
+        "歳出総額_千円": 7060107
+      },
+      "fy2018": {
+        "人口_人": 18442,
+        "歳入総額_千円": 7084491,
+        "歳出総額_千円": 6675594
+      },
+      "fy2019": {
+        "人口_人": 18428,
+        "歳入総額_千円": 6699357,
+        "歳出総額_千円": 6335574
+      },
+      "fy2020": {
+        "人口_人": 18495,
+        "歳入総額_千円": 11881687,
+        "歳出総額_千円": 11423114
+      },
+      "fy2021": {
+        "人口_人": 18550,
+        "歳入総額_千円": 9947339,
+        "歳出総額_千円": 8969214
+      },
+      "fy2022": {
+        "人口_人": 18695,
+        "歳入総額_千円": 9506398,
+        "歳出総額_千円": 8867637
+      },
+      "fy2023": {
+        "人口_人": 18697,
+        "歳入総額_千円": 7720751,
+        "歳出総額_千円": 7192926
+      },
+      "fy2024": {
+        "人口_人": 18568,
+        "歳入総額_千円": 8676402,
+        "歳出総額_千円": 8137668
+      }
+    },
+    {
+      "area_code": "215015",
+      "市区町村名": "加茂郡坂祝町",
+      "fy2015": {
+        "人口_人": 8238,
+        "歳入総額_千円": 3318397,
+        "歳出総額_千円": 3131295
+      },
+      "fy2016": {
+        "人口_人": 8204,
+        "歳入総額_千円": 3304779,
+        "歳出総額_千円": 3185418
+      },
+      "fy2017": {
+        "人口_人": 8195,
+        "歳入総額_千円": 3278778,
+        "歳出総額_千円": 3177846
+      },
+      "fy2018": {
+        "人口_人": 8253,
+        "歳入総額_千円": 3433517,
+        "歳出総額_千円": 3261177
+      },
+      "fy2019": {
+        "人口_人": 8291,
+        "歳入総額_千円": 3448222,
+        "歳出総額_千円": 3258366
+      },
+      "fy2020": {
+        "人口_人": 8166,
+        "歳入総額_千円": 4457645,
+        "歳出総額_千円": 4248101
+      },
+      "fy2021": {
+        "人口_人": 8023,
+        "歳入総額_千円": 4070481,
+        "歳出総額_千円": 3847271
+      },
+      "fy2022": {
+        "人口_人": 8084,
+        "歳入総額_千円": 4058668,
+        "歳出総額_千円": 3816711
+      },
+      "fy2023": {
+        "人口_人": 8213,
+        "歳入総額_千円": 3922749,
+        "歳出総額_千円": 3648435
+      },
+      "fy2024": {
+        "人口_人": 8264,
+        "歳入総額_千円": 4247301,
+        "歳出総額_千円": 3964304
+      }
+    },
+    {
+      "area_code": "215023",
+      "市区町村名": "加茂郡富加町",
+      "fy2015": {
+        "人口_人": 5720,
+        "歳入総額_千円": 2902458,
+        "歳出総額_千円": 2723787
+      },
+      "fy2016": {
+        "人口_人": 5707,
+        "歳入総額_千円": 2827638,
+        "歳出総額_千円": 2610267
+      },
+      "fy2017": {
+        "人口_人": 5729,
+        "歳入総額_千円": 3283429,
+        "歳出総額_千円": 3017518
+      },
+      "fy2018": {
+        "人口_人": 5714,
+        "歳入総額_千円": 4003455,
+        "歳出総額_千円": 3839232
+      },
+      "fy2019": {
+        "人口_人": 5769,
+        "歳入総額_千円": 2999457,
+        "歳出総額_千円": 2838331
+      },
+      "fy2020": {
+        "人口_人": 5751,
+        "歳入総額_千円": 3935759,
+        "歳出総額_千円": 3701789
+      },
+      "fy2021": {
+        "人口_人": 5696,
+        "歳入総額_千円": 3663983,
+        "歳出総額_千円": 3462209
+      },
+      "fy2022": {
+        "人口_人": 5760,
+        "歳入総額_千円": 3384441,
+        "歳出総額_千円": 3237588
+      },
+      "fy2023": {
+        "人口_人": 5847,
+        "歳入総額_千円": 3395333,
+        "歳出総額_千円": 3276291
+      },
+      "fy2024": {
+        "人口_人": 5884,
+        "歳入総額_千円": 3721924,
+        "歳出総額_千円": 3555117
+      }
+    },
+    {
+      "area_code": "215031",
+      "市区町村名": "加茂郡川辺町",
+      "fy2015": {
+        "人口_人": 10543,
+        "歳入総額_千円": 4482638,
+        "歳出総額_千円": 4171686
+      },
+      "fy2016": {
+        "人口_人": 10444,
+        "歳入総額_千円": 4837608,
+        "歳出総額_千円": 4551070
+      },
+      "fy2017": {
+        "人口_人": 10346,
+        "歳入総額_千円": 5173149,
+        "歳出総額_千円": 4876276
+      },
+      "fy2018": {
+        "人口_人": 10304,
+        "歳入総額_千円": 5163629,
+        "歳出総額_千円": 4885997
+      },
+      "fy2019": {
+        "人口_人": 10222,
+        "歳入総額_千円": 5246399,
+        "歳出総額_千円": 4997046
+      },
+      "fy2020": {
+        "人口_人": 10110,
+        "歳入総額_千円": 6578947,
+        "歳出総額_千円": 6268410
+      },
+      "fy2021": {
+        "人口_人": 10013,
+        "歳入総額_千円": 5901968,
+        "歳出総額_千円": 5625330
+      },
+      "fy2022": {
+        "人口_人": 9962,
+        "歳入総額_千円": 5893954,
+        "歳出総額_千円": 5604571
+      },
+      "fy2023": {
+        "人口_人": 9843,
+        "歳入総額_千円": 5608723,
+        "歳出総額_千円": 5271428
+      },
+      "fy2024": {
+        "人口_人": 9761,
+        "歳入総額_千円": 5736540,
+        "歳出総額_千円": 5430856
+      }
+    },
+    {
+      "area_code": "215040",
+      "市区町村名": "加茂郡七宗町",
+      "fy2015": {
+        "人口_人": 4135,
+        "歳入総額_千円": 3283732,
+        "歳出総額_千円": 3172450
+      },
+      "fy2016": {
+        "人口_人": 4038,
+        "歳入総額_千円": 3648270,
+        "歳出総額_千円": 3541218
+      },
+      "fy2017": {
+        "人口_人": 3919,
+        "歳入総額_千円": 5930751,
+        "歳出総額_千円": 5763466
+      },
+      "fy2018": {
+        "人口_人": 3799,
+        "歳入総額_千円": 9581706,
+        "歳出総額_千円": 9436205
+      },
+      "fy2019": {
+        "人口_人": 3721,
+        "歳入総額_千円": 3182316,
+        "歳出総額_千円": 3085889
+      },
+      "fy2020": {
+        "人口_人": 3617,
+        "歳入総額_千円": 3816138,
+        "歳出総額_千円": 3708530
+      },
+      "fy2021": {
+        "人口_人": 3511,
+        "歳入総額_千円": 3437994,
+        "歳出総額_千円": 3307069
+      },
+      "fy2022": {
+        "人口_人": 3373,
+        "歳入総額_千円": 3334782,
+        "歳出総額_千円": 3182217
+      },
+      "fy2023": {
+        "人口_人": 3290,
+        "歳入総額_千円": 3280436,
+        "歳出総額_千円": 3129579
+      },
+      "fy2024": {
+        "人口_人": 3186,
+        "歳入総額_千円": 3482940,
+        "歳出総額_千円": 3401241
+      }
+    },
+    {
+      "area_code": "215058",
+      "市区町村名": "加茂郡八百津町",
+      "fy2015": {
+        "人口_人": 11618,
+        "歳入総額_千円": 6341198,
+        "歳出総額_千円": 5990671
+      },
+      "fy2016": {
+        "人口_人": 11435,
+        "歳入総額_千円": 6482248,
+        "歳出総額_千円": 6221047
+      },
+      "fy2017": {
+        "人口_人": 11252,
+        "歳入総額_千円": 6398905,
+        "歳出総額_千円": 6058472
+      },
+      "fy2018": {
+        "人口_人": 11034,
+        "歳入総額_千円": 6798924,
+        "歳出総額_千円": 6440876
+      },
+      "fy2019": {
+        "人口_人": 10889,
+        "歳入総額_千円": 6232013,
+        "歳出総額_千円": 5894511
+      },
+      "fy2020": {
+        "人口_人": 10663,
+        "歳入総額_千円": 7881204,
+        "歳出総額_千円": 7461503
+      },
+      "fy2021": {
+        "人口_人": 10446,
+        "歳入総額_千円": 7444810,
+        "歳出総額_千円": 6991560
+      },
+      "fy2022": {
+        "人口_人": 10274,
+        "歳入総額_千円": 6987273,
+        "歳出総額_千円": 6491097
+      },
+      "fy2023": {
+        "人口_人": 10092,
+        "歳入総額_千円": 6962544,
+        "歳出総額_千円": 6503412
+      },
+      "fy2024": {
+        "人口_人": 9861,
+        "歳入総額_千円": 7119045,
+        "歳出総額_千円": 6642675
+      }
+    },
+    {
+      "area_code": "215066",
+      "市区町村名": "加茂郡白川町",
+      "fy2015": {
+        "人口_人": 8916,
+        "歳入総額_千円": 6262636,
+        "歳出総額_千円": 5891528
+      },
+      "fy2016": {
+        "人口_人": 8692,
+        "歳入総額_千円": 6201122,
+        "歳出総額_千円": 5785920
+      },
+      "fy2017": {
+        "人口_人": 8545,
+        "歳入総額_千円": 6304820,
+        "歳出総額_千円": 5991055
+      },
+      "fy2018": {
+        "人口_人": 8289,
+        "歳入総額_千円": 6039863,
+        "歳出総額_千円": 5687307
+      },
+      "fy2019": {
+        "人口_人": 8033,
+        "歳入総額_千円": 6315511,
+        "歳出総額_千円": 6052031
+      },
+      "fy2020": {
+        "人口_人": 7816,
+        "歳入総額_千円": 7620906,
+        "歳出総額_千円": 7193901
+      },
+      "fy2021": {
+        "人口_人": 7634,
+        "歳入総額_千円": 7286036,
+        "歳出総額_千円": 6774538
+      },
+      "fy2022": {
+        "人口_人": 7421,
+        "歳入総額_千円": 7257109,
+        "歳出総額_千円": 6712763
+      },
+      "fy2023": {
+        "人口_人": 7194,
+        "歳入総額_千円": 6884670,
+        "歳出総額_千円": 6487732
+      },
+      "fy2024": {
+        "人口_人": 6914,
+        "歳入総額_千円": 7388417,
+        "歳出総額_千円": 6791053
+      }
+    },
+    {
+      "area_code": "215074",
+      "市区町村名": "加茂郡東白川村",
+      "fy2015": {
+        "人口_人": 2432,
+        "歳入総額_千円": 2908956,
+        "歳出総額_千円": 2607979
+      },
+      "fy2016": {
+        "人口_人": 2375,
+        "歳入総額_千円": 3038312,
+        "歳出総額_千円": 2711190
+      },
+      "fy2017": {
+        "人口_人": 2330,
+        "歳入総額_千円": 2958963,
+        "歳出総額_千円": 2617792
+      },
+      "fy2018": {
+        "人口_人": 2277,
+        "歳入総額_千円": 3046396,
+        "歳出総額_千円": 2725199
+      },
+      "fy2019": {
+        "人口_人": 2214,
+        "歳入総額_千円": 3147679,
+        "歳出総額_千円": 2816728
+      },
+      "fy2020": {
+        "人口_人": 2178,
+        "歳入総額_千円": 3373388,
+        "歳出総額_千円": 3024915
+      },
+      "fy2021": {
+        "人口_人": 2141,
+        "歳入総額_千円": 3190998,
+        "歳出総額_千円": 2789847
+      },
+      "fy2022": {
+        "人口_人": 2109,
+        "歳入総額_千円": 3292109,
+        "歳出総額_千円": 2916919
+      },
+      "fy2023": {
+        "人口_人": 2072,
+        "歳入総額_千円": 3453030,
+        "歳出総額_千円": 3132618
+      },
+      "fy2024": {
+        "人口_人": 2011,
+        "歳入総額_千円": 3622390,
+        "歳出総額_千円": 3341054
+      }
+    },
+    {
+      "area_code": "215210",
+      "市区町村名": "可児郡御嵩町",
+      "fy2015": {
+        "人口_人": 18766,
+        "歳入総額_千円": 9205395,
+        "歳出総額_千円": 8979636
+      },
+      "fy2016": {
+        "人口_人": 18628,
+        "歳入総額_千円": 8893519,
+        "歳出総額_千円": 8731819
+      },
+      "fy2017": {
+        "人口_人": 18448,
+        "歳入総額_千円": 6994215,
+        "歳出総額_千円": 6811018
+      },
+      "fy2018": {
+        "人口_人": 18371,
+        "歳入総額_千円": 8372956,
+        "歳出総額_千円": 8098274
+      },
+      "fy2019": {
+        "人口_人": 18348,
+        "歳入総額_千円": 8995360,
+        "歳出総額_千円": 8696207
+      },
+      "fy2020": {
+        "人口_人": 18133,
+        "歳入総額_千円": 13500125,
+        "歳出総額_千円": 13103616
+      },
+      "fy2021": {
+        "人口_人": 17968,
+        "歳入総額_千円": 8993156,
+        "歳出総額_千円": 8724611
+      },
+      "fy2022": {
+        "人口_人": 17775,
+        "歳入総額_千円": 9182125,
+        "歳出総額_千円": 8874568
+      },
+      "fy2023": {
+        "人口_人": 17682,
+        "歳入総額_千円": 11582091,
+        "歳出総額_千円": 11371196
+      },
+      "fy2024": {
+        "人口_人": 17523,
+        "歳入総額_千円": 10940484,
+        "歳出総額_千円": 10685154
+      }
+    },
+    {
+      "area_code": "216046",
+      "市区町村名": "大野郡白川村",
+      "fy2015": {
+        "人口_人": 1694,
+        "歳入総額_千円": 3679507,
+        "歳出総額_千円": 3287321
+      },
+      "fy2016": {
+        "人口_人": 1672,
+        "歳入総額_千円": 3627137,
+        "歳出総額_千円": 3311519
+      },
+      "fy2017": {
+        "人口_人": 1652,
+        "歳入総額_千円": 3803673,
+        "歳出総額_千円": 3457276
+      },
+      "fy2018": {
+        "人口_人": 1630,
+        "歳入総額_千円": 4653296,
+        "歳出総額_千円": 4409264
+      },
+      "fy2019": {
+        "人口_人": 1608,
+        "歳入総額_千円": 4040263,
+        "歳出総額_千円": 3663418
+      },
+      "fy2020": {
+        "人口_人": 1572,
+        "歳入総額_千円": 5348482,
+        "歳出総額_千円": 5203416
+      },
+      "fy2021": {
+        "人口_人": 1541,
+        "歳入総額_千円": 4355336,
+        "歳出総額_千円": 4214290
+      },
+      "fy2022": {
+        "人口_人": 1513,
+        "歳入総額_千円": 4454869,
+        "歳出総額_千円": 3918784
+      },
+      "fy2023": {
+        "人口_人": 1491,
+        "歳入総額_千円": 5034349,
+        "歳出総額_千円": 4384824
+      },
+      "fy2024": {
+        "人口_人": 1470,
+        "歳入総額_千円": 5632231,
+        "歳出総額_千円": 5432167
+      }
+    }
+  ],
+  "totals_by_year": {
+    "fy2015": {
+      "national": {
+        "municipality_count": 1741,
+        "歳入総額_合計_千円": 58019627794,
+        "歳出総額_合計_千円": 55925006636
+      },
+      "prefecture": {
+        "municipality_count": 42,
+        "歳入総額_合計_千円": 873665514,
+        "歳出総額_合計_千円": 821846556
+      }
+    },
+    "fy2016": {
+      "national": {
+        "municipality_count": 1741,
+        "歳入総額_合計_千円": 57746160597,
+        "歳出総額_合計_千円": 55941655716
+      },
+      "prefecture": {
+        "municipality_count": 42,
+        "歳入総額_合計_千円": 877478840,
+        "歳出総額_合計_千円": 831132869
+      }
+    },
+    "fy2017": {
+      "national": {
+        "municipality_count": 1741,
+        "歳入総額_合計_千円": 59193019470,
+        "歳出総額_合計_千円": 57404052184
+      },
+      "prefecture": {
+        "municipality_count": 42,
+        "歳入総額_合計_千円": 887772927,
+        "歳出総額_合計_千円": 844954689
+      }
+    },
+    "fy2018": {
+      "national": {
+        "municipality_count": 1741,
+        "歳入総額_合計_千円": 59256351462,
+        "歳出総額_合計_千円": 57439319868
+      },
+      "prefecture": {
+        "municipality_count": 42,
+        "歳入総額_合計_千円": 891363078,
+        "歳出総額_合計_千円": 841065940
+      }
+    },
+    "fy2019": {
+      "national": {
+        "municipality_count": 1741,
+        "歳入総額_合計_千円": 60761599903,
+        "歳出総額_合計_千円": 58888132135
+      },
+      "prefecture": {
+        "municipality_count": 42,
+        "歳入総額_合計_千円": 918301767,
+        "歳出総額_合計_千円": 870054864
+      }
+    },
+    "fy2020": {
+      "national": {
+        "municipality_count": 1741,
+        "歳入総額_合計_千円": 77307212480,
+        "歳出総額_合計_千円": 75023952709
+      },
+      "prefecture": {
+        "municipality_count": 42,
+        "歳入総額_合計_千円": 1207826990,
+        "歳出総額_合計_千円": 1150180346
+      }
+    },
+    "fy2021": {
+      "national": {
+        "municipality_count": 1741,
+        "歳入総額_合計_千円": 69855607272,
+        "歳出総額_合計_千円": 67033848047
+      },
+      "prefecture": {
+        "municipality_count": 42,
+        "歳入総額_合計_千円": 1056974057,
+        "歳出総額_合計_千円": 981127169
+      }
+    },
+    "fy2022": {
+      "national": {
+        "municipality_count": 1741,
+        "歳入総額_合計_千円": 68382673934,
+        "歳出総額_合計_千円": 65886843920
+      },
+      "prefecture": {
+        "municipality_count": 42,
+        "歳入総額_合計_千円": 1037204580,
+        "歳出総額_合計_千円": 972829104
+      }
+    },
+    "fy2023": {
+      "national": {
+        "municipality_count": 1741,
+        "歳入総額_合計_千円": 68659372044,
+        "歳出総額_合計_千円": 66360424559
+      },
+      "prefecture": {
+        "municipality_count": 42,
+        "歳入総額_合計_千円": 1027594002,
+        "歳出総額_合計_千円": 967856842
+      }
+    },
+    "fy2024": {
+      "national": {
+        "municipality_count": 1741,
+        "歳入総額_合計_千円": 71399902523,
+        "歳出総額_合計_千円": 69109223128
+      },
+      "prefecture": {
+        "municipality_count": 42,
+        "歳入総額_合計_千円": 1075535378,
+        "歳出総額_合計_千円": 1017401592
+      }
+    }
+  },
+  "data_check_log": {
+    "extraction_issues": [],
+    "missing_codes_by_year": {}
+  }
+}

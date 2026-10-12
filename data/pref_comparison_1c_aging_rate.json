@@ -1,0 +1,775 @@
+{
+  "source_data_file": "data/pref_1c_aging_rate.json",
+  "generated_at": "2026-09-05",
+  "fields": [
+    "高齢化率"
+  ],
+  "notes": [
+    "母集団は参照元 data/pref_1c_aging_rate.json の47都道府県レコードのみ（N=47固定）。全国/合計行（都道府県コード ['-', '00', '00000'] のいずれか。本ファイルの参照元では '-'='合計'）は母集団に含めず、平均・順位・百分位の計算に使っていない。",
+    "national_average_unweighted = 47都道府県の値の単純算術平均（小数第2位で丸め）。average_method=\"unweighted_mean\"。docs/similar-group-aggregation-design.md §3「加重の扱い」の原則（平均は原則単純算術平均。人口加重等はどの重みを選ぶかに価値判断が入りうるため既定にしない）に従う。",
+    "national_official は参照元の全国/合計行の同名フィールドを**そのまま転記**したもので、本ファイルでは算出していない。これは average_method=\"official\" に相当する値を別フィールドで保持したものであり、national_average_unweighted と同一の量ではない。混同しないこと。実測の差は次のとおり： 高齢化率: 単純平均=31.44 / 全国行=28.89（公式比率・公式値）差=-2.55。",
+    "national_official は参照元の全国/合計行の値で、国全体の実数から算出された公式比率である。47都道府県の単純平均とは一致しない（分母が都道府県ごとに異なるため）。同じ内容を各フィールドの source_note にも書いてある。",
+    "rank は47都道府県内での値の降順順位（1=最大値）。rank(i) = 1 + #{j : value(j) > value(i)} で機械的に算出しており、**同値は同順位とし、次の順位をその分だけ飛ばす**方式（competition ranking。例 1,2,2,4）を採用した。本ファイルでの同順位の発生： 高齢化率: {11: 2}。",
+    "percentile = (rank_out_of − rank + 1) / rank_out_of × 100 = (47 − rank + 1) / 47 × 100（小数第1位で丸め）。1位=100.0、47位=2.1。同順位の都道府県は同じ percentile を持つ。",
+    "group_code・group_average は全フィールドで null。都道府県には類似団体区分が存在しないため（区分マスタ ruikei_kubun_r06 は市町村1741団体のみを収録し、都道府県を持たない）。値が未収集・未算出なのではなく、概念そのものが無いことによる null である。",
+    "順位・百分位は事実として出すだけで、大小の望ましさを含意しない。評価語・評価色（信号色）・複合スコアは付与していない（docs/20260808_decisions.md D-4／D-6 ランキング非生成／D-18、および設計書§6）。",
+    "都道府県コードは参照元の体系（住民基本台帳の6桁）をそのまま使っている。都道府県版の指標JSONはコード体系が3系統に分かれる（住基6桁＝例 210005／国勢5桁＝例 21000／SSDS2桁＝例 21）。比較値ファイル同士・生値ファイル同士をコードで結合する際は桁を揃える必要がある。",
+    "検算：national_average_unweighted × 47 と47都道府県値の合計の差が、丸め許容範囲 47 × 0.5 × 10^-2 = 0.235 以内であることを全フィールドで生成時に検証済み（平均を小数第2位に丸めているため厳密一致はしない）。",
+    "value は参照元の値をそのまま転記しており、本ファイルで再丸め・単位換算はしていない。参照元の時点は「令和7年1月1日時点（住民基本台帳）」。参照元 data/pref_1c_aging_rate.json は本作業で編集していない。",
+    "設計根拠は docs/similar-group-aggregation-design.md §3（集計式）・§4（出力スキーマ）。同§8は「都道府県ページでの集計」をV2送りとしていたが、content-spec-v1.md §7.16（2026-09-03）が県ページのV1構築を決定したことにより、その V2送り記述は上書き・破棄されている。また設計書§4の population_basis（一人あたり系の分母時点）は本ファイルでは使用していない（参照元が既に算出済みの値を転記しているため）。"
+  ],
+  "data": [
+    {
+      "都道府県コード": "010006",
+      "都道府県名": "北海道",
+      "高齢化率": {
+        "value": 33.0,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 18,
+        "rank_out_of": 47,
+        "percentile": 63.8,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "020001",
+      "都道府県名": "青森県",
+      "高齢化率": {
+        "value": 35.39,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 3,
+        "rank_out_of": 47,
+        "percentile": 95.7,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "030007",
+      "都道府県名": "岩手県",
+      "高齢化率": {
+        "value": 35.18,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 6,
+        "rank_out_of": 47,
+        "percentile": 89.4,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "040002",
+      "都道府県名": "宮城県",
+      "高齢化率": {
+        "value": 29.59,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 37,
+        "rank_out_of": 47,
+        "percentile": 23.4,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "050008",
+      "都道府県名": "秋田県",
+      "高齢化率": {
+        "value": 39.23,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 1,
+        "rank_out_of": 47,
+        "percentile": 100.0,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "060003",
+      "都道府県名": "山形県",
+      "高齢化率": {
+        "value": 35.38,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 4,
+        "rank_out_of": 47,
+        "percentile": 93.6,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "070009",
+      "都道府県名": "福島県",
+      "高齢化率": {
+        "value": 33.32,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 17,
+        "rank_out_of": 47,
+        "percentile": 66.0,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "080004",
+      "都道府県名": "茨城県",
+      "高齢化率": {
+        "value": 30.36,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 33,
+        "rank_out_of": 47,
+        "percentile": 31.9,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "090000",
+      "都道府県名": "栃木県",
+      "高齢化率": {
+        "value": 30.17,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 34,
+        "rank_out_of": 47,
+        "percentile": 29.8,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "100005",
+      "都道府県名": "群馬県",
+      "高齢化率": {
+        "value": 30.65,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 30,
+        "rank_out_of": 47,
+        "percentile": 38.3,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "110001",
+      "都道府県名": "埼玉県",
+      "高齢化率": {
+        "value": 26.97,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 42,
+        "rank_out_of": 47,
+        "percentile": 12.8,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "120006",
+      "都道府県名": "千葉県",
+      "高齢化率": {
+        "value": 27.61,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 40,
+        "rank_out_of": 47,
+        "percentile": 17.0,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "130001",
+      "都道府県名": "東京都",
+      "高齢化率": {
+        "value": 22.48,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 47,
+        "rank_out_of": 47,
+        "percentile": 2.1,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "140007",
+      "都道府県名": "神奈川県",
+      "高齢化率": {
+        "value": 25.67,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 44,
+        "rank_out_of": 47,
+        "percentile": 8.5,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "150002",
+      "都道府県名": "新潟県",
+      "高齢化率": {
+        "value": 33.88,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 13,
+        "rank_out_of": 47,
+        "percentile": 74.5,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "160008",
+      "都道府県名": "富山県",
+      "高齢化率": {
+        "value": 32.73,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 19,
+        "rank_out_of": 47,
+        "percentile": 61.7,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "170003",
+      "都道府県名": "石川県",
+      "高齢化率": {
+        "value": 30.49,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 31,
+        "rank_out_of": 47,
+        "percentile": 36.2,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "180009",
+      "都道府県名": "福井県",
+      "高齢化率": {
+        "value": 31.27,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 26,
+        "rank_out_of": 47,
+        "percentile": 46.8,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "190004",
+      "都道府県名": "山梨県",
+      "高齢化率": {
+        "value": 31.74,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 24,
+        "rank_out_of": 47,
+        "percentile": 51.1,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "200000",
+      "都道府県名": "長野県",
+      "高齢化率": {
+        "value": 32.47,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 20,
+        "rank_out_of": 47,
+        "percentile": 59.6,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "210005",
+      "都道府県名": "岐阜県",
+      "高齢化率": {
+        "value": 30.97,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 27,
+        "rank_out_of": 47,
+        "percentile": 44.7,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "220001",
+      "都道府県名": "静岡県",
+      "高齢化率": {
+        "value": 30.88,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 28,
+        "rank_out_of": 47,
+        "percentile": 42.6,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "230006",
+      "都道府県名": "愛知県",
+      "高齢化率": {
+        "value": 25.45,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 45,
+        "rank_out_of": 47,
+        "percentile": 6.4,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "240001",
+      "都道府県名": "三重県",
+      "高齢化率": {
+        "value": 30.45,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 32,
+        "rank_out_of": 47,
+        "percentile": 34.0,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "250007",
+      "都道府県名": "滋賀県",
+      "高齢化率": {
+        "value": 27.08,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 41,
+        "rank_out_of": 47,
+        "percentile": 14.9,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "260002",
+      "都道府県名": "京都府",
+      "高齢化率": {
+        "value": 29.64,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 36,
+        "rank_out_of": 47,
+        "percentile": 25.5,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "270008",
+      "都道府県名": "大阪府",
+      "高齢化率": {
+        "value": 26.86,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 43,
+        "rank_out_of": 47,
+        "percentile": 10.6,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "280003",
+      "都道府県名": "兵庫県",
+      "高齢化率": {
+        "value": 29.34,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 38,
+        "rank_out_of": 47,
+        "percentile": 21.3,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "290009",
+      "都道府県名": "奈良県",
+      "高齢化率": {
+        "value": 32.44,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 21,
+        "rank_out_of": 47,
+        "percentile": 57.4,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "300004",
+      "都道府県名": "和歌山県",
+      "高齢化率": {
+        "value": 33.89,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 11,
+        "rank_out_of": 47,
+        "percentile": 78.7,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "310000",
+      "都道府県名": "鳥取県",
+      "高齢化率": {
+        "value": 33.39,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 16,
+        "rank_out_of": 47,
+        "percentile": 68.1,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "320005",
+      "都道府県名": "島根県",
+      "高齢化率": {
+        "value": 35.08,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 7,
+        "rank_out_of": 47,
+        "percentile": 87.2,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "330001",
+      "都道府県名": "岡山県",
+      "高齢化率": {
+        "value": 30.81,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 29,
+        "rank_out_of": 47,
+        "percentile": 40.4,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "340006",
+      "都道府県名": "広島県",
+      "高齢化率": {
+        "value": 30.09,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 35,
+        "rank_out_of": 47,
+        "percentile": 27.7,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "350001",
+      "都道府県名": "山口県",
+      "高齢化率": {
+        "value": 35.23,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 5,
+        "rank_out_of": 47,
+        "percentile": 91.5,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "360007",
+      "都道府県名": "徳島県",
+      "高齢化率": {
+        "value": 34.71,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 8,
+        "rank_out_of": 47,
+        "percentile": 85.1,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "370002",
+      "都道府県名": "香川県",
+      "高齢化率": {
+        "value": 32.06,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 23,
+        "rank_out_of": 47,
+        "percentile": 53.2,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "380008",
+      "都道府県名": "愛媛県",
+      "高齢化率": {
+        "value": 33.89,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 11,
+        "rank_out_of": 47,
+        "percentile": 78.7,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "390003",
+      "都道府県名": "高知県",
+      "高齢化率": {
+        "value": 36.25,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 2,
+        "rank_out_of": 47,
+        "percentile": 97.9,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "400009",
+      "都道府県名": "福岡県",
+      "高齢化率": {
+        "value": 28.13,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 39,
+        "rank_out_of": 47,
+        "percentile": 19.1,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "410004",
+      "都道府県名": "佐賀県",
+      "高齢化率": {
+        "value": 31.57,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 25,
+        "rank_out_of": 47,
+        "percentile": 48.9,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "420000",
+      "都道府県名": "長崎県",
+      "高齢化率": {
+        "value": 34.41,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 9,
+        "rank_out_of": 47,
+        "percentile": 83.0,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "430005",
+      "都道府県名": "熊本県",
+      "高齢化率": {
+        "value": 32.3,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 22,
+        "rank_out_of": 47,
+        "percentile": 55.3,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "440001",
+      "都道府県名": "大分県",
+      "高齢化率": {
+        "value": 34.0,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 10,
+        "rank_out_of": 47,
+        "percentile": 80.9,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "450006",
+      "都道府県名": "宮崎県",
+      "高齢化率": {
+        "value": 33.58,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 15,
+        "rank_out_of": 47,
+        "percentile": 70.2,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "460001",
+      "都道府県名": "鹿児島県",
+      "高齢化率": {
+        "value": 33.66,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 14,
+        "rank_out_of": 47,
+        "percentile": 72.3,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "470007",
+      "都道府県名": "沖縄県",
+      "高齢化率": {
+        "value": 23.93,
+        "national_average_unweighted": 31.44,
+        "national_official": 28.89,
+        "group_code": null,
+        "group_average": null,
+        "rank": 46,
+        "rank_out_of": 47,
+        "percentile": 4.3,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    }
+  ]
+}

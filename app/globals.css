@@ -1,0 +1,229 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+
+  /*
+   * 自治体WatchのVIトークン。値は design/mock の実測（行政のすがた.html の :root と一致）。
+   * すべて識別のための色であり、増減・多寡に対する評価色ではない（20260808_decisions.md D-4/D-6/D-12/D-18・
+   * 信号色不採用）。当該自治体=--current／全国=--national／県内=--prefecture／類団=--similar は識別子。
+   */
+  --identity: #075c41;        /* ブランド緑：カード見出し・title-icon 地・バッジ文字 */
+  --identity-dark: #003f2c;   /* 濃見出し */
+  --identity-soft: #e4f0ea;   /* バッジ地・バー軌道・淡地 */
+  --current: #3f7d68;         /* 当該自治体の系列（識別） */
+  --national: #e07a33;        /* 全国比較マーカー（識別） */
+  --prefecture: #7f6278;      /* 県内平均マーカー（中立グレー・低彩度の赤紫みでmuted系と色相を分離。A-4・2026-09-23確定。WCAG AA対応前は#aeb7bd） */
+  --similar: #b56a55;         /* 類団比較（識別） */
+  --threshold: #b5533f;       /* 法定基準の「超過」を示す事実マーカー。信号色ではない（ui-vi §3.4） */
+  --baseline: #52665d;        /* 法定基準線＝実線（事実の基準・評価色ではない） */
+  --baseline-soft: #7b8781;   /* 法定基準線＝破線 */
+  --line: #d5dfda;            /* カード外罫 */
+  --line-soft: #e2e7e5;       /* 内部区切り罫 */
+  --muted: #4e555b;           /* ラベル・小見出し（A-4・WCAG AA対応。対応前は#757f88） */
+  --muted-light: #60656a;     /* 脚注（A-4・WCAG AA対応。対応前は#98a0a7） */
+  --surface: #ffffff;         /* カード地 */
+  --page: #f3f2ef;            /* ページ地（暖色オフホワイト） */
+  --ink: #17324a;             /* 補助見出し */
+  --body: #12251f;            /* 本文最濃 */
+
+  /* まちのすがた（machi）本体の識別色（design/mock まちのすがた.html :root 実測）。
+     分類・系列の識別色であって評価色ではない（D-4/D-6/D-12/D-18）。--rank=--current・--average=--national は流用。 */
+  --male: #4a9dc4;            /* 人口・男（識別） */
+  --female: #d98a86;          /* 人口・女（識別） */
+  --single: #8f6fb0;          /* 単身世帯割合（識別） */
+  --aging: #c99a3f;           /* 高齢化率（識別） */
+  --sector1: #5b8f4a;         /* 第1次産業（識別） */
+  --sector1-bg: #e3ecdc;
+  --sector2: #c0674a;         /* 第2次産業（識別） */
+  --sector2-bg: #f0ded4;
+  --sector3: #5182ab;         /* 第3次産業（識別） */
+  --sector3-bg: #dde7ef;
+  --info: #1768dc;
+  --green-deep: #00583d;      /* 濃見出し（machi） */
+  --daynight-marker: #cc8100; /* 昼夜間人口比率の当該団体マーカー（☀と同系の琥珀・白地3.13＝図形3:1以上。全国平均--nationalとは別色） */
+
+  /* 識別色の文字専用トークン（C-7・WCAG AA 4.5:1。運営者裁定2026-10-03）。
+     元の識別色の明度を下げた濃色（女・高齢化のみ色相も微調整）。文字と「文字が乗る面」（男女割合バー）にのみ使い、
+     図の塗り（ドーナツの弧・産業アイコン・枠・マーカー線）は上の識別色のまま（VIパレット§0.7は不変）。
+     比率は白地（産業は各淡地）に対する値。 */
+  --male-text: #257da3;       /* 男（白地4.62・白文字on 4.62） */
+  --female-text: #b8556b;     /* 女（白地4.62・白文字on 4.62。ピンク寄りに色相調整＝運営者裁定案3） */
+  --single-text: #8767a8;     /* 単身世帯（白地4.63） */
+  --aging-text: #956f00;      /* 高齢化率（白地4.61。からし色＝黄寄りに色相調整・運営者裁定案3） */
+  --sector1-text: #41732f;    /* 第1次産業（#e3ecdc地4.65） */
+  --sector2-text: #9f492d;    /* 第2次産業（#f0ded4地4.65） */
+  --sector3-text: #396991;    /* 第3次産業（#dde7ef地4.65） */
+  --national-text: #bb5900;   /* 全国平均ラベル（白地4.62） */
+
+  /* 議会のすがた（gikai）本体（design/mock 議会のすがた.html :root 実測） */
+  --track: #eaf0ed;           /* 棒グラフの軌道 */
+  --panel: #f6faf8;           /* サブパネル地 */
+
+  --card-shadow: 0 5px 16px rgb(30 66 53 / 7%);
+  --card-head-bg: linear-gradient(90deg, #f7faf8 0%, #ecf4f0 62%, #f9fbfa 100%);
+  --card-head-border: #dce6e1;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+/*
+ * 設計原本（design/mock 各 HTML）は color-scheme: light 固定で、dark 版デザインは存在しない。
+ * 以前ここにあった prefers-color-scheme: dark の反転（#0a0a0a/#ededed）は未管理で、各カードの
+ * bg-white・濃色文字の直書きと不整合になる（OSダーク時に地とカードが割れる）ため削除した
+ * （2026-09-14・D1／原本準拠）。dark を採るなら設計として別途起こす。
+ */
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  /*
+   * 全画面共通のタイポグラフィ（V-3）。design/mock 各HTML（トップ/県/まち/行政/議会/くらし）の
+   * 実測フォントスタックに整合させる。システムフォント指定＝Webフォントの外部読込なし
+   * （output:'export'／外部依存を増やさない・20260808_decisions.md D-10 と整合）。
+   * ui-vi-handoff.md はフォント・字サイズのピクセル値を実装時のモック整合に委ねており、本指定がその整合。
+   * -webkit-font-smoothing は layout.tsx の antialiased クラスで適用済み。
+   */
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Yu Gothic UI",
+    "Yu Gothic", Meiryo, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  /*
+   * 日本語テキストはデフォルトの word-break: normal だと、単語の意味を
+   * 無視して任意の文字間で改行されてしまう（例:「所得制限」が「所得制」
+   * 「限」で分割される）。keep-all で意味のまとまりを優先し、overflow-wrap:
+   * break-word を保険として残すことで、幅が足りない極端なケースのみ
+   * フォールバックで折り返す。
+   * auto-phrase（Chrome/Edge 119+）は文節単位で折り返し、「、」の位置で折れやすくなる。
+   * 非対応ブラウザは直前の keep-all のまま（宣言を2行重ねる標準の段階的対応）。
+   * 「・」で折れる箇所は lib/text.ts の noBreakAfterDot で個別に抑える。
+   */
+  word-break: keep-all;
+  word-break: auto-phrase;
+  overflow-wrap: break-word;
+}
+
+/*
+ * 字サイズトークン（2026-10-02・スマホ実機確認で「老眼では読めない」との指摘を受けた試作）。
+ * 既定値（:root）は従来の実装値と同一＝このトークンを使っても既存の見た目は変わらない。
+ * `.type-large` を付けた領域（現状は「まちのすがた」タブのみ）だけ、スマホ向けに大きくする。
+ * 他タブへ広げる場合は `.type-large` を付与する（または既定値を書き換える）。
+ * 階層名は ui-vi-handoff §4.9 と対応：crumb/back=パンくず・戻り、title=カード見出し、
+ * label=項目名、sub=添え書き、note=グラフ内の目盛・注記、source=出典フッター、
+ * badge=更新頻度バッジ、chip=フッターの注記チップ、key=標準主要数値（ヒーロー数値は対象外）。
+ * 左がモバイル／@media(min-width:640px) 以上が PC 側。
+ */
+:root {
+  --fs-crumb: 11px;
+  --fs-back: 12px;
+  --fs-title: 15px;
+  --fs-label: 13px;
+  --fs-sub: 11px;
+  --fs-note: 10px;
+  --fs-source: 9px;
+  --fs-badge: 10px;
+  --fs-chip: 9px;
+  --fs-key: 18px;
+  --fs-donut: 18px;
+  --donut: 86px;
+  --ind-cols: 3;
+  --pair-cols: 2;
+}
+@media (min-width: 640px) {
+  :root {
+    --fs-crumb: 12px;
+    --fs-back: 14px;
+    --fs-title: 17px;
+    --fs-source: 10px;
+    --fs-badge: 11px;
+    --fs-chip: 11px;
+    --fs-key: 21px;
+  }
+}
+.type-large {
+  --fs-crumb: 15px;
+  --fs-back: 15px;
+  --fs-title: 18px;
+  --fs-label: 16px;
+  --fs-sub: 16px;
+  --fs-note: 14px;
+  --fs-source: 12px;
+  --fs-badge: 12px;
+  --fs-chip: 12px;
+  --fs-key: 26px;
+  --fs-donut: 24px;
+  --donut: 124px;
+  --ind-cols: 1;
+  --pair-cols: 1;
+}
+@media (min-width: 640px) {
+  .type-large {
+    --fs-crumb: 15px;
+    --fs-title: 19px;
+    --fs-key: 26px;
+    --fs-donut: 22px;
+    --donut: 110px;
+    --ind-cols: 1;
+    --pair-cols: 2;
+  }
+}
+/* 単身世帯・高齢化率（ドーナツ2つ横並び）：PC(lg)は3列グリッドで1カード幅が狭いため、このブロック内だけ
+   添え書き・見出しの字を少し小さくし、ドーナツも小さくして横並びに収める（2026-10-02 PC確認）。 */
+@media (min-width: 1024px) {
+  .type-large .pair-grid {
+    --fs-sub: 12px;
+    --fs-label: 14px;
+    --fs-donut: 18px;
+    --donut: 96px;
+  }
+}
+/* 産業別就業者構成比（.type-large）：箱の幅が十分あるときは「左＝産業名・構成比・人数／右＝全国順位・類似団体平均」の
+   横長レイアウトにして、カード高さを抑え、比較2行を1行ずつに収める（2026-10-02 PC確認）。幅は箱の列幅（コンテナ）で判定。 */
+.type-large .sector-grid { container-type: inline-size; }
+@container (min-width: 460px) {
+  .type-large .sector-box {
+    display: grid;
+    grid-template-columns: 44px auto minmax(0, 1fr);
+    grid-template-areas: "icon label cmp" "icon pct cmp" "icon count cmp";
+    column-gap: 14px;
+    align-items: center;
+    justify-items: start;
+  }
+  .type-large .sector-icon { grid-area: icon; margin: 0; }
+  .type-large .sector-label { grid-area: label; margin: 0; justify-content: flex-start; }
+  .type-large .sector-pct { grid-area: pct; flex-direction: row; align-items: baseline; gap: 4px; }
+  .type-large .sector-count { grid-area: count; margin: 0; }
+  .type-large .sector-cmp {
+    grid-area: cmp;
+    justify-self: stretch;
+    padding-left: 14px;
+    border-left: 1px solid currentColor;
+  }
+  .type-large .sector-cmp > div { margin-top: 0; padding-top: 0; border-top: 0; }
+  .type-large .sector-cmp p { text-align: left; }
+}
+/* 財政概況の歳入・歳出パネル：コンテナ幅520px以上で2列、未満は1列 */
+.fin-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+@container (min-width: 520px) {
+  .fin-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@utility fs-crumb { font-size: var(--fs-crumb); }
+@utility fs-back { font-size: var(--fs-back); }
+@utility fs-title { font-size: var(--fs-title); }
+@utility fs-label { font-size: var(--fs-label); }
+@utility fs-sub { font-size: var(--fs-sub); }
+@utility fs-note { font-size: var(--fs-note); }
+@utility fs-source { font-size: var(--fs-source); }
+@utility fs-badge { font-size: var(--fs-badge); }
+@utility fs-chip { font-size: var(--fs-chip); }
+@utility fs-key { font-size: var(--fs-key); }
+@utility fs-donut { font-size: var(--fs-donut); }
+
+/* 大きい字サイズ領域ではカード見出しを省略せず折り返す（「産業別就業者…」の途切れ防止） */
+.type-large .metric-head { flex-wrap: wrap; }
+.type-large .metric-title { white-space: normal; overflow: visible; text-overflow: clip; }

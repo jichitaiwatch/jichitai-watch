@@ -1,0 +1,1440 @@
+{
+  "sources": [
+    {
+      "source_url": "https://www.soumu.go.jp/main_content/000932784.pdf",
+      "source_page": "総務省「地方自治月報」議会関係 (1)議員定数に関する調（令和5年4月1日現在）都道府県分",
+      "fetched_at": "2026-09-02",
+      "source_file_hash_sha256": "bf4f6a31c9c9b247e7dc09856b8f5ee9a52e1d55750402e55ba4edf7939aba54",
+      "provides": [
+        "議員定数",
+        "現員数"
+      ],
+      "note": "総務省が確認できた最新版は令和5年4月1日現在。令和6年度・令和7年度版はweb検索で発見できなかった（未発見）。"
+    },
+    {
+      "source_url": "https://www.soumu.go.jp/main_content/001056128.xlsx",
+      "source_page": "総務省「地方財政状況調査関係資料｜令和6年度都道府県決算状況調」第5表 目的別歳出内訳 5-2 都道府県別内訳（令和6年度＝2024年度決算）",
+      "source_page_url": "https://www.soumu.go.jp/iken/zaisei/r06_todohuken.html",
+      "fetched_at": "2026-09-02",
+      "source_file_hash_sha256": "55d07a63f1fb89eea4056ac4a8d3f6f80f236a0044779c5b1e1d816b21f3c8cf",
+      "provides": [
+        "議会費_total_千円"
+      ],
+      "note": "議会費の内訳（報酬・旅費等）は本表に無い。内訳項目は未発見（個別収集対象）。"
+    },
+    {
+      "provider": "Grok（Cursor経由）探索 → Composer（Cursor経由・クリーン環境）独立反証 → Claude突合",
+      "scope": "正副議長・会派（B系統）",
+      "reconciled_at": "2026-09-02T22:15:01.247384+09:00",
+      "reconcile_note": "47/47件を機械突合。福岡県のみ実データ食い違いを検出し、web検索で裏取りの上訂正（詳細はdata_correction_log参照）。"
+    },
+    {
+      "provider": "各都道府県議会サイト個別収集（層3・Claude並列班＋Claude突合）",
+      "scope": "議事録Web公開の有無",
+      "reconciled_at": "2026-09-05",
+      "reconcile_note": "47/47実ページで確認（有47・無0・確認できず0）。市区町村版と同じ規律（トップページのみで判断せず最低2階層辿る）を適用。詳細記録はrecon/pref-gikai-koho-20260905.md。"
+    }
+  ],
+  "data": [
+    {
+      "pref_code": "01",
+      "pref_name": "北海道",
+      "議員定数": 100,
+      "現員数": 95,
+      "議会費_total_千円": 3283834,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "伊藤条一",
+        "副議長氏名": "梶谷大志",
+        "status": "有",
+        "出典_grok": "https://www.gikai.pref.hokkaido.lg.jp/aisatu/index.html",
+        "出典_composer": "https://www.gikai.pref.hokkaido.lg.jp/topix/245209.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自民党・道民会議:51;民主・道民連合:26;北海道結志会:8;公明党:8;日本共産党:2;北海道維新の会:1（令和8年8月10日現在・欠員4）",
+        "会派一覧_composer": "自民党・道民会議:51|民主・道民連合:26|北海道結志会:8|公明党:8|日本共産党:2|北海道維新の会:1",
+        "status": "有",
+        "出典_grok": "https://www.gikai.pref.hokkaido.lg.jp/gaiyou/senkyoku/30senkyoku.html",
+        "出典_composer": "https://www.gikai.pref.hokkaido.lg.jp/gaiyou/senkyoku/30senkyoku.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（会議録データベース）＋インターネット版",
+        "url": [
+          "https://www.gikai.pref.hokkaido.lg.jp/kaigiroku/",
+          "https://pref-hokkaido.gijiroku.com/voices/index.asp"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "02",
+      "pref_name": "青森県",
+      "議員定数": 48,
+      "現員数": 44,
+      "議会費_total_千円": 1329655,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "工藤慎康",
+        "副議長氏名": "齊藤爾",
+        "status": "有",
+        "出典_grok": "https://www.pref.aomori.lg.jp/soshiki/gikai/gicho-aisatsu.html",
+        "出典_composer": "https://www.pref.aomori.lg.jp/soshiki/gikai/gichou.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党:27;オール青森:5;立憲民主・無所属の会:4;日本共産党:3;公明党:2;立憲民主・憲法をいかす県民の会:2;参政党:1;無所属:2（令和8年5月25日現在）",
+        "会派一覧_composer": "自由民主党:27|オール青森:5|立憲民主・無所属:4|日本共産党:3|公明党:2|立憲・憲法2:2|参政党:1|無所属:2",
+        "status": "有",
+        "出典_grok": "https://www.pref.aomori.lg.jp/soshiki/gikai/giin-kaiha.html",
+        "出典_composer": "https://www.pref.aomori.lg.jp/soshiki/gikai/kaiha.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（＋速報版の告知）",
+        "url": "https://www.pref.aomori.dbsr.jp/",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "03",
+      "pref_name": "岩手県",
+      "議員定数": 48,
+      "現員数": 45,
+      "議会費_total_千円": 1406802,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "城内愛彦",
+        "副議長氏名": "佐々木努",
+        "status": "有",
+        "出典_grok": "https://www.pref.iwate.jp/gikai/1053154/1050898.html",
+        "出典_composer": "https://www.pref.iwate.jp/_res/projects/default_project/_page_/001/006/035/gikai_gichou_aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党:17;希望いわて:14;いわて県民クラブ・無所属の会:5;いわて新政会:5;日本共産党:2;社民党:1;公明党:1",
+        "会派一覧_composer": "自由民主党:17|希望いわて:14|県民クラブ・無所属:5|新政会:5|日本共産党:2|社会民主党:1|公明党:1",
+        "status": "有",
+        "出典_grok": "https://iwatekengikai.gijiroku.com/g07_Kaiha.asp",
+        "出典_composer": "https://www.pref.iwate.jp/_res/projects/default_project/_page_/001/006/035/kaiha_meibo.pdf"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（本会議。委員会は「会議記録」）",
+        "url": [
+          "https://www.pref.iwate.jp/gikai/kaigiroku/1035822.html",
+          "https://iwatekengikai.gijiroku.com/kaigiroku_idx_s.asp"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "04",
+      "pref_name": "宮城県",
+      "議員定数": 59,
+      "現員数": 58,
+      "議会費_total_千円": 1650651,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "佐々木幸士",
+        "副議長氏名": "村上久仁",
+        "status": "有",
+        "出典_grok": "https://www.pref.miyagi.jp/site/kengikai/gityou.html",
+        "出典_composer": "https://www.pref.miyagi.jp/soshiki/gikai/gichou/gichou-aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党・県民会議:31;みやぎ県民の声:9;日本共産党宮城県会議員団:5;公明党県議団:4;立憲・無所属クラブ:3;21世紀クラブ:2;日本維新の会:2（令和8年4月7日掲載）",
+        "会派一覧_composer": "自民・県民:31|みやぎ県民:9|日本共産党:5|公明党:4|立憲民主党:3|21世紀:2|日本維新の会:2",
+        "status": "有",
+        "出典_grok": "https://www.pref.miyagi.jp/site/kengikai/18meibo-kaiha.html",
+        "出典_composer": "https://www.pref.miyagi.jp/uploaded/attachment/153456.pdf"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト＋速報製本用PDF",
+        "url": [
+          "https://www.pref.miyagi.jp/site/kengikai/",
+          "https://ssp.kaigiroku.net/tenant/prefmiyagi/SpTop.html"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "05",
+      "pref_name": "秋田県",
+      "議員定数": 41,
+      "現員数": 41,
+      "議会費_total_千円": 1155210,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "工藤嘉範",
+        "副議長氏名": "島田薫",
+        "status": "有",
+        "出典_grok": "https://pref.akita.gsl-service.net/doc/2018041800013/",
+        "出典_composer": "https://pref.akita.gsl-service.net/doc/2018041800013/"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党:27;みらい:5;立憲民主党:4;社会民主党:1;日本共産党:1;公明党:1;きらり:1;ひらく会:1",
+        "会派一覧_composer": "自由民主党:27|みらい:5|立憲民主党:4|社会民主党:1|日本共産党:1|公明党:1|きらり:1|ひらく会:1",
+        "status": "有",
+        "出典_grok": "https://pref.akita.gsl-service.net/doc/2018042300017/",
+        "出典_composer": "https://pref.akita.gsl-service.net/doc/2018042300017/"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト＋速報「本文」PDF",
+        "url": [
+          "https://pref.akita.gsl-service.net/doc/2019012300013/",
+          "https://ssp.kaigiroku.net/tenant/prefakita/SpMinuteSearch.html"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "06",
+      "pref_name": "山形県",
+      "議員定数": 43,
+      "現員数": 39,
+      "議会費_total_千円": 1128959,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "田澤伸一",
+        "副議長氏名": "渋間佳寿美",
+        "status": "有",
+        "出典_grok": "https://www.pref.yamagata.jp/600006/kensei/assembly/chairman/gichoaisatsu.html",
+        "出典_composer": "https://www.pref.yamagata.jp/600006/kensei/assembly/gikaikatsudou/kengikaitopics/r07topics/r7fukugicho.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党:26;県政クラブ:14;日本共産党山形県議団:2;公明党:1（令和8年7月17日現在）",
+        "会派一覧_composer": "自由民主党:25|県政クラブ:14|日本共産党:2|公明党:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.yamagata.jp/600006/kensei/assembly/giinsyokai/shozokukaihabetsu.html",
+        "出典_composer": "https://www.pref.yamagata.jp/documents/44661/r070319_giketsu.pdf"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "会議録PDF（速報）＋全文検索テキスト",
+        "url": [
+          "https://www.pref.yamagata.jp/600006/kaigirokusokuho/r0802teireikai.html",
+          "https://ssp.kaigiroku.net/tenant/prefyamagata/SpMinuteSearch.html"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "07",
+      "pref_name": "福島県",
+      "議員定数": 58,
+      "現員数": 58,
+      "議会費_total_千円": 1702546,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "矢吹貢一",
+        "副議長氏名": "佐藤雅裕",
+        "status": "有",
+        "出典_grok": "https://www.pref.fukushima.lg.jp/site/gikai/rekidai-sehukugityou.html",
+        "出典_composer": "https://www.pref.fukushima.lg.jp/site/gikai/gichou-aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党福島県議会議員会:28;福島県議会県民連合議員会:17;日本共産党福島県議会議員団:4;公明党福島県議会議員団:4;日本維新・無所属の会:2",
+        "会派一覧_composer": "自由民主党:28|県民連合:17|日本共産党:4|公明党:4|日本維新の会・無所属:2",
+        "status": "有",
+        "出典_grok": "https://www.pref.fukushima.lg.jp/site/gikai/meibo-kaiha201712.html",
+        "出典_composer": "https://www.pref.fukushima.lg.jp/uploaded/attachment/145678.pdf"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト＋冊子体裁PDF",
+        "url": [
+          "https://www.pref.fukushima.lg.jp/site/gikai/kaigirokukensaku-top.html",
+          "https://ssp.kaigiroku.net/tenant/fukushima/pg/index.html"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "08",
+      "pref_name": "茨城県",
+      "議員定数": 62,
+      "現員数": 61,
+      "議会費_total_千円": 1630077,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "舘静馬",
+        "副議長氏名": "下路健次郎",
+        "status": "有",
+        "出典_grok": "https://www.pref.ibaraki.jp/gikai/aisatu/index.htm",
+        "出典_composer": "https://www.pref.ibaraki.jp/gikai/meibo/meibo_1.htm"
+      },
+      "会派": {
+        "会派一覧_grok": "いばらき自民党:41;公明党:4;国民民主党:4;茨城無所属・政策の会:4;日本共産党:1;日本維新の会:1;市民ネットワーク:1;無所属:3（令和8年9月1日現在・定数62・現員59）",
+        "会派一覧_composer": "いばらき自民党:41|公明党:4|国民民主党:4|茨城無所属・政策の会:4|日本共産党:1|日本維新の会:1|市民ネットワーク:1|無所属:3",
+        "status": "有",
+        "出典_grok": "https://www.pref.ibaraki.jp/gikai/meibo/meibo_1.htm",
+        "出典_composer": "https://www.pref.ibaraki.jp/gikai/meibo/meibo_1.htm"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト",
+        "url": "https://www.pref.ibaraki.dbsr.jp/",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "09",
+      "pref_name": "栃木県",
+      "議員定数": 50,
+      "現員数": 44,
+      "議会費_total_千円": 1364120,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "関谷暢之",
+        "副議長氏名": "白石資隆",
+        "status": "有",
+        "出典_grok": "https://www.pref.tochigi.lg.jp/kengikai/index.html",
+        "出典_composer": "https://www.pref.tochigi.lg.jp/g05/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "とちぎ自民党議員会:29;民主市民クラブ:5;公明党栃木県議会議員会:3;県民クラブ:3;夢と希望あふれる栃木を創る会:3;日本維新の会:1;日本共産党栃木県議団:1（令和8年4月20日現在）",
+        "会派一覧_composer": "自由民主党:29|民主市民:5|公明党:3|県民:3|夢と希望:3|日本維新の会:1|日本共産党:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.tochigi.lg.jp/p01/assembly/giin/meibo/giinmeibokaihayobi.html",
+        "出典_composer": "https://www.pref.tochigi.lg.jp/g05/gikai/giin/kaiha.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（本会議は全文。委員会は要約）",
+        "url": "https://pref-tochigi.gijiroku.com/",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "10",
+      "pref_name": "群馬県",
+      "議員定数": 50,
+      "現員数": 44,
+      "議会費_total_千円": 1455605,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "金井康夫",
+        "副議長氏名": "伊藤清",
+        "status": "有",
+        "出典_grok": "https://www.pref.gunma.jp/site/gikai/25698.html",
+        "出典_composer": "https://www.pref.gunma.jp/page/006001-1.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党:30;つる舞う:4;リベラル群馬:4;公明党:3;日本共産党:2;群馬維新の会:1;赤榛会:1;真心:1（令和8年5月18日現在・現職46・定数50）",
+        "会派一覧_composer": "自由民主党:30|つる舞う:4|リベラル:4|公明党:3|日本共産党:2|日本維新の会:1|赤榛:1|真心:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.gunma.jp/site/gikai/25734.html",
+        "出典_composer": "https://www.pref.gunma.jp/page/006002-1.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト",
+        "url": "https://www07.gijiroku.com/voices/",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "11",
+      "pref_name": "埼玉県",
+      "議員定数": 93,
+      "現員数": 86,
+      "議会費_total_千円": 3117689,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "荒木裕介",
+        "副議長氏名": "吉良英敏",
+        "status": "有",
+        "出典_grok": "https://www.pref.saitama.lg.jp/e1601/gikai-chairman.html",
+        "出典_composer": "https://www.pref.saitama.lg.jp/a0101/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "埼玉県議会自由民主党議員団:51;埼玉民主フォーラム:11;埼玉県議会公明党議員団:9;無所属県民会議:5;日本共産党埼玉県議会議員団:3;無所属改革の会:1;無所属保守さくらの会:1;埼玉県市民ネットワーク:1;無所属:3（掲載日2026年8月12日・定数93・欠員8）",
+        "会派一覧_composer": "自由民主党:51|立憲民主党:11|公明党:9|無所属県民:5|日本共産党:3|参政党:1|日本維新の会:1|れいわ:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.saitama.lg.jp/e1601/gikai-member-kaiha.html",
+        "出典_composer": "https://www.pref.saitama.lg.jp/a0101/gikai/giin/kaiha/index.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト",
+        "url": [
+          "https://www.pref.saitama.lg.jp/f1603/kaigiroku-kensaku.html",
+          "https://ssp.kaigiroku.net/tenant/prefsaitama/pg/index.html"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "12",
+      "pref_name": "千葉県",
+      "議員定数": 94,
+      "現員数": 84,
+      "議会費_total_千円": 2633271,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "宍倉登",
+        "副議長氏名": "三沢智",
+        "status": "有",
+        "出典_grok": "https://www.pref.chiba.lg.jp/gikai/soumu/aramashi/seifukugityou.html",
+        "出典_composer": "https://www.pref.chiba.lg.jp/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党千葉県議会議員会:49;立憲民主党千葉県議会議員会:12;公明党千葉県議会議員団:8;千葉新政策議員団:5;日本共産党千葉県議会議員団:4;平和の党:1;国民民主党千葉県議会議員会:1;千葉県民の声:1;リベラル民主:1;市民力:1;有志の会:1;野田民主の会:1;未来ちば:1;自立と未来:1;無所属議員:2（令和8年8月17日現在・定数95・現員89）",
+        "会派一覧_composer": "自由民主党:49|立憲民主党:12|公明党:8|千葉新政策:5|日本共産党:4|国民民主党:3|参政党:2|日本維新の会:2|無所属:2",
+        "status": "有",
+        "出典_grok": "https://www.pref.chiba.lg.jp/gikai/giji/giin/kaihabetsu.html",
+        "出典_composer": "https://www.pref.chiba.lg.jp/gikai/giin/meibo/kaiha.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（速報PDF枠あり）",
+        "url": [
+          "https://www.pref.chiba.lg.jp/gikai/kaiginogaiyou/kaigiroku/index.html",
+          "https://pref-chiba.gijiroku.com/kaigiroku/index.asp"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "13",
+      "pref_name": "東京都",
+      "議員定数": 127,
+      "現員数": 123,
+      "議会費_total_千円": 4802994,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "増子博樹",
+        "副議長氏名": "菅野弘一",
+        "status": "有",
+        "出典_grok": "https://www.gikai.metro.tokyo.lg.jp/outline/chairman.html",
+        "出典_composer": "https://www.gikai.metro.tokyo.lg.jp/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "都民ファーストの会東京都議団:31;東京都議会自由民主党:22;東京都議会立憲民主党・ミライ会議・生活者ネットワーク・無所属の会:20;都議会公明党:19;日本共産党東京都議会議員団:14;国民民主党東京都議団:9;東京都議会参政党:3;地域政党自由を守る会:2;無所属（やちよの会）:1;無所属（東京・品川からやさしい未来を）:1;無所属（新時代の八王子）:1;無所属（グリーンな東京）:1（令和8年4月6日現在）",
+        "会派一覧_composer": "都民ファーストの会:31|自由民主党:22|立憲民主党:20|公明党:19|日本共産党:14|国民民主党:9|参政党:2|日本維新の会:2|れいわ:1",
+        "status": "有",
+        "出典_grok": "https://www.gikai.metro.tokyo.lg.jp/membership/political-party.html",
+        "出典_composer": "https://www.gikai.metro.tokyo.lg.jp/gikai/giin/kaiha/index.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "会議録検索＋本会議会議録HTML（速報含む）＋委員会速記録",
+        "url": [
+          "https://www.record.gikai.metro.tokyo.lg.jp/",
+          "https://www.gikai.metro.tokyo.lg.jp/record/proceedings/"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "14",
+      "pref_name": "神奈川県",
+      "議員定数": 105,
+      "現員数": 100,
+      "議会費_total_千円": 3549223,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "杉本透",
+        "副議長氏名": "杉山信雄",
+        "status": "有",
+        "出典_grok": "https://www.pref.kanagawa.jp/gikai/p316042.html",
+        "出典_composer": "https://www.pref.kanagawa.jp/docs/bc4/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党神奈川県議会議員団:45;立憲民主党・かながわクラブ神奈川県議会議員団:21;かながわ未来神奈川県議会議員団:10;公明党神奈川県議会議員団:8;県政会・立憲民主神奈川ネット神奈川県議会議員団:4;日本共産党神奈川県議会議員団:2;日本維新の会神奈川県議会議員団:2;中原・高津の会神奈川県議会議員団:2;わが町:1;神奈川を変える港南の会:1;創和会:1;翼の会:1;厚木愛川清川の会:1（13会派・定数105・現員99）",
+        "会派一覧_composer": "自由民主党:45|立憲民主党:21|かながわ未来:10|公明党:8|日本共産党:4|国民民主党:3|参政党:2|日本維新の会:2|無所属:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.kanagawa.jp/gikai/p307827.html",
+        "出典_composer": "https://www.pref.kanagawa.jp/docs/bc4/gikai/giin/kaiha/index.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（kaigiroku.net）",
+        "url": "https://ssp.kaigiroku.net/tenant/prefkanagawa/pg/index.html",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "15",
+      "pref_name": "新潟県",
+      "議員定数": 53,
+      "現員数": 51,
+      "議会費_total_千円": 1434367,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "小島義徳",
+        "副議長氏名": "高橋直揮",
+        "status": "有",
+        "出典_grok": "https://www.pref.niigata.lg.jp/site/gikai/1356826112196.html",
+        "出典_composer": "https://www.pref.niigata.lg.jp/site/gikai/gichou-aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党:32;未来にいがた:8;リベラル新潟:6;真政にいがた:3;公明党:2;無所属:1（定数53・現員52）",
+        "会派一覧_composer": "自由民主党:32|未来:8|リベラル:6|真政:3|公明党:2|無所属:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.niigata.lg.jp/site/gikai/1356810287682.html",
+        "出典_composer": "https://www.pref.niigata.lg.jp/site/gikai/kaiha-meibo.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（kaigiroku.net）",
+        "url": "https://ssp.kaigiroku.net/tenant/prefniigata/pg/index.html",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "16",
+      "pref_name": "富山県",
+      "議員定数": 40,
+      "現員数": 38,
+      "議会費_total_千円": 1012931,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "筱岡貞郎",
+        "副議長氏名": "山崎宗良",
+        "status": "有",
+        "出典_grok": "https://www.pref.toyama.jp/0100/gikai/structure/enkaku.html",
+        "出典_composer": "https://www.pref.toyama.jp/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党富山県議会議員会:34;富山県議会立憲民主党議員会:3;日本共産党富山県議員会:1;公明党富山県議員会:1",
+        "会派一覧_composer": "自由民主党:34|立憲民主党:3|日本共産党:1|公明党:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.toyama.jp/0100/gikai/members/kaiha.html",
+        "出典_composer": "https://www.pref.toyama.jp/gikai/giin/kaiha.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト＋速報版PDF",
+        "url": "https://www.pref.toyama.dbsr.jp/",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "17",
+      "pref_name": "石川県",
+      "議員定数": 43,
+      "現員数": 43,
+      "議会費_total_千円": 1105210,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "不破大仁",
+        "副議長氏名": "横山隆也",
+        "status": "有",
+        "出典_grok": "https://www.pref.ishikawa.lg.jp/gikai/oshirase.html",
+        "出典_composer": "https://www.pref.ishikawa.lg.jp/gikai/oshirase.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党石川県議会議員協議会:29;未来石川議員会:6;公明党:2;日本共産党:1;まっすぐ県民目線の会:1;参政党:1（令和8年3月2日現在）",
+        "会派一覧_composer": "自由民主党石川県議会議員協議会:29|未来石川議員会:6|公明党:2|日本共産党:1|まっすぐ県民目線の会:1|参政党:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.ishikawa.lg.jp/gikai/meibo/kaiha20150430.html",
+        "出典_composer": "https://www.pref.ishikawa.lg.jp/gikai/meibo/kaiha20150430.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（gijiroku.com）",
+        "url": "https://pref-ishikawa.gijiroku.com/voices/",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "18",
+      "pref_name": "福井県",
+      "議員定数": 37,
+      "現員数": 33,
+      "議会費_total_千円": 968657,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "小堀友廣",
+        "副議長氏名": "兼井大",
+        "status": "有",
+        "出典_grok": "https://www.pref.fukui.lg.jp/doc/gikai-soumu/giinshokai/rekidai.html",
+        "出典_composer": "https://www.pref.fukui.lg.jp/doc/gikai-soumu/aisatsu/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自民党福井県議会:26;民主・みらい:4;ふくいの党:3;越前若狭の会:2;公明党:1",
+        "会派一覧_composer": "自民党福井県議会:26|民主・みらい:4|ふくいの党:3|越前若狭の会:2|公明党:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.fukui.lg.jp/doc/gikai-giji/kaihabetsu.html",
+        "出典_composer": "https://www.pref.fukui.lg.jp/doc/gikai-giji/kaihabetsu.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（dbsr）",
+        "url": [
+          "https://www.pref.fukui.lg.jp/gikai/kaigiroku/index.html",
+          "https://www.pref.fukui.dbsr.jp/"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "19",
+      "pref_name": "山梨県",
+      "議員定数": 37,
+      "現員数": 32,
+      "議会費_total_千円": 1002045,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "宮本秀憲",
+        "副議長氏名": "長澤健",
+        "status": "有",
+        "出典_grok": "https://www.pref.yamanashi.jp/gikaisom/kengikaishikumi_2_3.html",
+        "出典_composer": "https://www.pref.yamanashi.jp/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党政風やまなし:15;自由民主党新緑の会:7;未来やまなし:5;自由民主党・開の国:3;日本共産党:2;リベラル山梨:1;やまなし県民会議:1;えがお夢:1（令和8年8月25日）",
+        "会派一覧_composer": "政風:15|新緑:7|未来:5|開の国:3|日本共産党:2|リベラル:1|県民会議:1|えがお夢:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.yamanashi.jp/gikaisom/kaihabetu_meibo.html",
+        "出典_composer": "https://www.pref.yamanashi.jp/gikai/giin/kaiha.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "本会議は検索システム、委員会は年度別PDF",
+        "url": [
+          "https://www.pref.yamanashi.jp/gikaisom/kaigiroku.html",
+          "https://kaigiroku.pref.yamanashi.jp/"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "20",
+      "pref_name": "長野県",
+      "議員定数": 57,
+      "現員数": 56,
+      "議会費_total_千円": 1492725,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "依田明善",
+        "副議長氏名": "中川博司",
+        "status": "有",
+        "出典_grok": "https://www.pref.nagano.lg.jp/gikai/chosa/aisatsu/gicho-2.html",
+        "出典_composer": "https://www.pref.nagano.lg.jp/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党県議団:24;改革信州:13;新政策議員団:7;日本共産党県議団:6;公明党長野県議団:5;無所属:2（令和8年8月12日現在。公式見出しは「党派別議員名簿」）",
+        "会派一覧_composer": "自由民主党:24|改革信州:13|新政策:7|日本共産党:6|公明党:5|無所属:2",
+        "status": "有",
+        "出典_grok": "https://www.pref.nagano.lg.jp/gikai/gikai/giin/toha.html",
+        "出典_composer": "https://www.pref.nagano.lg.jp/gikai/giin/kaiha/index.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "会議録PDF＋検索システム",
+        "url": [
+          "https://www.pref.nagano.lg.jp/gikai/giji/kaigiroku/pdf.html",
+          "https://www.pref.nagano.lg.jp/gikai/giji/kaigiroku/index.html"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "21",
+      "pref_name": "岐阜県",
+      "議員定数": 46,
+      "現員数": 46,
+      "議会費_total_千円": 1199451,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "松岡正人",
+        "副議長氏名": "長屋光征",
+        "status": "有",
+        "出典_grok": "https://www.pref.gifu.lg.jp/site/gikai/56996.html",
+        "出典_composer": "https://www.pref.gifu.lg.jp/site/gikai/gichou-aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "県政自民クラブ:34;県民クラブ:5;岐阜県議会公明党:2;日本共産党:1;無所属:3（令和8年5月1日現在）",
+        "会派一覧_composer": "県政自民:34|県民:5|公明党:2|日本共産党:1|無所属:3",
+        "status": "有",
+        "出典_grok": "https://www.pref.gifu.lg.jp/site/gikai/13308.html",
+        "出典_composer": "https://www.pref.gifu.lg.jp/site/gikai/kaiha-meibo.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（kaigiroku.net）。特別委等は要点筆記PDF",
+        "url": [
+          "https://www.pref.gifu.lg.jp/site/gikai/4531.html",
+          "https://ssp.kaigiroku.net/tenant/prefgifu/pg/index.html"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "22",
+      "pref_name": "静岡県",
+      "議員定数": 68,
+      "現員数": 66,
+      "議会費_total_千円": 1915454,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "和田篤夫",
+        "副議長氏名": "佐地茂人",
+        "status": "有",
+        "出典_grok": "https://www.pref.shizuoka.jp/kensei/kengikai/hirakaretagikai/1003746/1082724/1082729.html",
+        "出典_composer": "https://www.pref.shizuoka.jp/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自民改革会議:39;ふじのくに県民クラブ:17;公明党静岡県議団:5;無所属:6（定数68・現員67）",
+        "会派一覧_composer": "自由民主党:39|ふじのくに:17|公明党:5|無所属:6",
+        "status": "有",
+        "出典_grok": "https://www.pref.shizuoka.jp/kensei/kengikai/giinshokai/1054942.html",
+        "出典_composer": "https://www.pref.shizuoka.jp/gikai/giin/kaiha.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "本会議・委員会ともNotes型会議録検索",
+        "url": "https://www2.pref.shizuoka.jp/all/ggiji.nsf/WebSearch",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "23",
+      "pref_name": "愛知県",
+      "議員定数": 102,
+      "現員数": 98,
+      "議会費_total_千円": 3136273,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "島倉誠",
+        "副議長氏名": "成田修",
+        "status": "有",
+        "出典_grok": "https://www.pref.aichi.jp/site/gikai/aisatsu.html",
+        "出典_composer": "https://www.pref.aichi.jp/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党愛知県議員団:54;あいち民主県議団:26;公明党愛知県議員団:4;減税日本愛知県議員団:4;無所属（県政自民クラブ）:1;無所属（日本共産党愛知県議会議員団）:1;無所属:7（令和8年6月11日更新・欠員5）",
+        "会派一覧_composer": "自由民主党:54|あいち民主:26|公明党:4|減税:4|無所属:9",
+        "status": "有",
+        "出典_grok": "https://www.pref.aichi.jp/site/gikai/giin-kaiha.html",
+        "出典_composer": "https://www.pref.aichi.jp/gikai/giin/kaiha/index.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（dbsr）",
+        "url": "https://www.pref.aichi.dbsr.jp/",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "24",
+      "pref_name": "三重県",
+      "議員定数": 51,
+      "現員数": 49,
+      "議会費_total_千円": 1436601,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "藤田宜三",
+        "副議長氏名": "津田健児",
+        "status": "有",
+        "出典_grok": "https://www.pref.mie.lg.jp/KENGIKAI/07681011814.htm",
+        "出典_composer": "https://www.pref.mie.lg.jp/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "新政みえ:19;自由民主党:16;自民党県議団:5;草莽:3;公明党:2;日本共産党:1;参政党:1（令和7年11月18日現在・欠員1）",
+        "会派一覧_composer": "新政:18|自民:16|自民党:5|草莽:3|公明党:2|日本共産党:1|参政党:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.mie.lg.jp/KENGIKAI/89263000001_00001.htm",
+        "出典_composer": "https://www.pref.mie.lg.jp/gikai/giin/kaiha/index.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "検索システム＋本会議PDF＋委員会HTML",
+        "url": [
+          "https://www.kensakusystem.jp/mie/index.html",
+          "https://www.pref.mie.lg.jp/KENGIKAI/51097008511.htm"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "25",
+      "pref_name": "滋賀県",
+      "議員定数": 44,
+      "現員数": 43,
+      "議会費_total_千円": 1176959,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "加藤誠一",
+        "副議長氏名": "海東英和",
+        "status": "有",
+        "出典_grok": "https://www.pref.shiga.lg.jp/kensei/koho/e-shinbun/oshirase/349970.html",
+        "出典_composer": "https://www.pref.shiga.lg.jp/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党滋賀県議会議員団:21;チームしが県議団:9;さざなみ倶楽部:3;滋賀維新の会:3;公明党滋賀県議団:2;日本共産党滋賀県議会議員団:2;無所属:4",
+        "会派一覧_composer": "自由民主党:18|チームしが:9|さざなみ:3|日本維新の会:3|公明党:2|日本共産党:2|無所属:2",
+        "status": "有",
+        "出典_grok": "https://www.shigaken-gikai.jp/g07_Kaiha.asp",
+        "出典_composer": "https://www.pref.shiga.lg.jp/gikai/giin/kaiha/index.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（gijiroku.com系）",
+        "url": [
+          "https://www.shigaken-gikai.jp/voices/g08v_viewh.asp",
+          "https://www.shigaken-gikai.jp/voices/g07v_search.asp"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "26",
+      "pref_name": "京都府",
+      "議員定数": 60,
+      "現員数": 60,
+      "議会費_total_千円": 1900766,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "荒巻隆三（第84代・令和7年5月23日選出）",
+        "副議長氏名": "兎本和久（第76代・令和7年5月23日選出）",
+        "status": "有（片方のみ確認）",
+        "出典": "https://www.pref.kyoto.jp/gikai/html/aisatu/170519aisatu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党京都府議会議員団:28;国民民主党・日本維新の会京都府議会議員団:11;日本共産党京都府議会議員団:9;府民クラブ京都府議会議員団:5;公明党京都府議会議員団:5;京都が好きだ:1（令和8年5月30日現在・欠員1）",
+        "会派一覧_composer": "自由民主党:28|国民・維新:11|日本共産党:9|府民:5|公明党:5|京都が好き:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.kyoto.jp/gikai/html/aramasi/aramasi2.html",
+        "出典_composer": "https://www.pref.kyoto.jp/gikai/giin/kaiha/index.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（dbsr）",
+        "url": "https://www.pref.kyoto.dbsr.jp/",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "27",
+      "pref_name": "大阪府",
+      "議員定数": 88,
+      "現員数": 82,
+      "議会費_total_千円": 2278774,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "西野弘一",
+        "副議長氏名": "中野稔子",
+        "status": "有",
+        "出典_grok": "https://www.pref.osaka.lg.jp/o170010/gikai_somu/message/seifukugityouaisatu.html",
+        "出典_composer": "https://www.gikai.pref.osaka.lg.jp/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "大阪維新の会大阪府議会議員団:51;公明党大阪府議会議員団:14;自由民主党大阪府議会議員団:6;民主ネット大阪府議会議員団:2;日本共産党大阪府議会議員団:1;大阪なにわの和:1;おおさか未来プロジェクト:1;せっつ府民の会:1;大阪つなぐ会:1（令和8年8月28日現在・定数79・欠員1）",
+        "会派一覧_composer": "大阪維新の会:51|公明党:14|自由民主党:6|立憲民主党:2|日本共産党:1|参政党:1|れいわ:1|無所属:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.osaka.lg.jp/o170010/gikai_giji/giininfo/kaihakousei20.html",
+        "出典_composer": "https://www.gikai.pref.osaka.lg.jp/gikai/giin/kaiha/index.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（kaigiroku.net）",
+        "url": [
+          "https://www.pref.osaka.lg.jp/gikai/kaigirokukensaku.html",
+          "https://ssp.kaigiroku.net/tenant/prefosaka/pg/index.html"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "28",
+      "pref_name": "兵庫県",
+      "議員定数": 86,
+      "現員数": 86,
+      "議会費_total_千円": 2400626,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "北野実",
+        "副議長氏名": "岡つよし",
+        "status": "有",
+        "出典_grok": "https://web.pref.hyogo.lg.jp/gikai/gaiyo/gicho/aisatsu.html",
+        "出典_composer": "https://web.pref.hyogo.lg.jp/gi01/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "兵庫県議会自由民主党議員団:35;維新の会兵庫県議会議員団:15;兵庫県議会公明党議員団:13;兵庫県議会ひょうご県民連合議員団:8;躍動の会兵庫県議会議員団:3;日本共産党兵庫県会議員団:2;無所属:6",
+        "会派一覧_composer": "自由民主党:35|日本維新の会:15|公明党:13|県民連合:8|立憲民主党:4|日本共産党:2|参政党:1|無所属:1",
+        "status": "有",
+        "出典_grok": "https://web.pref.hyogo.lg.jp/gikai/giinshokai/shokai/kaihabetsu/kaihabetsu.html",
+        "出典_composer": "https://web.pref.hyogo.lg.jp/gi01/gikai/giin/kaiha/index.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（kensakusystem.jp）",
+        "url": "https://www.kensakusystem.jp/hyogopref/index.html",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "29",
+      "pref_name": "奈良県",
+      "議員定数": 43,
+      "現員数": 41,
+      "議会費_total_千円": 1130665,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "乾浩之",
+        "副議長氏名": "中川崇",
+        "status": "有",
+        "出典_grok": "https://www.pref.nara.jp/18528.htm",
+        "出典_composer": "https://www.pref.nara.jp/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党・無所属の会:15;日本維新の会:11;自由民主党:7;公明党:3;改新なら:2;無所属（日本共産党）:1;無所属:1",
+        "会派一覧_composer": "自民・無所属:15|日本維新の会:11|自由民主党:7|公明党:3|改新:2|無所属:2",
+        "status": "有",
+        "出典_grok": "https://www.pref.nara.jp/52790.htm",
+        "出典_composer": "https://www.pref.nara.jp/gikai/giin/kaiha/index.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（kaigiroku.net）",
+        "url": "https://ssp.kaigiroku.net/tenant/prefnara/pg/index.html",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "30",
+      "pref_name": "和歌山県",
+      "議員定数": 42,
+      "現員数": 41,
+      "議会費_total_千円": 1206697,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "堀龍雄",
+        "副議長氏名": "佐藤武治",
+        "status": "有",
+        "出典_grok": "https://www.pref.wakayama.lg.jp/prefg/200100/cms/d00155563.html",
+        "出典_composer": "https://www.pref.wakayama.lg.jp/prefg/gikai/gichou/index.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党県議団:26;改新クラブ:4;公明党県議団:3;無所属の会:2;日本共産党:1;無所属クラブ:1;みらいの会:1;一の会:1",
+        "会派一覧_composer": "自由民主党:26|改新:4|公明党:3|無所属:2|日本共産党:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.wakayama.lg.jp/prefg/200100/cms/d00154525.html",
+        "出典_composer": "https://www.pref.wakayama.lg.jp/prefg/gikai/giin/kaiha/index.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "HTML会議録（号単位の全文）＋キーワード検索",
+        "url": "https://www.pref.wakayama.lg.jp/gijiroku/d00203238.html",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "31",
+      "pref_name": "鳥取県",
+      "議員定数": 35,
+      "現員数": 34,
+      "議会費_total_千円": 1141573,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "福田俊史",
+        "副議長氏名": "浜田一哉",
+        "status": "有",
+        "出典_grok": "https://www.pref.tottori.lg.jp/dd.aspx?itemid=276822",
+        "出典_composer": "https://www.pref.tottori.lg.jp/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "鳥取県議会自由民主党:19;鳥取県議会民主とっとり:6;公明党鳥取県議会議員団:3;無所属:7",
+        "会派一覧_composer": "自由民主党:19|立憲民主党:6|公明党:3",
+        "status": "有",
+        "出典_grok": "https://www.pref.tottori.lg.jp/88585.htm",
+        "出典_composer": "https://www.pref.tottori.lg.jp/gikai/giin/kaiha.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "本会議は検索システム、委員会はHTML本文",
+        "url": [
+          "https://www.pref.tottori.dbsr.jp/index.php/",
+          "委員会例 https://www.pref.tottori.lg.jp/item/1433299.htm"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "32",
+      "pref_name": "島根県",
+      "議員定数": 36,
+      "現員数": 34,
+      "議会費_total_千円": 1048842,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "山根成二",
+        "副議長氏名": "",
+        "status": "有",
+        "出典_grok": "https://www1.pref.shimane.lg.jp/gikai/gaido/shiori.data/R8_shiori.pdf",
+        "出典_composer": "https://www1.pref.shimane.lg.jp/gikai/gityou/aisatu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党島根県議会議員連盟:15;自由民主党ネクスト島根:10;民主県民クラブ:5;公明党島根県議団:2;日本共産党島根県議団:2",
+        "会派一覧_composer": "自由民主党島根県議会議員連盟:15|自由民主党ネクスト島根:10|民主県民クラブ:5|公明党島根県議団:2|日本共産党島根県議団:2|会派に属しない議員:1",
+        "status": "有",
+        "出典_grok": "https://www1.pref.shimane.lg.jp/gikai/gaido/shiori.data/R8_shiori.pdf",
+        "出典_composer": "https://www1.pref.shimane.lg.jp/gikai/gaido/shiori.data/R7_shiori.pdf"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（dbsr）",
+        "url": "https://www2.pref.shimane.dbsr.jp/",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "33",
+      "pref_name": "岡山県",
+      "議員定数": 55,
+      "現員数": 54,
+      "議会費_total_千円": 1555503,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "太田正孝",
+        "副議長氏名": "上田勝義",
+        "status": "有",
+        "出典_grok": "https://www.pref.okayama.jp/site/gikai/1035903.html",
+        "出典_composer": "https://www.pref.okayama.jp/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党岡山県議団:33;民主・県民クラブ:10;公明党岡山県議団:6;日本共産党岡山県議会議員団:3",
+        "会派一覧_composer": "自由民主党:33|立憲民主・県民:10|公明党:6|日本共産党:3|無所属:2",
+        "status": "有",
+        "出典_grok": "https://www.pref.okayama.jp/site/gikai/03-03.html",
+        "出典_composer": "https://www.pref.okayama.jp/gikai/giin/kaiha/index.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（kaigiroku.net）",
+        "url": "https://ssp.kaigiroku.net/tenant/prefokayama/pg/index.html",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "34",
+      "pref_name": "広島県",
+      "議員定数": 64,
+      "現員数": 58,
+      "議会費_total_千円": 2125541,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "中本隆志",
+        "副議長氏名": "東保幸",
+        "status": "有",
+        "出典_grok": "https://www.pref.hiroshima.lg.jp/site/gikai/gikai-gikai-gi.html",
+        "出典_composer": "https://www.pref.hiroshima.lg.jp/site/gikai/gichou-aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党広島県議会議員連盟:35;広島県議会民主県政会:14;公明党広島県議会議員団:6;自由民主党広島県議会広志会:3;日本共産党広島県議会議員団:2;自由民主党広島県議会議員会:1;無所属ひとわ:1;ひろしま、刷新。:1（令和8年7月1日現在・合計63・欠員1）",
+        "会派一覧_composer": "自由民主党:35|立憲民主党:14|公明党:6|広志会:3|日本共産党:2|参政党:1|無所属:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.hiroshima.lg.jp/site/gikai/giin-giin-kai.html",
+        "出典_composer": "https://www.pref.hiroshima.lg.jp/site/gikai/kaiha-meibo.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（dbsr。公式表記は「議事録」）",
+        "url": "https://www.pref.hiroshima.dbsr.jp/index.php/",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "35",
+      "pref_name": "山口県",
+      "議員定数": 47,
+      "現員数": 47,
+      "議会費_total_千円": 1522831,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "柳居俊学",
+        "副議長氏名": "河野亨",
+        "status": "有",
+        "出典_grok": "https://www.pref.yamaguchi.lg.jp/site/gikai/25262.html",
+        "出典_composer": "https://www.pref.yamaguchi.lg.jp/site/gikai/gichou-aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党:27;公明党:5;やまぐち県政会:4;日本共産党:2;社民党・市民連合:1;新政クラブ:1;草の根:1;県民の誇りを育む会:1;すずらんの会:1;未来創政の会:1;無所属の会:1",
+        "会派一覧_composer": "自由民主党:27|公明党:5|県政会:4|日本共産党:2|立憲民主党:1|無所属:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.yamaguchi.lg.jp/site/gikai/25264.html",
+        "出典_composer": "https://www.pref.yamaguchi.lg.jp/site/gikai/kaiha-meibo.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（kaigiroku.net）",
+        "url": "https://ssp.kaigiroku.net/tenant/prefyamaguchi/pg/index.html",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "36",
+      "pref_name": "徳島県",
+      "議員定数": 38,
+      "現員数": 36,
+      "議会費_total_千円": 1000690,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "井川龍二",
+        "副議長氏名": "眞貝浩司",
+        "status": "有",
+        "出典_grok": "https://www.pref.tokushima.lg.jp/gikai/gichou/profile/",
+        "出典_composer": "https://www.pref.tokushima.lg.jp/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "徳島県議会自由民主党:17;新しい県政を創る会:5;自由民主党県民会議:4;グローカルplus:3;真政会:2;公明党徳島県議団:1;日本共産党:1;護民官:1;元気とくしま:1;日本維新の会:1",
+        "会派一覧_composer": "自由民主党:17|新しい県政:5|自民県民:4|グローカル:3|真政:2|公明党:2|日本共産党:1|無所属:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.tokushima.lg.jp/gikai/giin/kaihabetu/",
+        "出典_composer": "https://www.pref.tokushima.lg.jp/gikai/giin/kaiha/index.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（kaigiroku.net）",
+        "url": "https://ssp.kaigiroku.net/tenant/tokushimapref/pg/index.html",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "37",
+      "pref_name": "香川県",
+      "議員定数": 41,
+      "現員数": 41,
+      "議会費_total_千円": 1147615,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "氏家孝志",
+        "副議長氏名": "山本悟史",
+        "status": "有",
+        "出典_grok": "https://www.pref.kagawa.lg.jp/gikai/gicho/kfvn.html",
+        "出典_composer": "https://www.pref.kagawa.lg.jp/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党香川県政会:21;香川県議会自由民主党議員会:5;香川県議会国民民主党議員会:5;香川県議会立憲民主党議員会:3;香川県議会公明党議員会:2;日本共産党香川県議会議員団:1;香川・せとうちnext:1;市民派改革ネット:1;自由保守の会:1",
+        "会派一覧_composer": "自由民主党:26|国民民主党:5|立憲民主党:3|公明党:2|日本共産党:1|参政党:1|無所属:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.kagawa.lg.jp/gikai/meibo/4_3.html",
+        "出典_composer": "https://www.pref.kagawa.lg.jp/gikai/giin/kaiha/index.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（dbsr）",
+        "url": "https://www.pref.kagawa.dbsr.jp/",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "38",
+      "pref_name": "愛媛県",
+      "議員定数": 47,
+      "現員数": 45,
+      "議会費_total_千円": 1240338,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "松尾和久",
+        "副議長氏名": "松下行吉",
+        "status": "有",
+        "出典_grok": "https://www.pref.ehime.jp/site/gikai/12626.html",
+        "出典_composer": "https://www.pref.ehime.jp/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党:30;愛媛維新の会:4;公明党:3;リベラル愛媛:2;日本共産党:1;ネットワーク市民の窓:1;国民民主党:1;無所属:3（令和8年7月10日現在。井川剛・菊池伸英・西岡新は無所属として活動する、と注記）",
+        "会派一覧_composer": "自由民主党:30|日本維新の会:4|公明党:3|リベラル:2|日本共産党:1|参政党:1|無所属:3",
+        "status": "有",
+        "出典_grok": "https://www.pref.ehime.jp/site/gikai/12721.html",
+        "出典_composer": "https://www.pref.ehime.jp/gikai/giin/kaiha/index.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（kensakusystem.jp）",
+        "url": "https://www.kensakusystem.jp/ehime/index.html",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "39",
+      "pref_name": "高知県",
+      "議員定数": 37,
+      "現員数": 36,
+      "議会費_total_千円": 1021426,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "明神健夫",
+        "副議長氏名": "土居央",
+        "status": "有",
+        "出典_grok": "https://gikai.pref.kochi.lg.jp/chairman/index.html",
+        "出典_composer": "https://www.pref.kochi.lg.jp/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党:20;一燈立志の会:2;公明党:3;自由の風:1;県民の会:4;日本共産党:6（令和8年7月30日現在・定数37・現員36・欠員1）",
+        "会派一覧_composer": "自由民主党:20|一燈:2|公明党:3|自由の風:1|県民:4|日本共産党:6",
+        "status": "有",
+        "出典_grok": "https://gikai.pref.kochi.lg.jp/member/categories/",
+        "出典_composer": "https://www.pref.kochi.lg.jp/gikai/giin/kaiha/index.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "会議録PDF（本会議「本文」）＋検索システム",
+        "url": [
+          "https://gikai.pref.kochi.lg.jp/minutes/",
+          "本文例 `0802teireikaihonbun.pdf`"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "40",
+      "pref_name": "福岡県",
+      "議員定数": 87,
+      "現員数": 82,
+      "議会費_total_千円": 2936899,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": null,
+        "議長_status": "確認できず（前議長・藏内勇夫が2026-08-25議員辞職。後任選出手続き中、2026-09-02時点未確定）",
+        "副議長氏名": "板橋聡",
+        "副議長_status": "有",
+        "出典": "NHK/読売新聞等の報道（2026-08-17・08-25報道を突合し確認、2026-09-02実施）"
+      },
+      "会派": {
+        "会派一覧_grok": "自民党県議団:39;民主県政県議団:20;公明党:10;新政会:6;無所属の会:2;自由と繁栄の会:2;ふくおか政策の会:1;緑友会:1;桜和会:1;至誠会:1;日本維新の会福岡:1;豊築会:1（令和8年8月26日現在）",
+        "会派一覧_composer": "自由民主党:39|立憲民主党:20|公明党:10|新政:6|日本共産党:2|参政党:1|日本維新の会:1|無所属:1",
+        "status": "有",
+        "出典_grok": "https://www.gikai.pref.fukuoka.lg.jp/site/giin/index.html",
+        "出典_composer": "https://www.pref.fukuoka.lg.jp/site/gikai/kaiha-meibo.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（dbsr）",
+        "url": "https://www.pref.fukuoka.dbsr.jp/",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "41",
+      "pref_name": "佐賀県",
+      "議員定数": 38,
+      "現員数": 37,
+      "議会費_total_千円": 1071296,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "宮原真一",
+        "副議長氏名": "古賀陽三",
+        "status": "有",
+        "出典_grok": "https://www.pref.saga.lg.jp/gikai/kiji00375086/index.html",
+        "出典_composer": "https://www.pref.saga.lg.jp/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党:17;自由民主党ネクストさが:11;県民ネットワーク:6;公明党:2;日本共産党:1",
+        "会派一覧_composer": "自由民主党:17|ネクスト:11|県民:6|公明党:2|日本共産党:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.saga.lg.jp/gikai/kiji00366725/index.html",
+        "出典_composer": "https://www.pref.saga.lg.jp/gikai/giin/meibo/index.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト＋会議録PDF／速報",
+        "url": [
+          "https://www.pref.saga.dbsr.jp/index.php/",
+          "https://www.pref.saga.lg.jp/gikai/list01856.html"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "42",
+      "pref_name": "長崎県",
+      "議員定数": 46,
+      "現員数": 45,
+      "議会費_total_千円": 1266949,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "徳永達也",
+        "副議長氏名": "ごうまなみ",
+        "status": "有",
+        "出典_grok": "https://www.pref.nagasaki.lg.jp/gikai/1010.html",
+        "出典_composer": "https://www.pref.nagasaki.jp/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党:30;改革２１:9;公明党:3;日本共産党:1;もったいないよ長崎:1;まっすぐ長崎:1;もっと身近な県政の会:1（令和8年2月12日現在）",
+        "会派一覧_composer": "自由民主党:30|改革21:8|公明党:3|日本共産党:1|もったいない:1|まっすぐ:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.nagasaki.lg.jp/gikai/2020.html",
+        "出典_composer": "https://www.pref.nagasaki.jp/gikai/giin/kaiha/index.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "会議録PDF＋検索システム（kaigiroku.net）",
+        "url": [
+          "https://www.pref.nagasaki.lg.jp/gikai/",
+          "https://ssp.kaigiroku.net/tenant/prefnagasaki/pg/"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "43",
+      "pref_name": "熊本県",
+      "議員定数": 49,
+      "現員数": 47,
+      "議会費_total_千円": 1942540,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "内野幸喜",
+        "副議長氏名": "橋口海平",
+        "status": "有",
+        "出典_grok": "https://www.pref.kumamoto.jp/site/gikai/8074.html",
+        "出典_composer": "https://www.pref.kumamoto.jp/site/gikai/8074.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党:35;立憲民主連合:3;公明党:3;新社会党:1;参政党:1;熊本維新の会:1;無所属:3",
+        "会派一覧_composer": "自由民主党:35|立憲民主連合:3|公明党:3|新社会党:1|参政党:1|熊本維新の会:1|無所属:3",
+        "status": "有",
+        "出典_grok": "https://www.pref.kumamoto.jp/site/gikai/51859.html",
+        "出典_composer": "https://www.pref.kumamoto.jp/uploaded/life/247452_732868_misc.pdf"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "本会議録PDF＋検索システム",
+        "url": [
+          "https://www.pref.kumamoto.jp/site/gikai/list4-1079.html",
+          "https://ssp.kaigiroku.net/tenant/prefkumamoto/pg/index.html"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "44",
+      "pref_name": "大分県",
+      "議員定数": 43,
+      "現員数": 43,
+      "議会費_total_千円": 1241949,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "嶋幸一",
+        "副議長氏名": "森誠一",
+        "status": "有",
+        "出典_grok": "https://pref.oita.jp/site/gikai/messeiji-syuunin.html",
+        "出典_composer": "https://www.pref.oita.jp/site/gikai/gichou-aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党:23;県民クラブ:11;公明党:3;日本共産党:2;志士の会:1;無所属の会:1;日本維新の会:1",
+        "会派一覧_composer": "自由民主党:23|県民:11|公明党:3|日本共産党:2|志士:1|無所属:1|日本維新の会:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.oita.jp/site/gikai/giin-gisekijun.html",
+        "出典_composer": "https://www.pref.oita.jp/site/gikai/kaiha-meibo.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "会議録PDF（本会議）。委員会は「会議記録」PDF",
+        "url": "https://www.pref.oita.jp/site/gikai/kaigroku001.html",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "45",
+      "pref_name": "宮崎県",
+      "議員定数": 39,
+      "現員数": 37,
+      "議会費_total_千円": 1124671,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "外山衛",
+        "副議長氏名": "山下寿",
+        "status": "有",
+        "出典_grok": "https://www.pref.miyazaki.lg.jp/gikai/about/greetings/aisatsu.html",
+        "出典_composer": "https://www.pref.miyazaki.lg.jp/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "宮崎県議会自由民主党:24;公明党宮崎県議団:4;県民連合立憲:3;日本共産党宮崎県議会議員団:1;無所属の会チームひむか:1;未来への風:1;自民党同志会:1",
+        "会派一覧_composer": "自由民主党:24|公明党:4|県民連:3|日本共産党:1|ひむか:1|未来:1|同志:1",
+        "status": "有",
+        "出典_grok": "https://www.pref.miyazaki.lg.jp/gikai/about/members/party/index.html",
+        "出典_composer": "http://www.pref.miyazaki.lg.jp/documents/102012/102012_20250902083004-1.pdf"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "会議録PDF＋検索システム",
+        "url": "https://www.pref.miyazaki.lg.jp/gikai/minutes/plenary/index.html",
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "46",
+      "pref_name": "鹿児島県",
+      "議員定数": 51,
+      "現員数": 49,
+      "議会費_total_千円": 1361696,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "日高滋",
+        "副議長氏名": "寺田洋一",
+        "status": "有",
+        "出典_grok": "https://www.pref.kagoshima.jp/ha01/gikai/syoukai/ayumi/documents/17934_20260416114004-1.pdf",
+        "出典_composer": "https://www.pref.kagoshima.jp/ha01/gikai/koho/kouhoushi/documents/128510_20260527140713-1.pdf"
+      },
+      "会派": {
+        "会派一覧_grok": "自由民主党鹿児島県議会議員団:34;県民連合:7;無所属:5;公明党鹿児島県議団:3;日本共産党鹿児島県議団:1",
+        "会派一覧_composer": "自由民主党鹿児島県議会議員団:34|県民連合:7|公明党鹿児島県議団:3|日本共産党鹿児島県議団:1|無所属:5",
+        "status": "有",
+        "出典_grok": "https://www.pref.kagoshima.jp/aa02/gikai/giin/kaiha/index.html",
+        "出典_composer": "https://www.pref.kagoshima.jp/aa02/gikai/giin/kaiha/index.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "全文検索テキスト（dbsr）",
+        "url": [
+          "https://www.pref.kagoshima.jp/aa02/gikai/koremade/kaigirokukensaku.html",
+          "https://www.pref.kagoshima.dbsr.jp/"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    },
+    {
+      "pref_code": "47",
+      "pref_name": "沖縄県",
+      "議員定数": 48,
+      "現員数": 48,
+      "議会費_total_千円": 1340559,
+      "status": "確定",
+      "正副議長": {
+        "議長氏名": "中川京貴",
+        "副議長氏名": "上原章",
+        "status": "有",
+        "出典_grok": "https://www.pref.okinawa.lg.jp/kensei/gikai/1016976/1016977.html",
+        "出典_composer": "https://www.pref.okinawa.jp/gikai/gichou/aisatsu.html"
+      },
+      "会派": {
+        "会派一覧_grok": "沖縄自民党・無所属の会:21;てぃーだ平和ネット:7;立憲・無所属の会:7;公明党:4;日本共産党沖縄県議会議員団:4;沖縄社会大衆党:3",
+        "会派一覧_composer": "沖縄自民:21|てぃーだ:7|立憲民主党:7|公明党:4|日本共産党:4|社会大衆:3",
+        "status": "有",
+        "出典_grok": "https://www.pref.okinawa.lg.jp/kensei/gikai/1017039/1029763/1029799.html",
+        "出典_composer": "https://www.pref.okinawa.jp/gikai/giin/kaiha/index.html"
+      },
+      "議事録公開": {
+        "status": "有",
+        "公開形式": "会議録PDF＋検索システム",
+        "url": [
+          "https://www.pref.okinawa.lg.jp/kensei/gikai/1040847/index.html",
+          "https://ssp.kaigiroku.net/tenant/prefokinawa/SpTop.html"
+        ],
+        "出典": "recon/pref-gikai-koho-20260905.md"
+      }
+    }
+  ],
+  "data_correction_log": {
+    "b_keitou_reconcile_2026_09_02": {
+      "note": "Grok/Composer独立反証の突合で1件の食い違い（福岡県）を検出。金銭授受問題により前議長・前副議長が2026年7月〜8月に相次いで辞職した実event。Composer側は辞職前の情報を保持しており実態と不一致だった。web検索で複数報道と突合し訂正。",
+      "disagreements": [
+        {
+          "pref_name": "福岡県",
+          "issue": "正副議長：Grok/Composer食い違い（Composerは辞職済み前任者を記載）。web検索で裏取りし訂正",
+          "grok_議長": "（現職氏名未掲載。歴代一覧は第74代藏内勇夫を令和8年8月25日退任と記載）",
+          "composer_議長": "藏内勇夫",
+          "grok_副議長": "板橋聡（第89代・令和8年8月17日就任）",
+          "composer_副議長": "中尾正幸",
+          "採用": "板橋聡（副議長）／議長は空席として記録"
+        }
+      ]
+    }
+  }
+}

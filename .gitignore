@@ -1,0 +1,31 @@
+_headsha.txt 
+jw_snapshot.zip 
+_*.txt
+.next/
+out/
+tsconfig.tsbuildinfo
+next-env.d.ts
+data/cache/
+**/__pycache__/
+*.log
+*_dump.txt
+watch_*.txt
+watch_*.js
+snapshot-*.txt
+_untracked-triage/
+scripts/_tmp_*.py
+docs/_old/
+node_modules
+
+# Cloudflare の配信ソフト（wrangler）の手元キャッシュ
+.wrangler/
+
+# 調査・PoCの作業物（E-8・2026-10-08）：再現に不要、または第三者サイトの写しのため入れない
+poc/recon-20260828-b2/*/3-2/h*_*.html
+poc/recon-20260828-b2/*/3-2/h*_*.pdf
+poc/**/_inspect/
+scripts/_tmp_survey_out/
+scripts/kaigiroku_*_schedules.json
+
+# 公開用コピーの記録（publish/export.py が毎回作り直す）
+publish/last-export.txt

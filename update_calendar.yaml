@@ -1,0 +1,52 @@
+# 自治体Watch 更新カレンダー
+# docs/operations-runbook.md 1節を参照。
+# next_check を過ぎたエントリは stale として扱う。
+# 現時点では手動運用（人間が定期的にこのファイルを確認・更新する）。
+
+- source: "M1 こども家庭庁 乳幼児等医療費援助"
+  cadence: "yearly"
+  expected_publish_month: "12月頃（4/1時点データ）"
+  last_fetched: "2026-10-07"   # 令和7年4月1日時点版（別紙3 PDF）へ更新（launch-backlog.md F-8）
+  next_check: "2026-12-01"
+  script: "scripts/m1_kodomo_iryohi.py"
+  status: "fresh"
+
+- source: "M2 厚労省 介護保険料基準額"
+  cadence: "3years"
+  expected_publish_month: "次期＝2027年4月（第10期改定）"
+  last_fetched: "2026-07-31"
+  next_check: "2027-04-01"
+  script: "scripts/m2_kaigo_premium.py"
+  status: "fresh"
+
+- source: "M3 総務省 決算統計・財政状況資料集"
+  cadence: "yearly"
+  expected_publish_month: "未確認"
+  last_fetched: "2026-07-31"
+  next_check: "2026-12-01"
+  script: "scripts/m3_expenditure.py"
+  status: "fresh"
+
+- source: "マイナンバーカード保有率"
+  cadence: "monthly"
+  expected_publish_month: "随時"
+  last_fetched: null
+  next_check: null
+  script: "未着手"
+  status: "check_needed"
+
+- source: "待機児童数"
+  cadence: "yearly"
+  expected_publish_month: "4/1時点公表（例年8月頃）"
+  last_fetched: null
+  next_check: null
+  script: "未着手"
+  status: "check_needed"
+
+- source: "社会増減（住民基本台帳人口移動報告）"
+  cadence: "yearly"
+  expected_publish_month: "1月末頃"
+  last_fetched: null
+  next_check: null
+  script: "未着手"
+  status: "check_needed"
