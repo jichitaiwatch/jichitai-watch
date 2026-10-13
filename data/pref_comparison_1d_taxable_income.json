@@ -1,13 +1,13 @@
 {
   "source_data_file": "data/pref_1d_taxable_income.json",
-  "generated_at": "2026-09-05",
+  "generated_at": "2026-10-12",
   "fields": [
     "一人あたり課税対象所得_万円"
   ],
   "notes": [
     "母集団は参照元 data/pref_1d_taxable_income.json の47都道府県レコードのみ（N=47固定）。全国/合計行（都道府県コード ['-', '00', '00000'] のいずれか。本ファイルの参照元では '00'='全国'）は母集団に含めず、平均・順位・百分位の計算に使っていない。",
     "national_average_unweighted = 47都道府県の値の単純算術平均（小数第2位で丸め）。average_method=\"unweighted_mean\"。docs/similar-group-aggregation-design.md §3「加重の扱い」の原則（平均は原則単純算術平均。人口加重等はどの重みを選ぶかに価値判断が入りうるため既定にしない）に従う。",
-    "national_official は参照元の全国/合計行の同名フィールドを**そのまま転記**したもので、本ファイルでは算出していない。これは average_method=\"official\" に相当する値を別フィールドで保持したものであり、national_average_unweighted と同一の量ではない。混同しないこと。実測の差は次のとおり： 一人あたり課税対象所得_万円: 単純平均=324.93 / 全国行=361.3（公式比率・公式値）差=36.37。",
+    "national_official は参照元の全国/合計行の同名フィールドを**そのまま転記**したもので、本ファイルでは算出していない。これは average_method=\"official\" に相当する値を別フィールドで保持したものであり、national_average_unweighted と同一の量ではない。混同しないこと。実測の差は次のとおり： 一人あたり課税対象所得_万円: 単純平均=351.38 / 全国行=393.37（公式比率・公式値）差=41.99。",
     "national_official は参照元の全国/合計行の値で、国全体の実数から算出された公式比率である。47都道府県の単純平均とは一致しない（分母が都道府県ごとに異なるため）。同じ内容を各フィールドの source_note にも書いてある。",
     "rank は47都道府県内での値の降順順位（1=最大値）。rank(i) = 1 + #{j : value(j) > value(i)} で機械的に算出しており、**同値は同順位とし、次の順位をその分だけ飛ばす**方式（competition ranking。例 1,2,2,4）を採用した。本ファイルでの同順位の発生： なし（全フィールドで順位は1〜47の重複なし）。",
     "percentile = (rank_out_of − rank + 1) / rank_out_of × 100 = (47 − rank + 1) / 47 × 100（小数第1位で丸め）。1位=100.0、47位=2.1。同順位の都道府県は同じ percentile を持つ。",
@@ -15,7 +15,7 @@
     "順位・百分位は事実として出すだけで、大小の望ましさを含意しない。評価語・評価色（信号色）・複合スコアは付与していない（docs/20260808_decisions.md D-4／D-6 ランキング非生成／D-18、および設計書§6）。",
     "都道府県コードは参照元の体系（SSDS（社会・人口統計体系）の2桁）をそのまま使っている。都道府県版の指標JSONはコード体系が3系統に分かれる（住基6桁＝例 210005／国勢5桁＝例 21000／SSDS2桁＝例 21）。比較値ファイル同士・生値ファイル同士をコードで結合する際は桁を揃える必要がある。",
     "検算：national_average_unweighted × 47 と47都道府県値の合計の差が、丸め許容範囲 47 × 0.5 × 10^-2 = 0.235 以内であることを全フィールドで生成時に検証済み（平均を小数第2位に丸めているため厳密一致はしない）。",
-    "value は参照元の値をそのまま転記しており、本ファイルで再丸め・単位換算はしていない。参照元の時点は「2022年（課税対象所得・納税義務者数の年次）」。参照元 data/pref_1d_taxable_income.json は本作業で編集していない。",
+    "value は参照元の値をそのまま転記しており、本ファイルで再丸め・単位換算はしていない。参照元の時点は「2024年度（納税義務者1人当たり課税対象所得）」。参照元 data/pref_1d_taxable_income.json は本作業で編集していない。",
     "設計根拠は docs/similar-group-aggregation-design.md §3（集計式）・§4（出力スキーマ）。同§8は「都道府県ページでの集計」をV2送りとしていたが、content-spec-v1.md §7.16（2026-09-03）が県ページのV1構築を決定したことにより、その V2送り記述は上書き・破棄されている。また設計書§4の population_basis（一人あたり系の分母時点）は本ファイルでは使用していない（参照元が既に算出済みの値を転記しているため）。"
   ],
   "data": [
@@ -23,14 +23,14 @@
       "都道府県コード": "01",
       "都道府県名": "北海道",
       "一人あたり課税対象所得_万円": {
-        "value": 317.6,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 344.65,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 24,
+        "rank": 23,
         "rank_out_of": 47,
-        "percentile": 51.1,
+        "percentile": 53.2,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -39,9 +39,9 @@
       "都道府県コード": "02",
       "都道府県名": "青森県",
       "一人あたり課税対象所得_万円": {
-        "value": 283.5,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 304.86,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
         "rank": 46,
@@ -55,14 +55,14 @@
       "都道府県コード": "03",
       "都道府県名": "岩手県",
       "一人あたり課税対象所得_万円": {
-        "value": 288.3,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 308.74,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 43,
+        "rank": 45,
         "rank_out_of": 47,
-        "percentile": 10.6,
+        "percentile": 6.4,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -71,14 +71,14 @@
       "都道府県コード": "04",
       "都道府県名": "宮城県",
       "一人あたり課税対象所得_万円": {
-        "value": 325.0,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 349.95,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 18,
+        "rank": 19,
         "rank_out_of": 47,
-        "percentile": 63.8,
+        "percentile": 61.7,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -87,9 +87,9 @@
       "都道府県コード": "05",
       "都道府県名": "秋田県",
       "一人あたり課税対象所得_万円": {
-        "value": 282.2,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 304.42,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
         "rank": 47,
@@ -103,14 +103,14 @@
       "都道府県コード": "06",
       "都道府県名": "山形県",
       "一人あたり課税対象所得_万円": {
-        "value": 289.4,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 310.35,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 42,
+        "rank": 43,
         "rank_out_of": 47,
-        "percentile": 12.8,
+        "percentile": 10.6,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -119,14 +119,14 @@
       "都道府県コード": "07",
       "都道府県名": "福島県",
       "一人あたり課税対象所得_万円": {
-        "value": 305.3,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 328.59,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 32,
+        "rank": 33,
         "rank_out_of": 47,
-        "percentile": 34.0,
+        "percentile": 31.9,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -135,14 +135,14 @@
       "都道府県コード": "08",
       "都道府県名": "茨城県",
       "一人あたり課税対象所得_万円": {
-        "value": 331.2,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 357.19,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 14,
+        "rank": 15,
         "rank_out_of": 47,
-        "percentile": 72.3,
+        "percentile": 70.2,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -151,14 +151,14 @@
       "都道府県コード": "09",
       "都道府県名": "栃木県",
       "一人あたり課税対象所得_万円": {
-        "value": 326.6,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 352.47,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 17,
+        "rank": 16,
         "rank_out_of": 47,
-        "percentile": 66.0,
+        "percentile": 68.1,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -167,9 +167,9 @@
       "都道府県コード": "10",
       "都道府県名": "群馬県",
       "一人あたり課税対象所得_万円": {
-        "value": 322.1,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 349.12,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
         "rank": 20,
@@ -183,14 +183,14 @@
       "都道府県コード": "11",
       "都道府県名": "埼玉県",
       "一人あたり課税対象所得_万円": {
-        "value": 359.5,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 389.13,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 7,
+        "rank": 8,
         "rank_out_of": 47,
-        "percentile": 87.2,
+        "percentile": 85.1,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -199,14 +199,14 @@
       "都道府県コード": "12",
       "都道府県名": "千葉県",
       "一人あたり課税対象所得_万円": {
-        "value": 368.0,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 408.66,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 5,
+        "rank": 4,
         "rank_out_of": 47,
-        "percentile": 91.5,
+        "percentile": 93.6,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -215,9 +215,9 @@
       "都道府県コード": "13",
       "都道府県名": "東京都",
       "一人あたり課税対象所得_万円": {
-        "value": 492.0,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 542.02,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
         "rank": 1,
@@ -231,9 +231,9 @@
       "都道府県コード": "14",
       "都道府県名": "神奈川県",
       "一人あたり課税対象所得_万円": {
-        "value": 404.9,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 437.14,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
         "rank": 2,
@@ -247,9 +247,9 @@
       "都道府県コード": "15",
       "都道府県名": "新潟県",
       "一人あたり課税対象所得_万円": {
-        "value": 296.0,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 318.1,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
         "rank": 38,
@@ -263,14 +263,14 @@
       "都道府県コード": "16",
       "都道府県名": "富山県",
       "一人あたり課税対象所得_万円": {
-        "value": 312.7,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 333.82,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 30,
+        "rank": 31,
         "rank_out_of": 47,
-        "percentile": 38.3,
+        "percentile": 36.2,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -279,14 +279,14 @@
       "都道府県コード": "17",
       "都道府県名": "石川県",
       "一人あたり課税対象所得_万円": {
-        "value": 321.7,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 344.88,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 21,
+        "rank": 22,
         "rank_out_of": 47,
-        "percentile": 57.4,
+        "percentile": 55.3,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -295,9 +295,9 @@
       "都道府県コード": "18",
       "都道府県名": "福井県",
       "一人あたり課税対象所得_万円": {
-        "value": 315.0,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 339.01,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
         "rank": 29,
@@ -311,14 +311,14 @@
       "都道府県コード": "19",
       "都道府県名": "山梨県",
       "一人あたり課税対象所得_万円": {
-        "value": 323.1,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 350.64,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 19,
+        "rank": 18,
         "rank_out_of": 47,
-        "percentile": 61.7,
+        "percentile": 63.8,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -327,14 +327,14 @@
       "都道府県コード": "20",
       "都道府県名": "長野県",
       "一人あたり課税対象所得_万円": {
-        "value": 315.7,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 341.97,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 27,
+        "rank": 25,
         "rank_out_of": 47,
-        "percentile": 44.7,
+        "percentile": 48.9,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -343,14 +343,14 @@
       "都道府県コード": "21",
       "都道府県名": "岐阜県",
       "一人あたり課税対象所得_万円": {
-        "value": 327.8,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 351.84,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 16,
+        "rank": 17,
         "rank_out_of": 47,
-        "percentile": 68.1,
+        "percentile": 66.0,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -359,14 +359,14 @@
       "都道府県コード": "22",
       "都道府県名": "静岡県",
       "一人あたり課税対象所得_万円": {
-        "value": 330.6,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 359.77,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 15,
+        "rank": 13,
         "rank_out_of": 47,
-        "percentile": 70.2,
+        "percentile": 74.5,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -375,9 +375,9 @@
       "都道府県コード": "23",
       "都道府県名": "愛知県",
       "一人あたり課税対象所得_万円": {
-        "value": 381.8,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 410.76,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
         "rank": 3,
@@ -391,14 +391,14 @@
       "都道府県コード": "24",
       "都道府県名": "三重県",
       "一人あたり課税対象所得_万円": {
-        "value": 333.7,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 358.32,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 13,
+        "rank": 14,
         "rank_out_of": 47,
-        "percentile": 74.5,
+        "percentile": 72.3,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -407,9 +407,9 @@
       "都道府県コード": "25",
       "都道府県名": "滋賀県",
       "一人あたり課税対象所得_万円": {
-        "value": 345.6,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 370.07,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
         "rank": 10,
@@ -423,25 +423,9 @@
       "都道府県コード": "26",
       "都道府県名": "京都府",
       "一人あたり課税対象所得_万円": {
-        "value": 358.2,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
-        "group_code": null,
-        "group_average": null,
-        "rank": 8,
-        "rank_out_of": 47,
-        "percentile": 85.1,
-        "average_method": "unweighted_mean",
-        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
-      }
-    },
-    {
-      "都道府県コード": "27",
-      "都道府県名": "大阪府",
-      "一人あたり課税対象所得_万円": {
-        "value": 364.6,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 394.42,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
         "rank": 6,
@@ -452,17 +436,33 @@
       }
     },
     {
+      "都道府県コード": "27",
+      "都道府県名": "大阪府",
+      "一人あたり課税対象所得_万円": {
+        "value": 393.04,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
+        "group_code": null,
+        "group_average": null,
+        "rank": 7,
+        "rank_out_of": 47,
+        "percentile": 87.2,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
       "都道府県コード": "28",
       "都道府県名": "兵庫県",
       "一人あたり課税対象所得_万円": {
-        "value": 371.6,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 403.48,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 4,
+        "rank": 5,
         "rank_out_of": 47,
-        "percentile": 93.6,
+        "percentile": 91.5,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -471,9 +471,9 @@
       "都道府県コード": "29",
       "都道府県名": "奈良県",
       "一人あたり課税対象所得_万円": {
-        "value": 351.5,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 384.93,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
         "rank": 9,
@@ -487,14 +487,14 @@
       "都道府県コード": "30",
       "都道府県名": "和歌山県",
       "一人あたり課税対象所得_万円": {
-        "value": 316.5,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 340.54,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 25,
+        "rank": 27,
         "rank_out_of": 47,
-        "percentile": 48.9,
+        "percentile": 44.7,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -503,14 +503,14 @@
       "都道府県コード": "31",
       "都道府県名": "鳥取県",
       "一人あたり課税対象所得_万円": {
-        "value": 287.4,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 309.37,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 45,
+        "rank": 44,
         "rank_out_of": 47,
-        "percentile": 6.4,
+        "percentile": 8.5,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -519,9 +519,9 @@
       "都道府県コード": "32",
       "都道府県名": "島根県",
       "一人あたり課税対象所得_万円": {
-        "value": 293.2,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 314.84,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
         "rank": 41,
@@ -535,14 +535,14 @@
       "都道府県コード": "33",
       "都道府県名": "岡山県",
       "一人あたり課税対象所得_万円": {
-        "value": 319.0,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 347.76,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 23,
+        "rank": 21,
         "rank_out_of": 47,
-        "percentile": 53.2,
+        "percentile": 57.4,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -551,14 +551,14 @@
       "都道府県コード": "34",
       "都道府県名": "広島県",
       "一人あたり課税対象所得_万円": {
-        "value": 337.6,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 363.4,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 11,
+        "rank": 12,
         "rank_out_of": 47,
-        "percentile": 78.7,
+        "percentile": 76.6,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -567,25 +567,9 @@
       "都道府県コード": "35",
       "都道府県名": "山口県",
       "一人あたり課税対象所得_万円": {
-        "value": 319.9,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
-        "group_code": null,
-        "group_average": null,
-        "rank": 22,
-        "rank_out_of": 47,
-        "percentile": 55.3,
-        "average_method": "unweighted_mean",
-        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
-      }
-    },
-    {
-      "都道府県コード": "36",
-      "都道府県名": "徳島県",
-      "一人あたり課税対象所得_万円": {
-        "value": 315.2,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 339.62,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
         "rank": 28,
@@ -596,12 +580,28 @@
       }
     },
     {
+      "都道府県コード": "36",
+      "都道府県名": "徳島県",
+      "一人あたり課税対象所得_万円": {
+        "value": 344.03,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
+        "group_code": null,
+        "group_average": null,
+        "rank": 24,
+        "rank_out_of": 47,
+        "percentile": 51.1,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
       "都道府県コード": "37",
       "都道府県名": "香川県",
       "一人あたり課税対象所得_万円": {
-        "value": 316.4,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 340.7,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
         "rank": 26,
@@ -615,14 +615,14 @@
       "都道府県コード": "38",
       "都道府県名": "愛媛県",
       "一人あたり課税対象所得_万円": {
-        "value": 310.4,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 336.04,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
-        "rank": 31,
+        "rank": 30,
         "rank_out_of": 47,
-        "percentile": 36.2,
+        "percentile": 38.3,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }
@@ -631,121 +631,9 @@
       "都道府県コード": "39",
       "都道府県名": "高知県",
       "一人あたり課税対象所得_万円": {
-        "value": 296.5,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
-        "group_code": null,
-        "group_average": null,
-        "rank": 37,
-        "rank_out_of": 47,
-        "percentile": 23.4,
-        "average_method": "unweighted_mean",
-        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
-      }
-    },
-    {
-      "都道府県コード": "40",
-      "都道府県名": "福岡県",
-      "一人あたり課税対象所得_万円": {
-        "value": 334.5,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
-        "group_code": null,
-        "group_average": null,
-        "rank": 12,
-        "rank_out_of": 47,
-        "percentile": 76.6,
-        "average_method": "unweighted_mean",
-        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
-      }
-    },
-    {
-      "都道府県コード": "41",
-      "都道府県名": "佐賀県",
-      "一人あたり課税対象所得_万円": {
-        "value": 296.7,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
-        "group_code": null,
-        "group_average": null,
-        "rank": 36,
-        "rank_out_of": 47,
-        "percentile": 25.5,
-        "average_method": "unweighted_mean",
-        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
-      }
-    },
-    {
-      "都道府県コード": "42",
-      "都道府県名": "長崎県",
-      "一人あたり課税対象所得_万円": {
-        "value": 295.2,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
-        "group_code": null,
-        "group_average": null,
-        "rank": 39,
-        "rank_out_of": 47,
-        "percentile": 19.1,
-        "average_method": "unweighted_mean",
-        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
-      }
-    },
-    {
-      "都道府県コード": "43",
-      "都道府県名": "熊本県",
-      "一人あたり課税対象所得_万円": {
-        "value": 304.1,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
-        "group_code": null,
-        "group_average": null,
-        "rank": 33,
-        "rank_out_of": 47,
-        "percentile": 31.9,
-        "average_method": "unweighted_mean",
-        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
-      }
-    },
-    {
-      "都道府県コード": "44",
-      "都道府県名": "大分県",
-      "一人あたり課税対象所得_万円": {
-        "value": 299.1,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
-        "group_code": null,
-        "group_average": null,
-        "rank": 35,
-        "rank_out_of": 47,
-        "percentile": 27.7,
-        "average_method": "unweighted_mean",
-        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
-      }
-    },
-    {
-      "都道府県コード": "45",
-      "都道府県名": "宮崎県",
-      "一人あたり課税対象所得_万円": {
-        "value": 287.9,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
-        "group_code": null,
-        "group_average": null,
-        "rank": 44,
-        "rank_out_of": 47,
-        "percentile": 8.5,
-        "average_method": "unweighted_mean",
-        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
-      }
-    },
-    {
-      "都道府県コード": "46",
-      "都道府県名": "鹿児島県",
-      "一人あたり課税対象所得_万円": {
-        "value": 294.3,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 315.61,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
         "rank": 40,
@@ -756,17 +644,129 @@
       }
     },
     {
-      "都道府県コード": "47",
-      "都道府県名": "沖縄県",
+      "都道府県コード": "40",
+      "都道府県名": "福岡県",
       "一人あたり課税対象所得_万円": {
-        "value": 302.8,
-        "national_average_unweighted": 324.93,
-        "national_official": 361.3,
+        "value": 363.77,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
+        "group_code": null,
+        "group_average": null,
+        "rank": 11,
+        "rank_out_of": 47,
+        "percentile": 78.7,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "41",
+      "都道府県名": "佐賀県",
+      "一人あたり課税対象所得_万円": {
+        "value": 321.13,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
+        "group_code": null,
+        "group_average": null,
+        "rank": 37,
+        "rank_out_of": 47,
+        "percentile": 23.4,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "42",
+      "都道府県名": "長崎県",
+      "一人あたり課税対象所得_万円": {
+        "value": 321.26,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
+        "group_code": null,
+        "group_average": null,
+        "rank": 36,
+        "rank_out_of": 47,
+        "percentile": 25.5,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "43",
+      "都道府県名": "熊本県",
+      "一人あたり課税対象所得_万円": {
+        "value": 331.45,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
+        "group_code": null,
+        "group_average": null,
+        "rank": 32,
+        "rank_out_of": 47,
+        "percentile": 34.0,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "44",
+      "都道府県名": "大分県",
+      "一人あたり課税対象所得_万円": {
+        "value": 325.59,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
         "group_code": null,
         "group_average": null,
         "rank": 34,
         "rank_out_of": 47,
         "percentile": 29.8,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "45",
+      "都道府県名": "宮崎県",
+      "一人あたり課税対象所得_万円": {
+        "value": 314.45,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
+        "group_code": null,
+        "group_average": null,
+        "rank": 42,
+        "rank_out_of": 47,
+        "percentile": 12.8,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "46",
+      "都道府県名": "鹿児島県",
+      "一人あたり課税対象所得_万円": {
+        "value": 317.94,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
+        "group_code": null,
+        "group_average": null,
+        "rank": 39,
+        "rank_out_of": 47,
+        "percentile": 19.1,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
+      }
+    },
+    {
+      "都道府県コード": "47",
+      "都道府県名": "沖縄県",
+      "一人あたり課税対象所得_万円": {
+        "value": 324.88,
+        "national_average_unweighted": 351.38,
+        "national_official": 393.37,
+        "group_code": null,
+        "group_average": null,
+        "rank": 35,
+        "rank_out_of": 47,
+        "percentile": 27.7,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ公式値（国全体の実数から算出された比率）であり、47都道府県の単純平均とは一致しない。"
       }

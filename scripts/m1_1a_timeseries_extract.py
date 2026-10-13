@@ -57,6 +57,15 @@ FILES = [
         "engine": "openpyxl",
         "stat_inf_id": "000040306653",
     },
+    {
+        "key": "r8_2026",
+        "reiwa_label": "令和8年",
+        "date": "2026-01-01",
+        # 総務省サイト掲載ファイル（e-Stat 経由ではない）。ファイルID 000892952
+        "path": "../recon-20261012-juki-r8/soumu_000892952_juki_shichoson_pop_hh_r8.xlsx",
+        "engine": "openpyxl",
+        "stat_inf_id": None,
+    },
 ]
 
 

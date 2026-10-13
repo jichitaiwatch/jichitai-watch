@@ -1,4 +1,5 @@
 import ComparisonNote, { type ComparisonNoteProps } from "./ComparisonNote";
+import { toFixedHalfUp } from "@/lib/format-decimal";
 
 /**
  * 「まちのすがた」7枚目カード（§0.7案A）。一人あたり課税対象所得を表示する。
@@ -15,7 +16,7 @@ export function TaxableIncomeCard({
   return (
     <div className="text-center">
       <p className="text-[36px] font-bold leading-none text-[#3f7d68] sm:text-[38px]">
-        {perCapitaTaxableIncomeManYen.toFixed(1)}万円
+        {toFixedHalfUp(perCapitaTaxableIncomeManYen, 1)}万円
       </p>
       <p className="mt-1 fs-label text-stone-600">一人あたり課税対象所得</p>
       <p className="fs-label text-stone-600">（納税義務者一人あたり・年間）</p>

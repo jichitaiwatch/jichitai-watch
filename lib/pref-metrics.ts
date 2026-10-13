@@ -88,6 +88,7 @@ export interface PrefPopulationTimeseriesRow {
   r5_2023: PopulationYearSnapshot;
   r6_2024: PopulationYearSnapshot;
   r7_2025: PopulationYearSnapshot;
+  r8_2026: PopulationYearSnapshot;
 }
 export interface PrefSingleHouseholdRow {
   都道府県コード: string;
@@ -106,8 +107,8 @@ export interface PrefAgingRateRow {
 export interface PrefTaxableIncomeRow {
   都道府県コード: string;
   都道府県名: string;
-  課税対象所得_百万円: number;
-  納税義務者数_人: number;
+  /** 原表の値（千円・小数第1位）。2026-10-12 から経路A（すがた2026・2024年度）。総額・納税義務者数の原数値は無い */
+  一人あたり課税対象所得_千円: number;
   一人あたり課税対象所得_万円: number;
 }
 export interface PrefIndustryRow {

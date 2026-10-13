@@ -1,5 +1,6 @@
 import { type ComparisonNoteProps } from "./ComparisonNote";
 import { formatManOku, formatThousandYenExact } from "@/lib/format-yen";
+import { toFixedHalfUp } from "@/lib/format-decimal";
 
 interface GikaihiCardProps {
   current: number | null;
@@ -33,7 +34,7 @@ export function GikaihiCard({ current, prior }: GikaihiCardProps) {
       <p className="fs-sub text-[var(--muted)]">
         前年比（同一団体）：
         <span className="font-semibold text-[var(--body)]">
-          {yoy !== null ? `${yoy >= 0 ? "+" : ""}${yoy.toFixed(1)}%` : "確認できず"}
+          {yoy !== null ? `${yoy >= 0 ? "+" : ""}${toFixedHalfUp(yoy, 1)}%` : "確認できず"}
         </span>
       </p>
     </div>

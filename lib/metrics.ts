@@ -147,7 +147,7 @@ export type ExpenditureTimeseriesRow = {
   市区町村名: string;
 } & { [K in ExpenditureFyKey]: ExpenditureYearValue | null };
 
-/** 年次1時点分の人口・世帯データ（住基）。r2_2020〜r7_2025の6時点が全42件で確認済み */
+/** 年次1時点分の人口・世帯データ（住基）。r2_2020〜r8_2026の7時点が全42件で確認済み */
 export interface PopulationYearSnapshot {
   人口_男: number;
   人口_女: number;
@@ -155,7 +155,7 @@ export interface PopulationYearSnapshot {
   世帯数: number;
   /**
    * 全国・類似団体比較（人口_計・世帯数の2キーのみ。人口_男/女はカード非表示のため対象外）。
-   * r7_2025にのみ付与（全国母集団ファイルは令和7年時点のみ取得済みのため）。任意=過去年は未収集。
+   * 最新年（r8_2026）にのみ付与（全国母集団ファイルは令和8年時点のみ取得済みのため）。任意=過去年は未収集。
    */
   comparison?: {
     人口_計: TaxableIncomeComparison;
@@ -174,6 +174,7 @@ export interface PopulationTimeseriesRow {
   r5_2023: PopulationYearSnapshot;
   r6_2024: PopulationYearSnapshot;
   r7_2025: PopulationYearSnapshot;
+  r8_2026: PopulationYearSnapshot;
 }
 
 export interface SingleHouseholdRow {
@@ -557,9 +558,9 @@ interface PopulationSourceEntry extends DataSourceEntry {
   year_label: string;
 }
 
-/** 人口カードが「現在」として表示する年キー（PopulationCard.tsxの前年比算出はr7_2025/r6_2024前提）。
+/** 人口カードが「現在」として表示する年キー（PopulationCard.tsxの前年比算出はr8_2026/r7_2025前提）。
  *  新しい年次データが追加されたら、この値も合わせて更新する。 */
-const POPULATION_CURRENT_YEAR_KEY = "r7_2025";
+const POPULATION_CURRENT_YEAR_KEY = "r8_2026";
 
 interface MunicipalityMasterRecord {
   area_code: string;

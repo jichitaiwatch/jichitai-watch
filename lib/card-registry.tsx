@@ -81,6 +81,7 @@ import { CouncilSeatsCard } from "@/components/CouncilSeatsCard";
 import { KaihaCard } from "@/components/KaihaCard";
 import { GikaihiCard } from "@/components/GikaihiCard";
 import { GijirokuCard } from "@/components/GijirokuCard";
+import { toFixedHalfUp } from "@/lib/format-decimal";
 
 /** 新IA4入口（ui-vi-handoff.md §0.8 で確定。旧 fiscal/budget/mayor は gyosei へ集約・消滅） */
 export type IaTab = "machi" | "gyosei" | "gikai" | "kurashi";
@@ -141,12 +142,12 @@ export function getEntranceSummary(tab: IaTab, m: MunicipalityConfig): EntranceS
     const population = getPopulationTimeseries(m.areaCode);
     const aging = getAgingRate(m.areaCode);
     const populationValue = population
-      ? `${population.row.r7_2025.人口_計.toLocaleString()}人`
+      ? `${population.row.r8_2026.人口_計.toLocaleString()}人`
       : "—";
     const diffValue = population
-      ? formatSignedCount(population.row.r7_2025.人口_計 - population.row.r2_2020.人口_計)
+      ? formatSignedCount(population.row.r8_2026.人口_計 - population.row.r3_2021.人口_計)
       : "—";
-    const agingValue = aging ? `${aging.row.高齢化率.toFixed(1)}%` : "—";
+    const agingValue = aging ? `${toFixedHalfUp(aging.row.高齢化率, 1)}%` : "—";
     return [
       { label: "人口", value: populationValue },
       { label: "5年増減", value: diffValue },
@@ -293,7 +294,7 @@ export function defineCard<Row, E = MunicipalityConfig>(def: CardDefinition<Row,
  * まち（machi）：§0.7確定7枚を全て登録（人口・世帯・単身世帯高齢化・産業構成・
  * 上位3業種・昼夜間人口比率・一人あたり課税対象所得）。
  * 人口・世帯は同一データソース（m1_1a_population_timeseries.json）
- * の異なる切り出しで、いずれも最新年（r7_2025）のみを使用する。
+ * の異なる切り出しで、いずれも最新年（r8_2026）のみを使用する。
  *
  * まち以外（行政・議会・くらし）は getter が実在する M1/M2/M3 のみ登録。
  * 行政の 首長・財政概況・財政の健全性（§0.9）／議会（§0.10・指標別5枚）は
@@ -311,11 +312,11 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     title: "人口",
     updateFrequency: "年1回",
     sourceLabel: "住民基本台帳",
-    note: "自治体Watchが最新年（令和7年）のみを抽出して表示。",
+    note: "自治体Watchが最新年（令和8年）のみを抽出して表示。",
     resolve: (m) => getPopulationTimeseries(m.areaCode),
     renderVisualization: (data, _m, suppressComparison) => {
-      const latest = data.row.r7_2025;
-      const prior = data.row.r6_2024;
+      const latest = data.row.r8_2026;
+      const prior = data.row.r7_2025;
       const c = latest.comparison?.人口_計;
       return (
         <PopulationCard
@@ -344,14 +345,14 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     title: "世帯数",
     updateFrequency: "年1回",
     sourceLabel: "住民基本台帳",
-    note: "自治体Watchが最新年（令和7年）のみを抽出して表示。人口カードと同一データ。",
+    note: "自治体Watchが最新年（令和8年）のみを抽出して表示。人口カードと同一データ。",
     resolve: (m) => getPopulationTimeseries(m.areaCode),
     renderVisualization: (data, _m, suppressComparison) => {
-      const c = data.row.r7_2025.comparison?.世帯数;
+      const c = data.row.r8_2026.comparison?.世帯数;
       return (
         <HouseholdCountCard
-          households={data.row.r7_2025.世帯数}
-          householdsPrior={data.row.r6_2024 ? data.row.r6_2024.世帯数 : null}
+          households={data.row.r8_2026.世帯数}
+          householdsPrior={data.row.r7_2025 ? data.row.r7_2025.世帯数 : null}
           comparison={
             !c || suppressComparison
               ? undefined
@@ -375,7 +376,7 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     // が"3年"→"5年"→"年1回/年次"の順で部分一致判定するため、"5年"にマッチして無条件に
     // 5年周期扱いになっていた（単身世帯割合側の年次相当の陳腐化を検知できないバグ）。
     // 実際の更新周期は内訳が異なる（content-spec-v1.md §7.2 1-1b・2026-08-28裁定）：
-    //   単身世帯割合＝国勢調査（5年周期・次回=令和7年国勢調査、令8.9.29公表予定）
+    //   単身世帯割合＝国勢調査（5年周期・令和7年国勢調査の結果〔令8.9.29公表〕へ2026-10-12に更新済み。次回は令和12年国勢調査）
     //   高齢化率　　＝住民基本台帳 年齢階級別人口（年次更新・国勢調査より鮮度良のため意図的に住基採用）
     // 複合カード1枚に対しclassifyCycle()は単一の周期しか判定できないため、
     // 2指標のうち厳しい方（年次）をカード全体のupdateFrequencyとして採用する
@@ -387,10 +388,24 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
       const single = getSingleHousehold(m.areaCode);
       const aging = getAgingRate(m.areaCode);
       if (!single || !aging) return null;
+      // 2指標で出典の時点が異なる（単身世帯＝国勢調査、高齢化率＝住民基本台帳）ため、対象年度は両方を並べて表示する
+      // （2026-10-12 修正：旧実装は新しい方の meta だけを使い、片方の時点を両方の時点のように表示していた）。
+      // 更新日は新しい方、取得日は古い方（陳腐化判定を厳しい側に倒す）、系譜は両方を連結する。
+      const periodLabel =
+        single.meta.periodLabel && aging.meta.periodLabel
+          ? `単身世帯 ${single.meta.periodLabel}／高齢化率 ${aging.meta.periodLabel}`
+          : undefined;
+      const fetchedCandidates = [single.meta.fetchedAt, aging.meta.fetchedAt].filter(
+        (d): d is string => Boolean(d),
+      );
       return {
         row: { single: single.row, aging: aging.row },
-        // 2データセットの更新日が異なる場合は新しい方を採用
-        meta: single.meta.updated >= aging.meta.updated ? single.meta : aging.meta,
+        meta: {
+          updated: single.meta.updated >= aging.meta.updated ? single.meta.updated : aging.meta.updated,
+          periodLabel,
+          fetchedAt: fetchedCandidates.length ? fetchedCandidates.sort()[0] : undefined,
+          sources: [...(single.meta.sources ?? []), ...(aging.meta.sources ?? [])],
+        },
       };
     },
     renderVisualization: (data, _m, suppressComparison) => {
@@ -478,7 +493,7 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
               ? undefined
               : {
                   rankText: `全国${c.rank}位／${c.rank_out_of}市区町村`,
-                  averageText: `類似団体平均（${c.group_code}）：${c.group_average.toFixed(1)}`,
+                  averageText: `類似団体平均（${c.group_code}）：${toFixedHalfUp(c.group_average, 1)}`,
                 }
           }
         />
@@ -503,7 +518,7 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
               ? undefined
               : {
                   rankText: `全国${c.rank}位／${c.rank_out_of}市区町村`,
-                  averageText: `類似団体平均（${c.group_code}）：${c.group_average.toFixed(1)}万円`,
+                  averageText: `類似団体平均（${c.group_code}）：${toFixedHalfUp(c.group_average, 1)}万円`,
                 }
           }
         />

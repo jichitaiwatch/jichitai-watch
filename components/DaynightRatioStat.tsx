@@ -1,4 +1,5 @@
 import ComparisonNote, { type ComparisonNoteProps } from "./ComparisonNote";
+import { toFixedHalfUp } from "@/lib/format-decimal";
 
 interface DaynightRatioStatProps {
   ratio: number;
@@ -22,7 +23,7 @@ export function DaynightRatioStat({ ratio, comparison }: DaynightRatioStatProps)
     <div className="flex flex-col gap-3">
       <div className="grid grid-cols-[104px_1fr] items-center gap-3 sm:grid-cols-[132px_1fr]">
         <p className="whitespace-nowrap text-[36px] font-extrabold leading-none tracking-[-0.02em] text-[var(--identity)] sm:text-[38px]">
-          {ratio.toFixed(1)}
+          {toFixedHalfUp(ratio, 1)}
         </p>
 
         <div className="relative h-[72px]" aria-hidden>

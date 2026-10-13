@@ -8,15 +8,15 @@
   対象は「人口_計」（総人口）と「世帯数」の2指標（人口_男/女はカード非表示のため対象外）。
 
 入力（取得済みローカルファイルのみ。ネットワークアクセスをしない）:
-  poc/recon-20260828/1-1a/estat_000040306653_juki_shichoson_pop_hh_r7.xlsx
-    （統計表ID 000040306653・令和7年1月1日時点。既存 data/m1_1a_population_timeseries.json の
-    r7_2025 生値と同一の全国集約ファイル。2026-09-28にpush・岐阜市の値が完全一致することを確認済み）
+  poc/recon-20261012-juki-r8/soumu_000892952_juki_shichoson_pop_hh_r8.xlsx
+    （総務省ファイルID 000892952・令和8年1月1日時点。既存 data/m1_1a_population_timeseries.json の
+    r8_2026 生値と同一の全国集約ファイル。2026-10-12取得）
   poc/recon-20260828/0/ruikei_kubun_r06.xlsx（類似団体区分マスタ・市町村一覧シート・1741団体）
 
 更新（既存ファイルを書き換え・新規ファイルは作らない）:
-  data/m1_1a_population_timeseries.json の各レコード（42件）の r7_2025 に comparison フィールド
-  （人口_計・世帯数の2キー）を追加する。r2_2020〜r6_2024（過去年）へは追加しない
-  （全国母集団ファイルは令和7年時点のみ取得済みのため）。
+  data/m1_1a_population_timeseries.json の各レコード（42件）の r8_2026 に comparison フィールド
+  （人口_計・世帯数の2キー）を追加する。r2_2020〜r7_2025（過去年）へは追加しない
+  （全国母集団ファイルは最新の令和8年時点のみ取得済みのため。r7_2025 に付いていた旧 comparison は取り除く）。
 
 集計（docs/similar-group-aggregation-design.md §3・§4・§9・§10。m1_2b_daynight_comparison.py と
   同一の実装パターン。住基は6桁団体コードのため区分マスタと桁数変換なしで直接結合できる §10）:
@@ -28,7 +28,7 @@
 
 規律:
   - 列位置はハードコードせず、ヘッダのラベル文字列（団体コード・男・女・計・世帯数）から同定し自己検証する。
-  - 表題（住民基本台帳・人口・世帯数・令和7年）をコードでassertしてから使う（推測しない）。
+  - 表題（住民基本台帳・人口・世帯数・令和8年）をコードでassertしてから使う（推測しない）。
   - 評価語・評価色・複合スコアは付けない（中立性・D-4/D-6/D-18）。
 """
 from __future__ import annotations
@@ -41,7 +41,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-POP_SRC = ROOT / "poc" / "recon-20260828" / "1-1a" / "estat_000040306653_juki_shichoson_pop_hh_r7.xlsx"
+POP_SRC = ROOT / "poc" / "recon-20261012-juki-r8" / "soumu_000892952_juki_shichoson_pop_hh_r8.xlsx"
+KEY = "r8_2026"  # 比較値を付与する時点キー（令和8年1月1日）
+PREV_KEY = "r7_2025"  # 前回まで比較値を付けていた時点（再実行時に取り除く）
 RUIKEI_SRC = ROOT / "poc" / "recon-20260828" / "0" / "ruikei_kubun_r06.xlsx"
 OUT = ROOT / "data" / "m1_1a_population_timeseries.json"
 
@@ -60,13 +62,9 @@ ANCHOR = {
     "takayama_shi_group_n": 127,
 }
 
-# similar-group-aggregation-design.md §9（2026-08-29実データ検証）の岐阜市・人口固有アンカー。
-# 全国平均・類団平均は概数記載（許容誤差±1）。全国順位は完全一致を要求する。
-POPULATION_ANCHOR = {
-    "gifu_shi_national_average": 71413,
-    "gifu_shi_group_average": 508134,
-    "gifu_shi_rank": 54,
-}
+# 令和7年版にあった岐阜市の固定アンカー（全国平均71413／類団平均508134／順位54）は令和7年値固有のため、
+# 令和8年版では使わない。代わりに「母集団Mの件数」「全国平均が母集団の合計/件数と一致」「岐阜市の順位が
+# 値の降順で独立に再計算した順位と一致」を内部整合として検証する（下の main 内）。
 
 
 class Abort(Exception):
@@ -171,7 +169,7 @@ def resolve_population_columns(ws):
         raise Abort("population: category行（人口/世帯数）とfield行の列対応が一致しない")
 
     title_texts = " ".join(s(v) for row in header_rows[:1] for v in row if v)
-    if "住民基本台帳" not in title_texts or "人口" not in title_texts or "世帯数" not in title_texts or "令和7年" not in title_texts:
+    if "住民基本台帳" not in title_texts or "人口" not in title_texts or "世帯数" not in title_texts or "令和8年" not in title_texts:
         raise Abort(f"population: 表題に想定語を確認できない（実測={title_texts!r}）。推測で続行しない。")
     print(f"  [population] 表題確認: {title_texts[:60]}...")
 
@@ -311,20 +309,24 @@ def main():
     if not all(results):
         raise Abort("区分アンカー値が一致しない。JSONを書かずに中断した。")
 
-    print("== 人口固有アンカー自己検証（2026-08-29 PoC実測値との照合。全国平均/類団平均は±1許容・順位は完全一致） ==")
+    print("== 内部整合検証（令和8年版：固定アンカーに依らず独立再計算で照合） ==")
     gifu_pop = comp_population["212016"]
+    vals = sorted((v["人口_計"] for v in pop_by_code6.values() if v is not None and "人口_計" in v), reverse=True)
+    n_m = len([c for c in ruikei if c in pop_by_code6])
+    independent_rank = 1 + sum(1 for c in ruikei if c in pop_by_code6 and pop_by_code6[c]["人口_計"] > gifu_pop["value"])
+    independent_avg = round(sum(pop_by_code6[c]["人口_計"] for c in ruikei if c in pop_by_code6) / n_m, 1)
     pop_checks = [
-        abs(gifu_pop["national_average"] - POPULATION_ANCHOR["gifu_shi_national_average"]) <= 1,
-        abs(gifu_pop["group_average"] - POPULATION_ANCHOR["gifu_shi_group_average"]) <= 1,
-        gifu_pop["rank"] == POPULATION_ANCHOR["gifu_shi_rank"],
+        n_m == 1741,
+        gifu_pop["rank_out_of"] == n_m,
+        gifu_pop["rank"] == independent_rank,
+        abs(gifu_pop["national_average"] - independent_avg) < 1e-6,
     ]
     print(
-        f"    岐阜市: 全国平均={gifu_pop['national_average']}（期待≈{POPULATION_ANCHOR['gifu_shi_national_average']}） "
-        f"類団平均={gifu_pop['group_average']}（期待≈{POPULATION_ANCHOR['gifu_shi_group_average']}） "
-        f"全国順位={gifu_pop['rank']}（期待={POPULATION_ANCHOR['gifu_shi_rank']}）"
+        f"    母集団M={n_m}件（期待1741） 岐阜市: 全国平均={gifu_pop['national_average']}（独立再計算={independent_avg}） "
+        f"全国順位={gifu_pop['rank']}（独立再計算={independent_rank}） 類団平均={gifu_pop['group_average']}"
     )
     if not all(pop_checks):
-        raise Abort("人口固有アンカー値が一致しない。JSONを書かずに中断した。")
+        raise Abort("内部整合が一致しない。JSONを書かずに中断した。")
 
     print("== 既存42件との整合確認 ==")
     gifu_codes_pop = sorted(c for c in comp_population if c.startswith("21"))
@@ -335,20 +337,21 @@ def main():
     if set(by_area_code.keys()) != set(gifu_codes_pop):
         raise Abort("既存JSONのarea_codeと母集団Mの岐阜42件のキー集合が一致しない。JSONを書かずに中断した。")
 
-    print("== 既存レコードのr7_2025へ comparison を付与（生値の再抽出一致も併せて検証） ==")
+    print("== 既存レコードのr8_2026へ comparison を付与（生値の再抽出一致も併せて検証） ==")
     for rec in existing:
         code6 = rec["area_code"]
-        r7 = rec["r7_2025"]
+        r7 = rec[KEY]
+        rec[PREV_KEY].pop("comparison", None)  # 旧時点に付いていた比較値は取り除く
         cp = comp_population[code6]
         ch = comp_household[code6]
         if abs(r7["人口_計"] - cp["value"]) > 1e-6:
             raise Abort(
-                f"{rec['市区町村名']}（{code6}）: 既存r7_2025人口_計{r7['人口_計']}と全国ファイルからの再抽出値"
+                f"{rec['市区町村名']}（{code6}）: 既存r8_2026人口_計{r7['人口_計']}と全国ファイルからの再抽出値"
                 f"{cp['value']}が不一致。JSONを書かずに中断した。"
             )
         if abs(r7["世帯数"] - ch["value"]) > 1e-6:
             raise Abort(
-                f"{rec['市区町村名']}（{code6}）: 既存r7_2025世帯数{r7['世帯数']}と全国ファイルからの再抽出値"
+                f"{rec['市区町村名']}（{code6}）: 既存r8_2026世帯数{r7['世帯数']}と全国ファイルからの再抽出値"
                 f"{ch['value']}が不一致。JSONを書かずに中断した。"
             )
         r7["comparison"] = {"人口_計": cp, "世帯数": ch}
@@ -358,11 +361,11 @@ def main():
     comparison_note_prefix = "comparison（全国平均・類似団体平均・全国順位・百分位）は"
     payload["notes"] = [n for n in payload["notes"] if not n.startswith(comparison_note_prefix)]
     payload["notes"].append(
-        "comparison（全国平均・類似団体平均・全国順位・百分位）は2026-09-28追加（F-5）。r7_2025のみに付与"
-        "（全国母集団ファイルは令和7年時点のみ取得済みのため、過去年r2_2020〜r6_2024へは付与しない）。"
+        "comparison（全国平均・類似団体平均・全国順位・百分位）は2026-09-28追加（F-5）・2026-10-12に令和8年版へ更新。r8_2026のみに付与"
+        "（全国母集団ファイルは令和8年時点のみ取得済みのため、過去年r2_2020〜r7_2025へは付与しない。令和8年版への更新に伴い旧r7_2025の比較値は取り除いた）。"
         "docs/similar-group-aggregation-design.md §3・§4の集計段の定義に従う。"
         f"母集団M = 区分マスタ（総務省 類似団体別市町村財政指数表・{len(ruikei)}団体）"
-        "∩ 全国集約ファイル（本ファイルsourcesのr7_2025と同一の統計表ID000040306653）に数値がある団体。"
+        "∩ 全国集約ファイル（本ファイルsourcesのr8_2026と同一の総務省ファイルID000892952）に数値がある団体。"
         "national_average は母集団Mの単純算術平均、group_average は束ね後区分ごとの単純算術平均"
         "（average_method=\"unweighted_mean\"）。束ね写像：政令指定都市・中核市・施行時特例市・特別区は『大都市』"
         "に統合。それ以外は類団区分の原ラベルをそのまま使う。"
@@ -378,12 +381,12 @@ def main():
     print("== 書き出し ==")
     with OUT.open("w", encoding="utf-8") as fh:
         json.dump(payload, fh, ensure_ascii=False, indent=2)
-    print(f"  wrote {OUT.relative_to(ROOT)}  ({len(existing)}件のr7_2025にcomparison付与)")
+    print(f"  wrote {OUT.relative_to(ROOT)}  ({len(existing)}件のr8_2026にcomparison付与)")
 
     print("== 岐阜42件 人口_計順（サニティチェック用） ==")
-    ranked = sorted(existing, key=lambda r: -r["r7_2025"]["comparison"]["人口_計"]["value"])
+    ranked = sorted(existing, key=lambda r: -r[KEY]["comparison"]["人口_計"]["value"])
     for r in ranked[:3] + ranked[-3:]:
-        c = r["r7_2025"]["comparison"]["人口_計"]
+        c = r[KEY]["comparison"]["人口_計"]
         print(
             f"  {r['市区町村名']}（{r['area_code']}）: {int(c['value'])}人 "
             f"全国{c['rank']}位/{c['rank_out_of']}（上位{c['percentile']}%） "

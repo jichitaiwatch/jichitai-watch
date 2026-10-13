@@ -2,8 +2,8 @@
 """まちのすがた #3 高齢化率の生値JSONを、市区町村（岐阜42）と都道府県（47＋全国計）で生成する。
 
 入力（取得済みローカル1本のみ・新規ダウンロードなし）:
-  statInfId=000040306654 令和7年1月1日住民基本台帳年齢階級別人口（市区町村別）（総計）
-  poc/recon-20260828/1-1b/estat_000040306654_juki_shichoson_age_r7.xlsx / シート「年齢別人口（市区町村別）【総計】」
+  総務省ファイルID 000892953 令和8年1月1日住民基本台帳年齢階級別人口（市区町村別）（総計）
+  poc/recon-20261012-juki-r8/soumu_000892953_juki_shichoson_age_r8.xlsx / シート「年齢別人口（市区町村別）【総計】」
 
 出力（新規2本。既存JSONは読まない・書き換えない）:
   data/m1_1c_aging_rate.json      （市区町村42件・系譜 source_file_hash）
@@ -26,25 +26,22 @@ from pathlib import Path
 from openpyxl import load_workbook
 
 ROOT = Path(__file__).resolve().parents[1]
-SRC = ROOT / "poc" / "recon-20260828" / "1-1b" / "estat_000040306654_juki_shichoson_age_r7.xlsx"
+SRC = ROOT / "poc" / "recon-20261012-juki-r8" / "soumu_000892953_juki_shichoson_age_r8.xlsx"
+POP_JSON = ROOT / "data" / "pref_1a_population.json"  # 県別の人口（令和8年）。総数の突合に使う
 OUT = ROOT / "data"
 
 UPDATED = date.today().isoformat()
-PERIOD = "令和7年1月1日時点（住民基本台帳）"
+NATIONAL_65_DIFF = None  # 全国計行と47都道府県合計の65歳以上人口の差（注記用）
+PERIOD = "令和8年1月1日時点（住民基本台帳）"
 
-STAT_INF_ID = "000040306654"
-STAT_NAME = "住民基本台帳に基づく人口、人口動態及び世帯数調査"
-SOURCE_URL = f"https://www.e-stat.go.jp/stat-search/file-download?statInfId={STAT_INF_ID}&fileKind=0"
-SOURCE_PAGE = (
-    "https://www.e-stat.go.jp/stat-search/files?page=1&layout=datalist&toukei=00200241"
-    "&tstat=000001039591&cycle=7&year=20250&month=0&tclass1=000001039601"
-)
-# poc/recon-20260828/_fetch_log.json の当該エントリ（indicator_id=1-1b・本ファイル）の実測値
-FETCHED_AT = "2026-08-28T20:03:48+09:00"
-FETCH_LOG_SHA256 = "8b72e4fe5bbb9f49c135c17451afb673388100d7d39d0b75acfd9e4539af867e"
-
-# アンカー（前タスクで確認済み。岐阜県計）
-ANCHOR_PREF = {"code": "210005", "総数": 1951292, "65歳以上人口": 604233, "高齢化率": 30.97}
+SOURCE_FILE_ID = "000892953"
+STAT_NAME = "住民基本台帳に基づく人口、人口動態及び世帯数"
+SOURCE_URL = f"https://www.soumu.go.jp/main_content/{SOURCE_FILE_ID}.xlsx"
+SOURCE_PAGE = "https://www.soumu.go.jp/main_sosiki/jichi_gyousei/daityo/jinkou_jinkoudoutai-setaisuu.html"
+# 2026-10-12 に運営者が総務省サイトから取得した原本（e-Stat 掲載前）。ハッシュは実ファイルで固定する。
+FETCHED_AT = "2026-10-12T21:20:00+09:00"
+EXPECTED_SHA256 = "574ea5660baec38991875d032dab299ca7aac772b85760ab4385ae0d7b931491"
+TITLE_MUST_HAVE = "令和8年1月1日"
 
 
 class Abort(Exception):
@@ -101,7 +98,7 @@ def resolve_layout(ws):
 def table_title(ws) -> str:
     for row in ws.iter_rows(min_row=1, max_row=3, values_only=True):
         head = s(row[0] if row else "")
-        if "住民基本台帳" in head and "年齢階級別人口" in head:
+        if "住民基本台帳" in head and "年齢階級別人口" in head and TITLE_MUST_HAVE in head:
             return head
     raise Abort("表題行が見つからない")
 
@@ -168,7 +165,7 @@ def source_entry(hash_key: str, file_hash: str, title: str):
         "source_page": SOURCE_PAGE,
         "stat_name": STAT_NAME,
         "table_title": title,
-        "statInfId": STAT_INF_ID,
+        "source_file_id": SOURCE_FILE_ID,
         "fetched_at": FETCHED_AT,
         hash_key: file_hash,
     }
@@ -208,6 +205,12 @@ def notes_for(kind: str, over65_labels, has_national: bool):
             "都道府県名も原表のまま \"合計\" であり、他のpref系JSONの『全国』表記とは異なる。"
             "全国行は後段の全国比較用に同梱したものであり、都道府県の1件として数えない。"
         )
+        if NATIONAL_65_DIFF is not None:
+            pref_notes.append(
+                f"全国行の65歳以上人口は、47都道府県の合計より{NATIONAL_65_DIFF}人多い（総数は一致）。"
+                "原資料の全国計行の年齢階級別人口が、都道府県計行の合計と一致しない性質によるもので、"
+                "前年版（令和7年）の原資料でも同様に生じている。本JSONは原資料の各行の値をそのまま格納している。"
+            )
     return [*pref_notes, *common]
 
 
@@ -250,23 +253,56 @@ def main():
     has_national = len(national) == 1
     print(f"  → 岐阜42件 OK / 都道府県47件 OK / 全国行 {'あり' if has_national else 'なし'}")
 
-    print("== アンカー自己検証 ==")
+    print("== 内部整合・突合検証（固定アンカーに依らない） ==")
     pref_by_code = {r["code"]: r for r in prefs}
-    a = pref_by_code.get(ANCHOR_PREF["code"])
+    a = pref_by_code.get("210005")
     if a is None:
-        raise Abort(f"岐阜県計行 {ANCHOR_PREF['code']} が見つからない")
-    ok = True
-    for k in ("総数", "65歳以上人口", "高齢化率"):
-        hit = a[k] == ANCHOR_PREF[k]
-        ok = ok and hit
-        print(f"    {'OK ' if hit else 'NG '} 岐阜県計(210005) {k}: 実測={a[k]} 期待={ANCHOR_PREF[k]}")
-    if not ok:
-        raise Abort("岐阜県計のアンカー値が一致しない。JSONを書かずに中断した。")
+        raise Abort("岐阜県計行 210005 が見つからない")
+    # (1) 47都道府県の総数合計 = 全国計行（総数・65歳以上人口）
+    if has_national:
+        tot = sum(r["総数"] for r in prefs)
+        if tot != national[0]["総数"]:
+            raise Abort(f"47都道府県の総数合計{tot}が全国計行{national[0]['総数']}と不一致")
+        print(f"    OK  47都道府県の総数合計 = 全国計行 = {tot}")
+        # 65歳以上は原資料の性質上、全国計行が47都道府県の合計より僅かに大きい（令和7年版の原本でも同様：
+        # 各5歳階級で全国計行が県合計より大きく、総数だけが一致する）。
+        # 許容は全国計行の0.01%以内とし、差は出力と注記に残す。
+        tot65 = sum(r["65歳以上人口"] for r in prefs)
+        diff65 = national[0]["65歳以上人口"] - tot65
+        if not (0 <= diff65 <= national[0]["65歳以上人口"] * 0.0001):
+            raise Abort(f"65歳以上人口: 全国計行 − 47都道府県合計 = {diff65}（許容は0以上かつ全国計の0.01%以内）")
+        print(f"    OK  65歳以上人口: 全国計行 − 47都道府県合計 = {diff65}人（許容内。原資料の性質）")
+        global NATIONAL_65_DIFF
+        NATIONAL_65_DIFF = diff65
+    # (2) 岐阜県内42市区町村＋郡集計行を除いた合計は岐阜県計に一致（総数・65歳以上）
+    for k in ("総数", "65歳以上人口"):
+        tot = sum(r[k] for r in gifu)
+        if tot != a[k]:
+            raise Abort(f"岐阜42市区町村の{k}合計{tot}が岐阜県計{a[k]}と不一致")
+        print(f"    OK  岐阜42市区町村の{k}合計 = 岐阜県計 = {tot}")
+    # (3) 総数が別ファイル（県別人口 data/pref_1a_population.json）の人口と一致
+    pop = json.loads(POP_JSON.read_text(encoding="utf-8"))
+    pop_rows = pop["data"] if isinstance(pop, dict) else pop
+    def pop_total(r):
+        for key in ("人口_計", "population_total"):
+            if key in r:
+                return r[key]
+        raise Abort(f"pref_1a_population.json に人口_計が無い: keys={list(r)}")
+    def pop_code(r):
+        for key in ("都道府県コード", "code", "pref_code"):
+            if key in r:
+                return str(r[key])
+        raise Abort(f"pref_1a_population.json に都道府県コードが無い: keys={list(r)}")
+    pop_by = {pop_code(r): pop_total(r) for r in pop_rows}
+    mism = [(r["code"], r["総数"], pop_by.get(r["code"])) for r in prefs if pop_by.get(r["code"]) != r["総数"]]
+    if mism:
+        raise Abort(f"県別人口との総数不一致 {len(mism)}件: {mism[:3]}")
+    print("    OK  47都道府県の総数 = data/pref_1a_population.json の人口_計（47件全一致）")
 
     file_hash = sha256_of(SRC)
-    if file_hash != FETCH_LOG_SHA256:
-        raise Abort(f"入力のsha256が_fetch_log.jsonの記録と不一致\n  実測={file_hash}\n  記録={FETCH_LOG_SHA256}")
-    print(f"    OK  入力sha256が poc/recon-20260828/_fetch_log.json の記録と一致")
+    if file_hash != EXPECTED_SHA256:
+        raise Abort(f"入力のsha256が想定と不一致\n  実測={file_hash}\n  想定={EXPECTED_SHA256}")
+    print("    OK  入力sha256が想定値と一致")
 
     print("== 書き出し ==")
     write_json(

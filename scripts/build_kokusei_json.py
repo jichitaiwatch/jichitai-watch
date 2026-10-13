@@ -2,7 +2,8 @@
 """まちのすがた 国勢調査系3指標の生値JSONを、市区町村（岐阜42）と都道府県（47＋全国）で生成する。
 
 対象（content-spec-v1.md §7.11 確定表）:
-  #2 単身世帯割合            … 令和2年国勢調査 人口等基本集計 第9-1表（statInfId=000032142495 / シート b09_01）
+  #2 単身世帯割合            … 令和7年国勢調査 人口等基本集計 第9-1表（statInfId=000040506456 / シート b09_01。
+                                2026-10-12 に令和2年版〔000032142495〕から更新）
   #4 産業別就労者数・構成比  … 令和2年国勢調査 従業地・通学地集計 第8表（statInfId=000032214499 / シート e08-01）
   #5 上位3業種               … #4の派生（従業地就業者数の降順。評価語は付けない）
   #6 昼夜間人口比率          … 令和2年国勢調査 従業地・通学地集計 第1-1表（statInfId=000032214141 / シート e01_01）
@@ -11,6 +12,10 @@
   data/m1_1b_single_household.json   data/pref_1b_single_household.json
   data/m1_2a_industry.json           data/pref_2a_industry.json
   data/m1_2b_daynight.json           data/pref_2b_daynight.json
+
+実行:
+  python scripts/build_kokusei_json.py          … 3指標すべて（産業・昼夜間は令和2年のまま）
+  python scripts/build_kokusei_json.py single   … 単身世帯割合の2本だけ作り直す（産業・昼夜間の既存JSONには触れない）
 
 規律:
   - 入力は取得済みローカルファイルのみ。ネットワークアクセスをしない。
@@ -34,20 +39,22 @@ SRC = ROOT / "poc" / "recon-20260828"
 OUT = ROOT / "data"
 
 UPDATED = date.today().isoformat()
-PERIOD = "令和2年(2020)国勢調査"
+PERIOD = "令和2年(2020)国勢調査"  # 既定。入力ごとに meta["period"] があればそちらを使う
 CODE_RE = re.compile(r"^(\d{5})_(.+)$")
 DAIBUNRUI_RE = re.compile(r"^([A-Z])_")
 
 # 入力ファイルの定義。fetched_at と ledger_hash は poc/recon-20260828/ledger-batch1.csv の実測値。
 INPUTS = {
     "single": {
-        "path": SRC / "1-1b" / "estat_000032142495_kokusei2020_family_type_shichoson.xlsx",
-        "stat_inf_id": "000032142495",
-        "stat_name": "令和2年国勢調査 人口等基本集計",
-        "source_url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000032142495&fileKind=0",
-        "source_page": "https://www.e-stat.go.jp/stat-search/files?page=1&layout=datalist&toukei=00200521&tstat=000001136464",
-        "fetched_at": "2026-08-28T20:06:41+09:00",
-        "ledger_hash": "343c7a2797071cb63215bcaee640e2b43c6b212efb3b31dd379cd84206981f25",
+        # 2026-10-12 に令和7年国勢調査（2026-09-29公表）へ更新。運営者が e-Stat から取得した原本。
+        "path": ROOT / "poc" / "recon-20261012-kokusei2025" / "estat_000040506456_kokusei2025_family_type_shichoson.xlsx",
+        "period": "令和7年(2025)国勢調査",
+        "stat_inf_id": "000040506456",
+        "stat_name": "令和7年国勢調査 人口等基本集計",
+        "source_url": "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040506456&fileKind=0",
+        "source_page": "https://www.e-stat.go.jp/stat-search/files?page=1&layout=datalist&lid=000001491012",
+        "fetched_at": "2026-10-12T21:39:00+09:00",
+        "ledger_hash": "e0d5153cbad49adcca91a0aac410118dd6445deb9d47972923b82d2c10011984",
     },
     "industry": {
         "path": SRC / "1-2a" / "estat_000032214499_kokusei2020_industry_placeofwork.xlsx",
@@ -459,10 +466,10 @@ NOTES = {
 }
 
 
-def write_json(path: Path, sources, notes, data):
+def write_json(path: Path, sources, notes, data, period: str = PERIOD):
     payload = {
         "sources": sources,
-        "period": PERIOD,
+        "period": period,
         "updated": UPDATED,
         "notes": notes,
         "data": data,
@@ -476,7 +483,7 @@ def emit(kind_key, meta, picked, extra, values_fn, machi_name, pref_name):
     file_hash = sha256_of(meta["path"])
     if file_hash != meta["ledger_hash"]:
         raise Abort(
-            f"{kind_key}: 入力ファイルのsha256がledger-batch1.csvの記録と不一致\n"
+            f"{kind_key}: 入力ファイルのsha256が想定値（台帳またはスクリプト記載）と不一致\n"
             f"  実測={file_hash}\n  台帳={meta['ledger_hash']}"
         )
     title = extra["table_title"]
@@ -494,6 +501,7 @@ def emit(kind_key, meta, picked, extra, values_fn, machi_name, pref_name):
         [source_entry(meta, title, "source_file_hash", file_hash)],
         [*NOTES[kind_key], MACHI_NOTE, *COMMON_NOTES],
         machi_rows,
+        meta.get("period", PERIOD),
     )
 
     prefs = sorted((r for r in picked.values() if r["kind"] in ("pref", "national")),
@@ -510,6 +518,7 @@ def emit(kind_key, meta, picked, extra, values_fn, machi_name, pref_name):
         [source_entry(meta, title, "source_file_hash_sha256", file_hash)],
         [*NOTES[kind_key], PREF_NOTE, *COMMON_NOTES],
         pref_rows,
+        meta.get("period", PERIOD),
     )
     return picked
 
@@ -523,13 +532,45 @@ def check(label, got, want):
     return ok
 
 
-def main():
-    for meta in INPUTS.values():
+def verify_single(single):
+    """令和7年版の単身世帯割合：固定アンカーに依らず、内部整合で検証する。"""
+    prefs = [r for r in single.values() if r["kind"] == "pref"]
+    gifu = [r for r in single.values() if r["kind"] == "muni" and r["code"].startswith("21")]
+    nat = single["00000"]
+    ok = True
+    for k in ("一般世帯数", "単独世帯数"):
+        ok &= check(f"47都道府県の{k}合計 = 全国", sum(r[k] for r in prefs), nat[k])
+        ok &= check(f"岐阜42市町村の{k}合計 = 岐阜県(21000)", sum(r[k] for r in gifu), single["21000"][k])
+    ok &= check("都道府県数", len(prefs), 47)
+    ok &= check("岐阜県内市区町村数", len(gifu), 42)
+    # 単独世帯数 ≦ 一般世帯数（全地域）
+    ok &= check("単独世帯数 ≦ 一般世帯数 でない地域の数", sum(1 for r in single.values() if r["単独世帯数"] > r["一般世帯数"]), 0)
+    return ok
+
+
+def main(only_single: bool = False):
+    for key, meta in INPUTS.items():
+        if only_single and key != "single":
+            continue
         if not meta["path"].exists():
             raise Abort(f"入力ファイルが無い: {meta['path']}")
 
     print("== 抽出 ==")
     single, single_x = build_single(INPUTS["single"])
+
+    if only_single:
+        print("== 内部整合検証（令和7年・固定アンカーなし） ==")
+        if not verify_single(single):
+            raise Abort("検証が一致しない。JSONを書かずに中断した。")
+        print("== 書き出し（単身世帯割合のみ） ==")
+        emit("single", INPUTS["single"], single, single_x, single_values,
+             "m1_1b_single_household.json", "pref_1b_single_household.json")
+        print("== 該当値 ==")
+        for code in ("21000", "21201", "00000"):
+            r = single[code]
+            print(f"  [{code} {r['name']}] 一般世帯数={r['一般世帯数']} 単独世帯数={r['単独世帯数']} 単身世帯割合={r['単身世帯割合']}%")
+        return
+
     industry, industry_x = build_industry(INPUTS["industry"])
     daynight, daynight_x = build_daynight(INPUTS["daynight"])
 
@@ -537,9 +578,7 @@ def main():
     gifu_ind = industry["21000"]
     e_mfg = next((d for d in gifu_ind["上位3業種"] if d["産業コード"] == "E"), None)
     results = [
-        check("#2 岐阜県(21000) 一般世帯総数", single["21000"]["一般世帯数"], 779029),
-        check("#2 岐阜県(21000) 単独世帯数", single["21000"]["単独世帯数"], 228715),
-        check("#2 全国(00000) 一般世帯総数", single["00000"]["一般世帯数"], 55704949),
+        verify_single(single),
         check("#4 岐阜県(21000) 製造業E 従業地就業者数", e_mfg["就業者数"] if e_mfg else None, 222550),
         check("#6 岐阜県(21000) 昼夜間人口比率", daynight["21000"]["昼夜間人口比率"], 96.62078),
         check("#6 全国(00000) 昼夜間人口比率", daynight["00000"]["昼夜間人口比率"], 100),
@@ -572,7 +611,7 @@ def main():
 
 if __name__ == "__main__":
     try:
-        main()
+        main(only_single=(len(sys.argv) > 1 and sys.argv[1] == "single"))
     except Abort as exc:
         print(f"\n!! 中断: {exc}", file=sys.stderr)
         sys.exit(1)

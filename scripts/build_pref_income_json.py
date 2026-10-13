@@ -1,17 +1,20 @@
 # -*- coding: utf-8 -*-
-"""まちのすがた #7「一人あたり課税対象所得」の都道府県版 生値JSON（経路B）を生成する。
+"""まちのすがた #7「一人あたり課税対象所得」の都道府県版 生値JSONを生成する（経路A・2026-10-12 切替）。
 
 入力（取得済みローカル1本のみ・新規ダウンロードなし）:
-  statInfId=000040133617 社会生活統計指標－都道府県の指標－2024 基礎データ 表003 シートC 経済基盤
-  handoff/pref-machi-verify/a003.xls （OLE .xls。xlrdで読む）
+  statInfId=000040412525 統計でみる都道府県のすがた2026 D行政基盤
+  poc/recon-20261012-pref-sugata2026/estat_000040412525_sugata_pref2026_D_gyosei.xls （OLE .xls。xlrdで読む）
+  シート A204 の指標 No.95「課税対象所得（納税義務者１人当たり）」#D02206（単位 千円・年度 2024）
 
-出力（新規1本。既存JSONは読まない・書き換えない）:
+出力（1本）:
   data/pref_1d_taxable_income.json （47都道府県＋全国・系譜 source_file_hash_sha256）
 
-経路B（項目コード C120110／C120120 の基礎データ）を採用。市区町村版§7.11と同一の項目コード・
-同一算出式のため。経路A（統計でみる都道府県のすがた2026 D行政基盤 #D02206・既算出値）は不採用。
+経緯：2026-09-04〜10-08 は経路B（社会生活統計指標－都道府県の指標－2024 の基礎データ C120110／C120120・2022年）を
+採っていたが、2026-10-12 の運営者裁定（新しい版は公開前に取り込む）で、より新しい経路A（2024年度）へ切り替えた。
+経路Aは既に「納税義務者1人当たり」へ換算済みの値（千円・小数第1位）で、課税対象所得の総額・納税義務者数の原数値は含まない。
+このため JSON の 課税対象所得_百万円・納税義務者数_人 は無くなった（経路Bの原数値は旧版の git 履歴にある）。
 
-列位置はハードコードせず、項目コード行・年次行・単位行のラベルから同定し自己検証する。
+列位置はハードコードせず、指標コード行・単位行・年度行・「指標値／順位」行のラベルから同定し自己検証する。
 """
 from __future__ import annotations
 
@@ -25,39 +28,28 @@ from pathlib import Path
 import xlrd
 
 ROOT = Path(__file__).resolve().parents[1]
-SRC = ROOT / "handoff" / "pref-machi-verify" / "a003.xls"
+SRC = ROOT / "poc" / "recon-20261012-pref-sugata2026" / "estat_000040412525_sugata_pref2026_D_gyosei.xls"
 OUT = ROOT / "data" / "pref_1d_taxable_income.json"
 
 UPDATED = date.today().isoformat()
-PERIOD = "2022年（課税対象所得・納税義務者数の年次）"
-YEAR = "2022"
+YEAR = "2024"
+PERIOD = "2024年度（納税義務者1人当たり課税対象所得）"
 
-STAT_INF_ID = "000040133617"
-STAT_NAME = "社会・人口統計体系（社会生活統計指標－都道府県の指標－2024）"
+STAT_INF_ID = "000040412525"
+STAT_NAME = "社会・人口統計体系（統計でみる都道府県のすがた2026）"
 SOURCE_URL = f"https://www.e-stat.go.jp/stat-search/file-download?statInfId={STAT_INF_ID}&fileKind=0"
-SOURCE_PAGE = (
-    "https://www.e-stat.go.jp/stat-search/files?page=1&layout=dataset&toukei=00200502"
-    "&tstat=000001213101&tclass1=000001213103"
-)
-# recon/pref-machi-existence-20260904.md §3 の取得記録（bytes 107,520 / sha256）
-FETCHED_AT = "2026-09-04"
-RECON_SHA256 = "216d9b519fdc363fe50af9c454d10cae59b4c8c0f5e0f6278c55210036697ca5"  # recon が2026-09-04に記録した値
-# handoff/pref-machi-verify/a003.xls の現在のハッシュ（2026-10-08）。
-# 経緯：e-Stat から取得した原本（recon 記録 216d9b51…）は、運営者の PC で Excel によって一度開いて保存し直されていたと見られる
-# （xlrd の user_name に運営者名が入っていた。e-Stat の原本にはない）。バイト数と、ここから読む値は同じ。
-# Gate 5 の個人情報除去で、その名前の欄だけを同じ長さの "(anonymous)" に置き換えた（シートの内容は変えていない）。
-CURRENT_SHA256 = "f5a44d4718bdcf2b1d1ee01dc24b113149765d01c7a8cc751cdf441868982b6a"
+SOURCE_PAGE = "https://www.e-stat.go.jp/stat-search/files?toukei=00200502&tstat=000001240736"
+FETCHED_AT = "2026-10-12T21:47:00+09:00"
+# 2026-10-13: 原本の保存者名（Excel の WRITEACCESS 欄）を同じ長さの "(anonymous)" に置換した後のハッシュ（シートの内容は不変）。
+# 取得した元ファイルのハッシュ: 93bac6757f806705744c2deddbe5ce39ce3d6e875f6dfcd9379a064ad39be0ae
+EXPECTED_SHA256 = "1da8c79ae7b61343550c12eb018a9112c7895eabdb22b31a6d77d39697fef134"
 
-ITEMS = {
-    "C120110": {"key": "課税対象所得_百万円", "unit_kw": "百万円"},
-    "C120120": {"key": "納税義務者数_人", "unit_kw": "人"},
-}
-ANCHOR_GIFU = {"code": "21", "課税対象所得_百万円": 3100464, "納税義務者数_人": 945840,
-               "一人あたり課税対象所得_万円": 327.8}
+ITEM_CODE = "#D02206"
+ITEM_NAME_KW = "課税対象所得"
 
 
 class Abort(Exception):
-    """アンカー不一致・構造不一致で処理を止めるための例外。推測で続行しない。"""
+    """構造不一致・検証不一致で処理を止めるための例外。推測で続行しない。"""
 
 
 def s(v) -> str:
@@ -68,13 +60,6 @@ def s(v) -> str:
     return str(v).strip()
 
 
-def num(v, where: str) -> int:
-    t = s(v).replace(",", "")
-    if not re.fullmatch(r"-?\d+", t):
-        raise Abort(f"数値でないセル（0に丸めず中断）: {where} 値={s(v)!r}")
-    return int(t)
-
-
 def sha256_of(path: Path) -> str:
     h = hashlib.sha256()
     with path.open("rb") as fh:
@@ -83,179 +68,127 @@ def sha256_of(path: Path) -> str:
     return h.hexdigest()
 
 
-def find_row(sh, pred, what: str) -> int:
-    for r in range(sh.nrows):
-        vals = [s(sh.cell_value(r, c)) for c in range(sh.ncols)]
-        if pred(vals):
-            return r
-    raise Abort(f"{what} の行が見つからない")
-
-
-def resolve(sh):
-    """(項目コード行, 年次行, 項目→使用列, 都道府県コード列, 都道府県名列, 表題) を返す。"""
-    code_row = find_row(sh, lambda v: "C120110" in v and "C120120" in v, "項目コード")
-    code_vals = [s(sh.cell_value(code_row, c)) for c in range(sh.ncols)]
-    # 項目コードが載る列（＝各項目の開始列）を全部拾い、隣の項目の開始列までを当該項目の span とする
-    starts = sorted(c for c, v in enumerate(code_vals) if re.fullmatch(r"[A-Z]\d+", v))
-    if not starts:
-        raise Abort("項目コード列を検出できない")
-
-    year_row = find_row(
-        sh,
-        lambda v, cr=code_row: sum(1 for x in v if re.fullmatch(r"(19|20)\d{2}", x)) >= 10,
-        "年次",
-    )
-    if year_row <= code_row:
-        raise Abort(f"年次行({year_row + 1})が項目コード行({code_row + 1})より上にある")
-    year_vals = [s(sh.cell_value(year_row, c)) for c in range(sh.ncols)]
-
-    use = {}
-    for item, meta in ITEMS.items():
-        try:
-            start = next(c for c in starts if code_vals[c] == item)
-        except StopIteration as exc:
-            raise Abort(f"項目コード {item} が見つからない") from exc
-        later = [c for c in starts if c > start]
-        end = (later[0] - 1) if later else sh.ncols - 1
-        cands = [c for c in range(start, end + 1) if year_vals[c] == YEAR]
-        if len(cands) != 1:
-            years = {c: year_vals[c] for c in range(start, end + 1)}
-            raise Abort(f"{item}: 年次{YEAR}の列を1つに確定できない（span={start + 1}..{end + 1} 年次={years}）")
-        col = cands[0]
-        # 単位の裏取り：項目コード行の span 内に単位表記があること
-        units = [code_vals[c] for c in range(start, end + 1) if "(" in code_vals[c]]
-        if not any(meta["unit_kw"] in u for u in units):
-            raise Abort(f"{item}: 単位に『{meta['unit_kw']}』が見つからない（span内の単位表記={units}）")
-        use[item] = {"col": col, "start": start, "end": end, "unit": units}
-
-    # 都道府県名列：ヘッダに『都道府県』があり、データ行に県名が入る列
-    name_row = find_row(sh, lambda v: "都道府県" in v, "都道府県名ヘッダ")
-    name_cols = [c for c, v in enumerate([s(sh.cell_value(name_row, c)) for c in range(sh.ncols)])
-                 if v == "都道府県"]
-    if len(name_cols) != 1:
-        raise Abort(f"都道府県名列を1つに確定できない（候補={[c + 1 for c in name_cols]}）")
-    c_name = name_cols[0]
-
-    # 都道府県コード列：ラベルが無いため、データ行の値集合が '00'..'47' に一致する列を探して確定する
-    want = {f"{i:02d}" for i in range(48)}
-    c_code = None
-    for c in range(sh.ncols):
-        seen = []
-        for r in range(sh.nrows):
-            v = s(sh.cell_value(r, c))
-            if re.fullmatch(r"\d{1,2}", v) and s(sh.cell_value(r, c_name)):
-                seen.append(v.zfill(2))
-        if set(seen) == want and len(seen) == 48:
-            c_code = c
-            break
-    if c_code is None:
-        raise Abort("都道府県コード列（値集合が00〜47の48件）を検出できない")
-
-    title = s(sh.cell_value(find_row(sh, lambda v: any("経済基盤" in x for x in v), "表題"), 0))
-    if not title:
-        trow = find_row(sh, lambda v: any("経済基盤" in x for x in v), "表題")
-        title = next(s(sh.cell_value(trow, c)) for c in range(sh.ncols) if "経済基盤" in s(sh.cell_value(trow, c)))
-    return code_row, year_row, use, c_code, c_name, title
-
-
 def main():
     if not SRC.exists():
         raise Abort(f"入力ファイルが無い: {SRC}")
-    wb = xlrd.open_workbook(SRC)
-    sheet = wb.sheet_names()[0]
-    sh = wb.sheet_by_name(sheet)
-    code_row, year_row, use, c_code, c_name, title = resolve(sh)
+    file_hash = sha256_of(SRC)
+    print(f"  入力sha256={file_hash}")
+    if EXPECTED_SHA256 and file_hash != EXPECTED_SHA256:
+        raise Abort(f"入力のsha256が想定と不一致 実測={file_hash} 想定={EXPECTED_SHA256}")
 
-    print("== 抽出 ==")
-    print(f"  シート: {sheet}  rows={sh.nrows} cols={sh.ncols}")
-    print(f"  表題  : {title}")
-    print(f"  項目コード行=row{code_row + 1} 年次行=row{year_row + 1}")
-    print(f"  都道府県コード列=c{c_code + 1} 都道府県名列=c{c_name + 1}")
-    for item, m in use.items():
-        print(f"  {item}: span=c{m['start'] + 1}..c{m['end'] + 1} 年次{YEAR}列=c{m['col'] + 1} 単位={m['unit']}")
+    wb = xlrd.open_workbook(str(SRC))
+    sh = wb.sheet_by_index(0)
+    print(f"== 構造確認 == シート={sh.name!r} 行={sh.nrows} 列={sh.ncols}")
+
+    # 指標コード行（#D02206 を含む行）と列
+    code_cells = [(r, c) for r in range(0, 20) for c in range(sh.ncols) if s(sh.cell_value(r, c)) == ITEM_CODE]
+    if len(code_cells) != 1:
+        raise Abort(f"指標コード {ITEM_CODE} のセルが {len(code_cells)} 個（1個に確定できない）")
+    r_code, c_val = code_cells[0]
+    # 同じ列の上部ラベル行から、指標名・単位・年度・「指標値」を検証
+    col_vals = {r: s(sh.cell_value(r, c_val)) for r in range(0, 14)}
+    name_row = next((r for r, v in col_vals.items() if ITEM_NAME_KW in v), None)
+    if name_row is None:
+        raise Abort(f"指標列 c{c_val} の上部に『{ITEM_NAME_KW}』を含む指標名が無い")
+    unit_row = next((r for r, v in col_vals.items() if "千円" in v), None)
+    if unit_row is None:
+        raise Abort("指標列の単位が『千円』ではない（単位を確認できない）")
+    year_row = next((r for r, v in col_vals.items() if re.fullmatch(r"\d{4}", v)), None)
+    if year_row is None or col_vals[year_row] != YEAR:
+        raise Abort(f"年度が {YEAR} ではない（実測={col_vals.get(year_row)!r}）")
+    if "指標値" not in col_vals[11] or "Indicator" not in col_vals[11]:
+        raise Abort(f"指標列の11行目が『指標値』ではない（実測={col_vals[11]!r}）")
+    # 順位列は指標値列の右隣
+    rank_hdr = s(sh.cell_value(11, c_val + 1))
+    if "順位" not in rank_hdr:
+        raise Abort(f"指標値列の右隣が『順位』列ではない（実測={rank_hdr!r}）")
+    c_rank = c_val + 1
+    # キー列：都道府県コード（2桁）・名称
+    c_code, c_name = 7, 8
+    if s(sh.cell_value(11, c_name)) not in ("都道府県",) :
+        raise Abort(f"都道府県名の列が想定位置にない（実測={s(sh.cell_value(11, c_name))!r}）")
+    print(f"  指標列=c{c_val + 1}（{col_vals[name_row].replace(chr(10), ' ')}／{col_vals[unit_row]}／{YEAR}年度）順位列=c{c_rank + 1}")
 
     rows = []
-    for r in range(sh.nrows):
+    for r in range(12, sh.nrows):
         code = s(sh.cell_value(r, c_code))
-        name = s(sh.cell_value(r, c_name))
-        if not name or not re.fullmatch(r"\d{1,2}", code):
+        if not re.fullmatch(r"\d{2}", code):
             continue
-        code = code.zfill(2)
-        where = f"{code}_{name}"
-        rec = {"code": code, "name": name}
-        for item, m in use.items():
-            rec[ITEMS[item]["key"]] = num(sh.cell_value(r, m["col"]), f"{where} {item}")
-        if not rec["納税義務者数_人"]:
-            raise Abort(f"納税義務者数が0または欠損: {where}")
-        rec["一人あたり課税対象所得_万円"] = round(
-            rec["課税対象所得_百万円"] * 100 / rec["納税義務者数_人"], 1
-        )
-        rows.append(rec)
+        name = s(sh.cell_value(r, c_name))
+        v = sh.cell_value(r, c_val)
+        if not isinstance(v, float):
+            raise Abort(f"数値でないセル（0に丸めず中断）: {code}_{name} 値={v!r}")
+        rk = sh.cell_value(r, c_rank)
+        rows.append({"code": code, "name": name, "senyen": v, "rank_in_file": rk})
+    if len(rows) != 48 or rows[0]["code"] != "00" or rows[0]["name"] != "全国":
+        raise Abort(f"行数/先頭行が想定外: {len(rows)}件 先頭={rows[0] if rows else None}")
+    prefs = rows[1:]
+    if [p["code"] for p in prefs] != [f"{i:02d}" for i in range(1, 48)]:
+        raise Abort("都道府県コードが01〜47の連番でない")
 
-    rows.sort(key=lambda r: r["code"])
-    n_pref = sum(1 for r in rows if r["code"] != "00")
-    print(f"  抽出件数={len(rows)}（全国1＋都道府県{n_pref}）")
-    if len(rows) != 48 or n_pref != 47:
-        raise Abort(f"件数が48（全国1＋47）でない: 全体={len(rows)} 都道府県={n_pref}")
-    if {r["code"] for r in rows} != {f"{i:02d}" for i in range(48)}:
-        raise Abort("都道府県コードが00〜47を網羅していない")
-
-    print("== アンカー自己検証 ==")
-    gifu = next((r for r in rows if r["code"] == ANCHOR_GIFU["code"]), None)
-    if gifu is None:
-        raise Abort("岐阜県(21)の行が見つからない")
+    print("== 検証 ==")
     ok = True
-    for k in ("課税対象所得_百万円", "納税義務者数_人", "一人あたり課税対象所得_万円"):
-        hit = gifu[k] == ANCHOR_GIFU[k]
-        ok = ok and hit
-        print(f"    {'OK ' if hit else 'NG '} 岐阜県(21) {k}: 実測={gifu[k]} 期待={ANCHOR_GIFU[k]}")
-    if gifu["name"] != "岐阜県":
-        raise Abort(f"コード21の都道府県名が『岐阜県』でない: {gifu['name']!r}")
+    # (1) 原表の順位列（降順）と、値からの独立再計算が全47件で一致
+    bad = 0
+    for p in prefs:
+        indep = 1 + sum(1 for q in prefs if q["senyen"] > p["senyen"])
+        if not isinstance(p["rank_in_file"], float) or int(p["rank_in_file"]) != indep:
+            bad += 1
+    print(f"  {'OK ' if bad == 0 else 'NG '} 原表の順位列 = 値からの降順順位（不一致 {bad} 件）")
+    ok &= bad == 0
+    # (2) 全国は47都道府県の範囲内（最小〜最大）に収まる
+    lo, hi = min(p["senyen"] for p in prefs), max(p["senyen"] for p in prefs)
+    in_range = lo <= rows[0]["senyen"] <= hi
+    print(f"  {'OK ' if in_range else 'NG '} 全国{rows[0]['senyen']} が都道府県の範囲 {lo}〜{hi} 内")
+    ok &= in_range
+    # (3) 旧版（2022年・経路B）との同定：同じ指標なら全県で増加し、増加率が極端でない。
+    #     旧版の原数値（総額・納税義務者数）が残っている出力ファイルがある場合のみ実施（切替後の再実行ではスキップ）。
+    old_path = ROOT / "data" / "pref_1d_taxable_income.json"
+    old = json.loads(old_path.read_text(encoding="utf-8"))
+    if "課税対象所得_百万円" in old["data"][1]:
+        old_by = {r["都道府県コード"]: r["一人あたり課税対象所得_万円"] for r in old["data"]}
+        ratios = {p["code"]: p["senyen"] / 10 / old_by[p["code"]] for p in prefs}
+        rmin, rmax = min(ratios.values()), max(ratios.values())
+        old_rank = sorted(old_by[c] for c in ratios)
+        # 順位相関（スピアマン）
+        def rk(d):
+            order = sorted(d, key=lambda c: -d[c])
+            return {c: i + 1 for i, c in enumerate(order)}
+        ra, rb = rk({p["code"]: p["senyen"] for p in prefs}), rk({c: old_by[c] for c in ratios})
+        n = 47
+        spearman = 1 - 6 * sum((ra[c] - rb[c]) ** 2 for c in ra) / (n * (n * n - 1))
+        gentle = 0.95 <= rmin and rmax <= 1.30 and spearman >= 0.9
+        print(f"  {'OK ' if gentle else 'NG '} 旧版(2022年)に対する2024年度の比：最小{rmin:.3f}〜最大{rmax:.3f}、順位相関(Spearman)={spearman:.3f}")
+        ok &= gentle
+    else:
+        print("  （旧版の原数値が無いため、2022年版との同定はスキップ）")
     if not ok:
-        raise Abort("アンカー値が一致しない。JSONを書かずに中断した。")
+        raise Abort("検証が一致しない。JSONを書かずに中断した。")
 
-    file_hash = sha256_of(SRC)
-    if file_hash != CURRENT_SHA256:
-        raise Abort(f"入力のsha256が確認済みの値と不一致（別の版を読もうとしている。値を確かめてから CURRENT_SHA256 を更新する）\n  実測={file_hash}\n  確認済み={CURRENT_SHA256}")
-    print("    OK  入力sha256が確認済みの値と一致（recon の記録値 216d9b51… とは異なる。ノート参照）")
+    data = [{
+        "都道府県コード": p["code"],
+        "都道府県名": p["name"],
+        "一人あたり課税対象所得_千円": p["senyen"],
+        "一人あたり課税対象所得_万円": round(p["senyen"] / 10, 2),
+    } for p in rows]
 
     notes = [
-        "経路B（基礎データの項目コード C120110 課税対象所得／C120120 納税義務者数（所得割））を採用した。"
-        "市区町村版（content-spec-v1.md §7.11 の1-2c）と同一の項目コード・同一の算出式であり、突合が成立するため。"
-        "経路A（統計でみる都道府県のすがた2026 D行政基盤 #D02206 の既算出値・単位千円）は不採用。",
-        f"一人あたり課税対象所得(万円) = 課税対象所得(百万円) × 100 ÷ 納税義務者数(人)。小数第1位で丸め"
-        "（市区町村版§7.11と同じ丸め桁）。分子・分母の原数値を併載しているため再計算可能。",
-        f"年次は{YEAR}年（課税対象所得・納税義務者数の両項目）。同一ファイル内の2015年・2020年の列は使用していない。"
-        "**市区町村版（統計でみる市区町村のすがた2025・statInfId=000040283812）の対応年次は未確認**であり、"
-        "市区町村と都道府県を同一年次として並べてよいかは本ファイルでは判断していない。",
-        "単位は課税対象所得が百万円、納税義務者数が人。値は原資料のまま（加工なし）。"
-        "市区町村版で踏んだ『課税対象所得の単位を千円と誤認して一人あたりが1/1000になった』教訓（§7.11）を踏まえ、"
-        "本ファイルでは項目コード行の単位表記（(百万円:million yen)／(人:person)）を生成時に検証している。",
-        "都道府県コードはSSDS（社会・人口統計体系）独自の2桁体系（00=全国、21=岐阜県）。"
-        "住民基本台帳の6桁（例 210005）・国勢調査の5桁（例 21000）とは別体系であり、"
-        "data/pref_1a_population.json・data/pref_1c_aging_rate.json・data/pref_2a_industry.json とは"
-        "直接結合できない（先頭2桁での読み替えが必要）。",
-        "全国行は原資料が都道府県コード \"00\"・都道府県名『全国』を持つためそのまま格納した"
-        "（住基系JSONの合計行がコードを持たず \"-\" であるのとは異なる）。"
-        "全国行は後段の全国比較用であり、都道府県の1件として数えない。",
-        "本ファイルは生値のみを格納する。比較値（全国平均・類団平均・全国順位）は含めず、集計段で付与する。"
-        "都道府県レベルには類似団体の概念が無い点は別レイヤーの論点。",
-        "付随記録（採否対象外）：本入力の同一シートには県内総生産額（C1121・億円・2012/2015/2019）も収録されているが、"
-        "一人あたりGDPは既存方針により不採用のため本ファイルには含めていない（§7.11で1-3aを却下済み。"
-        "1-2cが経済力の代替指標として機能するという判断）。",
-        "入力ファイルのsha256は、recon/pref-machi-existence-20260904.md §3 の取得記録（216d9b51…）と一致しない"
-        "（2026-10-08確認）。取得後に Excel で開いて保存し直された版と見られ、さらに公開前の個人情報除去で、ファイルに残っていた"
-        "保存者名の欄を同じ長さの \"(anonymous)\" に置き換えた。バイト数（107,520）は取得時と同じで、シートの内容は変えていない。"
-        "本ファイルの sources には、実際に読んだファイルのハッシュ（f5a44d47…）を記録した。",
-        "入力は取得済みのローカルファイル1本のみを使用し、本ファイル生成時に再ダウンロードはしていない。"
-        "原資料はOLE .xls形式のため xlrd で読んでいる（openpyxlでは開けない）。",
+        "経路A（統計でみる都道府県のすがた2026 D行政基盤 No.95 #D02206『課税対象所得（納税義務者１人当たり）』）を採用した（2026-10-12 運営者裁定：新しい版は公開前に取り込む）。旧版は経路B（社会生活統計指標－都道府県の指標－2024 の基礎データ C120110／C120120・2022年）だったが、経路Aの方が2年新しい（2024年度）。",
+        "値は原資料に既に『納税義務者1人当たり』へ換算済みで、単位は千円（小数第1位）。一人あたり課税対象所得_千円 は原表の値そのまま、一人あたり課税対象所得_万円 は千円の値を10で割った値（小数第2位まで。丸めによる同順位を避けるため）。",
+        "経路Aは換算済みの値のみで、課税対象所得の総額・納税義務者数の原数値は含まない。このため旧版にあった 課税対象所得_百万円・納税義務者数_人 は無い（再計算には使えない）。",
+        "年度は2024年度（指標列の年度行の表記）。市区町村版（data/m1_2c_taxable_income.json）の対応年次とは別に確認が必要で、市区町村と都道府県を同一年次として並べてよいかは本ファイルでは判断していない。",
+        "原表の順位列（降順）が、値から独立に再計算した降順順位と全47件で一致することを生成時に確認した。旧版（2022年）との比較で、全県の増加率が極端でなく順位の並びが近いこと（同じ指標であること）も確認した。",
+        "都道府県コードはSSDS（社会・人口統計体系）独自の2桁体系（00=全国、21=岐阜県）。住民基本台帳の6桁・国勢調査の5桁とは別体系であり、他のpref系JSONとは直接結合できない（先頭2桁での読み替えが必要）。",
+        "全国行は原資料が都道府県コード \"00\"・都道府県名『全国』を持つためそのまま格納した。全国行は後段の全国比較用であり、都道府県の1件として数えない。",
+        "本ファイルは生値のみを格納する。比較値（全国平均・全国順位）は含めず、集計段で付与する。都道府県レベルには類似団体の概念が無い。",
+        "入力は取得済みのローカルファイル1本のみを使用し、本ファイル生成時に再ダウンロードはしていない。原資料はOLE .xls形式のため xlrd で読んでいる。",
     ]
     payload = {
         "sources": [{
             "source_url": SOURCE_URL,
             "source_page": SOURCE_PAGE,
             "stat_name": STAT_NAME,
-            "table_title": title,
+            "table_title": "D．行政基盤 No.95 課税対象所得（納税義務者１人当たり） #D02206",
             "statInfId": STAT_INF_ID,
             "fetched_at": FETCHED_AT,
             "source_file_hash_sha256": file_hash,
@@ -263,25 +196,13 @@ def main():
         "period": PERIOD,
         "updated": UPDATED,
         "notes": notes,
-        "data": [{
-            "都道府県コード": r["code"],
-            "都道府県名": r["name"],
-            "課税対象所得_百万円": r["課税対象所得_百万円"],
-            "納税義務者数_人": r["納税義務者数_人"],
-            "一人あたり課税対象所得_万円": r["一人あたり課税対象所得_万円"],
-        } for r in rows],
+        "data": data,
     }
-    print("== 書き出し ==")
     with OUT.open("w", encoding="utf-8") as fh:
         json.dump(payload, fh, ensure_ascii=False, indent=2)
-    print(f"  wrote {OUT.relative_to(ROOT)}  ({len(payload['data'])} records)")
-
-    print("== アンカー実測値 ==")
-    zenkoku = next(r for r in rows if r["code"] == "00")
-    for label, r in (("岐阜県(21)", gifu), ("全国(00)", zenkoku)):
-        print(f"  {label} {r['name']}: 課税対象所得={r['課税対象所得_百万円']}百万円 "
-              f"納税義務者数={r['納税義務者数_人']}人 "
-              f"一人あたり={r['一人あたり課税対象所得_万円']}万円")
+    print(f"  wrote {OUT.relative_to(ROOT)}  ({len(data)} records)")
+    g = next(r for r in data if r["都道府県コード"] == "21")
+    print(f"  岐阜県(21): {g['一人あたり課税対象所得_千円']}千円 = {g['一人あたり課税対象所得_万円']}万円 / 全国 {data[0]['一人あたり課税対象所得_万円']}万円")
 
 
 if __name__ == "__main__":

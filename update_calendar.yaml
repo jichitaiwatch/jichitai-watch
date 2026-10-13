@@ -21,11 +21,12 @@
 
 - source: "M3 総務省 決算統計・財政状況資料集"
   cadence: "yearly"
-  expected_publish_month: "未確認"
-  last_fetched: "2026-07-31"
-  next_check: "2026-12-01"
+  expected_publish_month: "3月（令和6年度分は令和8年3月公表）"
+  last_fetched: "2026-10-12"
+  next_check: "2027-03-01"
   script: "scripts/m3_expenditure.py"
   status: "fresh"
+  note: "2026-10-12 に2024年度（令和6年度）へ更新（launch-backlog.md E-9）。次は令和7年度分（市町村別決算状況調は例年3月公表）"
 
 - source: "マイナンバーカード保有率"
   cadence: "monthly"
@@ -50,3 +51,136 @@
   next_check: null
   script: "未着手"
   status: "check_needed"
+
+# ---------------------------------------------------------------------------
+# 2026-10-12 追記（launch-backlog.md E-9）：上の6件のほかに、サイトが使っているデータの系統。
+# 公表時期は公式ページで確認できたものだけ具体的に書く。確認できなかったものは null と
+# check_needed のままにし、note に「未確認」と書く（推測で埋めない）。
+# status が stale のものは、新しい版がすでに公表されている（更新するかは E-9 で運営者が判断）。
+# ---------------------------------------------------------------------------
+
+- source: "住民基本台帳に基づく人口・人口動態及び世帯数（人口・世帯数・年齢階級別。市区町村版・都道府県版・経年）"
+  cadence: "yearly"
+  expected_publish_month: "未確認（総務省のページに公表日の記載なし）"
+  last_fetched: "2026-10-12"
+  next_check: "2027-07-01"
+  script: "scripts/m1_1a_population_comparison.py ほか（succession-runbook.md §3.5・§3.7）"
+  status: "fresh"
+  note: "サイトは令和8年1月1日現在（総務省ファイル000892948・000892952・000892953、2026-10-12 取得）。次の版（令和9年1月1日現在）の公表時期は未確認のため、7月に総務省のページを確認する"
+
+- source: "国勢調査（単身世帯割合：人口等基本集計）"
+  cadence: "5years"
+  expected_publish_month: "次回（令和12年国勢調査）の人口等基本集計は令和13年（2031年）秋ごろ（今回は令和8年9月29日公表。前回は令和3年11月30日）"
+  last_fetched: "2026-10-12"
+  next_check: "2031-06-01"
+  script: "scripts/build_kokusei_json.py single"
+  status: "fresh"
+  note: "サイトは令和7年(2025)の結果（e-Stat 第9-1表 statInfId 000040506456、2026-10-12 取得）。産業別・昼夜間人口は別の集計で令和2年のまま（次の行）"
+
+- source: "国勢調査（産業別就業者・昼夜間人口：従業地・通学地による人口・就業状態等集計）"
+  cadence: "5years"
+  expected_publish_month: "令和7年国勢調査の結果は令和9年5月までに公表（統計局の公表予定）"
+  last_fetched: "2026-08-28"
+  next_check: "2027-05-01"
+  script: "scripts/build_kokusei_json.py"
+  status: "fresh"
+  note: "令和7年(2025)の結果が出るまで、令和2年(2020)の値を使い続ける"
+
+- source: "総務省 市町村別決算状況調（財政概況・財政規模・健全性・経年。M3は別行）"
+  cadence: "yearly"
+  expected_publish_month: "3月（令和6年度分は令和8年3月公表）"
+  last_fetched: "2026-08-30"
+  next_check: "2027-03-01"
+  script: "scripts/build_m2_2_finance.py"
+  status: "fresh"
+  note: "サイトは令和6年度決算。令和7年度分は2027年3月ごろ（前年・前々年の公表月に基づく見込み）"
+
+- source: "総務省 都道府県決算状況調（県の財政・支出・議会費）"
+  cadence: "yearly"
+  expected_publish_month: "2月（令和6年度分は令和8年2月公表）"
+  last_fetched: "2026-09-03"
+  next_check: "2027-02-01"
+  script: "scripts/build_pref_kessan.py"
+  status: "fresh"
+  note: "サイトは令和6年度決算。令和7年度分は2027年2月ごろ（前年・前々年の公表月に基づく見込み）"
+
+- source: "健全化判断比率及び資金不足比率（総務省）"
+  cadence: "yearly"
+  expected_publish_month: "未確認"
+  last_fetched: "2026-09-03"
+  next_check: null
+  script: "scripts/build_pref_fiscal_indicators.py"
+  status: "check_needed"
+  note: "公表時期を公式ページで確認できていない"
+
+- source: "ふるさと納税に関する現況調査（総務省。市区町村別の受入額・控除額）"
+  cadence: "yearly"
+  expected_publish_month: "7月末ごろ（令和8年度実施分は2026-07-31公表）"
+  last_fetched: "2026-10-07"
+  next_check: "2027-07-31"
+  script: "scripts/m4_5_furusato.py"
+  status: "fresh"
+  note: "公表日は今回の1回分だけ確認。前年の公表日は未確認"
+
+- source: "自治総研 自治体選挙結果調査・全国首長名簿（市区町村長・知事）"
+  cadence: "yearly"
+  expected_publish_month: "1月（2025年版の発行は2026年1月。4月30日現在）"
+  last_fetched: "2026-08-30"
+  next_check: "2027-01-31"
+  script: "scripts/build_m2_1_chief.py・scripts/build_pref_governor.py"
+  status: "fresh"
+  note: "直近の選挙分は公式サイトで個別確認して補正している（scripts/patches/）。任期満了（当選日+4年）が近い団体は、年版を待たずに確認する"
+
+- source: "総務省 議員定数に関する調（市区町村版＝令和7年4月1日現在、都道府県版＝令和5年4月1日現在）"
+  cadence: "未確認"
+  expected_publish_month: "未確認"
+  last_fetched: "2026-09-02"
+  next_check: null
+  script: "scripts/gikai_3_2_teiin_comparison.py・scripts/build_pref_assembly.py"
+  status: "check_needed"
+  note: "公表の周期と最新版を公式ページで確認できていない。都道府県版は市区町村版より古い年（令和5年）の資料を使っている"
+
+- source: "学校基本調査（文部科学省。市町村別の学校数・児童生徒数）"
+  cadence: "yearly"
+  expected_publish_month: "未確認（速報・確定値の公表月は文部科学省のページで確認できていない）"
+  last_fetched: "2026-08-30"
+  next_check: null
+  script: "scripts/build_m4_4_school.py"
+  status: "stale"
+  note: "令和6年5月1日現在のまま。この JSON（data/m4_4_school.json）は V1 のどのカードにも使っておらず画面に出ないため、2026-10-12 の運営者裁定で更新を見送った（launch-backlog E-9 ⑤）。次版で学校数・児童生徒数のカードにするときに、最新の版（令和8年度の速報が公表済み、令和7年度の確定値は未確認）を取り込み直す"
+
+- source: "統計でみる市区町村のすがた（課税対象所得）"
+  cadence: "yearly"
+  expected_publish_month: "毎年6月ごろ（2026年版は令和8年6月刊行・統計局の更新情報では 2026-06-19）"
+  last_fetched: "2026-10-12"
+  next_check: "2027-07-01"
+  script: "scripts/m1_2c_taxable_income.py"
+  status: "fresh"
+  note: "サイトは統計でみる市区町村のすがた2026（2024年の値・e-Stat 000040463586）。2026-10-12 に2025年版から更新"
+
+- source: "社会生活統計指標（都道府県の指標。県の課税対象所得）"
+  cadence: "yearly"
+  expected_publish_month: "未確認（「統計でみる都道府県のすがた」は毎年2〜5月ごろに更新。2026年版は2026-05-29 公開（更新）の表示）"
+  last_fetched: "2026-10-12"
+  next_check: null
+  script: "scripts/build_pref_income_json.py"
+  status: "fresh"
+  note: "サイトは統計でみる都道府県のすがた2026（2024年度の値・e-Stat 000040412525）。2026-10-12 に社会生活統計指標2024年版（2022年の値）から切替。社会生活統計指標の2025・2026年版は e-Stat・統計局のページに無い（2026年版は日本統計協会の書籍のみ）。次回の確認時期は未確認のため next_check は null"
+
+- source: "議会の個別情報（正副議長・会派・議事録公開の有無。各議会サイト）"
+  cadence: "改選・議長交代のたび（周期は未決定）"
+  expected_publish_month: "不定"
+  last_fetched: "2026-09-02"
+  next_check: null
+  script: "手作業の調査（poc/pref-gikai-20260902/README.md）"
+  status: "check_needed"
+  note: "更新の頻度と担当は未決定"
+
+- source: "全国地方公共団体コード・類似団体区分（自治体マスタ・読み・比較値の基礎）"
+  cadence: "不定（合併・名称変更のとき）"
+  expected_publish_month: "不定"
+  last_fetched: "2026-09-20"
+  next_check: null
+  script: "scripts/gen_municipality_master.py・scripts/gen_municipality_kana.py"
+  status: "check_needed"
+  note: "類似団体区分の更新周期は未確認"

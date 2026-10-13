@@ -5,8 +5,8 @@
   1-2c 一人あたり課税対象所得（岐阜42市区町村・比較値=全国平均・類似団体平均・順位・百分位つき）
 
 入力（取得済みローカルファイルのみ。ネットワークアクセスをしない）:
-  poc/recon-20260828/1-2c/estat_000040283812_ssds2025_C_keizai.xlsx
-    （statInfId=000040283812「統計でみる市区町村のすがた2025」C経済基盤。拡張子は.xlsxだが
+  poc/recon-20261012-sugata-city2026/estat_000040463586_ssds2026_C_keizai.xlsx
+    （statInfId=000040463586「統計でみる市区町村のすがた2026」C経済基盤。2026-10-12 に2025年版〔000040283812〕から更新。拡張子は.xlsxだが
       実体はOLE .xls形式のため xlrd で読む。openpyxlを先に試し、失敗したらxlrdへ切り替える）
   poc/recon-20260828/0/ruikei_kubun_r06.xlsx（類似団体区分マスタ・市町村一覧シート・1741団体）
     （こちらは実xlsxのためopenpyxlで読む）
@@ -44,15 +44,16 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from lineage import build_sources  # noqa: E402
 
-INCOME_SRC = ROOT / "poc" / "recon-20260828" / "1-2c" / "estat_000040283812_ssds2025_C_keizai.xlsx"
+INCOME_SRC = ROOT / "poc" / "recon-20261012-sugata-city2026" / "estat_000040463586_ssds2026_C_keizai.xlsx"
 RUIKEI_SRC = ROOT / "poc" / "recon-20260828" / "0" / "ruikei_kubun_r06.xlsx"
 OUT = ROOT / "data" / "m1_2c_taxable_income.json"
 
 UPDATED = date.today().isoformat()
-SOURCE_URL = "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040283812&fileKind=0"
-# ファイルのmtime（2026-08-28 20:12 JST頃取得・poc/recon-20260828セッション）をfetched_atのbackfillに使う。
-# 正確なダウンロード時刻の記録が無いため、_provenance_noteに由来を明記する（推測で埋めない）。
-BACKFILL_FETCHED_AT = "2026-08-28T20:12:26+09:00"
+SOURCE_URL = "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040463586&fileKind=0"
+# 2026-10-12 に運営者が e-Stat から取得（cmd の curl。dir の更新時刻 21:51）。lineage.build_sources は
+# ハッシュが前回と異なるとき取得時刻を「今」にするが、実際の取得時刻はこちらなので上書きする。
+FETCHED_AT_2026 = "2026-10-12T21:51:00+09:00"
+BACKFILL_FETCHED_AT = FETCHED_AT_2026
 
 DAITOSHI_KUBUN = {1, 2, 8, 9}  # 政令指定都市・特別区・中核市・施行時特例市 → "大都市"
 
@@ -330,6 +331,34 @@ def main():
     if not all(results):
         raise Abort("アンカー値が一致しない。JSONを書かずに中断した。")
 
+    print("== 県版との突合（同じ原表の岐阜県行 21000 と、県版 pref_1d の岐阜県） ==")
+    # 県の行は、市区町村コード列（c21）ではなく先頭側のコード列（2列目）に '21000' と入っている
+    g_row = [r for r in income_rows if len(r) > 11 and s(r[1]) == "21000" and s(r[8]).startswith("岐阜県")]
+    if len(g_row) != 1:
+        raise Abort(f"原表の岐阜県行（2列目='21000'・名称='岐阜県'）が {len(g_row)} 行（1行に確定できない）")
+    g_pref = {"income_million_yen": g_row[0][c_income], "taxpayers": g_row[0][c_taxpayers]}
+    if not isinstance(g_pref["income_million_yen"], float) or not g_pref["taxpayers"]:
+        raise Abort("岐阜県行の値が数値でない")
+    g_pref_val = round(g_pref["income_million_yen"] * 100 / g_pref["taxpayers"], 1)
+    pref_json = ROOT / "data" / "pref_1d_taxable_income.json"
+    if pref_json.exists():
+        pj = json.loads(pref_json.read_text(encoding="utf-8"))
+        pg = next(r for r in pj["data"] if r["都道府県コード"] == "21")
+        want = round(pg["一人あたり課税対象所得_万円"], 1)
+        if not check("岐阜県 一人あたり課税対象所得(万円)：市区町村のすがた2026の県行 = 県版(すがた2026 #D02206)", g_pref_val, want):
+            raise Abort("市区町村版の原表の岐阜県行と県版の値が一致しない。JSONを書かずに中断した。")
+    # 岐阜42市町村の合計 = 岐阜県行（課税対象所得・納税義務者数）
+    gifu5 = [c5 for c5 in income_by_code5 if c5.startswith("21") and not c5.endswith("000")]
+    gi = sum(income_by_code5[c]["income_million_yen"] or 0 for c in gifu5)
+    gt = sum(income_by_code5[c]["taxpayers"] or 0 for c in gifu5)
+    # 課税対象所得は百万円単位に丸めて掲載されているため、42件の合計と県行の差は最大 42×0.5=21 百万円まで許容する。
+    # 納税義務者数（人）は丸めがないので完全一致を要求する。
+    d_income = abs(gi - g_pref["income_million_yen"])
+    print(f"    {'OK ' if d_income <= 21 else 'NG '} 岐阜42市町村の課税対象所得合計と岐阜県行の差: {d_income}百万円（丸め由来の許容 21 以内）")
+    ok_t = check("岐阜42市町村の納税義務者数合計 = 岐阜県行", gt, g_pref["taxpayers"])
+    if not (d_income <= 21 and ok_t):
+        raise Abort("岐阜42市町村の合計が岐阜県行と一致しない。JSONを書かずに中断した。")
+
     print("== 岐阜42市区町村の抽出 ==")
     gifu_codes = sorted(c for c in codes if c.startswith("21"))
     if len(gifu_codes) != 42:
@@ -378,18 +407,15 @@ def main():
         ],
         backfill_fetched_at=BACKFILL_FETCHED_AT,
     )
-    sources[0]["_provenance_note"] = (
-        "2026-08-28 recon由来（poc/recon-20260828/1-2c/）・未コミットファイルから復元。"
-        "正確なダウンロード時刻の記録は無く、fetched_atはファイルのmtime（2026-08-28T20:12:26+09:00）で近似した。"
-        "以後の再取得時は通常のダウンロードフロー（lineage.build_sources のキャッシュ経由）に切り替わる。"
-    )
+    sources[0]["fetched_at"] = FETCHED_AT_2026
+    sources[0].pop("_provenance_note", None)
 
     notes = [
         "一人あたり課税対象所得(万円) = 課税対象所得(百万円) × 100 ÷ 納税義務者数(人)。小数第1位で丸め。"
         "分子・分母の原数値を併載しているため再計算可能。都道府県版（data/pref_1d_taxable_income.json）と同一の算出式。",
-        f"対象年次は{year}年（課税対象所得・納税義務者数の両項目共通。統計でみる市区町村のすがた2025 C経済基盤）。"
-        "都道府県版（data/pref_1d_taxable_income.json）は2022年（社会生活統計指標－都道府県の指標－2024）で年次が異なる。"
-        "本ファイルの生成でこの対応年次を確認し、都道府県版スクリプトの申し送り（対応年次未確認）を解消した。",
+        f"対象年次は{year}年（課税対象所得・納税義務者数の両項目共通。統計でみる市区町村のすがた2026 C経済基盤・令和8年6月刊行。2026-10-12 に2025年版〔2023年の値〕から更新）。"
+        "都道府県版（data/pref_1d_taxable_income.json）は統計でみる都道府県のすがた2026の2024年度で、年次がそろっている。"
+        "生成時に、この原表の岐阜県行から計算した値が県版の岐阜県の値と一致すること、岐阜42市町村の合計が岐阜県行と一致することを確認した。",
         "単位は課税対象所得が百万円、納税義務者数が人。生成時に項目コード行直下の単位表記から実測し、"
         "『百万円』『人』であることをコードでassertしてから計算した（単位誤認による1/1000ズレの既知教訓・content-spec-v1.md §7.11）。",
         "比較値（comparison）は docs/similar-group-aggregation-design.md §3・§4 の集計段の定義に従う。"
@@ -408,14 +434,14 @@ def main():
         "評価語・評価色（信号色）・複合スコアは付与していない（20260808_decisions.md D-4／D-6／D-18）。",
         "'...'（e-Stat原典の秘匿・非該当）が課税対象所得または納税義務者数にある団体は母集団Mから除外した"
         "（0に丸めていない。「確認できず」と「無」を区別する既存規律に従う）。",
-        "入力は取得済みのローカルファイル（poc/recon-20260828/）のみを使用し、本ファイル生成時に再ダウンロードはしていない。"
-        "統計でみる市区町村のすがた2025 の該当ファイルは拡張子.xlsxだが実体はOLE .xls形式のため xlrd で読んでいる"
+        "入力は取得済みのローカルファイル（poc/recon-20261012-sugata-city2026/）のみを使用し、本ファイル生成時に再ダウンロードはしていない。"
+        "統計でみる市区町村のすがた2026 の該当ファイルは拡張子.xlsxだが実体はOLE .xls形式のため xlrd で読んでいる"
         "（openpyxlでは開けない。都道府県版と同じ事情）。",
     ]
 
     payload = {
         "sources": sources,
-        "period": f"令和5年({year})",
+        "period": f"令和{int(year) - 2018}年({year})",
         "updated": UPDATED,
         "notes": notes,
         "data": data,

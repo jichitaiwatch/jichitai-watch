@@ -8,13 +8,13 @@
   この形をF-5残り項目（1-1b・2a）にも適用することで運営者裁定確定。
 
 入力（取得済みローカルファイルのみ。ネットワークアクセスをしない）:
-  poc/recon-20260828/1-1b/estat_000032142495_kokusei2020_family_type_shichoson.xlsx
-    （統計表ID 000032142495・第９－１表。既存 data/m1_1b_single_household.json と同一の全国集約
+  poc/recon-20261012-kokusei2025/estat_000040506456_kokusei2025_family_type_shichoson.xlsx
+    （統計表ID 000040506456・令和7年国勢調査 第９－１表。既存 data/m1_1b_single_household.json と同一の全国集約
     ファイル。5桁地域コード＝地域名セル "21201_岐阜市" 形式。単独世帯数(3_単独世帯)／
     一般世帯数(0_総数)の2行を抽出）
-  poc/recon-20260828/1-1b/estat_000040306654_juki_shichoson_age_r7.xlsx
-    （統計表ID 000040306654・令和7年1月1日時点。既存 data/m1_1c_aging_rate.json と同一の全国集約
-    ファイル。6桁団体コード直接（住基）。総数(col4)・65歳以上(col18-25合計・性別「計」行)を抽出）
+  poc/recon-20261012-juki-r8/soumu_000892953_juki_shichoson_age_r8.xlsx
+    （総務省ファイルID 000892953・令和8年1月1日時点。既存 data/m1_1c_aging_rate.json と同一の全国集約
+    ファイル。6桁団体コード直接（住基）。総数・65歳以上（8つの年齢帯の合計・性別「計」行）を抽出。列はラベルから同定）
   poc/recon-20260828/0/ruikei_kubun_r06.xlsx（類似団体区分マスタ・市町村一覧シート・1741団体）
 
 更新（既存ファイルを書き換え・新規ファイルは作らない）:
@@ -46,8 +46,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-FAMILY_SRC = ROOT / "poc" / "recon-20260828" / "1-1b" / "estat_000032142495_kokusei2020_family_type_shichoson.xlsx"
-AGE_SRC = ROOT / "poc" / "recon-20260828" / "1-1b" / "estat_000040306654_juki_shichoson_age_r7.xlsx"
+FAMILY_SRC = ROOT / "poc" / "recon-20261012-kokusei2025" / "estat_000040506456_kokusei2025_family_type_shichoson.xlsx"
+AGE_SRC = ROOT / "poc" / "recon-20261012-juki-r8" / "soumu_000892953_juki_shichoson_age_r8.xlsx"
 RUIKEI_SRC = ROOT / "poc" / "recon-20260828" / "0" / "ruikei_kubun_r06.xlsx"
 OUT_SINGLE = ROOT / "data" / "m1_1b_single_household.json"
 OUT_AGING = ROOT / "data" / "m1_1c_aging_rate.json"
@@ -67,8 +67,10 @@ ANCHOR = {
 
 # 2026-09-28コード直接確認によるアンカー（岐阜市・自己算出値。既存JSONの値と一致することを
 # 別途「既存レコードとの整合確認」で検証するため、ここでは構造検証のみに用いる）。
-GIFU_SHI_SINGLE_RATIO_ANCHOR = 36.47  # 63107/173032*100
-GIFU_SHI_AGING_RATIO_ANCHOR = 29.32  # 117021/399127*100
+# 単身世帯割合は令和7年国勢調査へ更新。令和2年版の固定アンカー（36.47）は使わず、既存JSON（同一原本から生成）との
+# 一致確認（apply_to_json）と独立再計算で検証する。
+# 高齢化率は令和8年版へ更新。令和7年版の固定アンカー（29.32）は使わず、既存JSON（同一原本から生成）との
+# 一致確認（apply_to_json）と、下の独立再計算で検証する。
 
 
 class Abort(Exception):
@@ -143,9 +145,18 @@ def load_single_household_ratio_by_code5() -> dict[str, float]:
 
     header_rows = list(ws.iter_rows(min_row=1, max_row=4, values_only=True))
     title_texts = " ".join(s(v) for row in header_rows[:2] for v in row if v)
-    if "第９－１表" not in title_texts or "世帯の家族類型" not in title_texts:
+    if "第９－１表" not in title_texts or "世帯の家族類型" not in title_texts or "令和７年" not in title_texts:
         raise Abort(f"family: 表題に想定語を確認できない（実測={title_texts!r}）。推測で続行しない。")
     print(f"  [family] 表題確認: {title_texts[:60]}...")
+    # 列位置（地域名=3列目・家族類型=5列目・一般世帯数の総数=6列目）をヘッダ行で自己検証する
+    hdr = list(ws.iter_rows(min_row=1, max_row=40, values_only=True))
+    hrow = next((r for r in hdr if s(cell(r, 0)) == "地域識別コード"), None)
+    if hrow is None or s(cell(hrow, 2)) != "地域名" or s(cell(hrow, 4)) != "世帯の家族類型":
+        raise Abort("family: ヘッダ行の列（地域名=3列目・世帯の家族類型=5列目）を確認できない")
+    grp = [r for r in hdr if s(cell(r, 5)) == "一般世帯数"]
+    sub = [r for r in hdr if s(cell(r, 5)) == "0_総数"]
+    if not grp or not sub:
+        raise Abort("family: 6列目が『一般世帯数／0_総数』であることを確認できない")
 
     general: dict[str, float] = {}
     single: dict[str, float] = {}
@@ -215,7 +226,7 @@ def resolve_age_columns(ws):
         raise Abort(f"age: 総数列または65歳以上の年齢帯列が見つからない total={total_col} over65={over65_cols}")
 
     title_texts = " ".join(s(v) for row in header_rows[:1] for v in row if v)
-    if "住民基本台帳" not in title_texts or "年齢階級別人口" not in title_texts or "令和7年" not in title_texts:
+    if "住民基本台帳" not in title_texts or "年齢階級別人口" not in title_texts or "令和8年" not in title_texts:
         raise Abort(f"age: 表題に想定語を確認できない（実測={title_texts!r}）。推測で続行しない。")
     print(f"  [age] 表題確認: {title_texts[:60]}...")
 
@@ -350,7 +361,7 @@ def apply_to_json(out_path: Path, comparison_by_code6: dict[str, dict], value_fi
         f"comparison（全国平均・類似団体平均・全国順位・百分位）は2026-09-28追加（F-5）。"
         "docs/similar-group-aggregation-design.md §3・§4の集計段の定義に従う。"
         f"母集団M = 区分マスタ（総務省 類似団体別市町村財政指数表・1741団体）"
-        f"∩ 全国集約ファイル（統計表ID{statinfid}）に数値がある団体。"
+        f"∩ 全国集約ファイル（{statinfid}）に数値がある団体。"
         "national_average は母集団Mの単純算術平均、group_average は束ね後区分ごとの単純算術平均"
         "（average_method=\"unweighted_mean\"）。束ね写像：政令指定都市・中核市・施行時特例市・特別区は"
         "『大都市』に統合。それ以外は類団区分の原ラベルをそのまま使う。"
@@ -398,22 +409,32 @@ def main():
         check_anchor("大垣市 束ね後区分の団体数", group_n_s[ogaki_shi_meta["group_code"]], ANCHOR["ogaki_shi_group_n"]),
         check_anchor("高山市 束ね後区分", takayama_shi_meta["group_code"], ANCHOR["takayama_shi_group"]),
         check_anchor("高山市 束ね後区分の団体数", group_n_s[takayama_shi_meta["group_code"]], ANCHOR["takayama_shi_group_n"]),
-        check_anchor("岐阜市 単身世帯割合 自己算出値", comp_single["212016"]["value"], GIFU_SHI_SINGLE_RATIO_ANCHOR),
+        check_anchor("岐阜市 単身世帯割合 母集団Mの件数", comp_single["212016"]["rank_out_of"], len(single_ratio_by_code6)),
+        check_anchor(
+            "岐阜市 単身世帯割合 順位（独立再計算）",
+            comp_single["212016"]["rank"],
+            1 + sum(1 for v in single_ratio_by_code6.values() if v > single_ratio_by_code6["212016"]),
+        ),
     ]
     if not all(results_s):
         raise Abort("単身世帯割合: アンカー値が一致しない。JSONを書かずに中断した。")
-    apply_to_json(OUT_SINGLE, comp_single, "単身世帯割合", "単身世帯割合", "000032142495")
+    apply_to_json(OUT_SINGLE, comp_single, "単身世帯割合", "単身世帯割合", "統計表ID000040506456（令和7年国勢調査）")
 
     print("== 高齢化率の集計・書き出し ==")
     comp_aging, group_n_a = build_comparison(ruikei, aging_by_code6)
     results_a = [
         check_anchor("岐阜市 束ね後区分", gifu_shi_meta["group_code"], ANCHOR["gifu_shi_group"]),
         check_anchor("岐阜市 束ね後区分の団体数", group_n_a[gifu_shi_meta["group_code"]], ANCHOR["gifu_shi_group_n"]),
-        check_anchor("岐阜市 高齢化率 自己算出値", comp_aging["212016"]["value"], GIFU_SHI_AGING_RATIO_ANCHOR),
+        check_anchor("岐阜市 高齢化率 母集団Mの件数", comp_aging["212016"]["rank_out_of"], len([c for c in ruikei if c in aging_by_code6])),
+        check_anchor(
+            "岐阜市 高齢化率 順位（独立再計算）",
+            comp_aging["212016"]["rank"],
+            1 + sum(1 for c in ruikei if c in aging_by_code6 and aging_by_code6[c] > aging_by_code6["212016"]),
+        ),
     ]
     if not all(results_a):
         raise Abort("高齢化率: アンカー値が一致しない。JSONを書かずに中断した。")
-    apply_to_json(OUT_AGING, comp_aging, "高齢化率", "高齢化率", "000040306654")
+    apply_to_json(OUT_AGING, comp_aging, "高齢化率", "高齢化率", "総務省ファイルID000892953（令和8年1月1日）")
 
     print("== 岐阜42件 単身世帯割合順（サニティチェック用） ==")
     d = json.loads(OUT_SINGLE.read_text(encoding="utf-8"))

@@ -49,24 +49,45 @@ FILES = [
         "path": "poc/recon-20260828/1-1a/estat_000040306653_juki_shichoson_pop_hh_r7.xlsx",
         "sha256": "5e6c474d2b0c89e6006b8ccca844b7422c3d867e2444e3f5ef14627b2bc06f8a",
     },
+    {
+        "key": "r8_2026",
+        "year_label": "令和8年1月1日",
+        "stat_inf_id": None,  # 総務省サイト掲載ファイル（e-Stat 経由ではない）
+        "soumu_file_id": "000892952",
+        "path": "poc/recon-20261012-juki-r8/soumu_000892952_juki_shichoson_pop_hh_r8.xlsx",
+        "sha256": "0d044766466d28c4988414e93238148ecb1d764642542d48332064d51cdff3bc",
+        "fetched_at": "2026-10-12",
+    },
 ]
 
-FETCHED_AT = "2026-08-30"
+FETCHED_AT = "2026-10-12"  # 全体の更新日。令和2〜7年分の取得日は各 source の fetched_at に残す
+OLD_FETCHED_AT = "2026-08-30"
 
 sources = []
 for f in FILES:
-    sources.append(
-        {
+    if f["stat_inf_id"]:
+        src = {
             "year_key": f["key"],
             "year_label": f["year_label"],
             "source_url": f"https://www.e-stat.go.jp/stat-search/file-download?statInfId={f['stat_inf_id']}&fileKind=0",
             "source_page": "https://www.e-stat.go.jp/stat-search/files?toukei=00200241&tstat=000001039591",
             "stat_name": "住民基本台帳に基づく人口、人口動態及び世帯数調査",
             "table_title": f"【総計】市区町村別人口、人口動態及び世帯数（{f['year_label']}時点）",
-            "fetched_at": FETCHED_AT,
+            "fetched_at": OLD_FETCHED_AT,
             "source_file_hash": f["sha256"],
         }
-    )
+    else:
+        src = {
+            "year_key": f["key"],
+            "year_label": f["year_label"],
+            "source_url": f"https://www.soumu.go.jp/main_content/{f['soumu_file_id']}.xlsx",
+            "source_page": "https://www.soumu.go.jp/main_sosiki/jichi_gyousei/daityo/jinkou_jinkoudoutai-setaisuu.html",
+            "stat_name": "住民基本台帳に基づく人口、人口動態及び世帯数",
+            "table_title": f"人口、世帯数、人口動態（市区町村別）【総計】（{f['year_label']}時点）",
+            "fetched_at": f["fetched_at"],
+            "source_file_hash": f["sha256"],
+        }
+    sources.append(src)
 
 merged = json.load(open("out_merged.json", encoding="utf-8"))
 
@@ -88,15 +109,15 @@ data.sort(key=lambda r: r["市区町村コード"])
 
 output = {
     "sources": sources,
-    "period": "令和2年1月1日〜令和7年1月1日、各年1月1日時点（住民基本台帳）",
+    "period": "令和2年1月1日〜令和8年1月1日、各年1月1日時点（住民基本台帳）",
     "updated": FETCHED_AT,
     "notes": [
         "e-Stat「住民基本台帳に基づく人口、人口動態及び世帯数調査」（toukei=00200241, tstat=000001039591）の年次ファイルから、都道府県='岐阜県'・実市区町村（郡見出し行・都道府県計行を除く）をフィルタして取得。",
         "令和2年（2020年）分は旧形式(.xls)で提供されており、他年（.xlsx）とヘッダ行数が異なるが、データ列位置（団体コード/都道府県名/市区町村名/男/女/計/世帯数）は同一であることを確認済み。",
-        "令和2.1.1〜令和7.1.1の6時点（各年1月1日）が全てe-Statで取得可能だったため、依頼の『5年分』に加えて令和2年分も含めた6時点をまとめて収録した。",
-        "岐阜県42市町村は全6年で42/42が揃い、団体コード・市区町村名の変化（合併・改称）は無かったことを確認済み。",
+        "令和2.1.1〜令和8.1.1の7時点（各年1月1日）を収録した。令和2〜7年分はe-Stat、令和8年分は総務省サイト掲載ファイル（e-Statへの掲載前）から取得した。",
+        "岐阜県42市町村は全7年で42/42が揃い、団体コード・市区町村名の変化（合併・改称）は無かったことを確認済み。",
         "本ファイルは生値のみを格納する。5年前との増減数・増減率はこのJSONを使う側（UI/集計）で計算する。",
-        "r2_2020〜r7_2025の各キーは当該年1月1日時点の人口_男/人口_女/人口_計/世帯数を持つ。値が無い場合はnull（今回は全年で欠損なし）。",
+        "r2_2020〜r8_2026の各キーは当該年1月1日時点の人口_男/人口_女/人口_計/世帯数を持つ。値が無い場合はnull（今回は全年で欠損なし）。",
     ],
     "data": data,
 }

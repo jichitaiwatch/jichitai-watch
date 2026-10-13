@@ -1,6 +1,6 @@
 {
   "source_data_file": "data/pref_1a_population.json",
-  "generated_at": "2026-09-05",
+  "generated_at": "2026-10-12",
   "fields": [
     "人口_計",
     "人口_男",
@@ -10,15 +10,15 @@
   "notes": [
     "母集団は参照元 data/pref_1a_population.json の47都道府県レコードのみ（N=47固定）。全国/合計行（都道府県コード ['-', '00', '00000'] のいずれか。本ファイルの参照元では '-'='合計'）は母集団に含めず、平均・順位・百分位の計算に使っていない。",
     "national_average_unweighted = 47都道府県の値の単純算術平均（小数第2位で丸め）。average_method=\"unweighted_mean\"。docs/similar-group-aggregation-design.md §3「加重の扱い」の原則（平均は原則単純算術平均。人口加重等はどの重みを選ぶかに価値判断が入りうるため既定にしない）に従う。",
-    "national_official は参照元の全国/合計行の同名フィールドを**そのまま転記**したもので、本ファイルでは算出していない。これは average_method=\"official\" に相当する値を別フィールドで保持したものであり、national_average_unweighted と同一の量ではない。混同しないこと。実測の差は次のとおり： 人口_計: 単純平均=2645333.83 / 全国行=124330690（合計（総数））差=121685356.17／人口_男: 単純平均=1290707.4 / 全国行=60663248（合計（総数））差=59372540.6／人口_女: 単純平均=1354626.23 / 全国行=63667433（合計（総数））差=62312806.77／世帯数: 単純平均=1303999.87 / 全国行=61287994（合計（総数））差=59983994.13。",
+    "national_official は参照元の全国/合計行の同名フィールドを**そのまま転記**したもので、本ファイルでは算出していない。これは average_method=\"official\" に相当する値を別フィールドで保持したものであり、national_average_unweighted と同一の量ではない。混同しないこと。実測の差は次のとおり： 人口_計: 単純平均=2633354.09 / 全国行=123767642（合計（総数））差=121134287.91／人口_男: 単純平均=1285036.47 / 全国行=60396714（合計（総数））差=59111677.53／人口_女: 単純平均=1348317.11 / 全国行=63370904（合計（総数））差=62022586.89／世帯数: 単純平均=1313768.94 / 全国行=61747140（合計（総数））差=60433371.06。",
     "national_official は参照元の全国/合計行の値で、**全国合計（総数）であって平均ではない**。47都道府県の平均と同じ軸に並べてはならない。同じ内容を各フィールドの source_note にも書いてある。",
-    "rank は47都道府県内での値の降順順位（1=最大値）。rank(i) = 1 + #{j : value(j) > value(i)} で機械的に算出しており、**同値は同順位とし、次の順位をその分だけ飛ばす**方式（competition ranking。例 1,2,2,4）を採用した。本ファイルでの同順位の発生： 人口_男: {27: 2}。",
+    "rank は47都道府県内での値の降順順位（1=最大値）。rank(i) = 1 + #{j : value(j) > value(i)} で機械的に算出しており、**同値は同順位とし、次の順位をその分だけ飛ばす**方式（competition ranking。例 1,2,2,4）を採用した。本ファイルでの同順位の発生： なし（全フィールドで順位は1〜47の重複なし）。",
     "percentile = (rank_out_of − rank + 1) / rank_out_of × 100 = (47 − rank + 1) / 47 × 100（小数第1位で丸め）。1位=100.0、47位=2.1。同順位の都道府県は同じ percentile を持つ。",
     "group_code・group_average は全フィールドで null。都道府県には類似団体区分が存在しないため（区分マスタ ruikei_kubun_r06 は市町村1741団体のみを収録し、都道府県を持たない）。値が未収集・未算出なのではなく、概念そのものが無いことによる null である。",
     "順位・百分位は事実として出すだけで、大小の望ましさを含意しない。評価語・評価色（信号色）・複合スコアは付与していない（docs/20260808_decisions.md D-4／D-6 ランキング非生成／D-18、および設計書§6）。",
     "都道府県コードは参照元の体系（住民基本台帳の6桁）をそのまま使っている。都道府県版の指標JSONはコード体系が3系統に分かれる（住基6桁＝例 210005／国勢5桁＝例 21000／SSDS2桁＝例 21）。比較値ファイル同士・生値ファイル同士をコードで結合する際は桁を揃える必要がある。",
     "検算：national_average_unweighted × 47 と47都道府県値の合計の差が、丸め許容範囲 47 × 0.5 × 10^-2 = 0.235 以内であることを全フィールドで生成時に検証済み（平均を小数第2位に丸めているため厳密一致はしない）。",
-    "value は参照元の値をそのまま転記しており、本ファイルで再丸め・単位換算はしていない。参照元の時点は「令和7年1月1日時点（住民基本台帳）」。参照元 data/pref_1a_population.json は本作業で編集していない。",
+    "value は参照元の値をそのまま転記しており、本ファイルで再丸め・単位換算はしていない。参照元の時点は「令和8年1月1日時点（住民基本台帳）」。参照元 data/pref_1a_population.json は本作業で編集していない。",
     "設計根拠は docs/similar-group-aggregation-design.md §3（集計式）・§4（出力スキーマ）。同§8は「都道府県ページでの集計」をV2送りとしていたが、content-spec-v1.md §7.16（2026-09-03）が県ページのV1構築を決定したことにより、その V2送り記述は上書き・破棄されている。また設計書§4の population_basis（一人あたり系の分母時点）は本ファイルでは使用していない（参照元が既に算出済みの値を転記しているため）。"
   ],
   "data": [
@@ -26,9 +26,9 @@
       "都道府県コード": "010006",
       "都道府県名": "北海道",
       "人口_計": {
-        "value": 5044825,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 4996492,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 9,
@@ -38,9 +38,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 2387307,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 2365632,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 9,
@@ -50,9 +50,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 2657518,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 2630860,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 9,
@@ -62,9 +62,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 2812839,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 2814047,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 7,
@@ -78,9 +78,9 @@
       "都道府県コード": "020001",
       "都道府県名": "青森県",
       "人口_計": {
-        "value": 1185767,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 1166578,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 31,
@@ -90,9 +90,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 562295,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 553545,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 31,
@@ -102,9 +102,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 623472,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 613033,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 31,
@@ -114,9 +114,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 592182,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 590699,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 31,
@@ -130,9 +130,9 @@
       "都道府県コード": "030007",
       "都道府県名": "岩手県",
       "人口_計": {
-        "value": 1153900,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 1136186,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 32,
@@ -142,9 +142,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 557528,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 549492,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 32,
@@ -154,9 +154,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 596372,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 586694,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 32,
@@ -166,9 +166,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 534966,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 534947,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 33,
@@ -182,9 +182,9 @@
       "都道府県コード": "040002",
       "都道府県名": "宮城県",
       "人口_計": {
-        "value": 2224980,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 2209215,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 14,
@@ -194,9 +194,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 1084679,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 1077071,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 14,
@@ -206,9 +206,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 1140301,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 1132144,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 14,
@@ -218,9 +218,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 1052122,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 1059300,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 14,
@@ -234,9 +234,9 @@
       "都道府県コード": "050008",
       "都道府県名": "秋田県",
       "人口_計": {
-        "value": 907593,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 890524,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 39,
@@ -246,9 +246,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 430112,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 422121,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 39,
@@ -258,9 +258,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 477481,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 468403,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 39,
@@ -270,61 +270,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 423081,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
-        "group_code": null,
-        "group_average": null,
-        "rank": 39,
-        "rank_out_of": 47,
-        "percentile": 19.1,
-        "average_method": "unweighted_mean",
-        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
-      }
-    },
-    {
-      "都道府県コード": "060003",
-      "都道府県名": "山形県",
-      "人口_計": {
-        "value": 1012355,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
-        "group_code": null,
-        "group_average": null,
-        "rank": 36,
-        "rank_out_of": 47,
-        "percentile": 25.5,
-        "average_method": "unweighted_mean",
-        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
-      },
-      "人口_男": {
-        "value": 491172,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
-        "group_code": null,
-        "group_average": null,
-        "rank": 37,
-        "rank_out_of": 47,
-        "percentile": 23.4,
-        "average_method": "unweighted_mean",
-        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
-      },
-      "人口_女": {
-        "value": 521183,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
-        "group_code": null,
-        "group_average": null,
-        "rank": 36,
-        "rank_out_of": 47,
-        "percentile": 25.5,
-        "average_method": "unweighted_mean",
-        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
-      },
-      "世帯数": {
-        "value": 422458,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 421071,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 40,
@@ -335,12 +283,64 @@
       }
     },
     {
+      "都道府県コード": "060003",
+      "都道府県名": "山形県",
+      "人口_計": {
+        "value": 995995,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
+        "group_code": null,
+        "group_average": null,
+        "rank": 37,
+        "rank_out_of": 47,
+        "percentile": 23.4,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
+      },
+      "人口_男": {
+        "value": 483466,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
+        "group_code": null,
+        "group_average": null,
+        "rank": 37,
+        "rank_out_of": 47,
+        "percentile": 23.4,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
+      },
+      "人口_女": {
+        "value": 512529,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
+        "group_code": null,
+        "group_average": null,
+        "rank": 36,
+        "rank_out_of": 47,
+        "percentile": 25.5,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
+      },
+      "世帯数": {
+        "value": 422173,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
+        "group_code": null,
+        "group_average": null,
+        "rank": 39,
+        "rank_out_of": 47,
+        "percentile": 19.1,
+        "average_method": "unweighted_mean",
+        "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
+      }
+    },
+    {
       "都道府県コード": "070009",
       "都道府県名": "福島県",
       "人口_計": {
-        "value": 1771314,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 1746008,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 21,
@@ -350,9 +350,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 870911,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 858425,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 21,
@@ -362,21 +362,21 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 900403,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 887583,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
-        "rank": 21,
+        "rank": 22,
         "rank_out_of": 47,
-        "percentile": 57.4,
+        "percentile": 55.3,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 800927,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 801621,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 24,
@@ -390,9 +390,9 @@
       "都道府県コード": "080004",
       "都道府県名": "茨城県",
       "人口_計": {
-        "value": 2848597,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 2830667,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 11,
@@ -402,9 +402,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 1431244,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 1422609,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 11,
@@ -414,9 +414,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 1417353,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 1408058,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 11,
@@ -426,9 +426,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 1327389,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 1340301,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 12,
@@ -442,9 +442,9 @@
       "都道府県コード": "090000",
       "都道府県名": "栃木県",
       "人口_計": {
-        "value": 1904173,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 1889901,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 19,
@@ -454,9 +454,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 954064,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 947209,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 17,
@@ -466,9 +466,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 950109,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 942692,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 19,
@@ -478,9 +478,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 875685,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 882123,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 18,
@@ -494,9 +494,9 @@
       "都道府県コード": "100005",
       "都道府県名": "群馬県",
       "人口_計": {
-        "value": 1907976,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 1893893,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 18,
@@ -506,9 +506,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 947579,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 940246,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 19,
@@ -518,9 +518,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 960397,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 953647,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 18,
@@ -530,9 +530,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 890162,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 895619,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 17,
@@ -546,9 +546,9 @@
       "都道府県コード": "110001",
       "都道府県名": "埼玉県",
       "人口_計": {
-        "value": 7374294,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 7368548,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 5,
@@ -558,9 +558,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 3677260,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 3672694,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 5,
@@ -570,9 +570,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 3697034,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 3695853,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 5,
@@ -582,9 +582,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 3555029,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 3598957,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 4,
@@ -598,9 +598,9 @@
       "都道府県コード": "120006",
       "都道府県名": "千葉県",
       "人口_計": {
-        "value": 6311579,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 6313748,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 6,
@@ -610,9 +610,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 3141610,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 3142034,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 6,
@@ -622,9 +622,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 3169969,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 3171712,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 6,
@@ -634,9 +634,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 3102148,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 3142540,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 6,
@@ -650,9 +650,9 @@
       "都道府県コード": "130001",
       "都道府県名": "東京都",
       "人口_計": {
-        "value": 14002534,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 14077553,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 1,
@@ -662,9 +662,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 6875969,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 6909523,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 1,
@@ -674,9 +674,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 7126562,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 7168017,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 1,
@@ -686,9 +686,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 7682155,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 7778945,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 1,
@@ -702,9 +702,9 @@
       "都道府県コード": "140007",
       "都道府県名": "神奈川県",
       "人口_計": {
-        "value": 9202559,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 9194723,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 2,
@@ -714,9 +714,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 4578234,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 4572887,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 2,
@@ -726,9 +726,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 4624325,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 4621835,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 2,
@@ -738,9 +738,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 4604332,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 4650828,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 2,
@@ -754,9 +754,9 @@
       "都道府県コード": "150002",
       "都道府県名": "新潟県",
       "人口_計": {
-        "value": 2110754,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 2083103,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 15,
@@ -766,9 +766,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 1027395,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 1014315,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 15,
@@ -778,9 +778,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 1083359,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 1068788,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 15,
@@ -790,9 +790,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 920725,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 921970,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 15,
@@ -806,21 +806,21 @@
       "都道府県コード": "160008",
       "都道府県名": "富山県",
       "人口_計": {
-        "value": 1008536,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 998580,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
-        "rank": 37,
+        "rank": 36,
         "rank_out_of": 47,
-        "percentile": 23.4,
+        "percentile": 25.5,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 491818,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 487410,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 36,
@@ -830,9 +830,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 516718,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 511170,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 37,
@@ -842,9 +842,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 436122,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 439525,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 38,
@@ -858,9 +858,9 @@
       "都道府県コード": "170003",
       "都道府県名": "石川県",
       "人口_計": {
-        "value": 1098121,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 1089861,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 34,
@@ -870,9 +870,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 533242,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 529726,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 33,
@@ -882,9 +882,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 564877,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 560133,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 34,
@@ -894,9 +894,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 501139,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 504268,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 35,
@@ -910,9 +910,9 @@
       "都道府県コード": "180009",
       "都道府県名": "福井県",
       "人口_計": {
-        "value": 746690,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 739412,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 43,
@@ -922,9 +922,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 364197,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 360720,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 43,
@@ -934,9 +934,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 382493,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 378692,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 43,
@@ -946,9 +946,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 306635,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 308526,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 45,
@@ -962,9 +962,9 @@
       "都道府県コード": "190004",
       "都道府県名": "山梨県",
       "人口_計": {
-        "value": 801056,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 794684,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 41,
@@ -974,9 +974,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 393986,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 390814,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 41,
@@ -986,9 +986,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 407068,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 403870,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 42,
@@ -998,9 +998,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 377101,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 379083,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 41,
@@ -1014,9 +1014,9 @@
       "都道府県コード": "200000",
       "都道府県名": "長野県",
       "人口_計": {
-        "value": 2012399,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 1995882,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 16,
@@ -1026,9 +1026,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 985768,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 977962,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 16,
@@ -1038,9 +1038,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 1026630,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 1017919,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 16,
@@ -1050,9 +1050,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 903498,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 908721,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 16,
@@ -1066,9 +1066,9 @@
       "都道府県コード": "210005",
       "都道府県名": "岐阜県",
       "人口_計": {
-        "value": 1951292,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 1935253,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 17,
@@ -1078,9 +1078,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 951437,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 944153,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 18,
@@ -1090,9 +1090,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 999855,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 991100,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 17,
@@ -1102,9 +1102,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 860512,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 867020,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 20,
@@ -1118,9 +1118,9 @@
       "都道府県コード": "220001",
       "都道府県名": "静岡県",
       "人口_計": {
-        "value": 3575704,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 3544228,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 10,
@@ -1130,9 +1130,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 1768928,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 1753744,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 10,
@@ -1142,9 +1142,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 1806776,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 1790484,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 10,
@@ -1154,9 +1154,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 1655220,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 1666079,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 10,
@@ -1170,9 +1170,9 @@
       "都道府県コード": "230006",
       "都道府県名": "愛知県",
       "人口_計": {
-        "value": 7483755,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 7473297,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 4,
@@ -1182,9 +1182,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 3744409,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 3740194,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 4,
@@ -1194,9 +1194,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 3739346,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 3733103,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 4,
@@ -1206,9 +1206,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 3499090,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 3542265,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 5,
@@ -1222,9 +1222,9 @@
       "都道府県コード": "240001",
       "都道府県名": "三重県",
       "人口_計": {
-        "value": 1741266,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 1724891,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 22,
@@ -1234,9 +1234,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 854465,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 846913,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 22,
@@ -1246,9 +1246,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 886801,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 877978,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 23,
@@ -1258,9 +1258,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 821382,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 823889,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 21,
@@ -1274,9 +1274,9 @@
       "都道府県コード": "250007",
       "都道府県名": "滋賀県",
       "人口_計": {
-        "value": 1405246,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 1400761,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 26,
@@ -1286,9 +1286,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 693864,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 691587,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 26,
@@ -1298,9 +1298,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 711382,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 709174,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 26,
@@ -1310,9 +1310,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 623703,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 630147,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 29,
@@ -1326,9 +1326,9 @@
       "都道府県コード": "260002",
       "都道府県名": "京都府",
       "人口_計": {
-        "value": 2472013,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 2457815,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 13,
@@ -1338,9 +1338,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 1182339,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 1175650,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 13,
@@ -1350,9 +1350,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 1289674,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 1282165,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 13,
@@ -1362,9 +1362,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 1262791,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 1270799,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 13,
@@ -1378,9 +1378,9 @@
       "都道府県コード": "270008",
       "都道府県名": "大阪府",
       "人口_計": {
-        "value": 8771961,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 8775326,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 3,
@@ -1390,9 +1390,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 4216807,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 4217700,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 3,
@@ -1402,9 +1402,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 4555154,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 4557624,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 3,
@@ -1414,9 +1414,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 4565594,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 4618574,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 3,
@@ -1430,9 +1430,9 @@
       "都道府県コード": "280003",
       "都道府県名": "兵庫県",
       "人口_計": {
-        "value": 5393607,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 5364773,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 7,
@@ -1442,9 +1442,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 2579265,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 2565237,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 7,
@@ -1454,9 +1454,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 2814342,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 2799536,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 7,
@@ -1466,9 +1466,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 2630792,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 2647044,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 8,
@@ -1482,9 +1482,9 @@
       "都道府県コード": "290009",
       "都道府県名": "奈良県",
       "人口_計": {
-        "value": 1303867,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 1293345,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 27,
@@ -1494,9 +1494,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 617325,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 611772,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 27,
@@ -1506,9 +1506,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 686542,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 681572,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 27,
@@ -1518,9 +1518,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 613342,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 615914,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 30,
@@ -1534,9 +1534,9 @@
       "都道府県コード": "300004",
       "都道府県名": "和歌山県",
       "人口_計": {
-        "value": 901193,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 889455,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 40,
@@ -1546,9 +1546,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 426826,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 421288,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 40,
@@ -1558,9 +1558,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 474367,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 468167,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 40,
@@ -1570,9 +1570,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 443306,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 443135,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 37,
@@ -1586,9 +1586,9 @@
       "都道府県コード": "310000",
       "都道府県名": "鳥取県",
       "人口_計": {
-        "value": 534003,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 527236,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 47,
@@ -1598,9 +1598,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 256002,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 252907,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 47,
@@ -1610,9 +1610,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 278000,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 274329,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 47,
@@ -1622,9 +1622,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 241254,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 241444,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 47,
@@ -1638,9 +1638,9 @@
       "都道府県コード": "320005",
       "都道府県名": "島根県",
       "人口_計": {
-        "value": 642590,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 634459,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 46,
@@ -1650,9 +1650,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 309844,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 306088,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 46,
@@ -1662,9 +1662,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 332746,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 328371,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 46,
@@ -1674,9 +1674,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 293821,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 293758,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 46,
@@ -1690,9 +1690,9 @@
       "都道府県コード": "330001",
       "都道府県名": "岡山県",
       "人口_計": {
-        "value": 1835478,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 1819524,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 20,
@@ -1702,9 +1702,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 887490,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 879996,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 20,
@@ -1714,9 +1714,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 947988,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 939528,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 20,
@@ -1726,9 +1726,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 873733,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 876107,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 19,
@@ -1742,9 +1742,9 @@
       "都道府県コード": "340006",
       "都道府県名": "広島県",
       "人口_計": {
-        "value": 2728771,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 2706285,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 12,
@@ -1754,9 +1754,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 1327153,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 1317107,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 12,
@@ -1766,9 +1766,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 1401618,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 1389178,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 12,
@@ -1778,9 +1778,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 1345070,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 1348552,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 11,
@@ -1794,9 +1794,9 @@
       "都道府県コード": "350001",
       "都道府県名": "山口県",
       "人口_計": {
-        "value": 1292956,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 1274535,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 29,
@@ -1806,9 +1806,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 616947,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 608729,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 29,
@@ -1818,9 +1818,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 676009,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 665805,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 29,
@@ -1830,14 +1830,14 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 657945,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 654647,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
-        "rank": 26,
+        "rank": 27,
         "rank_out_of": 47,
-        "percentile": 46.8,
+        "percentile": 44.7,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       }
@@ -1846,9 +1846,9 @@
       "都道府県コード": "360007",
       "都道府県名": "徳島県",
       "人口_計": {
-        "value": 700409,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 691229,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 44,
@@ -1858,9 +1858,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 336025,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 331787,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 44,
@@ -1870,9 +1870,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 364384,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 359442,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 44,
@@ -1882,9 +1882,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 338987,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 338690,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 44,
@@ -1898,9 +1898,9 @@
       "都道府県コード": "370002",
       "都道府県名": "香川県",
       "人口_計": {
-        "value": 939965,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 931812,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 38,
@@ -1910,9 +1910,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 456140,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 452368,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 38,
@@ -1922,9 +1922,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 483825,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 479444,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 38,
@@ -1934,9 +1934,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 452423,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 453824,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 36,
@@ -1950,9 +1950,9 @@
       "都道府県コード": "380008",
       "都道府県名": "愛媛県",
       "人口_計": {
-        "value": 1296359,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 1279431,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 28,
@@ -1962,21 +1962,21 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 617325,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 609648,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
-        "rank": 27,
+        "rank": 28,
         "rank_out_of": 47,
-        "percentile": 44.7,
+        "percentile": 42.6,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 679034,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 669783,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 28,
@@ -1986,14 +1986,14 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 657422,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 655461,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
-        "rank": 27,
+        "rank": 26,
         "rank_out_of": 47,
-        "percentile": 44.7,
+        "percentile": 46.8,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       }
@@ -2002,9 +2002,9 @@
       "都道府県コード": "390003",
       "都道府県名": "高知県",
       "人口_計": {
-        "value": 664863,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 654213,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 45,
@@ -2014,9 +2014,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 315518,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 310316,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 45,
@@ -2026,9 +2026,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 349345,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 343897,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 45,
@@ -2038,9 +2038,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 347128,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 345314,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 43,
@@ -2054,9 +2054,9 @@
       "都道府県コード": "400009",
       "都道府県名": "福岡県",
       "人口_計": {
-        "value": 5086957,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 5076856,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 8,
@@ -2066,9 +2066,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 2424041,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 2419848,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 8,
@@ -2078,9 +2078,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 2662916,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 2657008,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 8,
@@ -2090,9 +2090,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 2571378,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 2591054,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 9,
@@ -2106,9 +2106,9 @@
       "都道府県コード": "410004",
       "都道府県名": "佐賀県",
       "人口_計": {
-        "value": 794252,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 787887,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 42,
@@ -2118,9 +2118,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 378910,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 376295,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 42,
@@ -2130,9 +2130,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 415342,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 411592,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 41,
@@ -2142,9 +2142,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 348764,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 351276,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 42,
@@ -2158,9 +2158,9 @@
       "都道府県コード": "420000",
       "都道府県名": "長崎県",
       "人口_計": {
-        "value": 1274371,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 1257843,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 30,
@@ -2170,9 +2170,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 603308,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 595992,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 30,
@@ -2182,9 +2182,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 671063,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 661851,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 30,
@@ -2194,9 +2194,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 634937,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 633943,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 28,
@@ -2210,9 +2210,9 @@
       "都道府県コード": "430005",
       "都道府県名": "熊本県",
       "人口_計": {
-        "value": 1716360,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 1702998,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 23,
@@ -2222,9 +2222,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 817426,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 811913,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 23,
@@ -2234,21 +2234,21 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 898934,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 891085,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
-        "rank": 22,
+        "rank": 21,
         "rank_out_of": 47,
-        "percentile": 55.3,
+        "percentile": 57.4,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 817122,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 821253,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 22,
@@ -2262,9 +2262,9 @@
       "都道府県コード": "440001",
       "都道府県名": "大分県",
       "人口_計": {
-        "value": 1102102,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 1091304,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 33,
@@ -2274,9 +2274,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 526667,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 522205,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 34,
@@ -2286,9 +2286,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 575435,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 569099,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 33,
@@ -2298,9 +2298,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 550807,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 552909,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 32,
@@ -2314,9 +2314,9 @@
       "都道府県コード": "450006",
       "都道府県名": "宮崎県",
       "人口_計": {
-        "value": 1048347,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 1036017,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 35,
@@ -2326,9 +2326,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 497493,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 491973,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
         "rank": 35,
@@ -2338,9 +2338,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 550854,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 544044,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 35,
@@ -2350,9 +2350,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 534102,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 533568,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 34,
@@ -2366,9 +2366,9 @@
       "都道府県コード": "460001",
       "都道府県名": "鹿児島県",
       "人口_計": {
-        "value": 1558920,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 1541314,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 24,
@@ -2378,21 +2378,21 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 739056,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 731481,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
-        "rank": 24,
+        "rank": 25,
         "rank_out_of": 47,
-        "percentile": 51.1,
+        "percentile": 48.9,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 819864,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 809833,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 24,
@@ -2402,9 +2402,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 813191,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 812289,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 23,
@@ -2418,9 +2418,9 @@
       "都道府県コード": "470007",
       "都道府県名": "沖縄県",
       "人口_計": {
-        "value": 1484081,
-        "national_average_unweighted": 2645333.83,
-        "national_official": 124330690,
+        "value": 1484002,
+        "national_average_unweighted": 2633354.09,
+        "national_official": 123767642,
         "group_code": null,
         "group_average": null,
         "rank": 25,
@@ -2430,21 +2430,21 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_男": {
-        "value": 731868,
-        "national_average_unweighted": 1290707.4,
-        "national_official": 60663248,
+        "value": 731922,
+        "national_average_unweighted": 1285036.47,
+        "national_official": 60396714,
         "group_code": null,
         "group_average": null,
-        "rank": 25,
+        "rank": 24,
         "rank_out_of": 47,
-        "percentile": 48.9,
+        "percentile": 51.1,
         "average_method": "unweighted_mean",
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "人口_女": {
-        "value": 752213,
-        "national_average_unweighted": 1354626.23,
-        "national_official": 63667433,
+        "value": 752080,
+        "national_average_unweighted": 1348317.11,
+        "national_official": 63370904,
         "group_code": null,
         "group_average": null,
         "rank": 25,
@@ -2454,9 +2454,9 @@
         "source_note": "都道府県に類似団体区分は存在しない。順位は値の大きい順であり、大小の望ましさを含意しない。 national_official は原資料の全国行が持つ全国合計（総数）であって平均ではない。47都道府県の平均と同じ軸で並べないこと。"
       },
       "世帯数": {
-        "value": 713483,
-        "national_average_unweighted": 1303999.87,
-        "national_official": 61287994,
+        "value": 722921,
+        "national_average_unweighted": 1313768.94,
+        "national_official": 61747140,
         "group_code": null,
         "group_average": null,
         "rank": 25,

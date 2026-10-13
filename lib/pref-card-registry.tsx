@@ -62,6 +62,7 @@ import { CouncilSeatsCard } from "@/components/CouncilSeatsCard";
 import { KaihaCard } from "@/components/KaihaCard";
 import { GikaihiCard } from "@/components/GikaihiCard";
 import { GijirokuCard } from "@/components/GijirokuCard";
+import { toFixedHalfUp } from "@/lib/format-decimal";
 
 /** getter が返す {row, meta} の共通形。Row はカードごとに異なる */
 export interface PrefCardData<Row> {
@@ -125,7 +126,7 @@ function buildComparisonNote(
     const avg = Math.round(m.national_average_unweighted ?? 0);
     return { rankText, averageText: `全国平均（単純平均）：${avg.toLocaleString()}${opts.unit}` };
   }
-  const avg = (m.national_official ?? 0).toFixed(opts.decimals);
+  const avg = toFixedHalfUp(m.national_official ?? 0, opts.decimals);
   return { rankText, averageText: `全国平均（加重平均）：${avg}${opts.unit}` };
 }
 
@@ -148,7 +149,7 @@ export const PREF_CARD_REGISTRY: PrefCardDefinition<unknown>[] = [
     title: "人口",
     updateFrequency: "年1回",
     sourceLabel: "住民基本台帳",
-    note: "自治体Watchが最新年（令和7年）のみを抽出して表示。",
+    note: "自治体Watchが最新年（令和8年）のみを抽出して表示。",
     resolve: (p) => getPrefPopulation(p.prefectureName),
     renderVisualization: (d, p) => (
       <PopulationCard
@@ -168,7 +169,7 @@ export const PREF_CARD_REGISTRY: PrefCardDefinition<unknown>[] = [
     title: "世帯数",
     updateFrequency: "年1回",
     sourceLabel: "住民基本台帳",
-    note: "自治体Watchが最新年（令和7年）のみを抽出して表示。人口カードと同一データ。",
+    note: "自治体Watchが最新年（令和8年）のみを抽出して表示。人口カードと同一データ。",
     resolve: (p) => getPrefPopulation(p.prefectureName),
     renderVisualization: (d, p) => (
       <HouseholdCountCard
@@ -506,12 +507,12 @@ export function getPrefEntranceSummary(tab: IaTab, p: PrefectureConfig): Entranc
     const population = getPrefPopulationTimeseries(p.prefectureName);
     const aging = getPrefAgingRate(p.prefectureName);
     const populationValue = population
-      ? `${population.row.r7_2025.人口_計.toLocaleString()}人`
+      ? `${population.row.r8_2026.人口_計.toLocaleString()}人`
       : "—";
     const diffValue = population
-      ? formatSignedCount(population.row.r7_2025.人口_計 - population.row.r2_2020.人口_計)
+      ? formatSignedCount(population.row.r8_2026.人口_計 - population.row.r3_2021.人口_計)
       : "—";
-    const agingValue = aging ? `${aging.row.高齢化率.toFixed(1)}%` : "—";
+    const agingValue = aging ? `${toFixedHalfUp(aging.row.高齢化率, 1)}%` : "—";
     return [
       { label: "人口", value: populationValue },
       { label: "5年増減", value: diffValue },

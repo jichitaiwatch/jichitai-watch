@@ -1,5 +1,6 @@
 import type { FinanceOverviewRow, FinanceSection, FinanceLineItem } from "@/lib/metrics";
 import { formatManOku, formatThousandYenExact } from "@/lib/format-yen";
+import { toFixedHalfUp } from "@/lib/format-decimal";
 
 interface FinanceOverviewCardProps {
   data: FinanceOverviewRow;
@@ -28,7 +29,7 @@ function yearOverYearChips(total: number, prior: number): string[] {
   const sign = diff >= 0 ? "+" : "−";
   const abs = Math.abs(diff);
   const chips = [`前年比 ${sign}${formatManOku(abs)}`];
-  if (prior > 0) chips.push(`${sign}${((abs / prior) * 100).toFixed(1)}%`);
+  if (prior > 0) chips.push(`${sign}${toFixedHalfUp((abs / prior) * 100, 1)}%`);
   return chips;
 }
 
@@ -115,7 +116,7 @@ function FinancePanel({
               <tr key={r.name}>
                 <th scope="row">{r.name}</th>
                 <td>{yen(r.value)}</td>
-                <td>{pct(r.value).toFixed(1)}%</td>
+                <td>{toFixedHalfUp(pct(r.value), 1)}%</td>
               </tr>
             ))}
             <tr>

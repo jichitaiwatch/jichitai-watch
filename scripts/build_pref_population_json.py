@@ -2,8 +2,10 @@
 """まちのすがた #1「人口・男女数・世帯数」の都道府県版 生値JSON（単年）を生成する。
 
 入力（取得済みローカル1本のみ・新規ダウンロードなし）:
-  statInfId=000040306651 表25-01【総計】都道府県別人口、人口動態及び世帯数（令和7年1月1日）
-  handoff/pref-machi-verify/2501stjin.xlsx / シート「人口、世帯数、人口動態（都道府県別）【総計】」
+  総務省「住民基本台帳に基づく人口、人口動態及び世帯数」令和8年1月1日現在
+  【総計】都道府県別 人口・世帯数、人口動態（2026-10-12 に令和7年版から更新・launch-backlog.md E-9）
+  poc/recon-20261012-juki-r8/soumu_000892948_juki_pref_pop_hh_r8.xlsx / シート「人口、世帯数、人口動態（都道府県別）【総計】」
+  ※令和7年版（handoff/pref-machi-verify/2501stjin.xlsx）は build_pref_population_timeseries.py が経年の1点として使う。
 
 出力（新規1本。既存JSONは読まない・書き換えない）:
   data/pref_1a_population.json （47都道府県＋合計行・系譜 source_file_hash_sha256）
@@ -23,27 +25,21 @@ from pathlib import Path
 from openpyxl import load_workbook
 
 ROOT = Path(__file__).resolve().parents[1]
-SRC = ROOT / "handoff" / "pref-machi-verify" / "2501stjin.xlsx"
+SRC = ROOT / "poc" / "recon-20261012-juki-r8" / "soumu_000892948_juki_pref_pop_hh_r8.xlsx"
 OUT = ROOT / "data" / "pref_1a_population.json"
 
 UPDATED = date.today().isoformat()
-PERIOD = "令和7年1月1日時点（住民基本台帳）"
+PERIOD = "令和8年1月1日時点（住民基本台帳）"
 
-STAT_INF_ID = "000040306651"
-STAT_NAME = "住民基本台帳に基づく人口、人口動態及び世帯数調査"
-SOURCE_URL = f"https://www.e-stat.go.jp/stat-search/file-download?statInfId={STAT_INF_ID}&fileKind=0"
-SOURCE_PAGE = (
-    "https://www.e-stat.go.jp/stat-search/files?page=1&layout=datalist&toukei=00200241"
-    "&tstat=000001039591&cycle=7&year=20250&month=0&tclass1=000001039601"
-)
-# recon/pref-machi-existence-20260904.md §3 の取得記録（bytes 32,051 / sha256）
-FETCHED_AT = "2026-09-04"
-RECON_SHA256 = "30b61d52fcac0057cd41d6b1715271db65d3b8f88aa9a33ac9d45344d73adfba"
-
-ANCHORS = {
-    "gifu": {"code": "210005", "人口_計": 1951292},
-    "total": {"人口_男": 60663248, "人口_女": 63667433, "人口_計": 124330690, "世帯数": 61287994},
-}
+SOURCE_FILE_ID = "000892948"   # 総務省 main_content/NNNNNNNNN.xlsx の番号（e-Stat の統計表IDではない）
+STAT_NAME = "住民基本台帳に基づく人口、人口動態及び世帯数"
+SOURCE_URL = f"https://www.soumu.go.jp/main_content/{SOURCE_FILE_ID}.xlsx"
+SOURCE_PAGE = "https://www.soumu.go.jp/main_sosiki/jichi_gyousei/daityo/jinkou_jinkoudoutai-setaisuu.html"
+# 2026-10-12 に運営者が総務省のページから取得（取得時刻は保存時の記録）。ハッシュは取得したファイルの値
+FETCHED_AT = "2026-10-12T21:20:00+09:00"
+EXPECTED_SHA256 = "90c20e8d2514501aa73a9833a7496ab57c0ef4e65e6c031735a8c0a2ada43933"
+TITLE_MUST_HAVE = "令和8年1月1日"   # 表題に無ければ止める（別の年のファイルを読まないため）
+GIFU_PREF_CODE = "210005"
 
 
 class Abort(Exception):
@@ -166,26 +162,27 @@ def main():
     if len(rows) != 48:
         raise Abort(f"合計 {len(rows)} 件（48件ではない）")
 
-    print("== アンカー自己検証 ==")
-    gifu = next((r for r in prefs if r["code"] == ANCHORS["gifu"]["code"]), None)
+    print("== 自己検証（年ごとの固定値ではなく、表の内部の整合で確かめる） ==")
+    gifu = next((r for r in prefs if r["code"] == GIFU_PREF_CODE), None)
     if gifu is None:
-        raise Abort("岐阜県行(210005)が見つからない")
+        raise Abort(f"岐阜県行({GIFU_PREF_CODE})が見つからない")
     tot = totals[0]
-    checks = [("岐阜県(210005) 人口_計", gifu["人口_計"], ANCHORS["gifu"]["人口_計"])]
-    for k, want in ANCHORS["total"].items():
-        checks.append((f"合計 {k}", tot[k], want))
+    if TITLE_MUST_HAVE not in title:
+        raise Abort(f"表題に「{TITLE_MUST_HAVE}」が無い（別の年のファイルの可能性）: {title!r}")
+    print(f"    OK  表題に「{TITLE_MUST_HAVE}」を確認")
     ok = True
-    for label, got, want in checks:
+    for k in ("人口_男", "人口_女", "人口_計", "世帯数"):
+        got, want = sum(r[k] for r in prefs), tot[k]
         hit = got == want
         ok = ok and hit
-        print(f"    {'OK ' if hit else 'NG '} {label}: 実測={got} 期待={want}")
+        print(f"    {'OK ' if hit else 'NG '} 47都道府県の{k}の合計 = 合計行: {got} / {want}")
     if not ok:
-        raise Abort("アンカー値が一致しない。JSONを書かずに中断した。")
+        raise Abort("47都道府県の合計が合計行と一致しない。JSONを書かずに中断した。")
 
     file_hash = sha256_of(SRC)
-    if file_hash != RECON_SHA256:
-        raise Abort(f"入力のsha256がrecon記録と不一致\n  実測={file_hash}\n  記録={RECON_SHA256}")
-    print("    OK  入力sha256が recon/pref-machi-existence-20260904.md §3 の記録と一致")
+    if file_hash != EXPECTED_SHA256:
+        raise Abort(f"入力のsha256が取得時の記録と不一致\n  実測={file_hash}\n  記録={EXPECTED_SHA256}")
+    print("    OK  入力sha256が取得時の記録と一致")
 
     # 原資料 注2 の影響：男＋女≠計 になる行を全件洗い出す（合算で計を作らないことの根拠）
     gaps = [(r["code"], r["name"], r["人口_計"] - (r["人口_男"] + r["人口_女"])) for r in rows]
@@ -194,10 +191,16 @@ def main():
     for code, name, d in nonzero:
         print(f"    {code} {name}: 計 −(男+女) = {d}")
 
+    gap_text = "、".join(
+        f"{('合計' if code == '-' else name)}({code if code != '-' else '合計行'}) {d:+d}" for code, name, d in nonzero
+    )
+    prefs_gap_sum = sum(d for code, name, d in nonzero if code != "-")
+    total_gap = next((d for code, name, d in nonzero if code == "-"), 0)
     notes = [
-        "本ファイルは令和7年1月1日の単年のみを収録する。§7.11によれば1-1a情報カード本体は令和7.1.1単年で足り、"
+        f"本ファイルは{PERIOD.split('時点')[0]}の単年のみを収録する。1-1a情報カード本体は単年で足り、"
         "5年時系列が必要なのは入口サマリー0-1の『5年間の増減人数』・経年画面であって、そちらは市区町村版"
-        "（data/m1_1a_population_timeseries.json・令和2〜令和7の6時点）で既に対応済みのため、都道府県版は単年とした。",
+        "（data/m1_1a_population_timeseries.json）と都道府県版の経年（data/pref_1a_population_timeseries.json）で"
+        "対応済みのため、このファイルは単年とした。",
         "合計行は原表のまま 団体コード=\"-\"・都道府県名=\"合計\" で格納した（住基6桁体系に全国コードは存在しないため、"
         "コードを捏造していない）。国勢調査系JSON（data/pref_2a_industry.json 等）の \"00000_全国\" とは別体系であり、"
         "コード結合時に混同しないこと。合計行は後段の全国比較用に同梱したものであり、都道府県の1件として数えない。",
@@ -208,12 +211,12 @@ def main():
         "人口_計は原資料の『人口 計』列をそのまま格納しており、人口_男＋人口_女 の合算ではない。"
         "原資料 注2「外国人住民のうち、在留カードの性別欄が空欄のため、住民票の性別を男女のいずれにも該当しない"
         "ものとしている者については、表の男女のいずれにも計上せず、総計においてのみ計上している。」により、"
-        "計 −(男+女) が0にならない行が48行中6行ある：合計 +9、東京都(130001) +3、石川県(170003) +2、"
-        "山梨県(190004) +2、長野県(200000) +1、鳥取県(310000) +1（都道府県分の合計が合計行の+9と一致）。"
+        f"計 −(男+女) が0にならない行が{len(rows)}行中{len(nonzero)}行ある（このファイルでの実測）：{gap_text}"
+        f"（都道府県分の合計 {prefs_gap_sum:+d} は合計行の {total_gap:+d} と{'一致' if prefs_gap_sum == total_gap else '一致しない'}）。"
         "男女合算で計を作り直さないこと。",
         "単位は人口が人、世帯数が世帯。値は原資料のまま（加工なし）。",
         "本ファイルは生値のみを格納する。比較値（全国平均・全国順位）は含めず、集計段で付与する。",
-        "原資料 c7以降の人口動態（令和6年1月1日〜12月31日計上の転入・転出・出生・死亡・増減率等）は本ファイルに含めていない。",
+        "原資料 c7以降の人口動態（前年1月1日〜12月31日計上の転入・転出・出生・死亡・増減率等）は本ファイルに含めていない。",
         "入力は取得済みのローカルファイル1本のみを使用し、本ファイル生成時に再ダウンロードはしていない。",
     ]
     payload = {
@@ -222,7 +225,7 @@ def main():
             "source_page": SOURCE_PAGE,
             "stat_name": STAT_NAME,
             "table_title": title,
-            "statInfId": STAT_INF_ID,
+            "source_file_id": SOURCE_FILE_ID,
             "fetched_at": FETCHED_AT,
             "source_file_hash_sha256": file_hash,
         }],

@@ -1,5 +1,6 @@
 import type { KaigoAverageBlock } from "@/lib/metrics";
 import { MARKER_FLIP_PCT, markerBlockStyle } from "./ExpenditureBarChart";
+import { toFixedHalfUp } from "@/lib/format-decimal";
 
 interface KaigoPremiumSummaryProps {
   /** 当該自治体名（バーのラベル・広域連合時のeyebrowに使う） */
@@ -50,7 +51,7 @@ export function KaigoPremiumSummary({
 }: KaigoPremiumSummaryProps) {
   const isWideArea = insurerName.includes("広域連合");
   const growthLabel =
-    growthRate === 0 ? "±0%" : `${growthRate > 0 ? "+" : ""}${growthRate.toFixed(2)}%`;
+    growthRate === 0 ? "±0%" : `${growthRate > 0 ? "+" : ""}${toFixedHalfUp(growthRate, 2)}%`;
   const diff = premiumCurrent - premiumPrevious;
   const diffLabel = `第8期 ${premiumPrevious.toLocaleString()}円/月${
     diff !== 0 ? `（${diff > 0 ? "+" : ""}${diff.toLocaleString()}円）` : ""
@@ -173,17 +174,17 @@ export function KaigoPremiumSummary({
       )}
 
       <p className="fs-label text-[var(--muted)]">
-        要介護認定率 {certificationRate.toFixed(2)}%
+        要介護認定率 {toFixedHalfUp(certificationRate, 2)}%
         {(nationalAverage || prefectureAverage) && (
           // sm未満（スマホ幅）は改行して2行目とし、2行目自体は折り返さない1行にする。sm以上（PC）は
           // 同一行のまま（2026-09-28運営者指摘：外側の括弧は（）と）が連続して読みにくいため【】に変更、
           // 内側の「（単純平均）」は従来どおり（）を維持）。
           <span className="block text-[var(--muted-light)] sm:inline">
             【
-            {nationalAverage && `全国平均 ${nationalAverage.certification_rate_pct.toFixed(2)}%`}
+            {nationalAverage && `全国平均 ${toFixedHalfUp(nationalAverage.certification_rate_pct, 2)}%`}
             {nationalAverage && prefectureAverage && "・"}
             {prefectureAverage &&
-              `${prefName}内平均 ${prefectureAverage.certification_rate_pct.toFixed(2)}%`}
+              `${prefName}内平均 ${toFixedHalfUp(prefectureAverage.certification_rate_pct, 2)}%`}
             {certSuffix}】
           </span>
         )}

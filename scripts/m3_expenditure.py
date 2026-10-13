@@ -2,26 +2,29 @@
 M3: 総務省 地方財政状況調査 住民一人あたり分野別支出 抽出スクリプト
 対象: 岐阜県内42市町村（団体コード先頭2桁=21）
 
-データソース（令和5年度・FY2023）:
-  総務省 市区町村別決算状況調 令和5年度
-  https://www.soumu.go.jp/iken/kessan_jokyo_1.html
+データソース（令和6年度・FY2024。2026-10-12 に令和5年度から更新・launch-backlog.md E-9）:
+  総務省 市町村別決算状況調 令和6年度（2026年3月公表）
+  https://www.soumu.go.jp/iken/zaisei/r06_shichouson.html
 
-使用ファイル:
-  都市別 概況         000999900.xlsx  → 住民基本台帳人口（令6.1.1現在）
-  都市別 目的別歳出   000999902.xlsx  → 民生費(col25)/土木費(col45)/教育費(col58)
-  都市別 性質別歳出   000999903.xlsx  → 普通建設事業費(col146)
-  町村別 概況         000999905.xlsx  → 住民基本台帳人口（令6.1.1現在）
-  町村別 目的別歳出   000999908.xlsx  → 民生費(col25)/土木費(col45)/教育費(col58)
-  町村別 性質別歳出   000999910.xlsx  → 普通建設事業費(col146)
+入力（取得済みのローカルファイルのみ。ネットワークに接続しない）:
+  poc/recon-20260830/raw/ に置いた次の6ファイル（取得元は上のページ。URL は RAW_FILES に定義）
+  都市別 概況         001061669.xlsx  → 住民基本台帳人口（令7.1.1現在）
+  都市別 目的別歳出   001061671.xlsx  → 民生費/土木費/教育費
+  都市別 性質別歳出   001061672.xlsx  → 普通建設事業費
+  町村別 概況         001061674.xlsx  → 住民基本台帳人口（令7.1.1現在）
+  町村別 目的別歳出   001061676.xlsx  → 民生費/土木費/教育費
+  町村別 性質別歳出   001061677.xlsx  → 普通建設事業費
+  ※令和6年度版では性質別歳出の列位置が令和5年度版から5列ずれていた（普通建設事業費が
+    146列目→151列目）。列位置を数字で固定せず、見出しの文字から特定して自己検証する。
+  新しい年度へ更新するときは、上のページから6ファイルを取り直して RAW_FILES を差し替える。
 
 団体コード: Excel内の6桁（検査数字付き、全国地方公共団体コード）をそのまま使用
 
 全国平均・岐阜県内平均（2026-08-06追加）:
-  ダウンロードした全国Excelは岐阜県フィルタ前の全都道府県分のデータを
-  含む。このスクリプトはフィルタ前の全国データから4項目（民生費・
-  教育費・土木費・普通建設事業費、いずれも円/人）の全国平均を算出し、
-  JSONのトップレベル(national_average)に追加する。岐阜県内平均
-  (prefecture_average)も同様に算出する。
+  全国Excelは岐阜県フィルタ前の全都道府県分のデータを含む。このスクリプトは
+  フィルタ前の全国データから4項目（民生費・教育費・土木費・普通建設事業費、
+  いずれも円/人）の全国平均を算出し、JSONのトップレベル(national_average)に
+  追加する。岐阜県内平均(prefecture_average)も同様に算出する。
   算出方法は人口加重平均（対象市町村の当該費目_千円合計 ÷ 対象市町村の
   人口_人合計 × 1000）で、各市町村の円/人を単純算術平均する方式ではない
   （人口の少ない自治体ほど円/人が跳ね上がる構造があり、実際に岐阜県内
@@ -37,26 +40,29 @@ M3: 総務省 地方財政状況調査 住民一人あたり分野別支出 抽�
 import sys
 import argparse
 import json
+import re
 from pathlib import Path
 
-import requests
 import openpyxl
 
 from lineage import build_sources
 
-CACHE_DIR = Path("data/cache")
-OUTPUT_PATH = Path("data/m3_expenditure.json")
+ROOT = Path(__file__).resolve().parent.parent
+RAW_DIR = ROOT / "poc" / "recon-20260830" / "raw"
+OUTPUT_PATH = ROOT / "data" / "m3_expenditure.json"
 GIFU_PREFIX = "21"
-SOUMU_SOURCE_PAGE = "https://www.soumu.go.jp/iken/kessan_jokyo_1.html"
+SOUMU_SOURCE_PAGE = "https://www.soumu.go.jp/iken/zaisei/r06_shichouson.html"
 
-# (name, url, sheet_idx)
-EXCEL_FILES = {
-    "shi_gaikyo":   ("000999900", "https://www.soumu.go.jp/main_content/000999900.xlsx"),
-    "shi_mokuteki": ("000999902", "https://www.soumu.go.jp/main_content/000999902.xlsx"),
-    "shi_seishitsu":("000999903", "https://www.soumu.go.jp/main_content/000999903.xlsx"),
-    "machi_gaikyo": ("000999905", "https://www.soumu.go.jp/main_content/000999905.xlsx"),
-    "machi_mokuteki":("000999908","https://www.soumu.go.jp/main_content/000999908.xlsx"),
-    "machi_seishitsu":("000999910","https://www.soumu.go.jp/main_content/000999910.xlsx"),
+# キー → (ファイル名, 取得元URL, 取得日時〈記録〉)
+_T_OLD = "2026-08-28T20:03:48+09:00"   # 令和6年度の4ファイル（recon で取得。scripts/fetch_m2_2_raw.py の記録と同じ）
+_T_NEW = "2026-10-12T21:05:00+09:00"   # 性質別の2ファイル（2026-10-12 に運営者が取得）
+RAW_FILES = {
+    "shi_gaikyo":      ("001061669.xlsx", "https://www.soumu.go.jp/main_content/001061669.xlsx", _T_OLD),
+    "shi_mokuteki":    ("001061671.xlsx", "https://www.soumu.go.jp/main_content/001061671.xlsx", _T_OLD),
+    "shi_seishitsu":   ("001061672.xlsx", "https://www.soumu.go.jp/main_content/001061672.xlsx", _T_NEW),
+    "machi_gaikyo":    ("001061674.xlsx", "https://www.soumu.go.jp/main_content/001061674.xlsx", _T_OLD),
+    "machi_mokuteki":  ("001061676.xlsx", "https://www.soumu.go.jp/main_content/001061676.xlsx", _T_OLD),
+    "machi_seishitsu": ("001061677.xlsx", "https://www.soumu.go.jp/main_content/001061677.xlsx", _T_NEW),
 }
 
 # EXCEL_FILES キー → sources[].role（旧 soumu_urls の日本語ラベルを流用）
@@ -69,28 +75,61 @@ EXCEL_FILE_ROLES = {
     "machi_seishitsu": "町村別性質別",
 }
 
-# 列インデックス（0ベース）
-COL_CODE  = 14   # 団体コード（6桁）
-COL_NAME  = 15   # 団体名
-COL_POP   = 16   # 住民基本台帳登載人口（令6.1.1現在）
-COL_MIN   = 24   # 民生費
-COL_DOB   = 44   # 土木費
-COL_KYO   = 57   # 教育費
-COL_FKEN  = 145  # 普通建設事業費
+# 団体コード・団体名・人口の列（0ベース）。見出しで自己検証する（locate_cols）
+COL_CODE = 14   # 団体コード（6桁）
+COL_NAME = 15   # 団体名
+COL_POP  = 16   # 住民基本台帳登載人口（令7.1.1現在）
+HEADER_ROWS = range(5, 15)  # 見出しがある行（0ベース）
+
+POP_DATE_LABEL = "令和7年1月1日"
 
 
-def fetch_excel(file_id: str, url: str, use_cache: bool = True) -> openpyxl.Workbook:
-    path = CACHE_DIR / f"r05_{file_id}.xlsx"
-    if not (use_cache and path.exists()):
-        print(f"  [DL] {url.split('/')[-1]} ...", end=" ", flush=True)
-        CACHE_DIR.mkdir(parents=True, exist_ok=True)
-        resp = requests.get(url, timeout=60)
-        resp.raise_for_status()
-        path.write_bytes(resp.content)
-        print(f"ok ({len(resp.content):,} bytes)")
-    else:
-        print(f"  [cache] r05_{file_id}.xlsx")
+def load_excel(key: str) -> openpyxl.Workbook:
+    fname, _url, _t = RAW_FILES[key]
+    path = RAW_DIR / fname
+    if not path.exists():
+        sys.exit(
+            f"原本がありません: {path}\n"
+            f"  取得元: {RAW_FILES[key][1]}\n"
+            f"  上のURLからダウンロードして {RAW_DIR} に同じ名前で置いてから、もう一度実行してください。"
+        )
+    print(f"  [local] {fname}")
     return openpyxl.load_workbook(path, data_only=True)
+
+
+def _norm(v) -> str:
+    return re.sub(r"\s+", "", str(v)) if v is not None else ""
+
+
+def find_col(ws, label: str, top_level: bool = False) -> int:
+    """見出し行（HEADER_ROWS）で、セルの文字が label と完全一致する列を返す。ちょうど1つでなければ止める。
+
+    top_level=True のときは、同じ列の見出し行（0始まり8行目）に大項目の番号（「三」「八」など漢数字）が
+    ある列だけを対象にする。「土木費」「教育費」は災害復旧費の内訳にも同じ文字の列があるため。
+    """
+    rows = list(ws.iter_rows(min_row=1, max_row=max(HEADER_ROWS) + 1, values_only=True))
+    hits = []
+    for r_idx, row in enumerate(rows):
+        if r_idx not in HEADER_ROWS:
+            continue
+        for c_idx, v in enumerate(row):
+            if _norm(v) != label:
+                continue
+            if top_level:
+                marker = _norm(rows[8][c_idx]) if c_idx < len(rows[8]) else ""
+                if not re.fullmatch(r"[一二三四五六七八九十]+", marker):
+                    continue
+            hits.append(c_idx)
+    if len(set(hits)) != 1:
+        sys.exit(f"見出し「{label}」の列を1つに特定できません（候補: {sorted(set(hits))}）。ファイルの形式が変わった可能性があります。")
+    return hits[0]
+
+
+def check_fixed_cols(ws, fname: str) -> None:
+    """団体コード・団体名・人口の列位置が、見出しの文字と合っているか確かめる。"""
+    for col, label in ((COL_CODE, "団体コード"), (COL_NAME, "団体名")):
+        if find_col(ws, label) != col:
+            sys.exit(f"{fname}: 「{label}」の列が想定（{col}列目・0始まり）と違います。")
 
 
 def is_gifu(code: str) -> bool:
@@ -181,15 +220,31 @@ def weighted_average(
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--test", action="store_true", help="岐阜市（21201）のみ")
-    ap.add_argument("--no-cache", action="store_true")
     args = ap.parse_args()
-    use_cache = not args.no_cache
 
-    # ---- ファイル取得 ----
-    print("\n=== Excel ダウンロード/キャッシュ確認 ===")
+    # ---- 原本の読み込み（ローカルのみ） ----
+    print("\n=== 原本の読み込み ===")
     wbs = {}
-    for key, (fid, url) in EXCEL_FILES.items():
-        wbs[key] = fetch_excel(fid, url, use_cache)
+    for key in RAW_FILES:
+        wbs[key] = load_excel(key)
+        check_fixed_cols(wbs[key].worksheets[0], RAW_FILES[key][0])
+
+    # ---- 見出しの文字から列を特定（数字で固定しない） ----
+    cols: dict[str, dict[str, int]] = {}
+    for key, wb in wbs.items():
+        ws = wb.worksheets[0]
+        if key.endswith("gaikyo"):
+            c = {"人口": find_col(ws, "住民基本台帳登載人口")}
+            if c["人口"] != COL_POP:
+                sys.exit(f"{RAW_FILES[key][0]}: 人口の列が想定（{COL_POP}列目）と違います。")
+            if not any("令7.1.1現在" in _norm(v) for row in ws.iter_rows(min_row=1, max_row=15, values_only=True) for v in [row[COL_POP] if len(row) > COL_POP else None]):
+                sys.exit(f"{RAW_FILES[key][0]}: 人口の基準日が「令7.1.1現在」ではありません。POP_DATE_LABEL と出力の注記を見直してください。")
+        elif key.endswith("mokuteki"):
+            c = {k: find_col(ws, k, top_level=True) for k in ("民生費", "土木費", "教育費")}
+        else:
+            c = {"普通建設事業費": find_col(ws, "普通建設事業費", top_level=True)}
+        cols[key] = c
+        print(f"  列: {RAW_FILES[key][0]} {c}")
 
     # ---- 抽出（全国、都道府県フィルタなし。全国平均算出に使用） ----
     print("\n=== 全国データ抽出（全国平均算出用） ===")
@@ -207,7 +262,8 @@ def main() -> None:
     mokuteki_all: dict[str, list] = {}
     for key in ("shi_mokuteki", "machi_mokuteki"):
         ws = wbs[key].worksheets[0]
-        d = extract_all(ws, COL_MIN, COL_DOB, COL_KYO)
+        cc = cols[key]
+        d = extract_all(ws, cc["民生費"], cc["土木費"], cc["教育費"])
         mokuteki_all.update(d)
     print(f"  目的別歳出: {len(mokuteki_all)} 件（全国）")
 
@@ -215,7 +271,7 @@ def main() -> None:
     seishitsu_all: dict[str, list] = {}
     for key in ("shi_seishitsu", "machi_seishitsu"):
         ws = wbs[key].worksheets[0]
-        d = extract_all(ws, COL_FKEN)
+        d = extract_all(ws, cols[key]["普通建設事業費"])
         seishitsu_all.update(d)
     print(f"  性質別歳出: {len(seishitsu_all)} 件（全国）")
 
@@ -286,7 +342,7 @@ def main() -> None:
 
     # ---- サマリ ----
     null_count = sum(1 for r in rows for v in r.values() if v is None)
-    print(f"\n=== 岐阜県内市町村: {len(rows)} 件 (FY2023) ===")
+    print(f"\n=== 岐阜県内市町村: {len(rows)} 件 (FY2024) ===")
     for r in rows[:5]:
         print(
             f"  {r['市区町村名']:8s}  人口: {r['人口_人']:>8,}  "
@@ -348,8 +404,8 @@ def main() -> None:
         specs=[
             {
                 "role": EXCEL_FILE_ROLES[key],
-                "cache_path": CACHE_DIR / f"r05_{EXCEL_FILES[key][0]}.xlsx",
-                "source_url": EXCEL_FILES[key][1],
+                "cache_path": RAW_DIR / RAW_FILES[key][0],
+                "source_url": RAW_FILES[key][1],
                 "source_page": SOUMU_SOURCE_PAGE,
             }
             for key in (
@@ -359,19 +415,21 @@ def main() -> None:
         ],
         backfill_fetched_at="2026-07-31",
     )
+    # 取得日時は、実際に取得した日時の記録を使う（ネットワークに接続しないため、実行時刻を入れない）
+    for spec_key, entry in zip(("shi_gaikyo", "shi_mokuteki", "shi_seishitsu", "machi_gaikyo", "machi_mokuteki", "machi_seishitsu"), sources):
+        entry["fetched_at"] = RAW_FILES[spec_key][2]
     payload = {
-        "year": "2023年度（令和5年度）",
-        "year_label": "2023年度（令和5年度、FY April 2023 - March 2024）",
-        "population_source": "住民基本台帳登載人口（令和6年1月1日現在）",
-        "population_year_gap": "約0年（FY2023中 vs 令6.1.1）",
-        "updated": "2026-07-31",
+        "year": "2024年度（令和6年度）",
+        "year_label": "2024年度（令和6年度、FY April 2024 - March 2025）",
+        "population_source": f"住民基本台帳登載人口（{POP_DATE_LABEL}現在）",
+        "population_year_gap": "約0年（FY2024中 vs 令7.1.1）",
+        "updated": "2026-10-12",
         "sources": sources,
         "notes": [
-            "総務省 市区町村別決算状況調 令和5年度（FY2023）。",
-            "普通建設事業費は性質別歳出内訳(col146)から取得。全目的合計の性質別分類。",
-            "民生費・土木費・教育費は目的別歳出内訳から取得。",
+            "総務省 市区町村別決算状況調 令和6年度（FY2024）。2026-10-12 に令和5年度版から更新。",
+            "普通建設事業費は性質別歳出内訳（見出し「普通建設事業費」の列）から取得。全目的合計の性質別分類。",
+            "民生費・土木費・教育費は目的別歳出内訳（見出しの文字で列を特定）から取得。",
             "団体コードはExcel6桁(検査数字付き、全国地方公共団体コード)をそのまま使用。",
-            "e-Stat 00200251 はFY2018が最新のためExcel直接取得に切替。",
             f"全国平均・岐阜県内平均（national_average/prefecture_average）はいずれも"
             f"人口加重平均。全国母数は{national_n}件（日本の市区町村1,718+東京都"
             "特別区23=1,741の想定レンジ内であることを確認済み。Excelの脚注行・"

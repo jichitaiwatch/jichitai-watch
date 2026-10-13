@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""都道府県版 人口・男女数・世帯数の5年時系列（令和2〜令和7の6時点）生値JSONを生成する。
+"""都道府県版 人口・男女数・世帯数の時系列（令和2〜令和8の7時点）生値JSONを生成する。
 
 入力（【総計】都道府県別人口、人口動態及び世帯数。表番号 NN-01。年ごとに e-Stat 一覧から実査で同定済み）:
   令和2年(2020) statInfId=000031971201 estat_..._r2_2020.xls   ← 旧OLE .xls形式
@@ -8,6 +8,8 @@
   令和5年(2023) statInfId=000040306645 estat_..._r5_2023.xlsx
   令和6年(2024) statInfId=000040306668 estat_..._r6_2024.xlsx
   令和7年(2025) statInfId=000040306651 handoff/pref-machi-verify/2501stjin.xlsx（既存・再取得せず）
+  令和8年(2026) 総務省 main_content/000892948.xlsx poc/recon-20261012-juki-r8/…（2026-10-12 取得・launch-backlog.md E-9。
+                e-Stat に載る前の総務省掲載版。表の形は令和7年と同じ）
 
 出力（新規1本。既存JSONは読み取り検証のみで書き換えない）:
   data/pref_1a_population_timeseries.json
@@ -29,11 +31,11 @@ sys.stdout.reconfigure(encoding="utf-8")
 ROOT = Path(__file__).resolve().parents[1]
 HERE = ROOT / "poc" / "recon-20260905-pref-ts"  # 原本・_fetch_log.json の置き場
 OUT = ROOT / "data" / "pref_1a_population_timeseries.json"
-EXISTING_R7 = ROOT / "data" / "pref_1a_population.json"
+EXISTING_LATEST = ROOT / "data" / "pref_1a_population.json"   # 最新年（令和8年）の単年ファイル。先に build_pref_population_json.py を実行しておく
 FETCH_LOG = json.loads((HERE / "_fetch_log.json").read_text(encoding="utf-8"))
 
 UPDATED = date.today().isoformat()
-PERIOD = "令和2年1月1日〜令和7年1月1日、各年1月1日時点（住民基本台帳）"
+PERIOD = "令和2年1月1日〜令和8年1月1日、各年1月1日時点（住民基本台帳）"
 STAT_NAME = "住民基本台帳に基づく人口、人口動態及び世帯数調査"
 FIELDS = ("人口_男", "人口_女", "人口_計", "世帯数")
 
@@ -49,7 +51,20 @@ R7 = {
     "list_html": HERE / "_html" / "01_r7_2025.html",
 }
 
+# 令和7年のファイルは固定（2501stjin.xlsx）なので、令和7年の値は従来のアンカーで確かめられる
 ANCHORS = {"gifu_code": "210005", "gifu_r7_pop": 1951292, "total_r7_pop": 124330690}
+
+# 令和8年分（2026-10-12 取得）。ハッシュは取得したファイルの値
+R8 = {
+    "reiwa": 8, "year": 2026, "year_key": "r8_2026",
+    "file_id": "000892948",
+    "path": ROOT / "poc" / "recon-20261012-juki-r8" / "soumu_000892948_juki_pref_pop_hh_r8.xlsx",
+    "sha256": "90c20e8d2514501aa73a9833a7496ab57c0ef4e65e6c031735a8c0a2ada43933",
+    "fetched_at": "2026-10-12",
+    "source_url": "https://www.soumu.go.jp/main_content/000892948.xlsx",
+    "source_page": "https://www.soumu.go.jp/main_sosiki/jichi_gyousei/daityo/jinkou_jinkoudoutai-setaisuu.html",
+    "stat_name": "住民基本台帳に基づく人口、人口動態及び世帯数",
+}
 
 
 class Abort(Exception):
@@ -236,12 +251,19 @@ def main() -> None:
         "fetched_at": R7["fetched_at"], "source_page": R7["source_page"],
         "table_no": table_no_from_html(R7["list_html"], R7["statInfId"]),
     })
+    jobs.append({
+        "year_key": R8["year_key"], "reiwa": R8["reiwa"], "year": R8["year"],
+        "statInfId": None, "file_id": R8["file_id"], "path": R8["path"], "sha256": R8["sha256"],
+        "fetched_at": R8["fetched_at"], "source_url": R8["source_url"], "source_page": R8["source_page"],
+        "stat_name": R8["stat_name"], "table_no": None,
+    })
 
     per_year, sources, failures, gaps_by_year = {}, [], [], {}
     for job in jobs:
         yk = job["year_key"]
         print("=" * 78)
-        print(f"[{yk} 令和{job['reiwa']}年1月1日]  表番号{job['table_no']}  statInfId={job['statInfId']}")
+        print(f"[{yk} 令和{job['reiwa']}年1月1日]  表番号{job['table_no']}  "
+              + (f"statInfId={job['statInfId']}" if job["statInfId"] else f"総務省ファイル{job['file_id']}"))
         print(f"  file: {job['path'].name}")
         if not job["path"].exists():
             failures.append((yk, f"入力ファイルが無い: {job['path'].name}"))
@@ -277,19 +299,43 @@ def main() -> None:
         print(f"  男＋女≠計 の行: {len(nonzero)}/{len(vals)} 件"
               + ("" if not nonzero else "  " + "、".join(f"{c} {n} {d:+d}" for c, n, d in nonzero)))
 
-        per_year[yk] = {"vals": vals, "names": names}
-        sources.append({
-            "year_key": yk,
-            "year_label": f"令和{job['reiwa']}年1月1日",
-            "source_url": f"https://www.e-stat.go.jp/stat-search/file-download?statInfId={job['statInfId']}&fileKind=0",
-            "source_page": job["source_page"],
-            "stat_name": STAT_NAME,
-            "table_no": job["table_no"],
-            "table_title": meta["title"],
-            "statInfId": job["statInfId"],
-            "fetched_at": job["fetched_at"],
-            "source_file_hash_sha256": got,
-        })
+        # どの年でも、47都道府県の合計が合計行と一致すること（アンカーに頼らない内部整合）
+        for k in FIELDS:
+            tot_v = vals["-"][k]
+            sum_v = sum(v[k] for c, v in vals.items() if c != "-")
+            if sum_v != tot_v:
+                failures.append((yk, f"47都道府県の{k}の合計{sum_v}が合計行{tot_v}と不一致"))
+                print(f"  !! 中断: 47都道府県の{k}の合計{sum_v}が合計行{tot_v}と不一致")
+                break
+        else:
+            print("  47都道府県の合計 = 合計行（4項目）  OK")
+            per_year[yk] = {"vals": vals, "names": names}
+            if job["statInfId"]:
+                src = {
+                    "year_key": yk,
+                    "year_label": f"令和{job['reiwa']}年1月1日",
+                    "source_url": f"https://www.e-stat.go.jp/stat-search/file-download?statInfId={job['statInfId']}&fileKind=0",
+                    "source_page": job["source_page"],
+                    "stat_name": STAT_NAME,
+                    "table_no": job["table_no"],
+                    "table_title": meta["title"],
+                    "statInfId": job["statInfId"],
+                    "fetched_at": job["fetched_at"],
+                    "source_file_hash_sha256": got,
+                }
+            else:
+                src = {
+                    "year_key": yk,
+                    "year_label": f"令和{job['reiwa']}年1月1日",
+                    "source_url": job["source_url"],
+                    "source_page": job["source_page"],
+                    "stat_name": job["stat_name"],
+                    "table_title": meta["title"],
+                    "source_file_id": job["file_id"],
+                    "fetched_at": job["fetched_at"],
+                    "source_file_hash_sha256": got,
+                }
+            sources.append(src)
 
     print("=" * 78)
     if not per_year:
@@ -333,6 +379,8 @@ def main() -> None:
         ("岐阜県(210005) r7_2025.人口_計", gifu["r7_2025"]["人口_計"], ANCHORS["gifu_r7_pop"]),
         ("合計行 r7_2025.人口_計", tot["r7_2025"]["人口_計"], ANCHORS["total_r7_pop"]),
     ]
+    if gifu.get("r8_2026") is None:
+        raise Abort("令和8年(r8_2026)が取り込めていない。JSONを書かずに中断した。")
     ok = True
     for label, got_v, want in checks:
         hit = got_v == want
@@ -341,26 +389,26 @@ def main() -> None:
     if not ok:
         raise Abort("アンカー値が一致しない。JSONを書かずに中断した。")
 
-    # 令和7分が既存 data/pref_1a_population.json と完全一致するか（既存ファイルは読むだけ）
-    if "r7_2025" in per_year:
-        ex = json.loads(EXISTING_R7.read_text(encoding="utf-8"))
+    # 令和8分が data/pref_1a_population.json（令和8単年。build_pref_population_json.py が作る）と完全一致するか
+    if "r8_2026" in per_year:
+        ex = json.loads(EXISTING_LATEST.read_text(encoding="utf-8"))
         exmap = {r["都道府県コード"]: r for r in ex["data"]}
         mism = []
         if set(exmap) != base:
             mism.append(f"コード集合が不一致: 既存のみ={sorted(set(exmap) - base)} 新規のみ={sorted(base - set(exmap))}")
         for code in sorted(base & set(exmap)):
             for k in FIELDS:
-                a, b = per_year["r7_2025"]["vals"][code][k], exmap[code][k]
+                a, b = per_year["r8_2026"]["vals"][code][k], exmap[code][k]
                 if a != b:
                     mism.append(f"{code} {k}: 新規={a} 既存={b}")
-            if per_year["r7_2025"]["names"][code] != exmap[code]["都道府県名"]:
-                mism.append(f"{code} 都道府県名: 新規={per_year['r7_2025']['names'][code]} 既存={exmap[code]['都道府県名']}")
-        print(f"    {'OK ' if not mism else 'NG '} 令和7分 vs data/pref_1a_population.json: "
+            if per_year["r8_2026"]["names"][code] != exmap[code]["都道府県名"]:
+                mism.append(f"{code} 都道府県名: 新規={per_year['r8_2026']['names'][code]} 既存={exmap[code]['都道府県名']}")
+        print(f"    {'OK ' if not mism else 'NG '} 令和8分 vs data/pref_1a_population.json: "
               f"{len(base)}件×{len(FIELDS)}項目＋名称 の照合、不一致={len(mism)}件")
         for m in mism[:20]:
             print(f"        {m}")
         if mism:
-            raise Abort("令和7分が既存 data/pref_1a_population.json と一致しない。JSONを書かずに中断した。")
+            raise Abort("令和8分が data/pref_1a_population.json と一致しない。JSONを書かずに中断した。")
 
     gap_years = [yk for yk in year_keys if gaps_by_year.get(yk)]
     clean_years = [yk for yk in year_keys if not gaps_by_year.get(yk)]
@@ -377,11 +425,13 @@ def main() -> None:
         "e-Stat「住民基本台帳に基づく人口、人口動態及び世帯数調査」（toukei=00200241 / tstat=000001039591）の"
         "年次別統計表一覧から、各年の【総計】**都道府県別**人口、人口動態及び世帯数（表番号 NN-01）を"
         "年ごとに実査で同定して取得した。表番号は年により変わる（令和2年=20-01 〜 令和7年=25-01）。"
+        "令和8年（2026-10-12 取得）だけは、e-Stat に載る前の総務省ページ掲載版（main_content/000892948.xlsx）を使っており、"
+        "表の形（見出し・列・行）は令和7年と同じ。"
         "市区町村別（NN-03）・日本人住民（NN-05）・外国人住民（NN-09）・年齢階級別（NN-02）は使用していない。"
         "各年の statInfId は sources[] を参照（推測で埋めた欄はない）。",
-        f"収録は令和2年1月1日〜令和7年1月1日の6時点。content-spec-v1.md §0基本仕様の入口カード0-1"
-        "「人口及び5年間の増減人数」は、r2_2020 と r7_2025 の差で算出できる。"
-        "市区町村版 data/m1_1a_population_timeseries.json（令和2〜令和7の6時点）と同じ時点構成であり、"
+        f"収録は令和2年1月1日〜令和8年1月1日の7時点。content-spec-v1.md §0基本仕様の入口カード0-1"
+        "「人口及び5年間の増減人数」は、r3_2021 と r8_2026 の差（最新の5年間）、または r2_2020 と r8_2026 の差（6年間）で算出できる。"
+        "市区町村版 data/m1_1a_population_timeseries.json（令和2〜令和8の7時点）と同じ時点構成であり、"
         "都道府県ページと市区町村ページで同一の期間を並べられる。",
         "令和2年（2020年）分のみ旧 .xls 形式（OLE）で提供されており、ヘッダ構成が他年と異なる："
         "①グループ見出し（人口／世帯数）がキー列行より**下**にある（他年は上）、"
@@ -393,27 +443,27 @@ def main() -> None:
         "年をまたいで同一行として結合する必要があるため、令和2年の空欄を \"-\" に正規化した（値の加工はしていない）。"
         "合計行は後段の全国比較用に同梱したものであり、都道府県の1件として数えない。",
         "団体コードは住民基本台帳の6桁（NN000X 形式・チェックデジット付き。例 210005=岐阜県、010006=北海道）で、"
-        "**6時点すべてで同一体系・同一の48コード集合**であることを生成時に検証済み（桁数の混在なし、"
+        "**7時点すべてで同一体系・同一の48コード集合**であることを生成時に検証済み（桁数の混在なし、"
         "年による追加・欠落なし、名称変更なし）。data/pref_1a_population.json・data/pref_1c_aging_rate.json と"
         "同一体系で結合できる。国勢調査系JSON（5桁。例 21000）・SSDS系JSON（2桁。例 21）とは別体系。",
         f"人口_計は原資料の『人口 計』列をそのまま格納しており、人口_男＋人口_女 の合算ではない。"
-        f"令和7年ファイルの注2（外国人住民のうち在留カードの性別欄が空欄で、住民票の性別を男女のいずれにも"
+        f"原資料の注2（外国人住民のうち在留カードの性別欄が空欄で、住民票の性別を男女のいずれにも"
         f"該当しないものとしている者は、男女のいずれにも計上せず総計にのみ計上する）により、"
         f"計 −(男+女) が0にならない行がある：{gap_detail}"
         f"（都道府県分の差分合計が合計行の差分と一致することを検証済み）。"
         f"一方 {('・'.join(clean_years)) or 'なし'} は全48行で 男＋女＝計 が成立し、"
         f"当該年のファイルには注2の記載自体が無い（注記は増減率の「-」＝皆増の1件のみ）。"
         f"つまりこの差分は年により有無が変わる。**どの年でも男女合算で計を作り直さないこと。**",
-        "令和7年（2025）分は既存 data/pref_1a_population.json と同一の入力ファイル（statInfId=000040306651・"
-        "handoff/pref-machi-verify/2501stjin.xlsx）を再利用しており、新規ダウンロードはしていない。"
-        "48件×4項目＋都道府県名のすべてが既存ファイルと一致することを生成時に照合済み。"
-        "既存 data/pref_1a_population.json（令和7単年）は据え置きで、本ファイルとは別に併存する。",
+        "令和7年（2025）分は従来どおり handoff/pref-machi-verify/2501stjin.xlsx（statInfId=000040306651）を使っている。"
+        "令和8年（2026）分は poc/recon-20261012-juki-r8/ のファイルで、48件×4項目＋都道府県名のすべてが"
+        "data/pref_1a_population.json（令和8単年）と一致することを生成時に照合済み。"
+        "data/pref_1a_population.json は最新年（令和8）の単年ファイルとして本ファイルと別に併存する。",
         "単位は人口が人、世帯数が世帯。値は原資料のまま（加工なし）。",
         "本ファイルは生値のみを格納する。5年間の増減人数・増減率・全国平均・全国順位は含めず、"
         "このJSONを使う側（UI／集計段）で計算する。",
         "原資料 c7以降の人口動態（前年1月1日〜12月31日計上の転入・転出・出生・死亡・増減率等）は含めていない。",
         "各 rN_YYYY キーは当該年1月1日時点の 人口_男／人口_女／人口_計／世帯数 を持つ。"
-        "当該年が取得・検証できなかった場合は null（今回は6時点すべて取得・検証済みのため null はない）。",
+        "当該年が取得・検証できなかった場合は null（今回は7時点すべて取得・検証済みのため null はない）。",
     ]
     if failures:
         notes.append("取得または検証を通せず中断した年がある： "
