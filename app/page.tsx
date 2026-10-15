@@ -86,7 +86,8 @@ export default function Home() {
             地方自治を、もっと身近に。
           </p>
           <h1 className="text-3xl font-extrabold leading-snug tracking-wide sm:text-5xl" style={{ color: NAVY }}>
-            自分のまちを、数字から知る。
+            {/* スマホ幅で「知」と「る。」の間で折れないよう、句ごとに折り返さない塊にする（2026-10-15 運営者指示） */}
+            <span className="inline-block">自分のまちを、</span><span className="inline-block">数字から知る。</span>
           </h1>
           <p className="mt-4 text-base leading-relaxed sm:text-lg" style={{ color: NAVY2 }}>
             財政や暮らしの制度を、市町村ごとに分かりやすく整理します。
