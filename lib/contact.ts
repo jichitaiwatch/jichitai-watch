@@ -6,8 +6,8 @@
 
 export const CONTACT_FORM_URL: string = "https://docs.google.com/forms/d/e/1FAIpQLSc_yZP2FeS1x8ngZiBLe_aRhqVZtnnXaDZXEcvVdgDDXqNbjQ/viewform";
 
-/** 窓口のメールアドレス（/about・/corrections 共通）。 */
-export const CONTACT_EMAIL = "jichitaiwatch.official@gmail.com";
+/** 窓口のメールアドレス（/about・/corrections 共通）。公開ドメインのアドレス（Cloudflare Email Routing で運営用の受信箱へ転送。E-7・2026-10-15）。 */
+export const CONTACT_EMAIL = "contact@jichitaiwatch.jp";
 
 export function contactFormEnabled(): boolean {
   return CONTACT_FORM_URL !== "";

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { pageMeta } from "@/lib/site";
-import { contactFormEnabled } from "@/lib/contact";
+import { CONTACT_EMAIL, contactFormEnabled } from "@/lib/contact";
 import { SitePageShell, DocSection } from "@/components/SitePageShell";
 
 // app/about/page.tsx — 「自治体Watchとは」＋ブランド公開文①②③を集約。
@@ -30,7 +30,7 @@ export default function AboutPage() {
         <p>自治体Watchは、日本の地方自治体の状況を誰もが簡単にみることができるよう、無償で開発・運営されているオープンソースプロジェクトです。広告は一切掲載せず、特定の政党・企業・団体の利害から独立した、中立的なデータ提供を目指しています。</p>
         <ul className="space-y-2">
           <li><strong>運営</strong>　自治体Watch運営者（個人）</li>
-          <li><strong>連絡窓口</strong>　jichitaiwatch.official@gmail.com</li>
+          <li><strong>連絡窓口</strong>　{CONTACT_EMAIL}</li>
           <li><strong>ソースコード</strong>　MITライセンスで公開しています（<Link href="/data#license" className="underline underline-offset-2">許諾文の全文</Link>）。</li>
           <li><strong>データ</strong>　政府機関などが公開するデータをもとにしており、利用条件は提供元に従います。多くは<a href="https://data.e-gov.go.jp/data/dataset/pulic_data_license" target="_blank" rel="noreferrer" className="underline underline-offset-2">公共データ利用規約（第1.0版・PDL1.0）</a>のもとで公開されています。詳しくは<Link href="/data#license" className="underline underline-offset-2">データについて</Link>をご覧ください。</li>
           <li><strong>収支</strong>　現時点で収益・寄付はありません。今後収支が生じた場合は本ページで開示します。</li>
