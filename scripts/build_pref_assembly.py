@@ -2,9 +2,9 @@
 """data/pref_assembly.json（都道府県版「議会のすがた」・47件）の機械的に作れる部分を再生成・検証する。
 
 作れる部分（このスクリプトが毎回同じ結果を出す）:
-  A. 議員定数・現員数 … 総務省「地方自治月報」議員定数に関する調（令和5年4月1日現在）①都道府県分
-       poc/recon-20260828/3-2/000932784_giin_teisuu_r5.pdf を pdftotext -layout で読む（要 poppler）。
-       列：議員定数（令和5年4月1日現在）・議員実数。→ 「議員定数」「現員数」
+  A. 議員定数・現員数 … 総務省「地方自治月報」第62号 議員定数に関する調（令和7年4月1日現在）①都道府県分
+       poc/recon-20260828/3-2/001062130_giin_teisuu_r7.pdf を pdftotext -layout で読む（要 poppler）。
+       列：議員定数（令和7年4月1日現在）・議員実数（前回調査時回答の列・執行日の列は読まない）。→ 「議員定数」「現員数」
   B. 議会費_total_千円 … data/pref_kessan.json の expenditure_purpose_r6["議会費"]
        （先に scripts/build_pref_kessan.py を実行しておく。元は令和6年度都道府県決算状況調 5-2）
   C. 議事録公開 … recon/pref-gikai-koho-20260905.md の「47件一覧」の表（有／無／確認できず・公開形式・該当URL）
@@ -32,12 +32,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "data" / "pref_assembly.json"
 KESSAN = ROOT / "data" / "pref_kessan.json"
-PDF = ROOT / "poc" / "recon-20260828" / "3-2" / "000932784_giin_teisuu_r5.pdf"
-PDF_SHA256 = "bf4f6a31c9c9b247e7dc09856b8f5ee9a52e1d55750402e55ba4edf7939aba54"  # JSON の sources に記録された値
+PDF = ROOT / "poc" / "recon-20260828" / "3-2" / "001062130_giin_teisuu_r7.pdf"
+PDF_SHA256 = "73d6a3936a9f6043215f870404f889bd480828a81f6ea4cec57ed369acf7c8e3"  # JSON の sources に記録された値
 KOHO_MD = ROOT / "recon" / "pref-gikai-koho-20260905.md"
 GROK_CSV = ROOT / "poc" / "pref-gikai-20260902" / "chair-kaiha.csv"
 
-ROW_PAT = re.compile(r"^\s*(\S+?)\s+([\d,]+)\s+([\d,]+)\s+([\d,]+)\s+([\d,]+)\s+(-?\d+)\s*$")
+ROW_PAT = re.compile(r"^\s*(\S+?)\s+([\d,]+)\s+([\d,]+)\s+([\d,]+)\s+([\d,]+)\s+(-?\d+)(?:\s+\S.*)?$")
 
 
 class Abort(Exception):

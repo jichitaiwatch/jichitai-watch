@@ -114,10 +114,21 @@ def get_date_or_none(row, idx, year):
     if v in (None, ""):
         return None
     if isinstance(v, datetime):
-        return v.date()
-    if isinstance(v, (int, float)):
-        return excel_serial_to_date(v)
-    raise ValueError(f"unparseable election date in {year}: {v!r}")
+        d = v.date()
+    elif isinstance(v, (int, float)):
+        d = excel_serial_to_date(v)
+    else:
+        raise ValueError(f"unparseable election date in {year}: {v!r}")
+    # 2020年版以降の「選挙執行月日」セルは、年が「その年版のファイルの年」で入っている
+    # （例：2023年版の可児市＝2023-10-23）。実際の年は別列「選挙執行年」（例：「2022年」）にある。
+    # 両者が食い違うときは「選挙執行年」の年を採る（2026-10-17 修正。K-7）。
+    if "選挙執行年" in idx:
+        ev = row[idx["選挙執行年"][0]]
+        if isinstance(ev, str) and ev.strip().endswith("年") and ev.strip()[:-1].isdigit():
+            real_year = int(ev.strip()[:-1])
+            if real_year != d.year:
+                d = d.replace(year=real_year)
+    return d
 
 
 def parse_year(year: str):
