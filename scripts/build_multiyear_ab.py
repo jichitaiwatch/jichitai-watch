@@ -7,16 +7,22 @@
 """
 import hashlib
 import json
+import sys
 from datetime import date
 from pathlib import Path
 
 import openpyxl
 import xlrd
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pref_args import load_master_cities, out_path, parse_pref  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "data" / "cache"
-OUT_A = ROOT / "data" / "m3_expenditure_multiyear.json"
-OUT_B = ROOT / "data" / "m2_3_finance_scale_multiyear.json"
+# --pref NN（既定 21＝岐阜＝従来どおり）。岐阜以外は試作で、出力は _NN 付き（publish/allowlist.txt で公開から除外）
+PREF = parse_pref(sys.argv)
+OUT_A = out_path("m3_expenditure_multiyear", PREF)
+OUT_B = out_path("m2_3_finance_scale_multiyear", PREF)
 GIFU_MASTER = ROOT / "data" / "m1_1a_population_timeseries.json"
 TODAY = date.today().isoformat()
 
@@ -198,22 +204,29 @@ def weighted_average(codes: set[str], data: dict[str, dict], key_value: str, key
 
 
 def main():
-    gifu_master = json.loads(GIFU_MASTER.read_text(encoding="utf-8"))
-    gifu_codes = sorted({r["市区町村コード"] for r in gifu_master["data"]})
-    assert len(gifu_codes) == 42, f"岐阜42市町村マスタが42件でない: {len(gifu_codes)}"
+    if PREF == "21":
+        gifu_master = json.loads(GIFU_MASTER.read_text(encoding="utf-8"))
+        gifu_codes = sorted({r["市区町村コード"] for r in gifu_master["data"]})
+        assert len(gifu_codes) == 42, f"岐阜42市町村マスタが42件でない: {len(gifu_codes)}"
+        names = {r["市区町村コード"]: r["市区町村名"] for r in gifu_master["data"]}
+    else:
+        # 試作：自治体マスタの市区町村（政令市の区は決算状況調に無いので含まない）
+        names = load_master_cities(PREF)
+        gifu_codes = sorted(names)
+    n_pref = len(gifu_codes)
 
     issues: list = []
     per_year_raw: dict[int, dict] = {}
     for fy in YEARS:
         per_year_raw[fy] = load_year(fy, issues)
         n_gifu = len([c for c in gifu_codes if c in per_year_raw[fy]])
-        print(f"FY{fy}: 全国{len(per_year_raw[fy])}件中 岐阜{n_gifu}/42件")
+        print(f"FY{fy}: 全国{len(per_year_raw[fy])}件中 県内{n_gifu}/{n_pref}件")
 
     # ---- A: m3_expenditure_multiyear.json ----
     a_data = []
     a_missing_log: dict[str, list] = {}
     for code in gifu_codes:
-        name0 = next(r["市区町村名"] for r in gifu_master["data"] if r["市区町村コード"] == code)
+        name0 = names[code]
         rec = {"area_code": code, "市区町村名": name0}
         for fy in YEARS:
             raw = per_year_raw[fy].get(code)
@@ -285,7 +298,7 @@ def main():
     b_data = []
     b_missing_log: dict[str, list] = {}
     for code in gifu_codes:
-        name0 = next(r["市区町村名"] for r in gifu_master["data"] if r["市区町村コード"] == code)
+        name0 = names[code]
         rec = {"area_code": code, "市区町村名": name0}
         for fy in YEARS:
             raw = per_year_raw[fy].get(code)

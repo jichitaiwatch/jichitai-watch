@@ -12,6 +12,8 @@
 
 更新（既存ファイルを書き換え・新規ファイルは作らない）:
   data/m1_2b_daynight.json の各レコード（42件）に comparison フィールドを追加する。
+  --pref 23 など（D-24 の試作）：data/m1_2b_daynight_23.json（build_kokusei_json.py --pref 23 の出力）に追加する。
+  対象団体は自治体マスタの市区町村行（scripts/pref_args.py）。全国の比較値は県に依らず同じ母集団Mで算出する。
 
 集計（docs/similar-group-aggregation-design.md §3・§4・§9・§10。m1_2c_taxable_income.py と同一の実装パターン）:
   母集団M = 区分マスタに載る団体（1741）∩ 全国集約ファイルに値がある団体（'-'等の非該当値を除く）。
@@ -36,10 +38,15 @@ from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+from pref_args import load_master_cities, out_path, parse_pref  # noqa: E402
+from ward_compare import ward_comparison  # noqa: E402
+
+PREF = parse_pref(sys.argv[1:])
 
 DAYNIGHT_SRC = ROOT / "poc" / "recon-20260828" / "1-2b" / "estat_000032214141_kokusei2020_daynight.xlsx"
 RUIKEI_SRC = ROOT / "poc" / "recon-20260828" / "0" / "ruikei_kubun_r06.xlsx"
-OUT = ROOT / "data" / "m1_2b_daynight.json"
+OUT = out_path("m1_2b_daynight", PREF)
 
 UPDATED = date.today().isoformat()
 
@@ -221,8 +228,9 @@ def main():
     print("== 既存JSON読み込み ==")
     payload = json.loads(OUT.read_text(encoding="utf-8"))
     existing = payload["data"]
-    if len(existing) != 42:
-        raise Abort(f"既存JSONのレコード数が42ではない（実測={len(existing)}）")
+    cities = load_master_cities(PREF)
+    if len(existing) != len(cities):
+        raise Abort(f"既存JSONのレコード数が{len(cities)}（自治体マスタ）ではない（実測={len(existing)}）")
 
     print("== 区分マスタ読み込み ==")
     ruikei = load_ruikei_master()
@@ -278,14 +286,14 @@ def main():
     if not all(results):
         raise Abort("アンカー値が一致しない。JSONを書かずに中断した。")
 
-    print("== 既存42件との整合確認 ==")
-    gifu_codes = sorted(c for c in codes if c.startswith("21"))
-    if len(gifu_codes) != 42:
-        raise Abort(f"岐阜県内市区町村が{len(gifu_codes)}件（42件ではない）")
+    print(f"== 既存{len(existing)}件との整合確認 ==")
+    gifu_codes = sorted(c for c in codes if c in cities)
+    if set(gifu_codes) != set(cities):
+        raise Abort(f"母集団Mの県内が{len(gifu_codes)}件（自治体マスタ{len(cities)}件と一致しない）")
 
     by_area_code = {r["area_code"]: r for r in existing}
     if set(by_area_code.keys()) != set(gifu_codes):
-        raise Abort("既存JSONのarea_codeと母集団Mの岐阜42件のキー集合が一致しない。JSONを書かずに中断した。")
+        raise Abort("既存JSONのarea_codeと母集団Mの県内のキー集合が一致しない。JSONを書かずに中断した。")
 
     print("== 既存レコードへ comparison を付与（生値の再抽出一致も併せて検証） ==")
     for rec in existing:
@@ -313,6 +321,14 @@ def main():
             ),
         }
 
+    # 政令市の区（試作のみ）：区の値を母集団Mに当てはめた相当順位・親の市の区分の平均
+    for w in payload.get("wards", []):
+        w["comparison"] = ward_comparison(
+            ruikei, {c: p["value"] for c, p in population.items()}, w["昼夜間人口比率"], w["parent_area_code"]
+        )
+    if payload.get("wards"):
+        print(f"  区{len(payload['wards'])}件に相当順位つきcomparisonを付与")
+
     payload["updated"] = UPDATED
     payload.setdefault("notes", [])
     stale_note = "本ファイルは生値のみを格納する。比較値（全国平均・類団平均・全国順位）は含めず、集計段で付与する。"
@@ -339,7 +355,7 @@ def main():
         json.dump(payload, fh, ensure_ascii=False, indent=2)
     print(f"  wrote {OUT.relative_to(ROOT)}  ({len(existing)}件にcomparison付与)")
 
-    print("== 岐阜42件 昼夜間人口比率順（サニティチェック用） ==")
+    print(f"== 県コード{PREF}の{len(existing)}件 昼夜間人口比率順（サニティチェック用） ==")
     ranked = sorted(existing, key=lambda r: -r["comparison"]["value"])
     for r in ranked[:3] + ranked[-3:]:
         c = r["comparison"]

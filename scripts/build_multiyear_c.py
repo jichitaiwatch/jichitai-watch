@@ -11,6 +11,7 @@
 import hashlib
 import json
 import re
+import sys
 from datetime import date
 from pathlib import Path
 
@@ -19,7 +20,13 @@ import xlrd
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / "data" / "cache"
-OUT = ROOT / "data" / "m2_4_kenzenka_shichoson_multiyear.json"
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pref_args import load_master_cities, load_master_pref_name, out_path, parse_pref  # noqa: E402
+
+# --pref NN（既定 21＝岐阜＝従来どおり）。岐阜以外は試作で、出力は _NN 付き（publish/allowlist.txt で公開から除外）
+PREF = parse_pref(sys.argv)
+PREF_NAME = "岐阜県" if PREF == "21" else load_master_pref_name(PREF)
+OUT = out_path("m2_4_kenzenka_shichoson_multiyear", PREF)
 GIFU_MASTER = ROOT / "data" / "m1_1a_population_timeseries.json"
 TODAY = date.today().isoformat()
 
@@ -128,7 +135,7 @@ def classify(v):
 
 
 def load_year(fy: int, issues: list) -> dict:
-    """{市区町村名: {item: value}} を返す(岐阜県のみ)。"""
+    """{市区町村名: {item: value}} を返す(対象の県のみ。既定は岐阜県)。"""
     cands = list(CACHE.glob(f"kenzenka_fy{fy}_gaiyou.*"))
     if not cands:
         issues.append({"fy": fy, "error": "gaiyouファイルが見つからない"})
@@ -146,7 +153,7 @@ def load_year(fy: int, issues: list) -> dict:
     result = {}
     for r in range(header_row + 1, nrows + 1):
         pref = normalize(wb.cell(sheet, r, cols["都道府県名"]))
-        if pref != "岐阜県":
+        if pref != PREF_NAME:
             continue
         muni = str(wb.cell(sheet, r, cols["市区町村名"]) or "").strip()
         if not muni:
@@ -156,15 +163,18 @@ def load_year(fy: int, issues: list) -> dict:
 
 
 def main():
-    gifu_master = json.loads(GIFU_MASTER.read_text(encoding="utf-8"))
-    gifu_names = {r["市区町村コード"]: r["市区町村名"] for r in gifu_master["data"]}
-    assert len(gifu_names) == 42
+    if PREF == "21":
+        gifu_master = json.loads(GIFU_MASTER.read_text(encoding="utf-8"))
+        gifu_names = {r["市区町村コード"]: r["市区町村名"] for r in gifu_master["data"]}
+        assert len(gifu_names) == 42
+    else:
+        gifu_names = load_master_cities(PREF)  # 試作：自治体マスタの市区町村（政令市の区は含まない）
 
     issues: list = []
     per_year: dict[int, dict] = {}
     for fy in YEARS:
         per_year[fy] = load_year(fy, issues)
-        print(f"FY{fy}: 岐阜{len(per_year[fy])}件抽出")
+        print(f"FY{fy}: {PREF_NAME[:-1]}{len(per_year[fy])}件抽出")
 
     data = []
     missing_log: dict[str, list] = {}
@@ -211,20 +221,21 @@ def main():
         "missing_model": {
             "present": "数値をそのまま格納",
             "該当なし（ゼロ）": "リテラル文字列 \"-\"。皆無・該当額なし（早期健全化基準に対し実質的に黒字等）",
-            "確認できず": "null。概要ファイルに岐阜県の当該市区町村行が見つからない、または見出し検出に失敗した場合",
+            "確認できず": f"null。概要ファイルに{PREF_NAME}の当該市区町村行が見つからない、または見出し検出に失敗した場合",
         },
         "notes": [
             "「基礎数値」ファイル(kiso)は未使用。概要(gaiyou)ファイルのみを一次資料として使用している。"
-            "概要ファイル内で岐阜県42市町村が全件揃うかはdata_check_log.missing_codes_by_yearで確認可能。"
+            f"概要ファイル内で{PREF_NAME}{len(gifu_names)}市町村が全件揃うかはdata_check_log.missing_codes_by_yearで確認可能。"
             "欠損が生じた年度のみ、追加で基礎数値ファイルを取得して補うことを想定（本バージョンでは未実施）。",
             "市区町村版の健全化判断比率シートは年度によりシート名が変わる"
             "（例: FY2015='1(2)', FY2024='健全化（市区町村）'）ため、"
             "1ファイル内で最も行数が多いシート（市区町村は約1700件超、他の表は数百件以下）を"
             "機械的に選び、見出しテキストで列を検出している（固定シート名・固定列を使っていない）。",
-            "都道府県名+市区町村名の文字列一致で岐阜県42市町村を抽出している（団体コード列がこの表に無いため）。"
+            f"都道府県名+市区町村名の文字列一致で{PREF_NAME}{len(gifu_names)}市町村を抽出している（団体コード列がこの表に無いため）。"
             "町村はマスタの市区町村名が郡名を冠する表記（例:'羽島郡岐南町'）だが概要表は郡名なし表記（'岐南町'）"
-            "のため、郡名を除いた表記でも突合している。飛騨市はFY2015〜2017の概要表で旧字体『飛驒市』"
-            "（驒）表記のため別名マッピングで突合している（現行マスタは『飛騨市』＝騨）。",
+            "のため、郡名を除いた表記でも突合している。"
+            + ("飛騨市はFY2015〜2017の概要表で旧字体『飛驒市』（驒）表記のため別名マッピングで突合している"
+               "（現行マスタは『飛騨市』＝騨）。" if PREF == "21" else ""),
             "実質赤字比率・連結実質赤字比率の早期健全化基準・財政再生基準等の制度値（統計的定数）はこのファイルに"
             "混在させていない（データと制度値を混ぜない）。制度値の正本はdata/m2_2_finance.json "
             "statutory_criteria_common。",

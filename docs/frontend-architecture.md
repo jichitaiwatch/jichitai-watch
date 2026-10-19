@@ -8,7 +8,7 @@
 本文書は「動的ルート化の実装着手前にこの文書を確定する」という前提で書いたが、実際には決定1・2・3は本文書作成の前日（2026-08-05）に既に実装・コミット・push済みだった（`docs/20260805_decisions.md`冒頭「実装状況」節を参照）。以下、本文書の該当節と実装の相違点を記録する。**#1（area_code統一）は岐阜V1で完了。#2・#4は簡略版のまま。**
 
 - **2節との相違（解消・2026-09-20）**：岐阜V1で `scripts/gen_municipality_master.py` が `data/municipality_master.json` を生成し、M1・まち系5へ `area_code` を付与、複合名キーだった7 getterを area_code 引数へ統一した。M2は保険者単位のまま、master の `kaigo_insurer_name` 経由で解決。既に area_code 照合だった9 getterは変更していない。県レイヤー（`lib/prefectures.ts`）の照合統一は #2 据え置き。
-- **3節との相違**：実装されたルートは`app/gifu-pref/[gov]/page.tsx`であり、`gifu-pref`は動的セグメントではなく固定リテラル。都道府県を含めた完全動的ルート（`app/[pref]/[gov]/page.tsx`）ではない。ページ生成は `MUNICIPALITIES` 配列駆動を維持し、配列の中身は municipality_master.json（status=active・市区町村）から導出する。都道府県を跨いだ2件目（他県）実装時に必ず決着させる必要がある。
+- **3節との相違（解消・2026-10-17）**：当初は`app/gifu-pref/[gov]/page.tsx`で`gifu-pref`が固定リテラルだったが、D-24 の共通化で`app/[pref]/[gov]/page.tsx`の動的セグメントへ移した（県の一覧＝`lib/prefectures.ts`。現在の中身は岐阜のみ）。変更前後で 349 ページの HTML・sitemap・robots が一致することを確認済み。ページ生成は `MUNICIPALITIES` 配列駆動を維持し、配列の中身は municipality_master.json（status=active・市区町村）から導出する。都道府県を跨いだ2件目（他県）実装時に必ず決着させる必要がある。
 - **4節との相違**：実装された欠損モデルは「データ有／未整備」の2値のみ（`DataPlaceholder`コンポーネントへのフォールバック）。4.1で定義した5値（fetch_error/parse_error等の区別）はパイプライン側で未実装、将来課題として送られている。
 
 ---
@@ -213,6 +213,7 @@ parse_error      : 取得はできたが構造解析に失敗
 - **パス**：末尾スラッシュ無し（`/gifu-pref/gifu-shi/machi`）。`next.config` に `trailingSlash` 指定が無く、サイト内リンクは全ページでこの形に揃っている。本書 §5.0・§5.6 の `/{pref}/{gov}/` はルート構造の表記であって末尾スラッシュの指定ではない。
 - **単一の源**：`lib/site.ts`（`SITE_URL`・`publicPaths()`）。各ページの `canonical`、`app/sitemap.ts`、`app/robots.ts` はここから作る。ホストやパスの形を変えるときはここだけを直す。
 - **凍結**：公開後はこの形も §5.1 のスラッグと同じく凍結対象（変えると全URLが変わる）。公開前の変更は `lib/site.ts` の1か所で済む。
+- **政令市の区（2026-10-18・`launch-backlog.md` L-9）**：`publicPaths()` は区（`WARDS`）の入口と、区にあるタブ（`entranceTabsFor`）だけを載せる。区の経年は無い。`WARDS` は試作マスタにしか無いため、公開用ビルドの sitemap は変わらない。
 
 ### 5.8 多言語版のURLの形（2026-10-11 運営者裁定。決めるのは形だけ・V1では実装しない）
 
@@ -299,6 +300,8 @@ parse_error      : 取得はできたが構造解析に失敗
 
 誤字候補（§7.1-6）は採用仕様に無い＝V1は前方・部分一致まででよい。編集距離tierはV2。
 
+**このビルドにページがある未公開団体（2026-10-18・`launch-backlog.md` L-9）**：索引 `data/search_index.json` は公開スコープ（岐阜）だけを published=true にし、試作の URL は書かない。`app/search/layout.tsx` がビルド時に、索引で published=false だがこのビルドにページがある団体を団体コード（市区町村・区＝area_code、県＝pref_code）で拾い、URL（索引と同じ末尾 / の形）を `components/SearchExtraPages.tsx` の入れ物で検索ページへ渡す。検索ページはその団体を「自治体ページ」としてリンクにする。公開用ビルドでは該当0件で入れ物を出さない（出力不変）。試作の県を公開に加えるときは、索引側（`scripts/gen_search_index.py`）で published=true にするか、この仕組みのまま公開ビルドにページを入れるかを決める。
+
 
 ---
 
@@ -310,3 +313,5 @@ parse_error      : 取得はできたが構造解析に失敗
 4. ~~スラッグ規約(5.4)の「公式読み」の権威ソース選定~~ → **2026-08-07確定：総務省コード表のカナ列（5.4.6）。本項クローズ。**
 
 横断的な公開前ブロッカー・未確定事項の状態は `docs/pre-launch-blockers.md`（live ledger）に集約した。個別の状態はそちらを正本とする。
+
+**試作モード（2026-10-17・D-24）**: 環境変数 `JICHITAI_TRIAL_PREFS`（県コード。例 `24`）があるビルドだけ、`data/municipality_master_{県コード}.json` の自治体と `PREFECTURES` の試作県（愛知・三重）がルートに加わる（`lib/trial.ts`・`lib/municipalities.ts`・`lib/prefectures.ts`）。未設定の公開用ビルドは岐阜のみ。自治体切替（`MunicipalitySwitcher`）は同一県の一覧をサーバー側から受け取る。政令市の区（`WARDS`）は `MUNICIPALITIES` に入れず、県のページの一覧と自治体切替では親の市（`parentAreaCode`）の直後に字下げで並べる（件数に数えない。2026-10-18・L-9）。

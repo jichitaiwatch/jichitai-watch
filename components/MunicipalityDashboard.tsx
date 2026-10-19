@@ -64,7 +64,13 @@ export function MunicipalityDashboard<E = MunicipalityConfig>({
   const resolveLabel =
     resolveSourceLabelFn ??
     (defaultResolveSourceLabel as unknown as (def: CardDefinition<unknown, E>, entity: E) => string);
-  const cards = resolveCards(tab);
+  // 政令市の区（試作）：「まちのすがた」は市と同じカードを並べ、区の値が無いカードは市区町村と同じ「データ未整備」（D-25）。
+  // それ以外のタブ（行政・議会・くらし）は市の単位の情報なので、区の値があるカードだけを載せる（無ければタブ自体を出さない）
+  const isWard = (municipality as unknown as MunicipalityConfig).kind === "ward";
+  const cards =
+    isWard && tab !== "machi"
+      ? resolveCards(tab).filter((d) => d.resolve(municipality) !== null)
+      : resolveCards(tab);
 
   // 市区町村版の既存挙動フォールバック。都道府県呼び出しは displayName・backHref を
   // 必ず明示的に渡すため、この cast の中身（cityName/prefSlug/slug）が実行時に参照されるのは
@@ -77,6 +83,10 @@ export function MunicipalityDashboard<E = MunicipalityConfig>({
   const identity = identityColor ?? "var(--identity)";
   const identityStyle = { color: identity };
 
+  // 区の注記（運営者裁定 2026-10-17）。順位＝区の値を全国の市区町村の値と並べたときの位置、類似団体平均＝親の市の区分
+  const wardParent = isWard ? ((muni.cityName.match(/^(.+?市)/) ?? [])[1] ?? "") : "";
+  const wardNote = `区は全国の市区町村に含まれないため、順位は区の値を全国の市区町村の値と並べたときの位置。類似団体平均は${wardParent}の区分（大都市）。`;
+
   const renderCard = (def: CardDefinition<unknown, E>) => {
     const data = def.resolve(municipality);
     const source = resolveLabel(def, municipality);
@@ -88,7 +98,7 @@ export function MunicipalityDashboard<E = MunicipalityConfig>({
       <DataPlaceholder label={def.title} />
     );
     const visualization: ReactNode =
-      data && def.trendsCategory ? (
+      data && def.trendsCategory && !isWard ? (
         <div className="flex h-full flex-col">
           <div className="flex-1">{chart}</div>
           <Link
@@ -115,7 +125,7 @@ export function MunicipalityDashboard<E = MunicipalityConfig>({
           fetchedDate={data?.meta.fetchedAt}
           stale={data ? isStale(data.meta.fetchedAt, def.updateFrequency) : false}
           underReview={findUnderReview(def.id, areaCodeOf(municipality))}
-          note={data ? def.note : undefined}
+          note={data ? (isWard ? [def.note, wardNote].filter(Boolean).join(" ") : def.note) : undefined}
         >
           {visualization}
         </MetricCard>

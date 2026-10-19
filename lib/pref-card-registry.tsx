@@ -63,6 +63,8 @@ import { KaihaCard } from "@/components/KaihaCard";
 import { GikaihiCard } from "@/components/GikaihiCard";
 import { GijirokuCard } from "@/components/GijirokuCard";
 import { toFixedHalfUp } from "@/lib/format-decimal";
+import { ForestTaxCard } from "@/components/ForestTaxCard";
+import { getForestTaxPref, type ForestTaxRow } from "@/lib/forest-tax";
 
 /** getter が返す {row, meta} の共通形。Row はカードごとに異なる */
 export interface PrefCardData<Row> {
@@ -483,7 +485,30 @@ export const PREF_CARD_REGISTRY: PrefCardDefinition<unknown>[] = [
     ),
   }),
 
-  // ── くらし（kurashi）：V1見送り・エントリなし（content-spec §7.16） ──
+  // ── くらし（kurashi）：森林環境譲与税のみ。ほかの指標は V1 見送り（content-spec §7.16） ──
+  // 森林環境譲与税：県自身が受け取った額（L-8）。
+  definePrefCard<ForestTaxRow>({
+    id: "l8-forest-tax",
+    tab: "kurashi",
+    order: 40,
+    title: "森林環境譲与税",
+    updateFrequency: "年1回",
+    sourceLabel: "県の森林環境譲与税の使途公表／総務省 森林環境譲与税の譲与額",
+    note: "県の公表資料を自治体Watchが整理。基金の残高は載せていません。",
+    resolve: (p) => getForestTaxPref(p.prefCode),
+    renderVisualization: (data) => {
+      const r = data.row;
+      return (
+        <ForestTaxCard
+          jouyoYen={r.jouyo_yen}
+          katsuyoYen={r.katsuyo_yen}
+          katsuyoNote={r.katsuyo_basis !== null && r.katsuyo_basis !== "譲与税充当額" ? r.katsuyo_basis : undefined}
+          tsumitateYen={r.kikin_tsumitate_yen}
+          uses={r.main_uses}
+        />
+      );
+    },
+  }),
 ];
 
 /** 指定入口のカードを order 昇順で返す（並びは非評価的・D-4/D-6/D-12） */

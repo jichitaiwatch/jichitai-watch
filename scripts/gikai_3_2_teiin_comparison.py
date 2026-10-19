@@ -25,6 +25,12 @@
   percentile = (rank_out_of − rank + 1) / rank_out_of × 100（小数第1位）。
   average_method = "unweighted_mean"（単純算術平均。人口加重等はしない）。
 
+県引数（2026-10-17・D-24 共通化）:
+  python scripts/gikai_3_2_teiin_comparison.py --pref 23   # 愛知など
+  岐阜以外は data/gikai_assembly.json を書き換えず、条例定数・現員・比較値だけを data/gikai_teiin_{県コード}.json に書く
+  （公開しない）。正副議長・会派・議事録公開は各議会サイトの個別調査が要るため、この系統には入れない。
+  対象団体と名称は自治体マスタ（scripts/pref_args.py）。
+
 規律:
   - 都道府県名・市区町村名の突合は Unicode NFKC 正規化してから行う（CJK互換漢字対策。例：大阪府貝塚市の「塚」）。
   - ノイズ語での行除外に「定数割れ」を含めない（定数割れが実際に発生した自治体の実データ行にも出現するため）。
@@ -41,6 +47,8 @@ import unicodedata
 from datetime import date
 from pathlib import Path
 
+from pref_args import DEFAULT_PREF, load_master_cities, load_master_pref_name, out_path, parse_pref
+
 ROOT = Path(__file__).resolve().parents[1]
 
 TEIIN_TXT = ROOT / "poc" / "recon-20260828" / "3-2" / "001062130_giin_teisuu_r7.txt"
@@ -48,6 +56,8 @@ RUIKEI_SRC = ROOT / "poc" / "recon-20260828" / "0" / "ruikei_kubun_r06.xlsx"
 OUT = ROOT / "data" / "gikai_assembly.json"
 
 UPDATED = date.today().isoformat()
+PREF = parse_pref(sys.argv[1:])
+IS_DEFAULT = PREF == DEFAULT_PREF
 
 DAITOSHI_KUBUN = {1, 2, 8, 9}  # 政令指定都市・特別区・中核市・施行時特例市 → "大都市"（m1_2b_daynight_comparison.py と同一）
 
@@ -237,16 +247,83 @@ def ranks_desc(values: list[float]) -> list[int]:
     return [1 + sum(1 for w in values if w > v) for v in values]
 
 
+def write_pref(population, codes, national_average, group_average, ranks, n_total, n_ruikei):
+    """岐阜以外：自治体マスタの団体について、条例定数・現員・比較値だけを data/gikai_teiin_{県コード}.json に書く。"""
+    cities = load_master_cities(PREF)
+    pref_name = load_master_pref_name(PREF)
+    print(f"== {pref_name} の書き出し（自治体マスタ {len(cities)} 団体） ==")
+    rows = []
+    for code6, name in sorted(cities.items()):
+        p = population.get(code6)
+        if p is None:
+            raise Abort(f"{name}（{code6}）が母集団Mに無い。JSONを書かずに中断した。")
+        if p["name"] != norm(name):
+            raise Abort(f"{code6} の名称が区分マスタと違う: {p['name']!r} / {name!r}")
+        rank = ranks[code6]
+        pct = round((n_total - rank + 1) / n_total * 100, 1)
+        rows.append({
+            "area_code": code6,
+            "市区町村名": name,
+            "議員定数": p["value"],
+            "現員数": p["jissu_r7"],
+            "comparison": {
+                "value": p["value"],
+                "national_average": national_average,
+                "group_code": p["group_code"],
+                "group_average": group_average[p["group_code"]],
+                "rank": rank,
+                "rank_out_of": n_total,
+                "percentile": pct,
+                "average_method": "unweighted_mean",
+                "source_note": (
+                    f"全国{n_total}市区町村中の順位（母集団=類似団体区分マスタ登載団体{n_ruikei}のうち、"
+                    "総務省『議員定数に関する調』令和7年4月1日現在で条例定数を確認できた団体）。"
+                    "類似団体平均は総務省の類似団体区分（束ね後）の単純算術平均。比較対象は条例定数のみ"
+                    "（現員・会派・党派は対象外）。"
+                ),
+            },
+        })
+    null_jissu = [r["市区町村名"] for r in rows if r["現員数"] is None]
+    payload = {
+        "updated": UPDATED,
+        "period": "令和7年4月1日現在",
+        "notes": [
+            f"D-24 の試作（公開しない）。対象は自治体マスタ data/municipality_master_{PREF}.json の{pref_name}内{len(rows)}団体（政令指定都市の区の行は含めない）。",
+            "条例定数・現員は総務省『議員定数に関する調』令和7年4月1日現在の内訳表（001062130.pdf）。正副議長・会派・議事録公開は各議会サイトの個別調査が要るため、この系統には含めない。",
+            "comparison の定義は岐阜版（data/gikai_assembly.json）と同じ（母集団1741・単純算術平均・競争順位・百分位）。評価語・評価色は付与しない。",
+            *([f"現員が『－』（議会解散等）の団体: {null_jissu}。現員数は null。"] if null_jissu else []),
+        ],
+        "sources": [
+            {
+                "role": "議員定数・現員（令和7年4月1日現在）",
+                "source_url": "https://www.soumu.go.jp/main_content/001062130.pdf",
+                "source_page": "https://www.soumu.go.jp/senkyo/senkyo_s/data/syozoku/index.html",
+                "fetched_at": "2026-09-26",
+            }
+        ],
+        "data": rows,
+    }
+    target = out_path("gikai_teiin", PREF)
+    with target.open("w", encoding="utf-8") as fh:
+        json.dump(payload, fh, ensure_ascii=False, indent=2)
+        fh.write("\n")
+    print(f"  wrote {target.relative_to(ROOT)}  ({len(rows)}件・現員『－』{len(null_jissu)}件)")
+    for r in sorted(rows, key=lambda r: -r["議員定数"])[:3]:
+        c = r["comparison"]
+        print(f"  {r['市区町村名']}（{r['area_code']}）: 定数{r['議員定数']} 全国{c['rank']}位/{c['rank_out_of']} 区分={c['group_code']} 区分平均={c['group_average']}")
+
+
 def main():
-    for p in (TEIIN_TXT, RUIKEI_SRC, OUT):
+    for p in (TEIIN_TXT, RUIKEI_SRC) + ((OUT,) if IS_DEFAULT else ()):
         if not p.exists():
             raise Abort(f"入力ファイルが無い: {p}")
 
-    print("== 既存JSON読み込み ==")
-    payload = json.loads(OUT.read_text(encoding="utf-8"))
-    existing = payload["data"]
-    if len(existing) != 42:
-        raise Abort(f"既存JSONのレコード数が42ではない（実測={len(existing)}）")
+    if IS_DEFAULT:
+        print("== 既存JSON読み込み ==")
+        payload = json.loads(OUT.read_text(encoding="utf-8"))
+        existing = payload["data"]
+        if len(existing) != 42:
+            raise Abort(f"既存JSONのレコード数が42ではない（実測={len(existing)}）")
 
     print("== 区分マスタ読み込み ==")
     ruikei_by_code, ruikei_by_prefname = load_ruikei_master()
@@ -317,6 +394,10 @@ def main():
     ]
     if not all(results):
         raise Abort("アンカー値が一致しない。JSONを書かずに中断した。")
+
+    if not IS_DEFAULT:
+        write_pref(population, codes, national_average, group_average, ranks, n_total, len(ruikei_by_code))
+        return
 
     print("== 既存42件との整合確認・キー集合の一致 ==")
     gifu_codes = sorted(c for c in codes if c.startswith("21"))

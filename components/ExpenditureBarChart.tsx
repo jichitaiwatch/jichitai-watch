@@ -11,6 +11,8 @@ export interface ExpenditureBarChartDatum {
 
 interface ExpenditureBarChartProps {
   data: ExpenditureBarChartDatum[];
+  /** 県内平均の注記に出す県名（既定は岐阜県。D-24 試作で他県を出すときだけ渡す） */
+  prefectureName?: string;
 }
 
 /**
@@ -65,7 +67,7 @@ export const MARKER_FLIP_PCT = 50;
  *
  * バー本体は4費目を固定の識別色で塗り分ける（CATEGORY_COLOR。A-5・2026-09-23運営者確定）。
  */
-export function ExpenditureBarChart({ data }: ExpenditureBarChartProps) {
+export function ExpenditureBarChart({ data, prefectureName = "岐阜県" }: ExpenditureBarChartProps) {
   const maxValue = Math.max(...data.map((d) => d.valuePerCapita));
   const hasAnyAverage = data.some((d) => d.nationalAverage !== null || d.prefectureAverage !== null);
 
@@ -129,7 +131,8 @@ export function ExpenditureBarChart({ data }: ExpenditureBarChartProps) {
         {hasAnyAverage && (
           <p className="fs-note text-[var(--muted-light)]">
             <span className="text-[var(--national-text)]">▼</span> 全国平均・
-            <span className="text-[var(--prefecture)]">▲</span> 岐阜県内平均。いずれも人口加重平均（各費目の合計÷人口の合計）で、市町村ごとの円/人の単純平均ではありません（各項目のカード内最大値を100%とした位置に表示）
+            <span className="text-[var(--prefecture)]">▲</span>
+            {` ${prefectureName}内平均。いずれも人口加重平均（各費目の合計÷人口の合計）で、市町村ごとの円/人の単純平均ではありません（各項目のカード内最大値を100%とした位置に表示）`}
           </p>
         )}
       </div>
@@ -143,7 +146,7 @@ export function ExpenditureBarChart({ data }: ExpenditureBarChartProps) {
               <th scope="col">項目</th>
               <th scope="col">当該自治体</th>
               <th scope="col">全国平均</th>
-              <th scope="col">岐阜県内平均</th>
+              <th scope="col">{`${prefectureName}内平均`}</th>
             </tr>
           </thead>
           <tbody>

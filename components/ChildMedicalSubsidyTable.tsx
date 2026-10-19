@@ -10,6 +10,8 @@ interface ChildMedicalSubsidyTableProps {
   copayInpatient: "有" | "無";
   /** 県内・全国の団体数（事実の件数。順位・評価なし） */
   distribution?: KodomoDistribution;
+  /** 原表の「※」の団体＝18歳年度末以降は学生医療として実施（事実の注記） */
+  studentMedical?: boolean;
 }
 
 /** 「15歳年度末」のような機械抽出データ表記を「15歳の年度末まで」に補って読みやすくする */
@@ -38,6 +40,7 @@ export function ChildMedicalSubsidyTable({
   copayOutpatient,
   copayInpatient,
   distribution,
+  studentMedical,
 }: ChildMedicalSubsidyTableProps) {
   const panels = [
     {
@@ -109,7 +112,17 @@ export function ChildMedicalSubsidyTable({
           </section>
         ))}
       </div>
-      {distribution && <PolicyNote d={distribution} />}
+      {studentMedical ? (
+        // 「※」の団体だけ注記を足す。それ以外は従来と同じ子要素のまま（岐阜の出力を変えない）
+        <>
+          <p className="m-0 fs-note text-stone-600">
+            ※ 18歳年度末以降は学生医療として実施しており、対象は大学等に通う者に限る。（一定の所得制限あり。）
+          </p>
+          {distribution && <PolicyNote d={distribution} />}
+        </>
+      ) : (
+        distribution && <PolicyNote d={distribution} />
+      )}
     </div>
   );
 }
@@ -125,20 +138,40 @@ function PolicyNote({ d }: { d: KodomoDistribution }) {
   const lead =
     prefYes === 0
       ? `県内${d.prefTotal}市町村は、すべて所得制限・一部自己負担とも「無」です。`
-      : `「有」の団体数（県内／全国）は次のとおりです。`;
-  return (
+      : `県内${d.prefTotal}市町村の所得制限・一部自己負担の「有」の団体数は次のとおりです。`;
+  const nationalLine = (
+    <p className="m-0">
+      全国{fmt(d.nationalTotal)}市区町村で「有」の団体数：所得制限は通院
+      {fmt(d.incomeYes.通院.national)}・入院
+      {fmt(d.incomeYes.入院.national)}、一部自己負担は通院
+      {fmt(d.copayYes.通院.national)}・入院
+      {fmt(d.copayYes.入院.national)}。
+    </p>
+  );
+  const unitLine = (
+    <p className="m-0">
+      各数字は「県内の団体数／全国の団体数」。団体数であり、優劣を示すものではありません。
+    </p>
+  );
+  // 県内に「有」の団体があるときだけ、県内の団体数も併記する（無いときは従来と同じ表示）
+  return prefYes > 0 ? (
     <div className="fs-note text-stone-600">
       <p className="m-0">{lead}</p>
       <p className="m-0">
-        全国{fmt(d.nationalTotal)}市区町村で「有」の団体数：所得制限は通院
-        {fmt(d.incomeYes.通院.national)}・入院
-        {fmt(d.incomeYes.入院.national)}、一部自己負担は通院
-        {fmt(d.copayYes.通院.national)}・入院
-        {fmt(d.copayYes.入院.national)}。
+        「有」の団体数（県内／全国）：所得制限は通院
+        {fmt(d.incomeYes.通院.pref)}／{fmt(d.incomeYes.通院.national)}・入院
+        {fmt(d.incomeYes.入院.pref)}／{fmt(d.incomeYes.入院.national)}、一部自己負担は通院
+        {fmt(d.copayYes.通院.pref)}／{fmt(d.copayYes.通院.national)}・入院
+        {fmt(d.copayYes.入院.pref)}／{fmt(d.copayYes.入院.national)}。
       </p>
-      <p className="m-0">
-        各数字は「県内の団体数／全国の団体数」。団体数であり、優劣を示すものではありません。
-      </p>
+      {nationalLine}
+      {unitLine}
+    </div>
+  ) : (
+    <div className="fs-note text-stone-600">
+      <p className="m-0">{lead}</p>
+      {nationalLine}
+      {unitLine}
     </div>
   );
 }

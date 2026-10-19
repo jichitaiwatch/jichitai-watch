@@ -9,6 +9,11 @@
   data/m1_1c_aging_rate.json      （市区町村42件・系譜 source_file_hash）
   data/pref_1c_aging_rate.json    （47都道府県＋全国計・系譜 source_file_hash_sha256）
 
+県引数（2026-10-17・D-24 共通化）:
+  python scripts/build_koreika_json.py --pref 23
+  愛知など岐阜以外は市町村版 data/m1_1c_aging_rate_{県コード}.json だけを書く（県版は全国分が既にある）。
+  対象団体は自治体マスタの市区町村行（scripts/pref_args.py）。団体コードは住基6桁で、マスタの area_code と同じ体系。
+
 規律:
   - 列位置はハードコードせず、年齢階級ラベル・キー列見出しの文字列から同定する。
   - 比較値（全国平均・類団平均・順位）は算出しない（集計段で付与）。
@@ -26,6 +31,11 @@ from pathlib import Path
 from openpyxl import load_workbook
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+from pref_args import DEFAULT_PREF, load_master_cities, load_master_pref_name, load_master_wards, out_path, parse_pref  # noqa: E402
+
+PREF = parse_pref(sys.argv[1:])
+IS_DEFAULT = PREF == DEFAULT_PREF
 SRC = ROOT / "poc" / "recon-20261012-juki-r8" / "soumu_000892953_juki_shichoson_age_r8.xlsx"
 POP_JSON = ROOT / "data" / "pref_1a_population.json"  # 県別の人口（令和8年）。総数の突合に使う
 OUT = ROOT / "data"
@@ -127,7 +137,7 @@ def extract():
         # 対象範囲（全国計／47都道府県計／岐阜県内の市区町村）に限って数値化する。
         # 範囲外には実データ上の特異行がある（例 016951_色丹郡色丹村 は総数0）。
         # 範囲内で欠損・0が出た場合は下の num()／総数チェックが中断させる。
-        if not (is_national or is_pref_row or code.startswith("21")):
+        if not (is_national or is_pref_row or code.startswith(PREF)):
             continue
         where = f"{code}_{pref}_{muni}"
         rec = {
@@ -214,13 +224,14 @@ def notes_for(kind: str, over65_labels, has_national: bool):
     return [*pref_notes, *common]
 
 
-def write_json(path: Path, sources, notes, data):
+def write_json(path: Path, sources, notes, data, wards=None):
     payload = {
         "sources": sources,
         "period": PERIOD,
         "updated": UPDATED,
         "notes": notes,
         "data": data,
+        **({"wards": wards} if wards else {}),
     }
     with path.open("w", encoding="utf-8") as fh:
         json.dump(payload, fh, ensure_ascii=False, indent=2)
@@ -243,8 +254,13 @@ def main():
     print(f"  対象範囲の抽出: 岐阜県内市区町村={len(munis)} 岐阜県内の郡集計行(除外)={len(gun)} "
           f"都道府県計行={len(prefs)} 全国計行={len(national)}")
 
-    gifu = sorted((r for r in munis if r["code"].startswith("21")), key=lambda r: r["code"])
-    if len(gifu) != 42:
+    cities = load_master_cities(PREF)
+    pref_name = load_master_pref_name(PREF)
+    gifu = sorted((r for r in munis if r["code"] in cities), key=lambda r: r["code"])
+    if set(r["code"] for r in gifu) != set(cities):
+        raise Abort(f"{pref_name}の市区町村が原表から {len(gifu)} 件（自治体マスタ{len(cities)}件と一致しない）"
+                    f" マスタのみ={sorted(set(cities) - set(r['code'] for r in gifu))[:8]}")
+    if IS_DEFAULT and len(gifu) != 42:
         raise Abort(f"岐阜県内市区町村が {len(gifu)} 件（42件ではない）")
     if len(prefs) != 47:
         raise Abort(f"都道府県計行が {len(prefs)} 件（47件ではない）")
@@ -255,9 +271,9 @@ def main():
 
     print("== 内部整合・突合検証（固定アンカーに依らない） ==")
     pref_by_code = {r["code"]: r for r in prefs}
-    a = pref_by_code.get("210005")
+    a = next((r for r in prefs if r["code"].startswith(PREF)), None)
     if a is None:
-        raise Abort("岐阜県計行 210005 が見つからない")
+        raise Abort(f"{pref_name}計行（{PREF}000X）が見つからない")
     # (1) 47都道府県の総数合計 = 全国計行（総数・65歳以上人口）
     if has_national:
         tot = sum(r["総数"] for r in prefs)
@@ -278,8 +294,8 @@ def main():
     for k in ("総数", "65歳以上人口"):
         tot = sum(r[k] for r in gifu)
         if tot != a[k]:
-            raise Abort(f"岐阜42市区町村の{k}合計{tot}が岐阜県計{a[k]}と不一致")
-        print(f"    OK  岐阜42市区町村の{k}合計 = 岐阜県計 = {tot}")
+            raise Abort(f"{pref_name}{len(gifu)}市区町村の{k}合計{tot}が県計{a[k]}と不一致")
+        print(f"    OK  {pref_name}{len(gifu)}市区町村の{k}合計 = 県計 = {tot}")
     # (3) 総数が別ファイル（県別人口 data/pref_1a_population.json）の人口と一致
     pop = json.loads(POP_JSON.read_text(encoding="utf-8"))
     pop_rows = pop["data"] if isinstance(pop, dict) else pop
@@ -305,12 +321,34 @@ def main():
     print("    OK  入力sha256が想定値と一致")
 
     print("== 書き出し ==")
+    machi_notes = notes_for("machi", labels, has_national)
+    if not IS_DEFAULT:
+        machi_notes = [f"対象は{pref_name}内の市区町村{len(gifu)}件（自治体マスタ data/municipality_master_{PREF}.json の団体。"
+                       "郡の集計行・県計行は除く）。D-24 の試作（公開しない）。", *machi_notes[1:]]
+    # 政令市の区（試作のみ。マスタに kind="ward" の行がある県）。市の行（data）とは分け、wards に置く
+    ward_master = load_master_wards(PREF)
+    ward_rows = sorted((r for r in munis if r["code"] in ward_master), key=lambda r: r["code"])
+    if ward_master:
+        if set(r["code"] for r in ward_rows) != set(ward_master):
+            raise Abort(f"区が原表から {len(ward_rows)} 件（マスタ{len(ward_master)}件と一致しない）")
+        for pc in sorted({p for _, p in ward_master.values()}):
+            kids = [r for r in ward_rows if ward_master[r["code"]][1] == pc]
+            parent = next(r for r in gifu if r["code"] == pc)
+            for k in ("総数", "65歳以上人口"):
+                if sum(r[k] for r in kids) != parent[k]:
+                    raise Abort(f"{parent['muni']}の区{len(kids)}件の{k}合計{sum(r[k] for r in kids)}が市の値{parent[k]}と不一致")
+            print(f"    OK  {parent['muni']}の区{len(kids)}件の総数・65歳以上人口の合計 = 市の値")
     write_json(
-        OUT / "m1_1c_aging_rate.json",
+        out_path("m1_1c_aging_rate", PREF),
         [source_entry("source_file_hash", file_hash, title)],
-        notes_for("machi", labels, has_national),
-        [{"市区町村コード": r["code"], "都道府県": r["pref"], "市区町村名": r["muni"], **vals(r)} for r in gifu],
+        machi_notes,
+        [{**({} if IS_DEFAULT else {"area_code": r["code"]}),
+          "市区町村コード": r["code"], "都道府県": r["pref"], "市区町村名": r["muni"], **vals(r)} for r in gifu],
+        wards=[{"area_code": r["code"], "市区町村コード": r["code"], "都道府県": r["pref"], "市区町村名": r["muni"],
+                "parent_area_code": ward_master[r["code"]][1], **vals(r)} for r in ward_rows],
     )
+    if not IS_DEFAULT:
+        return  # 県版（pref_*）は全国分が既にある。試作では書かない
     pref_rows = sorted([*national, *prefs], key=lambda r: r["code"])
     write_json(
         OUT / "pref_1c_aging_rate.json",
@@ -320,10 +358,8 @@ def main():
     )
 
     print("== アンカー実測値 ==")
-    gifu_shi = next((r for r in gifu if r["code"] == "212016"), None)
-    if gifu_shi is None:
-        raise Abort("岐阜市(212016)の行が見つからない")
-    for label, r in (("岐阜市(212016)", gifu_shi), ("岐阜県計(210005)", a),
+    first = gifu[0]
+    for label, r in ((f"{first['muni']}({first['code']})", first), (f"{pref_name}計({a['code']})", a),
                      *([("全国(団体コード'-'・都道府県名'合計')", national[0])] if has_national else [])):
         print(f"  {label}: 総数={r['総数']} 65歳以上={r['65歳以上人口']} 高齢化率={r['高齢化率']}%")
 

@@ -1,7 +1,18 @@
 # -*- coding: utf-8 -*-
 import json
 import os
+import sys
 from pathlib import Path
+
+# 県引数（2026-10-17・D-24 共通化）: --pref 23 など。対象は自治体マスタの市区町村行（scripts/pref_args.py）。
+# 岐阜（既定）の中間出力は従来の out_merged.json、それ以外は out_merged_{県コード}.json（互いに上書きしない）。
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pref_args import DEFAULT_PREF, load_master_cities, load_master_pref_name, load_master_wards, parse_pref  # noqa: E402
+
+PREF = parse_pref(sys.argv[1:])
+CITIES = load_master_cities(PREF)
+PREF_NAME = load_master_pref_name(PREF)
+SUFFIX = "" if PREF == DEFAULT_PREF else f"_{PREF}"
 
 # 原本と中間出力は poc/recon-20260830-1-1a-timeseries/ にある。相対パスをそのフォルダ基準にそろえる
 os.chdir(Path(__file__).resolve().parents[1] / "poc" / "recon-20260830-1-1a-timeseries")
@@ -108,7 +119,7 @@ def is_real_municipality(code, name):
     return True
 
 
-def extract_gifu(fmeta):
+def extract_gifu(fmeta, codes=None):  # 名前は従来のまま。実際は PREF の県を抜く。codes 省略時は自治体マスタの市区町村
     if fmeta["engine"] == "xlrd":
         rows = load_rows_xlrd(fmeta["path"])
     else:
@@ -120,11 +131,13 @@ def extract_gifu(fmeta):
     result = {}
     for row in data_rows:
         code, pref, name, male, female, total, households = row[:7]
-        if pref != "岐阜県":
+        if pref != PREF_NAME:
             continue
         if not is_real_municipality(code, name):
             continue
         code = str(code)
+        if code not in (CITIES if codes is None else codes):
+            continue  # 自治体マスタの団体だけ（政令市の区の行などを除く）。岐阜では従来どおり42件すべてが通る
         result[code] = {
             "市区町村コード": code,
             "市区町村名": name,
@@ -145,7 +158,7 @@ def main():
         per_year[key] = gifu
         counts[key] = len(gifu)
 
-    with open("out_extract_summary.json", "w", encoding="utf-8") as f:
+    with open(f"out_extract_summary{SUFFIX}.json", "w", encoding="utf-8") as f:
         json.dump(counts, f, ensure_ascii=False, indent=1)
 
     # merge by code
@@ -173,11 +186,29 @@ def main():
         rec["市区町村名"] = sorted(name_set)
         merged.append(rec)
 
-    with open("out_merged.json", "w", encoding="utf-8") as f:
+    with open(f"out_merged{SUFFIX}.json", "w", encoding="utf-8") as f:
         json.dump(merged, f, ensure_ascii=False, indent=1)
+
+    # 政令市の区（試作のみ）：市の中間出力 out_merged とは別ファイル out_merged_{県}_wards.json に書く
+    wards = load_master_wards(PREF)
+    if wards:
+        w_year = {fm["key"]: extract_gifu(fm, set(wards)) for fm in FILES}
+        w_merged = []
+        for code in sorted(wards):
+            rec = {"市区町村コード": code, "市区町村名": [wards[code][0]], "parent_area_code": wards[code][1]}
+            for fm in FILES:
+                e = w_year[fm["key"]].get(code)
+                rec[fm["key"]] = None if e is None else {"人口_男": e["男"], "人口_女": e["女"], "人口_計": e["計"], "世帯数": e["世帯数"]}
+            w_merged.append(rec)
+        with open(f"out_merged{SUFFIX}_wards.json", "w", encoding="utf-8") as f:
+            json.dump(w_merged, f, ensure_ascii=False, indent=1)
+        print("wards:", {k: len(v) for k, v in w_year.items()})
 
     print("counts:", counts)
     print("total distinct codes:", len(all_codes))
+    if set(all_codes) != set(CITIES):
+        raise SystemExit(f"自治体マスタ{len(CITIES)}件と抽出{len(all_codes)}件が一致しない: "
+                         f"マスタのみ={sorted(set(CITIES) - all_codes)[:8]} 抽出のみ={sorted(all_codes - set(CITIES))[:8]}")
 
 
 if __name__ == "__main__":

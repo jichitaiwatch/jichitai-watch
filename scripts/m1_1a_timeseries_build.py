@@ -1,7 +1,18 @@
 # -*- coding: utf-8 -*-
 import json
 import os
+import sys
 from pathlib import Path
+
+# 県引数（D-24 共通化）: --pref 23 など。岐阜（既定）は従来どおり data/m1_1a_population_timeseries.json。
+# それ以外は out_merged_{県コード}.json から data/m1_1a_population_timeseries_{県コード}.json を書く（area_code 付き・公開しない）。
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from pref_args import DEFAULT_PREF, load_master_pref_name, out_path, parse_pref  # noqa: E402
+
+PREF = parse_pref(sys.argv[1:])
+IS_DEFAULT = PREF == DEFAULT_PREF
+PREF_NAME = load_master_pref_name(PREF)
+OUT_PATH = out_path("m1_1a_population_timeseries", PREF)  # 絶対パス（下の chdir に影響されない）
 
 # 原本と中間出力は poc/recon-20260830-1-1a-timeseries/ にある。相対パスをそのフォルダ基準にそろえる
 os.chdir(Path(__file__).resolve().parents[1] / "poc" / "recon-20260830-1-1a-timeseries")
@@ -89,15 +100,16 @@ for f in FILES:
         }
     sources.append(src)
 
-merged = json.load(open("out_merged.json", encoding="utf-8"))
+merged = json.load(open("out_merged.json" if IS_DEFAULT else f"out_merged_{PREF}.json", encoding="utf-8"))
 
 data = []
 for rec in merged:
-    row = {
+    row = {} if IS_DEFAULT else {"area_code": rec["市区町村コード"]}
+    row.update({
         "市区町村コード": rec["市区町村コード"],
-        "都道府県": "岐阜県",
+        "都道府県": PREF_NAME,
         "市区町村名": rec["市区町村名"][0],
-    }
+    })
     for f in FILES:
         key = f["key"]
         v = rec[key]
@@ -112,17 +124,43 @@ output = {
     "period": "令和2年1月1日〜令和8年1月1日、各年1月1日時点（住民基本台帳）",
     "updated": FETCHED_AT,
     "notes": [
-        "e-Stat「住民基本台帳に基づく人口、人口動態及び世帯数調査」（toukei=00200241, tstat=000001039591）の年次ファイルから、都道府県='岐阜県'・実市区町村（郡見出し行・都道府県計行を除く）をフィルタして取得。",
+        "e-Stat「住民基本台帳に基づく人口、人口動態及び世帯数調査」（toukei=00200241, tstat=000001039591）の年次ファイルから、都道府県='" + PREF_NAME + "'・実市区町村（郡見出し行・都道府県計行を除く）をフィルタして取得。",
         "令和2年（2020年）分は旧形式(.xls)で提供されており、他年（.xlsx）とヘッダ行数が異なるが、データ列位置（団体コード/都道府県名/市区町村名/男/女/計/世帯数）は同一であることを確認済み。",
         "令和2.1.1〜令和8.1.1の7時点（各年1月1日）を収録した。令和2〜7年分はe-Stat、令和8年分は総務省サイト掲載ファイル（e-Statへの掲載前）から取得した。",
-        "岐阜県42市町村は全7年で42/42が揃い、団体コード・市区町村名の変化（合併・改称）は無かったことを確認済み。",
+        f"{PREF_NAME}{len(data)}市町村は全7年で{len(data)}/{len(data)}が揃い、団体コード・市区町村名の変化（合併・改称）は無かったことを確認済み。",
         "本ファイルは生値のみを格納する。5年前との増減数・増減率はこのJSONを使う側（UI/集計）で計算する。",
         "r2_2020〜r8_2026の各キーは当該年1月1日時点の人口_男/人口_女/人口_計/世帯数を持つ。値が無い場合はnull（今回は全年で欠損なし）。",
     ],
     "data": data,
 }
 
-with open("../../data/m1_1a_population_timeseries.json", "w", encoding="utf-8") as f:
+# 政令市の区（試作のみ）：wards 配列に置く（市の行 data とは分ける）。7年すべてで区の合計＝親の市の値を検算
+wards_path = f"out_merged_{PREF}_wards.json"
+if not IS_DEFAULT and os.path.exists(wards_path):
+    wmerged = json.load(open(wards_path, encoding="utf-8"))
+    wards = []
+    for rec in wmerged:
+        row = {"area_code": rec["市区町村コード"], "市区町村コード": rec["市区町村コード"], "都道府県": PREF_NAME,
+               "市区町村名": rec["市区町村名"][0], "parent_area_code": rec["parent_area_code"]}
+        for f in FILES:
+            if rec[f["key"]] is None:
+                raise SystemExit(f"区 {rec['市区町村名'][0]} の {f['key']} が原表に無い")
+            row[f["key"]] = rec[f["key"]]
+        wards.append(row)
+    by_code = {r["area_code"]: r for r in data}
+    for p6 in sorted({w["parent_area_code"] for w in wards}):
+        kids = [w for w in wards if w["parent_area_code"] == p6]
+        for f in FILES:
+            for k in ("人口_男", "人口_女", "人口_計", "世帯数"):
+                tot = sum(w[f["key"]][k] for w in kids)
+                if tot != by_code[p6][f["key"]][k]:
+                    raise SystemExit(f"{by_code[p6]['市区町村名']}の区{len(kids)}件の{f['key']} {k}合計{tot}が市の値{by_code[p6][f['key']][k]}と不一致")
+        print(f"OK {by_code[p6]['市区町村名']}の区{len(kids)}件: 7年×(男・女・計・世帯数)の合計 = 市の値")
+    output["wards"] = sorted(wards, key=lambda r: r["市区町村コード"])
+
+if not IS_DEFAULT:
+    output["notes"].append(f"D-24 の試作（公開しない）。対象は自治体マスタ data/municipality_master_{PREF}.json の団体（政令指定都市の区の行は含めない）。")
+with open(OUT_PATH, "w", encoding="utf-8") as f:
     json.dump(output, f, ensure_ascii=False, indent=2)
 
 print("wrote", len(data), "records")

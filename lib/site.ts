@@ -12,9 +12,10 @@
 //   ビルド後の `out/` と一致することを検査で確認する（一致しなければ D-2 の受入れ不可）。
 
 import type { Metadata } from "next";
-import { MUNICIPALITIES } from "@/lib/municipalities";
-import { PREFECTURES } from "@/lib/prefectures";
-import { ENTRANCE_TABS, listTrendsCategories } from "@/lib/card-registry";
+import { MUNICIPALITIES, WARDS } from "@/lib/municipalities";
+import { PREFECTURES, REGION_DESCRIPTION } from "@/lib/prefectures";
+import { STAGING } from "@/lib/staging";
+import { ENTRANCE_TABS, entranceTabsFor, listTrendsCategories } from "@/lib/card-registry";
 
 export const SITE_URL = "https://jichitaiwatch.jp";
 export const SITE_NAME = "自治体Watch";
@@ -37,7 +38,7 @@ const SHARE_IMAGE = {
   url: "/opengraph-image.png",
   width: 1200,
   height: 630,
-  alt: "自治体Watch：岐阜県内の市町村の財政や暮らしの制度を、市町村ごとに整理して見られます。",
+  alt: `自治体Watch：${REGION_DESCRIPTION}`,
 };
 
 export function pageMeta({
@@ -63,6 +64,8 @@ export function pageMeta({
       images: [SHARE_IMAGE],
     },
     twitter: { card: "summary_large_image", title, description, images: [SHARE_IMAGE.url] },
+    // 確認用の置き場所（lib/staging.ts）は検索エンジンに載せない（公開用ビルドでは項目ごと出さない）
+    ...(STAGING ? { robots: { index: false, follow: false } } : {}),
   };
 }
 
@@ -90,6 +93,8 @@ export function govPath(prefSlug: string, govSlug: string): string {
  *   - 地域：PREFECTURES の prefSlug
  *   - 政府入口・4入口：市区町村 ∪ 県庁 × ENTRANCE_TABS
  *   - 経年：市区町村 × listTrendsCategories（県庁は経年なし）
+ *   - 政令市の区（WARDS・試作ビルドだけに入る）：入口 ＋ entranceTabsFor の入口だけ（区の経年は作らない＝
+ *     launch-backlog.md L-9）。公開用ビルドでは WARDS が空なので出力は変わらない。
  */
 export function publicPaths(): string[] {
   const govs = [
@@ -109,5 +114,9 @@ export function publicPaths(): string[] {
     ...MUNICIPALITIES.flatMap((m) =>
       cats.map((c) => `${govPath(m.prefSlug, m.slug)}/trends/${c.category}`),
     ),
+    ...WARDS.flatMap((w) => [
+      govPath(w.prefSlug, w.slug),
+      ...entranceTabsFor(w).map(({ tab }) => `${govPath(w.prefSlug, w.slug)}/${tab}`),
+    ]),
   ];
 }

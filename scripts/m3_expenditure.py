@@ -32,6 +32,10 @@ M3: 総務省 地方財政状況調査 住民一人あたり分野別支出 抽�
   全国母数は団体コードが6桁数字である行のみをカウントすることで、
   Excel末尾の小計行（「市計」「全国計」等）・見出し行を除外している。
 
+県引数（2026-10-17・D-24 共通化）:
+  python scripts/m3_expenditure.py --pref 23   # 愛知など。data/m3_expenditure_23.json に書く（公開しない）
+  対象団体は自治体マスタの市区町村行（scripts/pref_args.py）。全国平均は県に依らず全国1741団体の人口加重平均。
+
 実行:
   python scripts/m3_expenditure.py --test   # 岐阜市(21201)のみ
   python scripts/m3_expenditure.py          # 全42市町村 → data/m3_expenditure.json
@@ -46,10 +50,15 @@ from pathlib import Path
 import openpyxl
 
 from lineage import build_sources
+from pref_args import DEFAULT_PREF, load_master_cities, load_master_pref_name, out_path, parse_pref
 
 ROOT = Path(__file__).resolve().parent.parent
+PREF = parse_pref(sys.argv[1:])
+IS_DEFAULT = PREF == DEFAULT_PREF
+CITIES = load_master_cities(PREF)
+PREF_NAME = load_master_pref_name(PREF)
 RAW_DIR = ROOT / "poc" / "recon-20260830" / "raw"
-OUTPUT_PATH = ROOT / "data" / "m3_expenditure.json"
+OUTPUT_PATH = out_path("m3_expenditure", PREF)
 GIFU_PREFIX = "21"
 SOUMU_SOURCE_PAGE = "https://www.soumu.go.jp/iken/zaisei/r06_shichouson.html"
 
@@ -133,7 +142,8 @@ def check_fixed_cols(ws, fname: str) -> None:
 
 
 def is_gifu(code: str) -> bool:
-    return len(code) >= 5 and code[:2] == GIFU_PREFIX
+    """対象県の団体か（名前は従来のまま。自治体マスタの団体だけ＝政令市の区の行などは含めない）。"""
+    return code in CITIES
 
 
 def is_valid_code(code6: str) -> bool:
@@ -220,6 +230,7 @@ def weighted_average(
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--test", action="store_true", help="岐阜市（21201）のみ")
+    ap.add_argument("--pref", default=DEFAULT_PREF, help="県コード2桁（既定21＝岐阜。それ以外は試作）")
     args = ap.parse_args()
 
     # ---- 原本の読み込み（ローカルのみ） ----
@@ -342,7 +353,9 @@ def main() -> None:
 
     # ---- サマリ ----
     null_count = sum(1 for r in rows for v in r.values() if v is None)
-    print(f"\n=== 岐阜県内市町村: {len(rows)} 件 (FY2024) ===")
+    if len(rows) != len(CITIES) and not args.test:
+        sys.exit(f"{PREF_NAME}の抽出が{len(rows)}件（自治体マスタ{len(CITIES)}件と一致しない）")
+    print(f"\n=== {PREF_NAME}内市町村: {len(rows)} 件 (FY2024) ===")
     for r in rows[:5]:
         print(
             f"  {r['市区町村名']:8s}  人口: {r['人口_人']:>8,}  "
@@ -377,17 +390,22 @@ def main() -> None:
         "小規模自治体に歪められた値になるため。"
     )
 
+    if not IS_DEFAULT:
+        calc_note = (
+            "人口加重平均（対象市町村の当該費目_千円の合計 ÷ 対象市町村の人口_人の合計 × 1000）。"
+            "各市町村の円/人を単純算術平均した値ではない。人口の少ない自治体ほど円/人が跳ね上がる構造があるため。"
+        )
     national_average: dict = {
         "municipality_count": national_n,
         "note": calc_note,
     }
     prefecture_average: dict = {
-        "prefecture": "岐阜県",
+        "prefecture": PREF_NAME,
         "municipality_count": len(pop_map),
         "note": calc_note,
     }
 
-    print("\n=== 全国平均・岐阜県内平均（人口加重平均） ===")
+    print("\n=== 全国平均・県内平均（人口加重平均） ===")
     for key, value_map_all, value_map_pref, idx in ITEMS:
         nat_avg, nat_n, nat_pop = weighted_average(pop_map_all, value_map_all, idx)
         pref_avg, pref_n, pref_pop = weighted_average(pop_map, value_map_pref, idx)
@@ -395,7 +413,7 @@ def main() -> None:
         prefecture_average[key] = round(pref_avg)
         print(
             f"  {key:16s} 全国: {round(nat_avg):>7,}円/人 (対象{nat_n}件・人口計{nat_pop:,}人)  "
-            f"岐阜県内: {round(pref_avg):>7,}円/人 (対象{pref_n}件・人口計{pref_pop:,}人)"
+            f"{PREF_NAME}内: {round(pref_avg):>7,}円/人 (対象{pref_n}件・人口計{pref_pop:,}人)"
         )
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -418,6 +436,10 @@ def main() -> None:
     # 取得日時は、実際に取得した日時の記録を使う（ネットワークに接続しないため、実行時刻を入れない）
     for spec_key, entry in zip(("shi_gaikyo", "shi_mokuteki", "shi_seishitsu", "machi_gaikyo", "machi_mokuteki", "machi_seishitsu"), sources):
         entry["fetched_at"] = RAW_FILES[spec_key][2]
+    trial_note = [] if IS_DEFAULT else [
+        f"D-24 の試作（公開しない）。対象は自治体マスタ data/municipality_master_{PREF}.json の{PREF_NAME}内{len(rows)}団体（政令指定都市の区の行は含めない）。"
+        "prefecture_average はこの団体の人口加重平均。"
+    ]
     payload = {
         "year": "2024年度（令和6年度）",
         "year_label": "2024年度（令和6年度、FY April 2024 - March 2025）",
@@ -430,6 +452,7 @@ def main() -> None:
             "普通建設事業費は性質別歳出内訳（見出し「普通建設事業費」の列）から取得。全目的合計の性質別分類。",
             "民生費・土木費・教育費は目的別歳出内訳（見出しの文字で列を特定）から取得。",
             "団体コードはExcel6桁(検査数字付き、全国地方公共団体コード)をそのまま使用。",
+            *trial_note,
             f"全国平均・岐阜県内平均（national_average/prefecture_average）はいずれも"
             f"人口加重平均。全国母数は{national_n}件（日本の市区町村1,718+東京都"
             "特別区23=1,741の想定レンジ内であることを確認済み。Excelの脚注行・"

@@ -7,7 +7,7 @@ import { getTrendsCard, getTrendsCategory, listTrendsCategories } from "@/lib/ca
 import { shouldSuppressComparison } from "@/lib/staleness";
 import { govPath, pageMeta } from "@/lib/site";
 
-type PageParams = { gov: string; category: string };
+type PageParams = { pref: string; gov: string; category: string };
 
 /**
  * 経年画面のURLは市町村ページ直下にネスト（ui-vi-handoff §5.3・[tab] 配下ではない）。
@@ -19,7 +19,7 @@ type PageParams = { gov: string; category: string };
 export function generateStaticParams() {
   const cats = listTrendsCategories();
   return MUNICIPALITIES.flatMap((m) =>
-    cats.map((c) => ({ gov: m.slug, category: c.category })),
+    cats.map((c) => ({ pref: m.prefSlug, gov: m.slug, category: c.category })),
   );
 }
 
@@ -30,8 +30,8 @@ export async function generateMetadata({
 }: {
   params: Promise<PageParams>;
 }): Promise<Metadata> {
-  const { gov, category } = await params;
-  const municipality = getMunicipalityBySlug(gov);
+  const { pref, gov, category } = await params;
+  const municipality = getMunicipalityBySlug(gov, pref);
   const cat = getTrendsCategory(category);
   if (!municipality || !cat) return { title: "自治体Watch" }; // dynamicParams=false のため到達しない
   return pageMeta({
@@ -46,8 +46,8 @@ export default async function TrendsPage({
 }: {
   params: Promise<PageParams>;
 }) {
-  const { gov, category } = await params;
-  const municipality = getMunicipalityBySlug(gov);
+  const { pref, gov, category } = await params;
+  const municipality = getMunicipalityBySlug(gov, pref);
   const cat = getTrendsCategory(category);
   const card = getTrendsCard(category);
   if (!municipality || !cat || !card || !card.trends) {

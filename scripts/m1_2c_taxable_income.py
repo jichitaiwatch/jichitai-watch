@@ -12,7 +12,12 @@
     （こちらは実xlsxのためopenpyxlで読む）
 
 出力（新規1本）:
-  data/m1_2c_taxable_income.json
+  data/m1_2c_taxable_income.json（--pref 21＝既定・岐阜。公開対象）
+  data/m1_2c_taxable_income_{県コード}.json（--pref 23 など。D-24 の試作。publish/allowlist.txt で除外し公開しない）
+
+県引数（2026-10-17・D-24 共通化）: python scripts/m1_2c_taxable_income.py --pref 23
+  対象団体は自治体マスタの市区町村行（scripts/pref_args.py）。名前は従来どおり原表の名称。
+  県行との突合・県内合計の突合は指定県で行う（県内合計はマスタの団体だけを足す＝政令市の区の行を二重に数えない）。
 
 算出式:
   一人あたり課税対象所得_万円 = 課税対象所得_百万円（C120110） × 100 ÷ 納税義務者数_人（C120120）
@@ -43,10 +48,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from lineage import build_sources  # noqa: E402
+from pref_args import load_master_cities, load_master_pref_name, out_path, parse_pref  # noqa: E402
 
 INCOME_SRC = ROOT / "poc" / "recon-20261012-sugata-city2026" / "estat_000040463586_ssds2026_C_keizai.xlsx"
 RUIKEI_SRC = ROOT / "poc" / "recon-20260828" / "0" / "ruikei_kubun_r06.xlsx"
-OUT = ROOT / "data" / "m1_2c_taxable_income.json"
+PREF = parse_pref(sys.argv[1:])
+OUT = out_path("m1_2c_taxable_income", PREF)
 
 UPDATED = date.today().isoformat()
 SOURCE_URL = "https://www.e-stat.go.jp/stat-search/file-download?statInfId=000040463586&fileKind=0"
@@ -331,38 +338,46 @@ def main():
     if not all(results):
         raise Abort("アンカー値が一致しない。JSONを書かずに中断した。")
 
-    print("== 県版との突合（同じ原表の岐阜県行 21000 と、県版 pref_1d の岐阜県） ==")
-    # 県の行は、市区町村コード列（c21）ではなく先頭側のコード列（2列目）に '21000' と入っている
-    g_row = [r for r in income_rows if len(r) > 11 and s(r[1]) == "21000" and s(r[8]).startswith("岐阜県")]
+    pref_name = load_master_pref_name(PREF)
+    cities = load_master_cities(PREF)
+    print(f"== 県版との突合（同じ原表の{pref_name}行 {PREF}000 と、県版 pref_1d の{pref_name}） ==")
+    # 県の行は、市区町村コード列（c21）ではなく先頭側のコード列（2列目）に 'NN000' と入っている
+    g_row = [r for r in income_rows if len(r) > 11 and s(r[1]) == f"{PREF}000" and s(r[8]).startswith(pref_name)]
     if len(g_row) != 1:
-        raise Abort(f"原表の岐阜県行（2列目='21000'・名称='岐阜県'）が {len(g_row)} 行（1行に確定できない）")
+        raise Abort(f"原表の{pref_name}行（2列目='{PREF}000'・名称='{pref_name}'）が {len(g_row)} 行（1行に確定できない）")
     g_pref = {"income_million_yen": g_row[0][c_income], "taxpayers": g_row[0][c_taxpayers]}
     if not isinstance(g_pref["income_million_yen"], float) or not g_pref["taxpayers"]:
-        raise Abort("岐阜県行の値が数値でない")
+        raise Abort(f"{pref_name}行の値が数値でない")
     g_pref_val = round(g_pref["income_million_yen"] * 100 / g_pref["taxpayers"], 1)
     pref_json = ROOT / "data" / "pref_1d_taxable_income.json"
     if pref_json.exists():
         pj = json.loads(pref_json.read_text(encoding="utf-8"))
-        pg = next(r for r in pj["data"] if r["都道府県コード"] == "21")
+        pg = next(r for r in pj["data"] if r["都道府県コード"] == PREF)
         want = round(pg["一人あたり課税対象所得_万円"], 1)
-        if not check("岐阜県 一人あたり課税対象所得(万円)：市区町村のすがた2026の県行 = 県版(すがた2026 #D02206)", g_pref_val, want):
-            raise Abort("市区町村版の原表の岐阜県行と県版の値が一致しない。JSONを書かずに中断した。")
-    # 岐阜42市町村の合計 = 岐阜県行（課税対象所得・納税義務者数）
-    gifu5 = [c5 for c5 in income_by_code5 if c5.startswith("21") and not c5.endswith("000")]
-    gi = sum(income_by_code5[c]["income_million_yen"] or 0 for c in gifu5)
-    gt = sum(income_by_code5[c]["taxpayers"] or 0 for c in gifu5)
-    # 課税対象所得は百万円単位に丸めて掲載されているため、42件の合計と県行の差は最大 42×0.5=21 百万円まで許容する。
+        if not check(f"{pref_name} 一人あたり課税対象所得(万円)：市区町村のすがた2026の県行 = 県版(すがた2026 #D02206)", g_pref_val, want):
+            raise Abort(f"市区町村版の原表の{pref_name}行と県版の値が一致しない。JSONを書かずに中断した。")
+    # 県内市町村（自治体マスタの団体。政令市の区の行は足さない）の合計 = 県行（課税対象所得・納税義務者数）
+    pref5 = [c6[:5] for c6 in cities]
+    missing5 = [c for c in pref5 if c not in income_by_code5]
+    if missing5:
+        raise Abort(f"自治体マスタの団体が原表に無い: {missing5[:8]}")
+    n_c = len(pref5)
+    gi = sum(income_by_code5[c]["income_million_yen"] or 0 for c in pref5)
+    gt = sum(income_by_code5[c]["taxpayers"] or 0 for c in pref5)
+    # 課税対象所得は百万円単位に丸めて掲載されているため、N件の合計と県行の差は最大 N×0.5 百万円まで許容する。
     # 納税義務者数（人）は丸めがないので完全一致を要求する。
+    tol = n_c * 0.5
     d_income = abs(gi - g_pref["income_million_yen"])
-    print(f"    {'OK ' if d_income <= 21 else 'NG '} 岐阜42市町村の課税対象所得合計と岐阜県行の差: {d_income}百万円（丸め由来の許容 21 以内）")
-    ok_t = check("岐阜42市町村の納税義務者数合計 = 岐阜県行", gt, g_pref["taxpayers"])
-    if not (d_income <= 21 and ok_t):
-        raise Abort("岐阜42市町村の合計が岐阜県行と一致しない。JSONを書かずに中断した。")
+    print(f"    {'OK ' if d_income <= tol else 'NG '} {pref_name}{n_c}市町村の課税対象所得合計と県行の差: {d_income}百万円（丸め由来の許容 {tol:g} 以内）")
+    ok_t = check(f"{pref_name}{n_c}市町村の納税義務者数合計 = 県行", gt, g_pref["taxpayers"])
+    if not (d_income <= tol and ok_t):
+        raise Abort(f"{pref_name}{n_c}市町村の合計が県行と一致しない。JSONを書かずに中断した。")
 
-    print("== 岐阜42市区町村の抽出 ==")
-    gifu_codes = sorted(c for c in codes if c.startswith("21"))
-    if len(gifu_codes) != 42:
-        raise Abort(f"岐阜県内市区町村が{len(gifu_codes)}件（42件ではない）")
+    print(f"== {pref_name}{n_c}市区町村の抽出 ==")
+    gifu_codes = sorted(c for c in codes if c in cities)
+    if set(gifu_codes) != set(cities):
+        raise Abort(f"母集団Mの{pref_name}内が{len(gifu_codes)}件（自治体マスタ{len(cities)}件と一致しない）"
+                    f" マスタのみ={sorted(set(cities) - set(gifu_codes))[:8]}")
 
     data = []
     for code6 in gifu_codes:
@@ -451,7 +466,7 @@ def main():
         json.dump(payload, fh, ensure_ascii=False, indent=2)
     print(f"  wrote {OUT.relative_to(ROOT)}  ({len(data)} records)")
 
-    print("== 岐阜42件 一人あたり課税対象所得（万円）順（サニティチェック用） ==")
+    print(f"== {pref_name}{len(data)}件 一人あたり課税対象所得（万円）順（サニティチェック用） ==")
     ranked = sorted(data, key=lambda r: -r["一人あたり課税対象所得_万円"])
     for r in ranked[:3] + ranked[-3:]:
         c = r["comparison"]

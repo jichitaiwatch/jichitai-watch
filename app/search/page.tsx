@@ -10,10 +10,13 @@
 // - 段内並び＝団体コード昇順（§7.1・D-6 中立性。総合スコア・順位付けをしない）。
 // - 同名（府中市＝東京都/広島県）は両方表示し都道府県で区別（§7.0・design/mock 同名の場合の処理）。
 // - 公開スコープ外（published=false）は「準備中」表示（未公開分岐・ui-vi §2.6 正直さの担保）。
+//   ただし、このビルドにページがある団体（試作ビルドの愛知・三重。app/search/layout.tsx が団体コードで渡す）は
+//   「自治体ページ」としてリンクにする（2026-10-18 運営者裁定・launch-backlog.md L-9。公開用ビルドでは該当なし）。
 //
 // 色は app/globals.css のVIトークン（--identity 系）。識別の色であり評価色ではない（D-4/D-6）。
 
 import { Suspense, useMemo, useState, useSyncExternalStore } from "react";
+import { useSearchExample, useSearchExtraPages } from "@/components/SearchExtraPages";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import searchIndex from "@/data/search_index.json";
@@ -49,11 +52,11 @@ interface Hit {
   tier: number;
 }
 
-function runSearch(rawQuery: string): Hit[] {
+function runSearch(rawQuery: string, index: SearchRecord[]): Hit[] {
   const q = normalizeSearchKey(rawQuery);
   if (!q) return [];
   const hits: Hit[] = [];
-  for (const rec of INDEX) {
+  for (const rec of index) {
     const tier = tierOf(rec, q);
     if (tier !== null) hits.push({ rec, tier });
   }
@@ -159,7 +162,16 @@ function SearchResults() {
   const [typed, setQuery] = useState<string | null>(null);
   const query = typed ?? hashQ ?? initialQ;
 
-  const hits = useMemo(() => runSearch(query), [query]);
+  const extra = useSearchExtraPages();
+  const example = useSearchExample();
+  const index = useMemo(
+    () =>
+      Object.keys(extra).length === 0
+        ? INDEX
+        : INDEX.map((r) => (extra[r.area_code] ? { ...r, published: true, url: extra[r.area_code] } : r)),
+    [extra],
+  );
+  const hits = useMemo(() => runSearch(query, index), [query, index]);
 
   const prefs = hits.filter((h) => h.rec.level === "prefecture");
   const munis = hits.filter((h) => h.rec.level === "municipality");
@@ -224,7 +236,7 @@ function SearchResults() {
 
         {trimmed === "" ? (
           <p className="mt-6 fs-label" style={{ color: "var(--muted)" }}>
-            市町村名または都道府県名を入力してください。例：岐阜市、大垣市
+            {`市町村名または都道府県名を入力してください。例：${example}`}
           </p>
         ) : !hasResults ? (
           <div className="mt-6">

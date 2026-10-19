@@ -17,6 +17,7 @@ kaigo_insurer_name は新規取得しない。既存 data/m2_kaigo_premium.json 
   python scripts/gen_municipality_master.py --master-only
   python scripts/gen_municipality_master.py --attach-only
   python scripts/gen_municipality_master.py --inspect
+  python scripts/gen_municipality_master.py --pref 23   # 試作（愛知。data/municipality_master_23.json に出力し、指標JSONには触れない）
 """
 
 from __future__ import annotations
@@ -42,6 +43,10 @@ M3_PATH = ROOT / "data" / "m3_expenditure.json"
 
 PREF_FILTER = "21"
 PREF_SLUG_V1 = "gifu-pref"
+# 県コード → 地域スラッグ（lib/prefectures.ts の prefSlug と同じ値。D-24 共通化で --pref を足した。
+# 岐阜（21）の出力は従来と同一。岐阜以外は試作で、出力先も別ファイル）
+PREF_SLUGS = {"21": "gifu-pref", "23": "aichi-pref", "24": "mie-pref"}
+GIFU_PREF_CODE = "21"
 USER_AGENT = "Mozilla/5.0 (jichitai-watch municipality-master generator)"
 
 # 公開済みスラッグ凍結（frontend-architecture.md §5.1 / §5.5）
@@ -469,9 +474,14 @@ def extract_gifu_rows(ws) -> list[dict[str, str]]:
     return rows
 
 
-def load_kaigo_insurer_map() -> dict[str, str]:
+def m2_path_for(pref: str) -> Path:
+    """県の介護保険料JSON。岐阜は data/m2_kaigo_premium.json、他県は _{県コード}（試作）。"""
+    return M2_PATH if pref == GIFU_PREF_CODE else ROOT / "data" / f"m2_kaigo_premium_{pref}.json"
+
+
+def load_kaigo_insurer_map(m2_path: Path | None = None) -> dict[str, str]:
     """M2 の構成市区町村 → 保険者名。単独保険者は呼び出し側で city_name を入れる。"""
-    payload = json.loads(M2_PATH.read_text(encoding="utf-8"))
+    payload = json.loads((m2_path or M2_PATH).read_text(encoding="utf-8"))
     mapping: dict[str, str] = {}
     for rec in payload["data"]:
         members = rec.get("構成市区町村")
@@ -522,12 +532,13 @@ def validate_master(records: list[dict]) -> None:
     prefs = [r for r in records if not r["city_name"]]
     if len(prefs) != 1:
         errors.append(f"都道府県レコードは1件であるべき: {len(prefs)}")
-    if len(cities) != 42:
+    if PREF_FILTER == GIFU_PREF_CODE and len(cities) != 42:
         errors.append(f"岐阜の市区町村は42件であるべき: {len(cities)}")
     for r in records:
         if r["pref_slug"] != FROZEN_PREF_SLUG:
             errors.append(f"pref_slug 凍結不一致: {r['area_code']} {r['pref_slug']}")
-    for code, expected in FROZEN_CITY_SLUGS.items():
+    gifu = PREF_FILTER == GIFU_PREF_CODE
+    for code, expected in (FROZEN_CITY_SLUGS.items() if gifu else []):
         hit = next((r for r in records if r["area_code"] == code), None)
         if hit is None:
             errors.append(f"凍結対象がマスタに無い: {code} ({expected})")
@@ -535,7 +546,7 @@ def validate_master(records: list[dict]) -> None:
             errors.append(
                 f"凍結スラッグ不一致: {code} {hit['city_name']} 生成={hit['city_slug']!r} 凍結={expected!r}"
             )
-    for code, expected in SPEC_SLUG_EXAMPLES.items():
+    for code, expected in (SPEC_SLUG_EXAMPLES.items() if gifu else []):
         hit = next((r for r in records if r["area_code"] == code), None)
         if hit is None:
             errors.append(f"規約実例の団体が無い: {code} ({expected})")
@@ -551,7 +562,7 @@ def validate_master(records: list[dict]) -> None:
     for r in cities:
         if r["kaigo_insurer_name"] != r["city_name"]:
             union_members += 1
-    if union_members != 9:
+    if gifu and union_members != 9:
         errors.append(f"広域連合構成市町村は9件であるべき: {union_members}")
     if errors:
         print("VALIDATION FAILED:", file=sys.stderr)
@@ -672,9 +683,10 @@ def write_master(records: list[dict], source_url: str, effective_from: str) -> N
         "updated": today,
         "source_as_of": effective_from,
         "notes": [
-            "総務省「全国地方公共団体コード」（都道府県コード及び市区町村コード）から岐阜県(21)分を抽出。",
+            f"総務省「全国地方公共団体コード」（都道府県コード及び市区町村コード）から{next(r['pref_name'] for r in records if not r['city_name'])}({PREF_FILTER})分を抽出。",
             "手書き禁止。scripts/gen_municipality_master.py が単一ソース。",
-            "city_slug はカナ列から frontend-architecture.md §5.4 で機械導出。gifu-pref/gifu-shi/mizuho-shi は凍結検証済み。",
+            "city_slug はカナ列から frontend-architecture.md §5.4 で機械導出。"
+            + ("gifu-pref/gifu-shi/mizuho-shi は凍結検証済み。" if PREF_FILTER == GIFU_PREF_CODE else "試作（凍結検証の対象外）。"),
             "kaigo_insurer_name は data/m2_kaigo_premium.json の構成市区町村から解決（新規取得しない）。",
             "status は V1 全 active。合併リダイレクト（C-8）は実装しない。",
         ],
@@ -697,7 +709,44 @@ def main() -> None:
     parser.add_argument("--inspect", action="store_true")
     parser.add_argument("--master-only", action="store_true")
     parser.add_argument("--attach-only", action="store_true")
+    parser.add_argument(
+        "--kaigo-only",
+        action="store_true",
+        help="既存の試作マスタ（岐阜以外）の kaigo_insurer_name だけを、その県の M2 JSON の構成市区町村から更新する（総務省表の再取得なし）",
+    )
+    parser.add_argument("--pref", default=GIFU_PREF_CODE, help="県コード2桁（既定 21＝岐阜。岐阜以外は試作）")
     args = parser.parse_args()
+
+    global PREF_FILTER, PREF_SLUG_V1, FROZEN_PREF_SLUG, OUTPUT_PATH
+    if args.pref not in PREF_SLUGS:
+        raise SystemExit(f"未対応の県コード: {args.pref}（対応: {sorted(PREF_SLUGS)}）")
+    PREF_FILTER = args.pref
+    PREF_SLUG_V1 = FROZEN_PREF_SLUG = PREF_SLUGS[args.pref]
+    if args.pref != GIFU_PREF_CODE:
+        # 試作：岐阜の出力・指標JSONを触らない
+        OUTPUT_PATH = ROOT / "data" / f"municipality_master_{args.pref}.json"
+        args.master_only = True
+        if args.attach_only:
+            raise SystemExit("--attach-only は岐阜（21）だけ。")
+
+    if args.kaigo_only:
+        if args.pref == GIFU_PREF_CODE:
+            raise SystemExit("--kaigo-only は岐阜以外（試作）だけ。岐阜は通常の生成を使う。")
+        payload = json.loads(OUTPUT_PATH.read_text(encoding="utf-8"))
+        kaigo_map = load_kaigo_insurer_map(m2_path_for(args.pref))
+        changed = 0
+        for r in payload["data"]:
+            if r["city_name"] == "":
+                continue
+            new = kaigo_map.get(r["city_name"])
+            if new is None:
+                continue  # 広域連合の構成でない団体（区を含む）は触らない
+            if r["kaigo_insurer_name"] != new:
+                r["kaigo_insurer_name"] = new
+                changed += 1
+        OUTPUT_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        print(f"[kaigo-only] {OUTPUT_PATH}  更新 {changed} 件")
+        return
 
     if args.attach_only:
         if not OUTPUT_PATH.exists():
@@ -742,7 +791,10 @@ def main() -> None:
     if not args.master_only:
         attach_area_codes(records)
 
-    print("[ok] freeze gifu-pref / gifu-shi / mizuho-shi 一致")
+    if PREF_FILTER == GIFU_PREF_CODE:
+        print("[ok] freeze gifu-pref / gifu-shi / mizuho-shi 一致")
+    else:
+        print(f"[ok] 試作 {PREF_FILTER}: {sum(1 for r in records if r['city_name'])} 団体（県1件を除く）")
 
 
 if __name__ == "__main__":

@@ -21,6 +21,11 @@ M1: こども家庭庁 こども医療費に対する助成の実施状況調査
     6.所得制限通院 7.所得制限入院 8.一部自己負担通院 9.一部自己負担入院
   pdfplumber・PyMuPDFはMS-PGothic CIDフォント非対応で文字化けするため不使用。
 
+県引数（2026-10-17・D-24 共通化）:
+  python scripts/m1_kodomo_iryohi.py --pref 23   # 愛知など。data/m1_kodomo_iryohi_23.json に書く（公開しない）
+  対象団体と area_code は自治体マスタ（scripts/pref_args.py）から。原本PDFは全国分。
+  data/cache/ に無ければ poc/recon-20261007-kodomo-r7/ の保存済み原本を使う。
+
 実行:
   python scripts/m1_kodomo_iryohi.py --test   # 岐阜市のみ
   python scripts/m1_kodomo_iryohi.py          # 岐阜県42市町村 → data/m1_kodomo_iryohi.json
@@ -38,6 +43,7 @@ from pathlib import Path
 import requests
 
 from lineage import build_sources
+from pref_args import DEFAULT_PREF, load_master_cities, load_master_pref_name, out_path, parse_pref
 
 PDF_URL = (
     "https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/"
@@ -47,7 +53,10 @@ PDF_URL = (
 TARGET_PREF = "岐阜県"
 CACHE_PDF = Path("data/cache/m1_kodomoiryohi_r7.pdf")
 CACHE_TXT = Path("data/cache/m1_kodomoiryohi_r7.txt")
-OUTPUT_PATH = Path("data/m1_kodomo_iryohi.json")
+SAVED_PDF = Path("poc/recon-20261007-kodomo-r7/cfa_kodomoiryohi_r7_bessi3.pdf")  # リポジトリに保存済みの原本
+PREF = parse_pref(sys.argv[1:])
+IS_DEFAULT = PREF == DEFAULT_PREF
+OUTPUT_PATH = Path("data") / out_path("m1_kodomo_iryohi", PREF).name
 
 # pdftotext(Poppler) の探索順: PATH → 環境変数 PDFTOTEXT_PATH → Winget既定の配置。
 # ローカル絶対パスをソースに直書きしない（運営者のユーザー名が実名を含むため。
@@ -116,6 +125,7 @@ def pdf_to_text(pdf_path: Path, txt_path: Path) -> Path:
         print(f"[cache] {txt_path}")
         return txt_path
     pdftotext = find_pdftotext()
+    txt_path.parent.mkdir(parents=True, exist_ok=True)
     subprocess.run([pdftotext, "-layout", "-enc", "UTF-8", str(pdf_path), str(txt_path)], check=True)
     print(f"[saved]    {txt_path}")
     return txt_path
@@ -220,27 +230,46 @@ def national_summary(records: list[dict]) -> dict:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--test", action="store_true", help="岐阜市のみ抽出して動作確認")
+    ap.add_argument("--pref", default=DEFAULT_PREF, help="県コード2桁（既定21＝岐阜。それ以外は試作）")
     args = ap.parse_args()
 
-    pdf_path = download_pdf(PDF_URL, CACHE_PDF)
+    if not CACHE_PDF.exists() and SAVED_PDF.exists():
+        pdf_path = SAVED_PDF
+        print(f"[saved-original] {SAVED_PDF}")
+    else:
+        pdf_path = download_pdf(PDF_URL, CACHE_PDF)
     txt_path = pdf_to_text(pdf_path, CACHE_TXT)
 
     all_records = parse_layout(txt_path)
     print(f"[parse] 全国 {len(all_records)} 件")
 
-    results = [dict(r) for r in all_records if r["都道府県"] == TARGET_PREF]
-    assert not any(r["学生医療"] for r in results), "岐阜県に※付き団体が現れた：出力形の見直しが必要"
+    pref_name = load_master_pref_name(PREF)
+    results = [dict(r) for r in all_records if r["都道府県"] == pref_name]
+    if IS_DEFAULT:
+        assert not any(r["学生医療"] for r in results), "岐阜県に※付き団体が現れた：出力形の見直しが必要"
+    else:
+        gakusei = [r["市区町村名"] for r in results if r["学生医療"]]
+        print(f"[info] ※付き（学生医療あり）の団体: {gakusei}")
     # area_code は既存出力（令和6年版の整備時に付与済み）の名称→コード対応を引き継ぐ。
     # 名称が一致しない団体があれば中断（合併・改称の見落とし防止。D-17 area_code キー優先）。
-    code_by_name = {
-        r["市区町村名"]: r["area_code"]
-        for r in json.loads(OUTPUT_PATH.read_text(encoding="utf-8"))["data"]
-    }
+    if IS_DEFAULT:
+        code_by_name = {
+            r["市区町村名"]: r["area_code"]
+            for r in json.loads(OUTPUT_PATH.read_text(encoding="utf-8"))["data"]
+        }
+    else:
+        # 他県は自治体マスタの市区町村行（政令市の区は無い）から名称→コードを作る
+        code_by_name = {name: code for code, name in load_master_cities(PREF).items()}
     missing = [r["市区町村名"] for r in results if r["市区町村名"] not in code_by_name]
     if missing or len(code_by_name) != len(results):
         raise SystemExit(f"area_code を引き継げない団体: {missing}（既存{len(code_by_name)}件／今回{len(results)}件）")
     results = [
-        {"area_code": code_by_name[r["市区町村名"]], **{k: v for k, v in r.items() if k != "学生医療"}}
+        {
+            "area_code": code_by_name[r["市区町村名"]],
+            **{k: v for k, v in r.items() if k != "学生医療"},
+            # 名前末尾の※（18歳年度末以降は学生医療）。岐阜には無いので従来の出力には現れない
+            **({"学生医療": True} if r["学生医療"] else {}),
+        }
         for r in results
     ]
 
@@ -248,7 +277,7 @@ def main() -> None:
         results = [r for r in results if r["市区町村名"] == "岐阜市"]
 
     print(f"\n{'='*55}")
-    print(f"{TARGET_PREF} 抽出結果: {len(results)} 件")
+    print(f"{pref_name} 抽出結果: {len(results)} 件")
     print(f"{'='*55}")
     for row in results[:5]:
         print(
@@ -271,7 +300,7 @@ def main() -> None:
         OUTPUT_PATH,
         specs=[{
             "role": None,
-            "cache_path": CACHE_PDF,
+            "cache_path": pdf_path,
             "source_url": PDF_URL,
             "source_page": "https://www.cfa.go.jp/policies/boshihoken/kodomoiryouhityousa-r7",
         }],
@@ -281,10 +310,16 @@ def main() -> None:
         "sources": sources,
         "period": "令和7年4月1日時点",
         "updated": "2026-10-07",
-        "notes": [
-            "全国1,741市区町村収録PDF（別紙3）より都道府県名='岐阜県'でフィルタ。",
-            "令和7年版では岐阜県42市町村は全件が所得制限『無』・一部自己負担『無』（令和6年版と同じ）。"
-            "対象年齢は令和6年版から変わった団体がある（岐阜市は15歳→18歳年度末など）。",
+        "notes": ([] if IS_DEFAULT else [
+            f"D-24 の試作（公開しない）。都道府県名='{pref_name}'でフィルタし、自治体マスタ data/municipality_master_{PREF}.json の団体と名称で突き合わせた（政令指定都市の区の行は含めない）。",
+        ]) + [
+            "全国1,741市区町村収録PDF（別紙3）より都道府県名='岐阜県'でフィルタ。" if IS_DEFAULT else "全国1,741市区町村収録PDF（別紙3）より都道府県名でフィルタ。",
+            *([
+                "令和7年版では岐阜県42市町村は全件が所得制限『無』・一部自己負担『無』（令和6年版と同じ）。"
+                "対象年齢は令和6年版から変わった団体がある（岐阜市は15歳→18歳年度末など）。",
+            ] if IS_DEFAULT else [
+                "名前末尾の『※』の団体は、行に『学生医療: true』を付けた（PDFの注記：18歳年度末以降は学生医療として実施しており、対象は大学等に通う者に限る。一定の所得制限あり）。",
+            ]),
             "全国の分布は national に件数で収録（全国1,741市区町村。※付き＝学生医療ありの団体を含む）。",
         ],
         "national": national_summary(all_records),

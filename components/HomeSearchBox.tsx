@@ -9,8 +9,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { DEFAULT_SEARCH_EXAMPLE } from "@/lib/prefectures";
 
-export function HomeSearchBox() {
+export function HomeSearchBox({ example = DEFAULT_SEARCH_EXAMPLE }: { example?: string }) {
   const router = useRouter();
   const [q, setQ] = useState("");
 
@@ -47,7 +48,7 @@ export function HomeSearchBox() {
           自治体を探す
         </button>
       </div>
-      <p className="mt-3 text-base" style={{ color: "#41577d" }}>例：岐阜市、大垣市</p>
+      <p className="mt-3 text-base" style={{ color: "#41577d" }}>{`例：${example}`}</p>
     </form>
   );
 }

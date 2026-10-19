@@ -8,11 +8,27 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { MUNICIPALITIES, type MunicipalityConfig } from "@/lib/municipalities";
+import type { MunicipalityConfig } from "@/lib/municipalities";
 
-const LIST = [...MUNICIPALITIES].sort((a, b) => a.areaCode.localeCompare(b.areaCode));
-
-export function MunicipalitySwitcher({ current }: { current: MunicipalityConfig }) {
+/**
+ * list＝同一県内の市町村と政令市の区（サーバー側で渡す。クライアントから lib/municipalities を値として読まない）。
+ * 区（kind="ward"）は親の市の直後に字下げで並べる（2026-10-18 運営者裁定・launch-backlog.md L-9）。
+ * 区と市は parentAreaCode（団体コード）で結ぶ。表示名は親の市名を除いた区名（名古屋市のページの区の一覧と同じ）。
+ */
+export function MunicipalitySwitcher({
+  current,
+  list,
+}: {
+  current: MunicipalityConfig;
+  list: MunicipalityConfig[];
+}) {
+  const byCode = (a: MunicipalityConfig, b: MunicipalityConfig) => a.areaCode.localeCompare(b.areaCode);
+  const LIST = list
+    .filter((m) => m.kind !== "ward")
+    .sort(byCode)
+    .flatMap((m) => [m, ...list.filter((w) => w.kind === "ward" && w.parentAreaCode === m.areaCode).sort(byCode)]);
+  const parentName = (w: MunicipalityConfig) =>
+    list.find((m) => m.areaCode === w.parentAreaCode)?.cityName ?? "";
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -66,12 +82,12 @@ export function MunicipalitySwitcher({ current }: { current: MunicipalityConfig 
                   <Link
                     href={`/${m.prefSlug}/${m.slug}/`}
                     aria-current={isCurrent ? "true" : undefined}
-                    className={`flex items-center justify-between rounded-lg px-3 py-2 fs-label ${
-                      isCurrent ? "bg-teal-50 font-bold text-teal-900" : "text-teal-950 hover:bg-stone-100"
-                    }`}
+                    className={`flex items-center justify-between rounded-lg py-2 fs-label ${
+                      m.kind === "ward" ? "ml-4 border-l-2 border-stone-200 pl-3 pr-3" : "px-3"
+                    } ${isCurrent ? "bg-teal-50 font-bold text-teal-900" : "text-teal-950 hover:bg-stone-100"}`}
                     onClick={() => setOpen(false)}
                   >
-                    <span className="truncate">{m.cityName}</span>
+                    <span className="truncate">{m.kind === "ward" ? m.cityName.replace(parentName(m), "") : m.cityName}</span>
                     {isCurrent && <span className="shrink-0 fs-sub text-teal-700">表示中</span>}
                   </Link>
                 </li>

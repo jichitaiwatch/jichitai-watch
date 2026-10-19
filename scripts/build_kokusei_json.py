@@ -15,6 +15,9 @@
 
 実行:
   python scripts/build_kokusei_json.py          … 3指標すべて（産業・昼夜間は令和2年のまま）
+  python scripts/build_kokusei_json.py --pref 23 … 試作（D-24）：愛知の市町村版3本だけを data/{名前}_23.json に書く。
+      県版（pref_*）は全国分が既にあるため書かない。area_code は自治体マスタ（scripts/pref_args.py）から付け、
+      政令市の区の行は対象外（マスタの市町村だけ）。岐阜（既定）の出力と処理は従来どおり。
   python scripts/build_kokusei_json.py single   … 単身世帯割合の2本だけ作り直す（産業・昼夜間の既存JSONには触れない）
 
 規律:
@@ -35,6 +38,11 @@ from pathlib import Path
 from openpyxl import load_workbook
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+from pref_args import DEFAULT_PREF, load_master_cities, load_master_pref_name, load_master_wards, out_path, parse_pref  # noqa: E402
+
+PREF = parse_pref(sys.argv[1:])
+IS_DEFAULT = PREF == DEFAULT_PREF
 SRC = ROOT / "poc" / "recon-20260828"
 OUT = ROOT / "data"
 
@@ -201,7 +209,7 @@ def zero(v):
 
 
 def in_scope(code: str, kind: str) -> bool:
-    """対象地域のみを解析する。全国／47都道府県／岐阜県内の市区町村（先頭2桁=21）。
+    """対象地域のみを解析する。全国／47都道府県／指定県内の市区町村（先頭2桁=PREF。既定21＝岐阜）。
 
     範囲外の市区町村は値を読まない。国勢調査R2には対象外自治体の欠損（例 07546_双葉町の
     一般世帯数='-'）が実在するため、範囲外まで数値化すると対象外の欠損で止まってしまう。
@@ -209,7 +217,7 @@ def in_scope(code: str, kind: str) -> bool:
     """
     if kind in ("pref", "national"):
         return True
-    return kind == "muni" and code.startswith("21")
+    return kind == "muni" and code.startswith(PREF)
 
 
 def pct(numerator, denominator, where: str):
@@ -466,13 +474,14 @@ NOTES = {
 }
 
 
-def write_json(path: Path, sources, notes, data, period: str = PERIOD):
+def write_json(path: Path, sources, notes, data, period: str = PERIOD, wards=None):
     payload = {
         "sources": sources,
         "period": period,
         "updated": UPDATED,
         "notes": notes,
         "data": data,
+        **({"wards": wards} if wards else {}),
     }
     with path.open("w", encoding="utf-8") as fh:
         json.dump(payload, fh, ensure_ascii=False, indent=2)
@@ -488,21 +497,62 @@ def emit(kind_key, meta, picked, extra, values_fn, machi_name, pref_name):
         )
     title = extra["table_title"]
 
-    munis = sorted((r for r in picked.values() if r["kind"] == "muni" and r["code"].startswith("21")),
-                   key=lambda r: r["code"])
-    if len(munis) != 42:
-        raise Abort(f"{kind_key}: 岐阜県内市区町村が {len(munis)} 件（42件ではない）")
-    machi_rows = [
-        {"市区町村コード": r["code"], "都道府県": "岐阜県", "市区町村名": r["name"], **values_fn(r)}
-        for r in munis
-    ]
+    if IS_DEFAULT:
+        munis = sorted((r for r in picked.values() if r["kind"] == "muni" and r["code"].startswith("21")),
+                       key=lambda r: r["code"])
+        if len(munis) != 42:
+            raise Abort(f"{kind_key}: 岐阜県内市区町村が {len(munis)} 件（42件ではない）")
+        machi_rows = [
+            {"市区町村コード": r["code"], "都道府県": "岐阜県", "市区町村名": r["name"], **values_fn(r)}
+            for r in munis
+        ]
+        machi_path, machi_note = OUT / machi_name, MACHI_NOTE
+    else:
+        # 試作（D-24）：自治体マスタの市町村だけ（政令市の区の行は除く）。area_code はマスタの6桁。
+        cities = load_master_cities(PREF)
+        pref_name = load_master_pref_name(PREF)
+        by5 = {c6[:5]: c6 for c6 in cities}
+        missing = sorted(c5 for c5 in by5 if c5 not in picked or picked[c5]["kind"] != "muni")
+        if missing:
+            raise Abort(f"{kind_key}: 自治体マスタの団体が原表に無い: {missing[:8]}")
+        munis = sorted((picked[c5] for c5 in by5), key=lambda r: r["code"])
+        machi_rows = [
+            {"area_code": by5[r["code"]], "市区町村コード": r["code"], "都道府県": pref_name,
+             "市区町村名": r["name"], **values_fn(r)}
+            for r in munis
+        ]
+        machi_path = out_path(machi_name.removesuffix(".json"), PREF)
+        machi_note = (f"対象は{pref_name}内の市区町村{len(munis)}件（自治体マスタ data/municipality_master_{PREF}.json の団体。"
+                      "政令指定都市の区の行は含めない）。都道府県行・全国行は含まない。D-24 の試作（公開しない）。")
+    ward_rows = []
+    if not IS_DEFAULT:
+        # 政令市の区（試作）。国勢調査の5桁コード＝マスタ6桁の先頭5桁。市の行（data）とは分け、wards に置く
+        ward_master = load_master_wards(PREF)
+        for c6, (wname, parent6) in sorted(ward_master.items()):
+            r = picked.get(c6[:5])
+            if r is None or r["kind"] != "muni":
+                raise Abort(f"{kind_key}: 区 {wname}（{c6}）が原表に無い")
+            ward_rows.append({"area_code": c6, "市区町村コード": r["code"], "都道府県": pref_name,
+                              "市区町村名": r["name"], "parent_area_code": parent6, **values_fn(r)})
+        # 検算：整数の列は、区の合計＝親の市の値
+        for parent6 in sorted({p for _, p in ward_master.values()}):
+            kids = [w for w in ward_rows if w["parent_area_code"] == parent6]
+            parent = next(m for m in machi_rows if m["area_code"] == parent6)
+            for k, v in parent.items():
+                if isinstance(v, int) and not isinstance(v, bool) and all(isinstance(w.get(k), int) for w in kids):
+                    if sum(w[k] for w in kids) != v:
+                        raise Abort(f"{kind_key}: {parent['市区町村名']}の区{len(kids)}件の{k}合計が市の値{v}と不一致")
+            print(f"    OK  {kind_key}: {parent['市区町村名']}の区{len(kids)}件の整数列の合計 = 市の値")
     write_json(
-        OUT / machi_name,
+        machi_path,
         [source_entry(meta, title, "source_file_hash", file_hash)],
-        [*NOTES[kind_key], MACHI_NOTE, *COMMON_NOTES],
+        [*NOTES[kind_key], machi_note, *COMMON_NOTES],
         machi_rows,
         meta.get("period", PERIOD),
+        wards=ward_rows,
     )
+    if not IS_DEFAULT:
+        return picked  # 県版（pref_*）は全国分が既にある。試作では書かない
 
     prefs = sorted((r for r in picked.values() if r["kind"] in ("pref", "national")),
                    key=lambda r: r["code"])
@@ -535,14 +585,21 @@ def check(label, got, want):
 def verify_single(single):
     """令和7年版の単身世帯割合：固定アンカーに依らず、内部整合で検証する。"""
     prefs = [r for r in single.values() if r["kind"] == "pref"]
-    gifu = [r for r in single.values() if r["kind"] == "muni" and r["code"].startswith("21")]
     nat = single["00000"]
+    if IS_DEFAULT:
+        gifu = [r for r in single.values() if r["kind"] == "muni" and r["code"].startswith("21")]
+        label, n_want = "岐阜42市町村", 42
+    else:
+        # 試作：自治体マスタの市町村だけを足す（政令市の区の行を二重に数えない）
+        cities5 = {c6[:5] for c6 in load_master_cities(PREF)}
+        gifu = [r for r in single.values() if r["kind"] == "muni" and r["code"] in cities5]
+        label, n_want = f"{load_master_pref_name(PREF)}{len(cities5)}市町村", len(cities5)
     ok = True
     for k in ("一般世帯数", "単独世帯数"):
         ok &= check(f"47都道府県の{k}合計 = 全国", sum(r[k] for r in prefs), nat[k])
-        ok &= check(f"岐阜42市町村の{k}合計 = 岐阜県(21000)", sum(r[k] for r in gifu), single["21000"][k])
+        ok &= check(f"{label}の{k}合計 = 県({PREF}000)", sum(r[k] for r in gifu), single[f"{PREF}000"][k])
     ok &= check("都道府県数", len(prefs), 47)
-    ok &= check("岐阜県内市区町村数", len(gifu), 42)
+    ok &= check("県内市区町村数", len(gifu), n_want)
     # 単独世帯数 ≦ 一般世帯数（全地域）
     ok &= check("単独世帯数 ≦ 一般世帯数 でない地域の数", sum(1 for r in single.values() if r["単独世帯数"] > r["一般世帯数"]), 0)
     return ok
@@ -575,6 +632,7 @@ def main(only_single: bool = False):
     daynight, daynight_x = build_daynight(INPUTS["daynight"])
 
     print("== アンカー自己検証 ==")
+    # 岐阜県の固定アンカーは県に依らず毎回確認する（原表の読み方が変わっていないことの検証）
     gifu_ind = industry["21000"]
     e_mfg = next((d for d in gifu_ind["上位3業種"] if d["産業コード"] == "E"), None)
     results = [
@@ -594,8 +652,8 @@ def main(only_single: bool = False):
     emit("daynight", INPUTS["daynight"], daynight, daynight_x, daynight_values,
          "m1_2b_daynight.json", "pref_2b_daynight.json")
 
-    print("== 岐阜県・全国の該当値 ==")
-    for code in ("21000", "00000"):
+    print(f"== 県({PREF}000)・全国の該当値 ==")
+    for code in (f"{PREF}000", "00000"):
         nm = single[code]["name"]
         si, ind, dn = single[code], industry[code], daynight[code]
         print(f"  [{code} {nm}]")
@@ -606,12 +664,13 @@ def main(only_single: bool = False):
         print(f"    #5 上位3業種=" + " / ".join(
             f"{d['産業コード']}_{d['産業名']}:{d['就業者数']}" for d in ind["上位3業種"]))
         print(f"    #6 昼夜間人口比率={dn['昼夜間人口比率']}")
-    print(f"  岐阜市(21201) #6 昼夜間人口比率={daynight['21201']['昼夜間人口比率']}")
+    if IS_DEFAULT:
+        print(f"  岐阜市(21201) #6 昼夜間人口比率={daynight['21201']['昼夜間人口比率']}")
 
 
 if __name__ == "__main__":
     try:
-        main(only_single=(len(sys.argv) > 1 and sys.argv[1] == "single"))
+        main(only_single=("single" in sys.argv[1:]))
     except Abort as exc:
         print(f"\n!! 中断: {exc}", file=sys.stderr)
         sys.exit(1)

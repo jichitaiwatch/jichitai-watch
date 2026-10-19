@@ -15,7 +15,13 @@
   poc/recon-20260828/0/ruikei_kubun_r06.xlsx                   類似団体区分マスタ（1741団体）
 
 出力（新規1本）:
-  data/m4_5_furusato.json
+  data/m4_5_furusato.json（--pref 21＝既定・岐阜。公開対象）
+  data/m4_5_furusato_{県コード}.json（--pref 23 など。D-24 の試作。publish/allowlist.txt で除外し公開しない）
+
+県引数（2026-10-17・D-24 共通化・pre-launch-blockers.md #2）:
+  python scripts/m4_5_furusato.py --pref 23
+  対象団体と名前は自治体マスタ（data/municipality_master.json／_{県コード}.json）の市区町村行から取る（scripts/pref_args.py）。
+  全国の比較値（母集団M・順位）は県に依らず同じ1741団体で算出する。
 
 算出式:
   一人あたり受入額_円   = 受入額_円 ÷ 人口_計（令和7年1月1日住基）  ※整数円に丸め
@@ -41,12 +47,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from lineage import build_sources  # noqa: E402
+from pref_args import load_master_cities, out_path, parse_pref  # noqa: E402
 
 UKEIRE_SRC = ROOT / "poc" / "recon-20261007-furusato" / "soumu_001084989_r7_ukeire.xlsx"
 KOUJO_SRC = ROOT / "poc" / "recon-20261007-furusato" / "soumu_001085012_r8_koujo.xlsx"
 POP_SRC = ROOT / "poc" / "recon-20260828" / "1-1a" / "estat_000040306653_juki_shichoson_pop_hh_r7.xlsx"
 RUIKEI_SRC = ROOT / "poc" / "recon-20260828" / "0" / "ruikei_kubun_r06.xlsx"
-OUT = ROOT / "data" / "m4_5_furusato.json"
+PREF = parse_pref(sys.argv[1:])
+OUT = out_path("m4_5_furusato", PREF)
 
 UPDATED = date.today().isoformat()
 PAGE_URL = "https://www.soumu.go.jp/main_sosiki/jichi_zeisei/czaisei/czaisei_seido/furusato/archive/"
@@ -327,15 +335,16 @@ def main():
             "source_note": note_rank,
         }
 
-    gifu = sorted(c for c in M if c.startswith("21"))
-    if len(gifu) != 42:
-        raise Abort(f"岐阜県内が{len(gifu)}件（42件でない）")
-    names = {r["area_code"]: r["市区町村名"] for r in json.load(open(ROOT / "data" / "m1_kodomo_iryohi.json", encoding="utf-8"))["data"]}
-    if set(names) != set(gifu):
-        raise Abort("岐阜42件のコードがdata/m1_kodomo_iryohi.jsonと一致しない")
+    names = load_master_cities(PREF)
+    targets = sorted(c for c in M if c.startswith(PREF))
+    if set(names) != set(targets):
+        missing = sorted(set(names) - set(targets))
+        extra = sorted(set(targets) - set(names))
+        raise Abort(f"県コード{PREF}：自治体マスタ{len(names)}件と母集団Mの県内{len(targets)}件が一致しない"
+                    f"（マスタのみ={missing[:8]} Mのみ={extra[:8]}）")
 
     data = []
-    for code in gifu:
+    for code in targets:
         m = M[code]
         data.append({
             "area_code": code,
@@ -392,7 +401,7 @@ def main():
         json.dump(payload, fh, ensure_ascii=False, indent=2)
     print(f"== 書き出し == {OUT.relative_to(ROOT)} ({len(data)}件)")
 
-    print("== サニティ：岐阜42件の一人あたり受入額（円）上位3・下位3 ==")
+    print(f"== サニティ：県コード{PREF}の{len(data)}件の一人あたり受入額（円）上位3・下位3 ==")
     for r in sorted(data, key=lambda r: -r["一人あたり受入額_円"])[:3] + sorted(data, key=lambda r: -r["一人あたり受入額_円"])[-3:]:
         c = r["comparison"]["一人あたり受入額_円"]
         d = r["comparison"]["一人あたり控除額_円"]

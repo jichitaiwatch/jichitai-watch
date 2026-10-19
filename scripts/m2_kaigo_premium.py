@@ -1,6 +1,10 @@
 """
 M2: 厚労省 介護保険料 基準額（第1号・月額）抽出スクリプト
-対象: 岐阜県内42市町村
+対象: 既定は岐阜県内42市町村。--pref NN で他県（D-24 の試作。例 --pref 23＝愛知、--pref 24＝三重）
+  --pref 無し＝従来どおり data/m2_kaigo_premium.json（公開対象）。
+  --pref NN（NN≠21）＝data/m2_kaigo_premium_NN.json（試作。publish/allowlist.txt の対象外＝公開しない）。
+  県名は自治体マスタ（scripts/pref_args.py）から取り、書き出し後に「この県の保険者名」と
+  自治体マスタの介護保険者名（kaigo_insurer_name）の突き合わせ結果を表示する（広域連合の取り違え検出用）。
 ソース: 第9期 各保険者保険料基準額一覧（xlsx）
         https://www.mhlw.go.jp/content/12303500/001253800.xlsx
 公表ページ（第9期集計）:
@@ -49,17 +53,21 @@ M2: 厚労省 介護保険料 基準額（第1号・月額）抽出スクリプ�
 import sys
 import json
 import argparse
+import sys
+from datetime import date
 from pathlib import Path
 
 import requests
 import openpyxl
 
 from lineage import build_sources
+from pref_args import DEFAULT_PREF, _master_rows, load_master_pref_name, out_path, parse_pref
 
 XLSX_URL = "https://www.mhlw.go.jp/content/12303500/001253800.xlsx"
-TARGET_PREF = "岐阜県"
+PREF = parse_pref(sys.argv[1:])              # --pref NN（既定 21＝岐阜）
+TARGET_PREF = load_master_pref_name(PREF)    # 例 "岐阜県"（自治体マスタの県名）
 CACHE_PATH = Path("data/cache/m2_001253800.xlsx")
-OUTPUT_PATH = Path("data/m2_kaigo_premium.json")
+OUTPUT_PATH = out_path("m2_kaigo_premium", PREF)
 
 # 厚労省公表の全国加重平均（公式値）。出典: 令和6年5月14日 報道発表
 # 「第９期介護保険事業計画期間における介護保険の第１号保険料及び
@@ -93,6 +101,35 @@ def download_xlsx(url: str, cache: Path) -> Path:
 
 
 # ------------------------------------------------------------------ inspect
+
+class _Cell:
+    __slots__ = ("value",)
+
+    def __init__(self, value):
+        self.value = value
+
+
+class _Grid:
+    """シートを最初に1回だけ順に読み、メモリ上の表として ws.cell(row, col).value を返す（1始まり）。
+    openpyxl の read_only シートは cell() のたびに先頭から読み直す（行数の二乗の時間がかかる。
+    1,739行×全国抽出で数分以上止まったように見えた＝2026-10-18）ため、行を順に1回だけ読む。
+    読む範囲は 1..max_row × 1..max_column に固定し、空の行・列は None（従来の cell().value と同じ）。"""
+
+    def __init__(self, ws):
+        self.title = ws.title
+        self.max_row = ws.max_row
+        self.max_column = ws.max_column
+        self._rows = list(
+            ws.iter_rows(min_row=1, max_row=self.max_row, min_col=1, max_col=self.max_column, values_only=True)
+        )
+
+    def cell(self, row: int, col: int) -> _Cell:
+        if 1 <= row <= len(self._rows):
+            r = self._rows[row - 1]
+            if 1 <= col <= len(r):
+                return _Cell(r[col - 1])
+        return _Cell(None)
+
 
 def inspect_sheet(ws, max_rows: int = 10) -> None:
     lines = [
@@ -270,8 +307,24 @@ def build_prefecture_average(pref_records: list[dict], pref_name: str) -> dict:
 
 # ------------------------------------------------------------------ main
 
+def report_insurer_match(pref: str, results: list[dict]) -> None:
+    """この県で抽出した保険者名と、自治体マスタの介護保険者名（kaigo_insurer_name）を突き合わせて表示する。
+    出力は変えない（表示のみ）。マスタ側にあって Excel に無い名前は、ページでは「データ未整備」になる
+    （推定で埋めない＝D-25）。広域連合の取り違えがあればここに出る。"""
+    excel = {r["市区町村名"] for r in results}
+    master = {r["kaigo_insurer_name"] for r in _master_rows(pref)
+              if r["area_code"].startswith(pref) and r.get("city_name") and r.get("status") == "active"
+              and r.get("kaigo_insurer_name")}
+    only_master = sorted(master - excel)
+    only_excel = sorted(excel - master)
+    print(f"\n[突き合わせ] 県コード{pref}: Excelの保険者{len(excel)}／マスタの介護保険者名{len(master)}")
+    print(f"  マスタにあってExcelに無い（ページは「データ未整備」になる）: {len(only_master)}件 {only_master}")
+    print(f"  Excelにあってマスタに無い（どの市町村にも使われない）: {len(only_excel)}件 {only_excel}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
+    ap.add_argument("--pref", default=DEFAULT_PREF, help="都道府県コード2桁（既定 21＝岐阜。値の検証は parse_pref）")
     ap.add_argument("--inspect", action="store_true", help="列構造確認のみ（抽出しない）")
     ap.add_argument("--test", action="store_true", help="最初の3件のみ抽出して動作確認")
     args = ap.parse_args()
@@ -279,7 +332,7 @@ def main() -> None:
     cache = download_xlsx(XLSX_URL, CACHE_PATH)
 
     wb = openpyxl.load_workbook(cache, data_only=True, read_only=True)
-    ws = wb.active
+    ws = _Grid(wb.active)
 
     if args.inspect:
         inspect_sheet(ws, max_rows=12)
@@ -326,6 +379,8 @@ def main() -> None:
     )
     print(f"{'='*55}")
 
+    report_insurer_match(PREF, results)
+
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     sources = build_sources(
         OUTPUT_PATH,
@@ -335,12 +390,13 @@ def main() -> None:
             "source_url": XLSX_URL,
             "source_page": NATIONAL_OFFICIAL_SOURCE_URL,
         }],
-        backfill_fetched_at="2026-08-06",
+        # 岐阜（既定）の遡及日。試作県は遡及ではなく今回の取得なので入れない（build_sources が現在時刻を入れる）
+        backfill_fetched_at="2026-08-06" if PREF == DEFAULT_PREF else None,
     )
     payload = {
         "sources": sources,
         "period": "第9期（2024〜2026年度）",
-        "updated": "2026-08-06",
+        "updated": "2026-08-06" if PREF == DEFAULT_PREF else date.today().isoformat(),
         "note": (
             "保険者コードはExcel非掲載。都道府県名でフィルタ。"
             "伸び率・認定率は小数（例: 0.05 → 5.0%に変換済み）。"

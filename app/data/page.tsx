@@ -1,5 +1,12 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/site";
+import { PREFECTURES } from "@/lib/prefectures";
+
+// 日本地図（トップの「地域から探す」）は県が複数のビルドだけに出る。出るときだけ出典の文を足す（岐阜のみの公開用ビルドは変わらない）。
+const MAP_CREDIT =
+  PREFECTURES.length > 1
+    ? "トップ画面の日本地図（8つの地方の形）も同じ「地球地図日本」を加工したもので、都道府県の境界を地方ごとに結合し、形を簡略化して描き直しています。沖縄県と遠く離れた小島は描いていません。"
+    : "";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { SitePageShell, DocSection } from "@/components/SitePageShell";
@@ -98,7 +105,7 @@ export default function DataPage() {
           <a href="https://www.gsi.go.jp/kankyochiri/gm_jpn.html" target="_blank" rel="noreferrer" className="break-all underline underline-offset-2">https://www.gsi.go.jp/kankyochiri/gm_jpn.html</a>
           ）を加工して作成したものです。このデータには
           <a href="https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html" target="_blank" rel="noreferrer" className="underline underline-offset-2">国土地理院コンテンツ利用規約</a>
-          が適用されます。GitHubで公開されている変換データ（dataofjapan/land）から取得し、自治体Watchが輪郭を簡略化して描き直しています。
+          {`が適用されます。GitHubで公開されている変換データ（dataofjapan/land）から取得し、自治体Watchが輪郭を簡略化して描き直しています。${MAP_CREDIT}`}
         </p>
         <p>上位3業種カードの業種別アイコンの意匠は、Lucide（ISC License）によります。著作権表示と許諾文は次のとおりです。</p>
         <details>

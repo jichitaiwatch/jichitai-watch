@@ -13,21 +13,31 @@ Pipeline:
    election date across all 8 years (current officeholder).
 5. Cross-check against the canonical 42 area_code/name list already verified
    in data/m2_2_finance.json (Batch3).
+
+県引数（2026-10-17・D-24 共通化）:
+  python scripts/build_m2_1_chief.py --pref 23   # 愛知など。data/m2_1_chief_23.json に書く（公開しない）
+  対象団体は自治体マスタの市区町村行（scripts/pref_args.py）。手作業の直近選挙補正は scripts/patches/m2_1_chief_manual_{県コード}.json
+  があるときだけ当てる（岐阜は従来の m2_1_chief_manual.json）。無い県は、自治総研の収録（2025-12-08当選分まで）のまま。
 """
 from __future__ import annotations
 
 import hashlib
 import json
+import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 import openpyxl
 
 from manual_patch import apply_manual_patch
+from pref_args import DEFAULT_PREF, load_master_cities, load_master_pref_name, out_path, parse_pref
 
 ROOT = Path(__file__).resolve().parents[1]
 HERE = ROOT / "poc" / "recon-20260830"  # 原本（raw/・raw_pref/）の置き場
 RAW = HERE / "raw"
+PREF = parse_pref(sys.argv[1:])
+IS_DEFAULT = PREF == DEFAULT_PREF
+PREF_NAME = load_master_pref_name(PREF)
 JST = timezone(timedelta(hours=9))
 
 SHEET_NAMES = {
@@ -58,24 +68,8 @@ SOURCE_FILE_NAMES = {
 DOWNLOAD_PAGE_URL = "https://jichisoken.jp/jichitaisenkyo/"
 YEAR_INDEX_URLS = {y: f"https://jichisoken.jp/jichitaisenkyo/{y}/" for y in SHEET_NAMES}
 
-# Canonical 42 gifu municipalities, cross-checked against data/m2_2_finance.json
-# (Batch3, already verified 42/42 against soumu decision-statistics files).
-MASTER_42 = {
-    "21201": ("212016", "岐阜市"), "21202": ("212024", "大垣市"), "21203": ("212032", "高山市"),
-    "21204": ("212041", "多治見市"), "21205": ("212059", "関市"), "21206": ("212067", "中津川市"),
-    "21207": ("212075", "美濃市"), "21208": ("212083", "瑞浪市"), "21209": ("212091", "羽島市"),
-    "21210": ("212105", "恵那市"), "21211": ("212113", "美濃加茂市"), "21212": ("212121", "土岐市"),
-    "21213": ("212130", "各務原市"), "21214": ("212148", "可児市"), "21215": ("212156", "山県市"),
-    "21216": ("212164", "瑞穂市"), "21217": ("212172", "飛騨市"), "21218": ("212181", "本巣市"),
-    "21219": ("212199", "郡上市"), "21220": ("212202", "下呂市"), "21221": ("212211", "海津市"),
-    "21302": ("213021", "岐南町"), "21303": ("213039", "笠松町"), "21341": ("213411", "養老町"),
-    "21361": ("213616", "垂井町"), "21362": ("213624", "関ケ原町"), "21381": ("213811", "神戸町"),
-    "21382": ("213829", "輪之内町"), "21383": ("213837", "安八町"), "21401": ("214019", "揖斐川町"),
-    "21403": ("214035", "大野町"), "21404": ("214043", "池田町"), "21421": ("214213", "北方町"),
-    "21501": ("215015", "坂祝町"), "21502": ("215023", "富加町"), "21503": ("215031", "川辺町"),
-    "21504": ("215040", "七宗町"), "21505": ("215058", "八百津町"), "21506": ("215066", "白川町"),
-    "21507": ("215074", "東白川村"), "21521": ("215210", "御嵩町"), "21604": ("216046", "白川村"),
-}
+# 対象団体＝自治体マスタの市区町村行。5桁コード（自治総研のキー）＝6桁コードの先頭5桁 → (6桁コード, 名前)
+MASTER_42 = {code6[:5]: (code6, name) for code6, name in sorted(load_master_cities(PREF).items())}
 
 
 def sha256_file(path: Path) -> str:
@@ -159,7 +153,7 @@ def parse_year(year: str):
     for r in rows_all[1:]:
         if r[pref_col] not in (None, ""):
             current_pref = r[pref_col]
-        if current_pref != "岐阜県":
+        if current_pref != PREF_NAME:
             current_group = None
             continue
 
@@ -302,7 +296,7 @@ def main():
             "無投票": "Excel「無投票」列に値がある場合。投票率・絶対得票率はnullとしtoken='無投票'を立てる（0埋めしない）",
         },
         "coverage": {
-            "target": 42,
+            "target": len(MASTER_42),
             "matched": len(data),
             "missing_municipalities": missing,
         },
@@ -322,14 +316,23 @@ def main():
     }
 
     # 手作業で確認した直近選挙の補正を当て直す（scripts/patches/m2_1_chief_manual.json）
-    applied, superseded = apply_manual_patch(output, ROOT / "scripts" / "patches" / "m2_1_chief_manual.json", "area_code")
-    print("手作業補正: 適用", applied, "/ 自治総研が追いついたため不要", superseded)
+    patch_path = ROOT / "scripts" / "patches" / ("m2_1_chief_manual.json" if IS_DEFAULT else f"m2_1_chief_manual_{PREF}.json")
+    if patch_path.exists():
+        applied, superseded = apply_manual_patch(output, patch_path, "area_code")
+        print("手作業補正: 適用", applied, "/ 自治総研が追いついたため不要", superseded)
+    else:
+        print("手作業補正: なし（自治総研の収録のまま）")
+    if not IS_DEFAULT:
+        output["trial_note"] = (
+            f"D-24 の試作（公開しない）。対象は自治体マスタ data/municipality_master_{PREF}.json の{PREF_NAME}内{len(MASTER_42)}団体。"
+            + ("" if patch_path.exists() else "2025-12-08 当選分までの自治総研の収録のまま（直近選挙の個別確認はまだ）。")
+        )
 
-    Path(ROOT / "data" / "m2_1_chief.json").write_text(
+    out_path("m2_1_chief", PREF).write_text(
         json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8"
     )
 
-    print("matched:", len(data), "/", 42)
+    print("matched:", len(data), "/", len(MASTER_42))
     print("missing:", missing)
     print("extra code5 not in master (ignored):", extra)
 

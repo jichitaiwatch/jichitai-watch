@@ -3,7 +3,7 @@ import Link from "next/link";
 
 // components/SiteFooter.tsx
 // サイト共通フッター（ヘッダー3項目相当＋訂正・お問い合わせ）。文書ページの共通の器
-// （components/SitePageShell.tsx）から抽出し、自治体ページ（app/gifu-pref/layout.tsx）・
+// （components/SitePageShell.tsx）から抽出し、自治体ページ（app/[pref]/layout.tsx）・
 // 検索（app/search/layout.tsx）でも同一のものを使う（C-2 N-4：市区町村ページから
 // 訂正窓口・検索・トップへ到達できなかった導線欠落の解消。Gate 4「訂正導線はフッター」）。
 // VI は app/page.tsx / SitePageShell と同じ（navy/teal 系・mock実測）。サーバーコンポーネント。

@@ -22,5 +22,6 @@ export const CF_BEACON_TOKEN: string = "3e516f77db134e1394309a53bac616ae";
  * 開発サーバー（npm run dev）では出さない：手元の確認で計測が混ざるのを防ぐ。
  */
 export function analyticsEnabled(): boolean {
-  return process.env.NODE_ENV === "production" && CF_BEACON_TOKEN !== "";
+  // 確認用の置き場所（lib/staging.ts）では出さない：本番の計測に確認作業の閲覧が混ざるのを防ぐ
+  return process.env.NODE_ENV === "production" && CF_BEACON_TOKEN !== "" && process.env.JICHITAI_STAGING !== "1";
 }

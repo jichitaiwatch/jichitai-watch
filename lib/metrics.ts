@@ -28,6 +28,8 @@ export interface KodomoIryohiRow {
   所得制限_入院: "有" | "無";
   一部自己負担_通院: "有" | "無";
   一部自己負担_入院: "有" | "無";
+  /** 原表の名前末尾「※」＝18歳年度末以降は学生医療として実施（対象は大学等に通う者に限る。一定の所得制限あり）。無い団体はキー自体が無い */
+  学生医療?: boolean;
 }
 
 /** 全国1,741市区町村の分布（件数。scripts/m1_kodomo_iryohi.py が収録。順位・評価は持たない） */
@@ -346,6 +348,20 @@ export interface GikaiAssemblyRow {
   comparison?: TaxableIncomeComparison;
 }
 
+/** 議員定数カードに要る分だけ（条例定数・現員・比較値）。試作県（D-24）はこの形で持つ。GikaiAssemblyRow はこれを満たす */
+export type GikaiTeiinRow = Pick<
+  GikaiAssemblyRow,
+  "area_code" | "市区町村名" | "議員定数" | "現員数" | "comparison"
+>;
+
+/**
+ * 正副議長・会派・議事録公開だけ（試作県 D-24。data/gikai_council_{県コード}.json）。GikaiAssemblyRow はこれを満たす。
+ * 議事録公開が null ＝会議録本文の公開を確認できなかった（D-25。非公開の意味ではない）→ カードは「データ未整備」。
+ */
+export type GikaiCouncilRow = Pick<GikaiAssemblyRow, "area_code" | "市区町村名" | "正副議長" | "会派"> & {
+  議事録公開: GikaiGijiroku | null;
+};
+
 export interface GikaihiRow {
   area_code: string;
   市区町村名: string;
@@ -560,7 +576,7 @@ interface PopulationSourceEntry extends DataSourceEntry {
 
 /** 人口カードが「現在」として表示する年キー（PopulationCard.tsxの前年比算出はr8_2026/r7_2025前提）。
  *  新しい年次データが追加されたら、この値も合わせて更新する。 */
-const POPULATION_CURRENT_YEAR_KEY = "r8_2026";
+export const POPULATION_CURRENT_YEAR_KEY = "r8_2026";
 
 interface MunicipalityMasterRecord {
   area_code: string;
@@ -577,13 +593,15 @@ function getMasterByAreaCode(areaCode: string): MunicipalityMasterRecord | undef
   return municipalityMasterDataset.data.find((r) => r.area_code === areaCode);
 }
 
-const kodomoIryohiDataset = kodomoIryohiRaw as {
+/** 子ども医療費助成のデータセット（公開用・県別の試作用で同じ形） */
+export interface KodomoIryohiDataset {
   updated: string;
   period?: string;
   national: KodomoIryohiNational;
   data: KodomoIryohiRow[];
   sources?: DataSourceEntry[];
-};
+}
+const kodomoIryohiDataset = kodomoIryohiRaw as KodomoIryohiDataset;
 
 const kaigoPremiumDataset = kaigoPremiumRaw as {
   updated: string;
@@ -701,7 +719,7 @@ const chiefDataset = chiefRaw as unknown as {
 // m2_2_finance.json はレコードに revenue/expenditure（財政概況・後続Stage）と健全化比率を同居させる。
 // 本Stageは健全化比率のフィールドのみ参照する（FiscalHealthRow へ絞り込み）。sources[0] は
 // DataSourceEntry 互換（role/source_url/source_page/fetched_at/source_file_hash）。
-const financeDataset = financeRaw as unknown as {
+export interface FinanceDataset {
   updated: string;
   statutory_criteria_common: KenzenkaStatutoryCommon;
   /** 歳入款キーの並び（R6/R5で款が異なる：R5のみ「特別地方消費税交付金」が残る等） */
@@ -711,7 +729,8 @@ const financeDataset = financeRaw as unknown as {
   expenditure_purpose_keys: string[];
   data: { area_code: string }[];
   sources?: DataSourceEntry[];
-};
+}
+const financeDataset = financeRaw as unknown as FinanceDataset;
 
 /**
  * M1 子ども医療費助成を area_code で照合して返す（getExpenditure と同型）。
@@ -744,8 +763,13 @@ function ageRank(label: string): number {
  * 年齢は県内に現れる区分を年齢の小さい順に並べ、県内にない区分は全国分を「上記以外」にまとめる。
  */
 export function getKodomoIryohiDistribution(): KodomoDistribution {
-  const rows = kodomoIryohiDataset.data;
-  const nat = kodomoIryohiDataset.national;
+  return buildKodomoIryohiDistribution(kodomoIryohiDataset);
+}
+
+/** getKodomoIryohiDistribution の本体（試作データセットにも使う）。 */
+export function buildKodomoIryohiDistribution(ds: KodomoIryohiDataset): KodomoDistribution {
+  const rows = ds.data;
+  const nat = ds.national;
   const ageOf = (kind: "通院" | "入院"): KodomoAgeCount[] => {
     const key = `対象年齢_${kind}` as const;
     const prefCount: Record<string, number> = {};
@@ -1080,14 +1104,22 @@ export function getChief(
 export function getKenzenkaSingleYear(
   areaCode: string,
 ): { row: FiscalHealthRow; meta: DataMeta } | null {
-  const row = financeDataset.data.find((r) => r.area_code === areaCode);
+  return buildKenzenkaSingleYear(financeDataset, areaCode);
+}
+
+/** getKenzenkaSingleYear の本体。県別の試作データセット（lib/trial-datasets.ts）にも使う。 */
+export function buildKenzenkaSingleYear(
+  ds: FinanceDataset,
+  areaCode: string,
+): { row: FiscalHealthRow; meta: DataMeta } | null {
+  const row = ds.data.find((r) => r.area_code === areaCode);
   if (!row) return null;
   return {
     row: row as unknown as FiscalHealthRow,
     meta: {
-      sourceUrl: pickSourceUrl(financeDataset.sources?.[0]),
-      updated: financeDataset.updated,
-      sources: financeDataset.sources,
+      sourceUrl: pickSourceUrl(ds.sources?.[0]),
+      updated: ds.updated,
+      sources: ds.sources,
     },
   };
 }
@@ -1122,7 +1154,15 @@ export function getGikaiAssembly(
 export function getGikaihi(
   areaCode: string,
 ): { row: GikaihiRow; meta: DataMeta } | null {
-  const raw = financeDataset.data.find((r) => r.area_code === areaCode) as unknown as
+  return buildGikaihi(financeDataset, areaCode);
+}
+
+/** getGikaihi の本体（試作データセットにも使う）。 */
+export function buildGikaihi(
+  ds: FinanceDataset,
+  areaCode: string,
+): { row: GikaihiRow; meta: DataMeta } | null {
+  const raw = ds.data.find((r) => r.area_code === areaCode) as unknown as
     | {
         area_code: string;
         市区町村名: string;
@@ -1131,7 +1171,7 @@ export function getGikaihi(
       }
     | undefined;
   if (!raw) return null;
-  const key = financeDataset.expenditure_purpose_keys[0];
+  const key = ds.expenditure_purpose_keys[0];
   const row: GikaihiRow = {
     area_code: raw.area_code,
     市区町村名: raw.市区町村名,
@@ -1141,9 +1181,9 @@ export function getGikaihi(
   return {
     row,
     meta: {
-      sourceUrl: pickSourceUrl(financeDataset.sources?.[0]),
-      updated: financeDataset.updated,
-      sources: financeDataset.sources,
+      sourceUrl: pickSourceUrl(ds.sources?.[0]),
+      updated: ds.updated,
+      sources: ds.sources,
     },
   };
 }
@@ -1161,7 +1201,15 @@ export function getKenzenkaStatutoryCommon(): KenzenkaStatutoryCommon {
 export function getFinanceOverview(
   areaCode: string,
 ): { row: FinanceOverviewRow; meta: DataMeta } | null {
-  const raw = financeDataset.data.find((r) => r.area_code === areaCode) as unknown as
+  return buildFinanceOverview(financeDataset, areaCode);
+}
+
+/** getFinanceOverview の本体（試作データセットにも使う）。 */
+export function buildFinanceOverview(
+  ds: FinanceDataset,
+  areaCode: string,
+): { row: FinanceOverviewRow; meta: DataMeta } | null {
+  const raw = ds.data.find((r) => r.area_code === areaCode) as unknown as
     | {
         area_code: string;
         市区町村名: string;
@@ -1186,23 +1234,23 @@ export function getFinanceOverview(
     area_code: raw.area_code,
     市区町村名: raw.市区町村名,
     revenue: {
-      total: sumBy(raw.revenue_r6, financeDataset.revenue_kan_keys_r6),
-      priorTotal: sumBy(raw.revenue_r5, financeDataset.revenue_kan_keys_r5),
-      items: itemsBy(raw.revenue_r6, financeDataset.revenue_kan_keys_r6),
+      total: sumBy(raw.revenue_r6, ds.revenue_kan_keys_r6),
+      priorTotal: sumBy(raw.revenue_r5, ds.revenue_kan_keys_r5),
+      items: itemsBy(raw.revenue_r6, ds.revenue_kan_keys_r6),
     },
     expenditure: {
-      total: sumBy(raw.expenditure_purpose_r6, financeDataset.expenditure_purpose_keys),
-      priorTotal: sumBy(raw.expenditure_purpose_r5, financeDataset.expenditure_purpose_keys),
-      items: itemsBy(raw.expenditure_purpose_r6, financeDataset.expenditure_purpose_keys),
+      total: sumBy(raw.expenditure_purpose_r6, ds.expenditure_purpose_keys),
+      priorTotal: sumBy(raw.expenditure_purpose_r5, ds.expenditure_purpose_keys),
+      items: itemsBy(raw.expenditure_purpose_r6, ds.expenditure_purpose_keys),
     },
   };
 
   return {
     row,
     meta: {
-      sourceUrl: pickSourceUrl(financeDataset.sources?.[0]),
-      updated: financeDataset.updated,
-      sources: financeDataset.sources,
+      sourceUrl: pickSourceUrl(ds.sources?.[0]),
+      updated: ds.updated,
+      sources: ds.sources,
     },
   };
 }

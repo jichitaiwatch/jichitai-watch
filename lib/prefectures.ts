@@ -15,6 +15,8 @@
 //     pref_assembly / pref_fiscal_indicators）：pref_code（2桁ゼロ埋め）で照合する。
 // このため PrefectureConfig は prefectureName と prefCode の両方を保持する。
 
+import { TRIAL_PREF_CODES } from "@/lib/trial";
+
 export interface PrefectureConfig {
   /**
    * 地域（area）レイヤーのURLセグメント（/{prefSlug}/）。
@@ -39,26 +41,51 @@ export interface PrefectureConfig {
    * pref_fiscal_indicators は pref_code で結合する。
    */
   prefCode: string;
+  /** 検索の入力例に出す市（先頭から2つまで。例「岐阜市」「大垣市」）。 */
+  exampleCities: string[];
 }
 
 /**
  * 都道府県ごとの差分データ。V1公開スコープは岐阜県のみ（content-spec-v1.md §1）。
  * 他県を追加する際はこの配列に1件足すだけでよく、
- * app/gifu-pref/page.tsx（地域入口）と app/gifu-pref/gifu-ken/[tab]/page.tsx（県庁情報）は
+ * app/[pref]/page.tsx（地域入口）と app/[pref]/[gov]/[tab]/page.tsx（県庁情報）は
  * 共通テンプレートに県configを渡す（市区町村版と同じデータ駆動の思想）。
  *
  * ※他県の完全動的ルート化・県スラッグの一斉適用は
  *   docs/frontend-architecture.md §5.4 の繰延事項（規約は凍結済み）。
  *   V1では本ファイルは岐阜のみを保持する。
  */
-export const PREFECTURES: PrefectureConfig[] = [
+const ALL_PREFECTURES: PrefectureConfig[] = [
   {
     prefSlug: "gifu-pref",
     govSlug: "gifu-ken",
     prefectureName: "岐阜県",
     prefCode: "21",
+    exampleCities: ["岐阜市", "大垣市"],
   },
+  // 試作県（D-24）。JICHITAI_TRIAL_PREFS に県コードがあるときだけ有効（lib/trial.ts）。
+  { prefSlug: "aichi-pref", govSlug: "aichi-ken", prefectureName: "愛知県", prefCode: "23", exampleCities: ["名古屋市", "豊橋市"] },
+  { prefSlug: "mie-pref", govSlug: "mie-ken", prefectureName: "三重県", prefCode: "24", exampleCities: ["津市", "四日市市"] },
 ];
+
+export const PREFECTURES: PrefectureConfig[] = ALL_PREFECTURES.filter(
+  (p) => p.prefCode === "21" || TRIAL_PREF_CODES.includes(p.prefCode),
+);
+
+/**
+ * 公開中の地域を指す文言（トップの説明・共有画像の代替文・「自治体Watchとは」・検索の入力例）の元。
+ * 岐阜県だけのとき（公開用ビルド）は従来どおりの文言になり、県が増えると PREFECTURES から作り直される
+ * （県を足したときに文言の直し漏れが出ないように、文言は県の一覧から作る。launch-backlog.md L-9）。
+ */
+export const REGION_LABEL = PREFECTURES.map((p) => p.prefectureName).join("・");
+export const REGION_DESCRIPTION = `${REGION_LABEL}内の市町村の財政や暮らしの制度を、市町村ごとに整理して見られます。`;
+/** 岐阜県だけのときの入力例。クライアント側の既定値にも使う（この値と同じなら画面へ渡さない）。 */
+export const DEFAULT_SEARCH_EXAMPLE = "岐阜市、大垣市";
+export const SEARCH_EXAMPLE = (
+  PREFECTURES.length === 1
+    ? PREFECTURES[0].exampleCities.slice(0, 2)
+    : PREFECTURES.map((p) => p.exampleCities[0])
+).join("、");
 
 export function getPrefectureBySlug(slug: string): PrefectureConfig | undefined {
   return PREFECTURES.find((p) => p.prefSlug === slug);

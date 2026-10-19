@@ -17,6 +17,10 @@
     ファイル。6桁団体コード直接（住基）。総数・65歳以上（8つの年齢帯の合計・性別「計」行）を抽出。列はラベルから同定）
   poc/recon-20260828/0/ruikei_kubun_r06.xlsx（類似団体区分マスタ・市町村一覧シート・1741団体）
 
+県引数（D-24 の試作）: --pref 23 など。data/m1_1b_single_household_23.json（build_kokusei_json.py --pref 23）と
+  data/m1_1c_aging_rate_23.json（build_koreika_json.py --pref 23）に付与する。対象団体は自治体マスタの市区町村行
+  （scripts/pref_args.py）。全国の比較値は県に依らず同じ母集団Mで算出する。
+
 更新（既存ファイルを書き換え・新規ファイルは作らない）:
   data/m1_1b_single_household.json の各レコード（42件）に comparison フィールドを追加する
   （対象値＝単身世帯割合）。
@@ -45,12 +49,18 @@ from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+from ward_compare import ward_comparison  # noqa: E402
+from pref_args import load_master_cities, out_path as pref_out_path, parse_pref  # noqa: E402
+
+PREF = parse_pref(sys.argv[1:])
+CITIES = load_master_cities(PREF)
 
 FAMILY_SRC = ROOT / "poc" / "recon-20261012-kokusei2025" / "estat_000040506456_kokusei2025_family_type_shichoson.xlsx"
 AGE_SRC = ROOT / "poc" / "recon-20261012-juki-r8" / "soumu_000892953_juki_shichoson_age_r8.xlsx"
 RUIKEI_SRC = ROOT / "poc" / "recon-20260828" / "0" / "ruikei_kubun_r06.xlsx"
-OUT_SINGLE = ROOT / "data" / "m1_1b_single_household.json"
-OUT_AGING = ROOT / "data" / "m1_1c_aging_rate.json"
+OUT_SINGLE = pref_out_path("m1_1b_single_household", PREF)
+OUT_AGING = pref_out_path("m1_1c_aging_rate", PREF)
 
 UPDATED = date.today().isoformat()
 
@@ -329,19 +339,20 @@ def check_anchor(label, got, want):
     return ok
 
 
-def apply_to_json(out_path: Path, comparison_by_code6: dict[str, dict], value_field: str, metric_label: str, statinfid: str):
+def apply_to_json(out_path: Path, comparison_by_code6: dict[str, dict], value_field: str, metric_label: str, statinfid: str,
+                  ruikei: dict | None = None, value_by_code6: dict[str, float] | None = None):
     payload = json.loads(out_path.read_text(encoding="utf-8"))
     existing = payload["data"]
-    if len(existing) != 42:
-        raise Abort(f"{out_path.name}: 既存JSONのレコード数が42ではない（実測={len(existing)}）")
+    if len(existing) != len(CITIES):
+        raise Abort(f"{out_path.name}: 既存JSONのレコード数が{len(CITIES)}（自治体マスタ）ではない（実測={len(existing)}）")
 
-    gifu_codes = sorted(c for c in comparison_by_code6 if c.startswith("21"))
-    if len(gifu_codes) != 42:
-        raise Abort(f"{out_path.name}: 岐阜県内市区町村が母集団Mで{len(gifu_codes)}件（42件ではない）")
+    gifu_codes = sorted(c for c in comparison_by_code6 if c in CITIES)
+    if set(gifu_codes) != set(CITIES):
+        raise Abort(f"{out_path.name}: 母集団Mの県内が{len(gifu_codes)}件（自治体マスタ{len(CITIES)}件と一致しない）")
 
     by_area_code = {r["area_code"]: r for r in existing}
     if set(by_area_code.keys()) != set(gifu_codes):
-        raise Abort(f"{out_path.name}: 既存JSONのarea_codeと母集団Mの岐阜42件のキー集合が一致しない。")
+        raise Abort(f"{out_path.name}: 既存JSONのarea_codeと母集団Mの県内のキー集合が一致しない。")
 
     for rec in existing:
         code6 = rec["area_code"]
@@ -352,6 +363,16 @@ def apply_to_json(out_path: Path, comparison_by_code6: dict[str, dict], value_fi
                 f"全国ファイルからの再算出値{c['value']}が不一致（差={abs(rec[value_field] - c['value'])}）。"
             )
         rec["comparison"] = c
+
+    # 政令市の区（試作のみ。wards 配列がある県）：区の値を母集団Mに当てはめた相当順位・親の市の区分の平均
+    for w in payload.get("wards", []):
+        wc = w["area_code"]
+        if value_by_code6 is not None and wc in value_by_code6 and abs(w[value_field] - value_by_code6[wc]) > 0.011:
+            raise Abort(f"{out_path.name}: 区 {w['市区町村名']}（{wc}）の既存値{w[value_field]}と全国ファイルの値{value_by_code6[wc]}が不一致")
+        w["comparison"] = ward_comparison(ruikei, value_by_code6, w[value_field], w["parent_area_code"])
+    if payload.get("wards"):
+        print(f"  区{len(payload['wards'])}件に相当順位つきcomparisonを付与（例: {payload['wards'][0]['市区町村名']} "
+              f"{payload['wards'][0]['comparison']['rank']}位/{payload['wards'][0]['comparison']['rank_out_of']}）")
 
     payload["updated"] = UPDATED
     payload.setdefault("notes", [])
@@ -418,7 +439,8 @@ def main():
     ]
     if not all(results_s):
         raise Abort("単身世帯割合: アンカー値が一致しない。JSONを書かずに中断した。")
-    apply_to_json(OUT_SINGLE, comp_single, "単身世帯割合", "単身世帯割合", "統計表ID000040506456（令和7年国勢調査）")
+    apply_to_json(OUT_SINGLE, comp_single, "単身世帯割合", "単身世帯割合", "統計表ID000040506456（令和7年国勢調査）",
+                  ruikei, single_ratio_by_code6)
 
     print("== 高齢化率の集計・書き出し ==")
     comp_aging, group_n_a = build_comparison(ruikei, aging_by_code6)
@@ -434,9 +456,10 @@ def main():
     ]
     if not all(results_a):
         raise Abort("高齢化率: アンカー値が一致しない。JSONを書かずに中断した。")
-    apply_to_json(OUT_AGING, comp_aging, "高齢化率", "高齢化率", "総務省ファイルID000892953（令和8年1月1日）")
+    apply_to_json(OUT_AGING, comp_aging, "高齢化率", "高齢化率", "総務省ファイルID000892953（令和8年1月1日）",
+                  ruikei, aging_by_code6)
 
-    print("== 岐阜42件 単身世帯割合順（サニティチェック用） ==")
+    print(f"== 県コード{PREF}の{len(CITIES)}件 単身世帯割合順（サニティチェック用） ==")
     d = json.loads(OUT_SINGLE.read_text(encoding="utf-8"))
     ranked = sorted(d["data"], key=lambda r: -r["comparison"]["value"])
     for r in ranked[:3] + ranked[-3:]:

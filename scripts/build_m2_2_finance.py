@@ -1,64 +1,33 @@
 # -*- coding: utf-8 -*-
-"""Extract 2-2a〜2-2g for Gifu 42 into data/m2_2_finance.json. Keys from SCHEMA_*."""
+"""Extract 2-2a〜2-2g for Gifu 42 into data/m2_2_finance.json. Keys from SCHEMA_*.
+
+県引数（2026-10-17・D-24 共通化）:
+  python scripts/build_m2_2_finance.py --pref 23   # 愛知など。data/m2_2_finance_23.json に書く（公開しない）
+  対象団体は自治体マスタの市区町村行（scripts/pref_args.py）。原表は全国分なので追加の取得は要らない。
+"""
 from __future__ import annotations
 
 import json
+import sys
 from datetime import date
 from pathlib import Path
 
 from openpyxl import load_workbook
 
+from pref_args import DEFAULT_PREF, load_master_cities, load_master_pref_name, out_path, parse_pref
+
 ROOT = Path(__file__).resolve().parents[1]
 RECON = ROOT / "poc" / "recon-20260830"
 RAW = RECON / "raw"
 INSPECT = RECON / "_inspect"
-OUT_JSON = ROOT / "data" / "m2_2_finance.json"
-VERIFY_PATH = INSPECT / "verify.json"
+PREF = parse_pref(sys.argv[1:])
+IS_DEFAULT = PREF == DEFAULT_PREF
+PREF_NAME = load_master_pref_name(PREF)
+OUT_JSON = out_path("m2_2_finance", PREF)
+VERIFY_PATH = INSPECT / ("verify.json" if IS_DEFAULT else f"verify_{PREF}.json")
 
-GIFU_42 = [
-    ("212016", "岐阜市"),
-    ("212024", "大垣市"),
-    ("212032", "高山市"),
-    ("212041", "多治見市"),
-    ("212059", "関市"),
-    ("212067", "中津川市"),
-    ("212075", "美濃市"),
-    ("212083", "瑞浪市"),
-    ("212091", "羽島市"),
-    ("212105", "恵那市"),
-    ("212113", "美濃加茂市"),
-    ("212121", "土岐市"),
-    ("212130", "各務原市"),
-    ("212148", "可児市"),
-    ("212156", "山県市"),
-    ("212164", "瑞穂市"),
-    ("212172", "飛騨市"),
-    ("212181", "本巣市"),
-    ("212199", "郡上市"),
-    ("212202", "下呂市"),
-    ("212211", "海津市"),
-    ("213021", "岐南町"),
-    ("213039", "笠松町"),
-    ("213411", "養老町"),
-    ("213616", "垂井町"),
-    ("213624", "関ケ原町"),
-    ("213811", "神戸町"),
-    ("213829", "輪之内町"),
-    ("213837", "安八町"),
-    ("214019", "揖斐川町"),
-    ("214035", "大野町"),
-    ("214043", "池田町"),
-    ("214213", "北方町"),
-    ("215015", "坂祝町"),
-    ("215023", "富加町"),
-    ("215031", "川辺町"),
-    ("215040", "七宗町"),
-    ("215058", "八百津町"),
-    ("215066", "白川町"),
-    ("215074", "東白川村"),
-    ("215210", "御嵩町"),
-    ("216046", "白川村"),
-]
+# 対象団体＝自治体マスタの市区町村行（岐阜は従来の42団体と同じ。順序はコード順）
+GIFU_42 = sorted(load_master_cities(PREF).items())
 GIFU_BY_CODE = {c: n for c, n in GIFU_42}
 GIFU_BY_NAME = {n: c for c, n in GIFU_42}
 
@@ -319,11 +288,11 @@ def main() -> None:
     for i, row in enumerate(ws.iter_rows(values_only=True), start=1):
         if len(row) < 11:
             continue
-        if row[2] == "岐阜県" and row[3] in GIFU_BY_NAME:
+        if row[2] == PREF_NAME and row[3] in GIFU_BY_NAME:
             kenzen_by_name[str(row[3])] = (i, row)
     ws2 = wb["健全化（都道府県）"]
     for i, row in enumerate(ws2.iter_rows(values_only=True), start=1):
-        if row and len(row) > 6 and row[2] == "岐阜県":
+        if row and len(row) > 6 and row[2] == PREF_NAME:
             kenzen_pref = {"row": i, "実質公債費比率": to_num(row[6]), "将来負担比率": to_num(row[7]),
                            "実質赤字比率": to_num(row[4]), "連結実質赤字比率": to_num(row[5])}
     wb.close()
@@ -456,8 +425,9 @@ def main() -> None:
     mismatches_in = [v for v in verify_rows if v["revenue_minus_gaikyo"] not in (0, 0.0, None)]
     mismatches_out = [v for v in verify_rows if v["expenditure_minus_gaikyo"] not in (0, 0.0, None)]
 
-    gifu_shi = next(v for v in verify_rows if v["area_code"] == "212016")
-    gifu_rec = next(r for r in data if r["area_code"] == "212016")
+    rep_code = "212016" if IS_DEFAULT else min(r["area_code"] for r in data)  # 岐阜市／県庁所在市
+    gifu_shi = next(v for v in verify_rows if v["area_code"] == rep_code)
+    gifu_rec = next(r for r in data if r["area_code"] == rep_code)
 
     kenzen_mismatch = []
     for v in verify_rows:
@@ -476,7 +446,7 @@ def main() -> None:
         "gifu42_count": len(data),
         "missing": {k: v for k, v in missing.items() if v},
         "gifu_shi": {
-            "area_code": "212016",
+            "area_code": rep_code,
             "excel_rows": gifu_rec["excel_rows"],
             "revenue_r6_地方税": gifu_rec["revenue_r6"].get("地方税"),
             "revenue_r6_地方交付税": gifu_rec["revenue_r6"].get("地方交付税"),
@@ -524,8 +494,10 @@ def main() -> None:
     else:
         import hashlib
         prev = {}
-        if OUT_JSON.exists():
-            for old in json.loads(OUT_JSON.read_text(encoding="utf-8")).get("sources", []):
+        # 取得日の記録は岐阜版（公開中）の sources から引き継ぐ（原表は全県共通のため）
+        prev_src = out_path("m2_2_finance", DEFAULT_PREF)
+        if prev_src.exists():
+            for old in json.loads(prev_src.read_text(encoding="utf-8")).get("sources", []):
                 prev[old["source_url"].rsplit("/", 1)[-1]] = old
         fetch_by = {}
         for f in sorted(RAW.iterdir()):
@@ -569,10 +541,10 @@ def main() -> None:
     payload = {
         "year": "2024年度（令和6年度）",
         "prior_year": "2023年度（令和5年度）",
-        "updated": "2026-08-30",
+        "updated": "2026-08-30" if IS_DEFAULT else date.today().isoformat(),
         "unit_revenue_expenditure": "千円（ソースヘッダ『（単位　千円）』）",
         "unit_ratio": "％（概況は比率列、001060123は『（単位：％）』）",
-        "code_format": "6桁（全国地方公共団体コード、検査数字付き。例 212016=岐阜市）",
+        "code_format": "6桁（全国地方公共団体コード、検査数字付き。例 212016=岐阜市）" if IS_DEFAULT else f"6桁（全国地方公共団体コード、検査数字付き。例 {rep_code}）",
         "revenue_kan_keys_r6": REVENUE_KAN_KEYS_R6,
         "revenue_kan_keys_r5": REVENUE_KAN_KEYS_R5,
         "expenditure_purpose_keys": EXPENDITURE_PURPOSE_KEYS,
@@ -588,7 +560,7 @@ def main() -> None:
             "将来負担比率_財政再生基準_note": "資料のみかたに『－』（設定なし）",
         },
         "prefecture_layer": {
-            "in_shichoson_kessan_files": "無（市町村別ファイル。都道府県名の見出し行はあるが団体コード付きの岐阜県行は無い）",
+            "in_shichoson_kessan_files": f"無（市町村別ファイル。都道府県名の見出し行はあるが団体コード付きの{PREF_NAME}行は無い）",
             "in_kenzen_001060123_都道府県シート": kenzen_pref,
         },
         "sources": sources,
@@ -608,7 +580,9 @@ def main() -> None:
             "dash_将来負担比率_count": verification["dash_将来負担比率_count"],
             "dash_実質赤字比率_count": verification["dash_実質赤字比率_count"],
         },
-        "notes": [
+        "notes": ([] if IS_DEFAULT else [
+            f"D-24 の試作（公開しない）。対象は自治体マスタ data/municipality_master_{PREF}.json の{PREF_NAME}内{len(data)}団体（政令指定都市の区の行は含めない）。原表は岐阜版と同じ全国分。"
+        ]) + [
             "2-2a/2-2b/2-2eは市町村別決算状況調の歳入内訳・目的別歳出。単位は各ファイルヘッダ『（単位　千円）』。",
             "労働費・諸支出金は目的別歳出に款合計列が無く、項列（労働費=col35+36、諸支出金=col91+92+93）の合計。他の目的は款合計列。",
             "R5歳入は『特別地方消費税交付金』が款として残る。R6歳入ヘッダに同名款は無い。2-2eは款名で突合する。",

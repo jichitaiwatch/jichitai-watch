@@ -40,7 +40,8 @@ WHITE = "#ffffff"
 
 SITE_NAME = "自治体Watch"
 DOMAIN = "jichitaiwatch.jp"
-TAGLINE = ["岐阜県内の市町村の財政や暮らしの制度を、", "市町村ごとに整理して見られます。"]
+# トップページの説明文（app/page.tsx）と同じ文言。県名を入れない（公開する県が増えても書き換えが要らない）。
+TAGLINE = ["財政や暮らしの制度を、", "市町村ごとに分かりやすく整理します。"]
 
 
 def font(path: str, size: int) -> ImageFont.FreeTypeFont:

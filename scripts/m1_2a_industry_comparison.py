@@ -17,6 +17,8 @@
   poc/recon-20260828/0/ruikei_kubun_r06.xlsx（類似団体区分マスタ・市町村一覧シート・1741団体）
 
 更新（既存ファイルを書き換え・新規ファイルは作らない）:
+  （--pref 23 など・D-24 の試作：data/m1_2a_industry_23.json〔build_kokusei_json.py --pref 23 の出力〕に付与。
+   対象団体は自治体マスタの市区町村行〔scripts/pref_args.py〕。全国の比較値は県に依らず同じ母集団Mで算出する）
   data/m1_2a_industry.json の各レコード（42件）に comparison フィールド
   （第1次構成比・第2次構成比・第3次構成比の3キー）を追加する。
 
@@ -42,10 +44,15 @@ from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+from pref_args import load_master_cities, out_path, parse_pref  # noqa: E402
+from ward_compare import ward_comparison  # noqa: E402
+
+PREF = parse_pref(sys.argv[1:])
 
 INDUSTRY_SRC = ROOT / "poc" / "recon-20260828" / "1-2a" / "estat_000032214499_kokusei2020_industry_placeofwork.xlsx"
 RUIKEI_SRC = ROOT / "poc" / "recon-20260828" / "0" / "ruikei_kubun_r06.xlsx"
-OUT = ROOT / "data" / "m1_2a_industry.json"
+OUT = out_path("m1_2a_industry", PREF)
 
 UPDATED = date.today().isoformat()
 
@@ -306,8 +313,9 @@ def main():
     print("== 既存JSON読み込み ==")
     payload = json.loads(OUT.read_text(encoding="utf-8"))
     existing = payload["data"]
-    if len(existing) != 42:
-        raise Abort(f"既存JSONのレコード数が42ではない（実測={len(existing)}）")
+    cities = load_master_cities(PREF)
+    if len(existing) != len(cities):
+        raise Abort(f"既存JSONのレコード数が{len(cities)}（自治体マスタ）ではない（実測={len(existing)}）")
 
     print("== 区分マスタ読み込み ==")
     ruikei = load_ruikei_master()
@@ -341,13 +349,13 @@ def main():
     if not all(results):
         raise Abort("アンカー値が一致しない。JSONを書かずに中断した。")
 
-    print("== 既存42件との整合確認 ==")
-    gifu_codes = sorted(c for c in industry_by_code6 if c.startswith("21"))
-    if len(gifu_codes) != 42:
-        raise Abort(f"岐阜県内市区町村が{len(gifu_codes)}件（42件ではない）")
+    print(f"== 既存{len(existing)}件との整合確認 ==")
+    gifu_codes = sorted(c for c in industry_by_code6 if c in cities)
+    if set(gifu_codes) != set(cities):
+        raise Abort(f"母集団Mの県内が{len(gifu_codes)}件（自治体マスタ{len(cities)}件と一致しない）")
     by_area_code = {r["area_code"]: r for r in existing}
     if set(by_area_code.keys()) != set(gifu_codes):
-        raise Abort("既存JSONのarea_codeと母集団Mの岐阜42件のキー集合が一致しない。JSONを書かずに中断した。")
+        raise Abort("既存JSONのarea_codeと母集団Mの県内のキー集合が一致しない。JSONを書かずに中断した。")
 
     print("== 既存レコードへ comparison を付与（生値の再抽出一致も併せて検証） ==")
     for rec in existing:
@@ -360,6 +368,15 @@ def main():
                     f"{c['value']}が不一致。JSONを書かずに中断した。"
                 )
         rec["comparison"] = {"第1次構成比": c1, "第2次構成比": c2, "第3次構成比": c3}
+
+    # 政令市の区（試作のみ）：区の値を母集団Mに当てはめた相当順位・親の市の区分の平均
+    for w in payload.get("wards", []):
+        w["comparison"] = {
+            f: ward_comparison(ruikei, {c: v[f] for c, v in industry_by_code6.items()}, w[f], w["parent_area_code"])
+            for f in ("第1次構成比", "第2次構成比", "第3次構成比")
+        }
+    if payload.get("wards"):
+        print(f"  区{len(payload['wards'])}件に相当順位つきcomparisonを付与")
 
     payload["updated"] = UPDATED
     payload.setdefault("notes", [])

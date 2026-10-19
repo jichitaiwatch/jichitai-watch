@@ -40,12 +40,18 @@ from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+from pref_args import load_master_cities, out_path, parse_pref  # noqa: E402
+from ward_compare import ward_comparison  # noqa: E402
+
+PREF = parse_pref(sys.argv[1:])  # --pref 23 など（D-24 の試作）。既定21＝岐阜
+CITIES = load_master_cities(PREF)
 
 POP_SRC = ROOT / "poc" / "recon-20261012-juki-r8" / "soumu_000892952_juki_shichoson_pop_hh_r8.xlsx"
 KEY = "r8_2026"  # 比較値を付与する時点キー（令和8年1月1日）
 PREV_KEY = "r7_2025"  # 前回まで比較値を付けていた時点（再実行時に取り除く）
 RUIKEI_SRC = ROOT / "poc" / "recon-20260828" / "0" / "ruikei_kubun_r06.xlsx"
-OUT = ROOT / "data" / "m1_1a_population_timeseries.json"
+OUT = out_path("m1_1a_population_timeseries", PREF)
 
 UPDATED = date.today().isoformat()
 
@@ -273,8 +279,8 @@ def main():
     print("== 既存JSON読み込み ==")
     payload = json.loads(OUT.read_text(encoding="utf-8"))
     existing = payload["data"]
-    if len(existing) != 42:
-        raise Abort(f"既存JSONのレコード数が42ではない（実測={len(existing)}）")
+    if len(existing) != len(CITIES):
+        raise Abort(f"既存JSONのレコード数が{len(CITIES)}（自治体マスタ）ではない（実測={len(existing)}）")
 
     print("== 区分マスタ読み込み ==")
     ruikei = load_ruikei_master()
@@ -328,14 +334,14 @@ def main():
     if not all(pop_checks):
         raise Abort("内部整合が一致しない。JSONを書かずに中断した。")
 
-    print("== 既存42件との整合確認 ==")
-    gifu_codes_pop = sorted(c for c in comp_population if c.startswith("21"))
-    if len(gifu_codes_pop) != 42:
-        raise Abort(f"岐阜県内市区町村が{len(gifu_codes_pop)}件（42件ではない・人口_計）")
+    print(f"== 既存{len(existing)}件との整合確認 ==")
+    gifu_codes_pop = sorted(c for c in comp_population if c in CITIES)
+    if set(gifu_codes_pop) != set(CITIES):
+        raise Abort(f"母集団Mの県内が{len(gifu_codes_pop)}件（自治体マスタ{len(CITIES)}件と一致しない・人口_計）")
 
     by_area_code = {r["area_code"]: r for r in existing}
     if set(by_area_code.keys()) != set(gifu_codes_pop):
-        raise Abort("既存JSONのarea_codeと母集団Mの岐阜42件のキー集合が一致しない。JSONを書かずに中断した。")
+        raise Abort("既存JSONのarea_codeと母集団Mの県内のキー集合が一致しない。JSONを書かずに中断した。")
 
     print("== 既存レコードのr8_2026へ comparison を付与（生値の再抽出一致も併せて検証） ==")
     for rec in existing:
@@ -355,6 +361,17 @@ def main():
                 f"{ch['value']}が不一致。JSONを書かずに中断した。"
             )
         r7["comparison"] = {"人口_計": cp, "世帯数": ch}
+
+    # 政令市の区（試作のみ）：区の値を母集団Mに当てはめた相当順位・親の市の区分の平均
+    for w in payload.get("wards", []):
+        wr = w[KEY]
+        w[PREV_KEY].pop("comparison", None)
+        wr["comparison"] = {
+            f: ward_comparison(ruikei, {c: v[f] for c, v in pop_by_code6.items()}, wr[f], w["parent_area_code"])
+            for f in ("人口_計", "世帯数")
+        }
+    if payload.get("wards"):
+        print(f"  区{len(payload['wards'])}件に相当順位つきcomparisonを付与")
 
     payload["updated"] = UPDATED
     payload.setdefault("notes", [])
@@ -383,7 +400,7 @@ def main():
         json.dump(payload, fh, ensure_ascii=False, indent=2)
     print(f"  wrote {OUT.relative_to(ROOT)}  ({len(existing)}件のr8_2026にcomparison付与)")
 
-    print("== 岐阜42件 人口_計順（サニティチェック用） ==")
+    print(f"== 県コード{PREF}の{len(existing)}件 人口_計順（サニティチェック用） ==")
     ranked = sorted(existing, key=lambda r: -r[KEY]["comparison"]["人口_計"]["value"])
     for r in ranked[:3] + ranked[-3:]:
         c = r[KEY]["comparison"]["人口_計"]

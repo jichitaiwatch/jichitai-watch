@@ -1,0 +1,947 @@
+{
+ "updated": "2026-10-17",
+ "fiscal_year": "令和6年度",
+ "unit": "円",
+ "notes": "試作（D-24）。公開しない。各自治体の使途公表（令和6年度）を読み取った値。jouyo_yenは総務省PDF。katsuyo_yenは基金積立を除く事業への充当額（basisが事業費の団体は財源内訳が無い）。kikin_tsumitate_yenは基金への積立額。check=整合は活用額＋基金積立額が譲与額に一致、不一致は資料の値のまま（推定で直さない）、確定できないは機械で数値の対応を決められなかったもの（値は空・読み取れた数値を備考に）、未取得は機械で探して到達できなかったもの。基金残高・未執行額は載せない（L-8裁定）。 main_usesは金額の大きい順に最大3件で、基金への積立も使途として含める（2026-10-17 運営者裁定）。",
+ "data": [
+  {
+   "area_code": "212016",
+   "city_name": "岐阜市",
+   "jouyo_yen": 64375000,
+   "katsuyo_yen": 64375000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": null,
+   "main_uses": [
+    {
+     "name": "森林経営管理事業",
+     "yen": 33823000
+    },
+    {
+     "name": "ながら川ふれあいの森施設長寿命化事業",
+     "yen": 15646000
+    },
+    {
+     "name": "林道維持管理業務",
+     "yen": 7087000
+    }
+   ],
+   "source_url": "https://www.city.gifu.lg.jp/_res/projects/default_project/_page_/001/007/770/r6kessanjoukyou2.pdf",
+   "check": "整合",
+   "note": "資料の合計「うち当該年度の森林環境譲与税」64,375千円（6事業の合計と同額）。基金積立の行なし（外部AI2系統が確認）"
+  },
+  {
+   "area_code": "212024",
+   "city_name": "大垣市",
+   "jouyo_yen": 32591000,
+   "katsuyo_yen": 37366000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": 6216000,
+   "main_uses": [
+    {
+     "name": "森林経営管理事業",
+     "yen": 13723000
+    },
+    {
+     "name": "林道維持管理事業",
+     "yen": 6468000
+    },
+    {
+     "name": "森林環境譲与税基金積立",
+     "yen": 6216000
+    }
+   ],
+   "source_url": "https://www.city.ogaki.lg.jp/0000068640.html",
+   "check": "不一致（資料の値のまま）",
+   "note": "資料の見出しの譲与額32,591千円。表の「譲与税額」合計は43,582千円で、「うち基金取崩額」10,366千円の列を含む。基金積立を除く7行の譲与税額の合計は37,366千円（機械の足し算）。外部AI2系統が確認"
+  },
+  {
+   "area_code": "212032",
+   "city_name": "高山市",
+   "jouyo_yen": 267027000,
+   "katsuyo_yen": 267027000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": null,
+   "main_uses": [
+    {
+     "name": "森林環境保全直接支援事業の上乗せ補助",
+     "yen": 51295000
+    },
+    {
+     "name": "林道修繕工事",
+     "yen": 31064000
+    },
+    {
+     "name": "森林境界調査",
+     "yen": 26922000
+    }
+   ],
+   "source_url": "https://www.city.takayama.lg.jp/_res/projects/default_project/_page_/001/013/034/joyozei_r7.pdf",
+   "check": "整合",
+   "note": "資料の「うち森林環境譲与税充当額」計267,027千円。基金の行は「森林環境整備積立金 -」（外部AI2系統が確認）"
+  },
+  {
+   "area_code": "212041",
+   "city_name": "多治見市",
+   "jouyo_yen": 21494000,
+   "katsuyo_yen": 15773000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": 5721000,
+   "main_uses": [
+    {
+     "name": "森林環境譲与税基金積立",
+     "yen": 5721000
+    },
+    {
+     "name": "境界明確化業務委託",
+     "yen": 4235000
+    },
+    {
+     "name": "林地台帳地図整備業務委託",
+     "yen": 3465000
+    }
+   ],
+   "source_url": "https://www.city.tajimi.lg.jp/_res/projects/default_project/_page_/001/006/810/reiwa7nenndoshito.pdf",
+   "check": "整合",
+   "note": "基金積立を除く6事業の「うち当該年度の森林環境譲与税」の合計（機械の足し算）。資料の合計行は21,494千円で、活用額＋基金積立額と一致。基金積立の事業総額は6,021千円（基金取崩300千円）。外部AI2系統が確認"
+  },
+  {
+   "area_code": "212059",
+   "city_name": "関市",
+   "jouyo_yen": 98537000,
+   "katsuyo_yen": 100672000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": null,
+   "main_uses": [
+    {
+     "name": "林地残材木質バイオマス利用促進",
+     "yen": 24759617
+    },
+    {
+     "name": "森林環境保全整備",
+     "yen": 18819000
+    },
+    {
+     "name": "危険木伐採",
+     "yen": 13192161
+    }
+   ],
+   "source_url": "https://www.city.seki.lg.jp/cmsfiles/contents/0000016/16023/R6jyouyozei.pdf",
+   "check": "不一致（資料の値のまま）",
+   "note": "資料の合計「うち森林環境譲与税」100,672,000円。資料の「令和6年度森林環境譲与税額」は98,537千円で合計と異なる。基金積立の行なし。外部AI2系統が確認"
+  },
+  {
+   "area_code": "212067",
+   "city_name": "中津川市",
+   "jouyo_yen": 131625000,
+   "katsuyo_yen": 131625000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": null,
+   "main_uses": [
+    {
+     "name": "会議棟木質部材",
+     "yen": 19122303
+    },
+    {
+     "name": "林分調査・周囲測量・施業方法の判定",
+     "yen": 17204000
+    },
+    {
+     "name": "民有林整備促進のための利用間伐搬出・未利用材搬出補助",
+     "yen": 13287100
+    }
+   ],
+   "source_url": "https://www.city.nakatsugawa.lg.jp/material/files/group/39/R6_shinrin-kankyo-jyoyozei.pdf",
+   "check": "整合",
+   "note": "資料の合計「うち森林環境譲与税」131,625,000円。令和7年度に繰り越して執行する事業10,395,000円を含む。基金積立の行なし。外部AI2系統が確認"
+  },
+  {
+   "area_code": "212075",
+   "city_name": "美濃市",
+   "jouyo_yen": 34328000,
+   "katsuyo_yen": 29738000,
+   "katsuyo_basis": "事業費（財源内訳なし）",
+   "kikin_tsumitate_yen": 4780000,
+   "main_uses": [
+    {
+     "name": "森林経営管理意向調査及び森林境界明確化業務委託",
+     "yen": 9900000
+    },
+    {
+     "name": "防災減災対策森林整備業務",
+     "yen": 8566000
+    },
+    {
+     "name": "森林経営管理システム構築業務委託",
+     "yen": 4840000
+    }
+   ],
+   "source_url": "https://www.city.mino.gifu.jp/fs/3/1/9/9/3/8/_/R6.pdf",
+   "check": "不一致（資料の値のまま）",
+   "note": "資料は事業費のみで譲与税の列がない。8事業の事業費の合計（機械の足し算）。資料の譲与額34,328千円、基金積立4,780千円。外部AI2系統が確認"
+  },
+  {
+   "area_code": "212083",
+   "city_name": "瑞浪市",
+   "jouyo_yen": 22168000,
+   "katsuyo_yen": 19370000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": 2798000,
+   "main_uses": [
+    {
+     "name": "危険木伐採事業費補助金",
+     "yen": 5556000
+    },
+    {
+     "name": "間伐",
+     "yen": 5335000
+    },
+    {
+     "name": "基金への積立",
+     "yen": 2798000
+    }
+   ],
+   "source_url": "https://www.city.mizunami.lg.jp/_res/projects/default_project/_page_/001/007/322/r6sito.pdf",
+   "check": "整合",
+   "note": "基金積立を除く5事業の「うち当該年度の森林環境譲与税」の合計（機械の足し算）。資料の合計22,168千円と一致。千円未満は四捨五入の注記（外部AI2系統が確認）"
+  },
+  {
+   "area_code": "212091",
+   "city_name": "羽島市",
+   "jouyo_yen": 7733000,
+   "katsuyo_yen": 608000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": 7125000,
+   "main_uses": [
+    {
+     "name": "森林環境譲与税基金積立金",
+     "yen": 7125000
+    },
+    {
+     "name": "堰板等補充",
+     "yen": 608000
+    }
+   ],
+   "source_url": "https://www.city.hashima.lg.jp/secure/2241/kankyozyoyozeikouhyou.pdf",
+   "check": "不一致（資料の値のまま）",
+   "note": "表題は令和6年度決算だが、列見出しは「うち令５年度の森林環境譲与税」。値は資料のまま。外部AI2系統が確認"
+  },
+  {
+   "area_code": "212105",
+   "city_name": "恵那市",
+   "jouyo_yen": 123941000,
+   "katsuyo_yen": 119374000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": null,
+   "main_uses": [
+    {
+     "name": "間伐委託業務",
+     "yen": 39304000
+    },
+    {
+     "name": "意向調査・集積計画作成",
+     "yen": 17779000
+    },
+    {
+     "name": "恵那南中学校増改築（木質化）",
+     "yen": 10400000
+    }
+   ],
+   "source_url": "https://www.city.ena.lg.jp/material/files/group/20/R6zyouyozeisito.pdf",
+   "check": "不一致（資料の値のまま）",
+   "note": "資料の「活用額」119,374,000円、譲与額123,941,000円。基金積立の行なし。外部AI1系統が入口のリンクから到達し、読み取りは外部AI1系統"
+  },
+  {
+   "area_code": "212113",
+   "city_name": "美濃加茂市",
+   "jouyo_yen": 12918000,
+   "katsuyo_yen": 13166000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": null,
+   "main_uses": [
+    {
+     "name": "未整備人工林調査",
+     "yen": 9735000
+    },
+    {
+     "name": "ウッドスタート実施",
+     "yen": 1700000
+    },
+    {
+     "name": "里山整備講座",
+     "yen": 1012000
+    }
+   ],
+   "source_url": "https://www.city.minokamo.lg.jp/uploaded/attachment/18687.pdf",
+   "check": "不一致（資料の値のまま）",
+   "note": "資料の「森林環境譲与税充当実績」13,166千円。資料の譲与額も13,166千円で、総務省の額（12,918千円）と異なる。基金積立の行なし。外部AI2系統が確認"
+  },
+  {
+   "area_code": "212121",
+   "city_name": "土岐市",
+   "jouyo_yen": 16311000,
+   "katsuyo_yen": 17108900,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": 0,
+   "main_uses": [
+    {
+     "name": "生活環境保全林整備工事",
+     "yen": 8820900
+    },
+    {
+     "name": "土岐市危険木予防伐採事業費補助金",
+     "yen": 4768000
+    },
+    {
+     "name": "森林経営管理意向調査業務委託",
+     "yen": 3520000
+    }
+   ],
+   "source_url": "https://www.city.toki.lg.jp/sangyo/sangyo/1004875/1004366.html",
+   "check": "不一致（資料の値のまま）",
+   "note": "歳出3件の合計（機械の足し算。資料に合計行なし）。歳入は16,311,000円で、歳出が歳入を超える。基金は「積み立てなし」。外部AI2系統が確認"
+  },
+  {
+   "area_code": "212130",
+   "city_name": "各務原市",
+   "jouyo_yen": 19293000,
+   "katsuyo_yen": 19293000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": null,
+   "main_uses": [],
+   "source_url": "https://www.city.kakamigahara.lg.jp/_res/projects/default_project/_page_/001/001/562/reiwa6.pdf",
+   "check": "整合",
+   "note": "資料の「うち森林環境譲与税充当額」19,293千円。事業ごとの譲与税の内訳が資料に無く、主な使途の金額は載せない（事業費：新特別支援学校内装木質化事業79,246千円ほか）。基金積立の行なし（外部AI2系統が確認）"
+  },
+  {
+   "area_code": "212148",
+   "city_name": "可児市",
+   "jouyo_yen": 21860000,
+   "katsuyo_yen": 21860000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": 0,
+   "main_uses": [
+    {
+     "name": "森林環境整備事業（広見東地区 破砕工）",
+     "yen": 6953000
+    },
+    {
+     "name": "都市計画課事業",
+     "yen": 4099000
+    },
+    {
+     "name": "観光課事業（明智城址大手門）",
+     "yen": 3905000
+    }
+   ],
+   "source_url": "https://www.city.kani.lg.jp/secure/27947/R6joyozei_kohyo.pdf",
+   "check": "整合",
+   "note": "資料の合計「うち森林環境譲与税充当額」21,860千円。「令和6年度は、基金への積立はありません」（外部AI2系統が確認）"
+  },
+  {
+   "area_code": "212156",
+   "city_name": "山県市",
+   "jouyo_yen": 61675000,
+   "katsuyo_yen": 47704000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": 13971000,
+   "main_uses": [
+    {
+     "name": "私有林整備",
+     "yen": 16161000
+    },
+    {
+     "name": "山県市森林環境整備基金積立",
+     "yen": 13971000
+    },
+    {
+     "name": "林道改良事業",
+     "yen": 11560000
+    }
+   ],
+   "source_url": "https://www.city.yamagata.gifu.jp/uploaded/life/53549_103264_misc.pdf",
+   "check": "整合",
+   "note": "基金積立を除く9事業の「うち令和6年度の森林環境譲与税」の合計（機械の足し算）。資料の合計61,675千円と一致（外部AI2系統が確認）"
+  },
+  {
+   "area_code": "212164",
+   "city_name": "瑞穂市",
+   "jouyo_yen": 6322000,
+   "katsuyo_yen": 1613000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": 4709000,
+   "main_uses": [
+    {
+     "name": "森林環境整備促進基金積立事業",
+     "yen": 4709000
+    },
+    {
+     "name": "木育玩具の購入",
+     "yen": 1613000
+    }
+   ],
+   "source_url": "https://www.city.mizuho.lg.jp/secure/3380/R6sinrin.pdf",
+   "check": "整合",
+   "note": "事業1件（事業総額3,199千円のうち当該年度の森林環境譲与税1,613千円）と基金積立（外部AI2系統が確認）"
+  },
+  {
+   "area_code": "212172",
+   "city_name": "飛騨市",
+   "jouyo_yen": 85251000,
+   "katsuyo_yen": 62907000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": 22400000,
+   "main_uses": [
+    {
+     "name": "基金への積立",
+     "yen": 22400000
+    },
+    {
+     "name": "生活環境保全のための森林整備の促進",
+     "yen": 11902000
+    },
+    {
+     "name": "森林作業路機能強化支援事業",
+     "yen": 10000000
+    }
+   ],
+   "source_url": "https://www.city.hida.gifu.jp/uploaded/attachment/32502.pdf",
+   "check": "整合",
+   "note": "資料の「うち森林環境譲与税充当額」62,907千円、積立額22,400千円、譲与税額85,251千円。外部AI2系統が確認"
+  },
+  {
+   "area_code": "212181",
+   "city_name": "本巣市",
+   "jouyo_yen": 63562000,
+   "katsuyo_yen": 70746492,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": null,
+   "main_uses": [
+    {
+     "name": "庁舎整備事業（外構緑化）",
+     "yen": 37820000
+    },
+    {
+     "name": "意向調査の準備作業、森林整備の準備作業",
+     "yen": 12874515
+    },
+    {
+     "name": "私有林整備（間伐等）",
+     "yen": 9955340
+    }
+   ],
+   "source_url": "https://www.city.motosu.lg.jp/cmsfiles/contents/0000003/3203/R06_kessan.pdf",
+   "check": "不一致（資料の値のまま）",
+   "note": "決算の「(A)うち森林環境譲与税」9行の合計（機械の足し算）。調査表に譲与額の欄なし。積立の行なし。外部AI2系統が確認"
+  },
+  {
+   "area_code": "212199",
+   "city_name": "郡上市",
+   "jouyo_yen": 320332000,
+   "katsuyo_yen": 317405441,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": 33027333,
+   "main_uses": [
+    {
+     "name": "森林経営管理事業",
+     "yen": 173447341
+    },
+    {
+     "name": "森づくり振興基金",
+     "yen": 33027333
+    },
+    {
+     "name": "森林管理道等緊急整備事業",
+     "yen": 31101000
+    }
+   ],
+   "source_url": "https://www.city.gujo.gifu.jp/business/docs/6c895bc581f2837f8b69cd321ce41d96642fb045.pdf",
+   "check": "不一致（資料の値のまま）",
+   "note": "資料の合計（積立金を含まない）の「うち譲与税」317,405,441円。基金積立は「その他特目基金積立 森づくり振興基金」（外部AI2系統が確認）"
+  },
+  {
+   "area_code": "212202",
+   "city_name": "下呂市",
+   "jouyo_yen": 217958000,
+   "katsuyo_yen": null,
+   "katsuyo_basis": null,
+   "kikin_tsumitate_yen": 45430000,
+   "main_uses": [],
+   "source_url": "https://www.city.gero.lg.jp/uploaded/life/17613_78930_misc.pdf",
+   "check": "確定できない",
+   "note": "基金積立を除く活用額を確定できない（読み取れた数値：令和6年度交付額217,958千円・令和6年度譲与税事業のうち税122,956千円・令和5年度繰越36,738千円・決算額合計のうち税159,694千円・基金への積み立て事業のうち譲与税45,430千円・基金の令和6年度末現在高18,374千円。決算額合計に基金への積み立て45,430千円が含まれるか資料から確定できない）。外部AI2系統が確認"
+  },
+  {
+   "area_code": "212211",
+   "city_name": "海津市",
+   "jouyo_yen": 8039000,
+   "katsuyo_yen": 8039000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": null,
+   "main_uses": [
+    {
+     "name": "林業振興事業（経営管理意向調査）",
+     "yen": 2996400
+    },
+    {
+     "name": "こども未来館運営管理事業",
+     "yen": 2790000
+    },
+    {
+     "name": "月見の森管理事業",
+     "yen": 1317600
+    }
+   ],
+   "source_url": "https://www.city.kaizu.lg.jp/kurashi/cmsfiles/contents/0000000/181/R6jyouyozeishito.pdf",
+   "check": "整合",
+   "note": "資料に「活用額 8,039,000円」とあり、4事業の「うち森林環境譲与税」の合計と同額。基金積立の行なし（外部AI2系統が確認）"
+  },
+  {
+   "area_code": "213021",
+   "city_name": "岐南町",
+   "jouyo_yen": 2901000,
+   "katsuyo_yen": 1500000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": 2901000,
+   "main_uses": [
+    {
+     "name": "森林環境譲与税基金積立事業",
+     "yen": 2901000
+    },
+    {
+     "name": "木製備品購入",
+     "yen": 1500000
+    }
+   ],
+   "source_url": "https://www.town.ginan.lg.jp/secure/3387/03_%E7%9C%8C%E5%85%AC%E8%A1%A8%E6%A7%98%E5%BC%8F(R6).pdf",
+   "check": "不一致（資料の値のまま）",
+   "note": "事業1件（事業総額2,035千円のうち当該年度の森林環境譲与税1,500千円）と基金積立（2,956千円のうち2,901千円）。基金取崩額の列は空。2行の合計4,401千円は総務省の譲与額2,901千円と異なる（資料の値のまま）。外部AI2系統が確認"
+  },
+  {
+   "area_code": "213039",
+   "city_name": "笠松町",
+   "jouyo_yen": 2490000,
+   "katsuyo_yen": 245000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": 2245250,
+   "main_uses": [
+    {
+     "name": "森林環境譲与税基金積立事業",
+     "yen": 2245250
+    },
+    {
+     "name": "子育てウッドスタート事業",
+     "yen": 245000
+    }
+   ],
+   "source_url": "https://www.town.kasamatsu.gifu.jp/docs/2020032400027/file_contents/R6sitokouhyou.pdf",
+   "check": "整合",
+   "note": "事業1件と基金積立（実績の基金積立額2,245,250円）（外部AI2系統が確認）"
+  },
+  {
+   "area_code": "213411",
+   "city_name": "養老町",
+   "jouyo_yen": 5850000,
+   "katsuyo_yen": 7315600,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": null,
+   "main_uses": [
+    {
+     "name": "養老山頂ウッドテラス",
+     "yen": 5488700
+    },
+    {
+     "name": "林地台帳更新",
+     "yen": 781000
+    },
+    {
+     "name": "西南濃森林管理推進協議会負担金",
+     "yen": 686000
+    }
+   ],
+   "source_url": "https://www.town.yoro.gifu.jp/_res/projects/default_project/_page_/001/002/458/6.pdf",
+   "check": "不一致（資料の値のまま）",
+   "note": "資料の「活用額」7,315,600円、譲与額5,850,000円。基金積立の行なし。外部AI1系統が入口のリンクから到達"
+  },
+  {
+   "area_code": "213616",
+   "city_name": "垂井町",
+   "jouyo_yen": 10867000,
+   "katsuyo_yen": 10082000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": null,
+   "main_uses": [
+    {
+     "name": "意向調査業務",
+     "yen": 3465000
+    },
+    {
+     "name": "コネクトベース垂井備品導入",
+     "yen": 3445000
+    },
+    {
+     "name": "西南濃森林組合等の負担金",
+     "yen": 1190000
+    }
+   ],
+   "source_url": "https://www.town.tarui.lg.jp/uploaded/attachment/12154.pdf",
+   "check": "不一致（資料の値のまま）",
+   "note": "画像のPDFで、外部AI1系統が画面から読み取り（文字層なし）。基金積立を除く10行の「うち当該年度の森林環境譲与税」の合計が資料の活用額10,082千円と一致。資料の見出しは「（円）」だが数字は千円単位で、総務省の額と同じ。基金積立の行は読み取れず額は確定できない。外部AI2系統が確認"
+  },
+  {
+   "area_code": "213624",
+   "city_name": "関ケ原町",
+   "jouyo_yen": 13989000,
+   "katsuyo_yen": 12092000,
+   "katsuyo_basis": "事業費（財源内訳なし）",
+   "kikin_tsumitate_yen": null,
+   "main_uses": [
+    {
+     "name": "森林環境譲与税活用事業補助金",
+     "yen": 7124000
+    },
+    {
+     "name": "森林経営管理意向調査業務",
+     "yen": 2831000
+    },
+    {
+     "name": "西南濃森林経営管理推進協議会負担金",
+     "yen": 1433000
+    }
+   ],
+   "source_url": "https://www.town.sekigahara.gifu.jp/secure/6299/R6torikumi.pdf",
+   "check": "不一致（資料の値のまま）",
+   "note": "資料は事業費のみ（4事業の事業費の合計・機械の足し算）。補助金7,124千円には他の財源27千円を含む。譲与額・基金積立の記載なし（外部AI2系統が確認）"
+  },
+  {
+   "area_code": "213811",
+   "city_name": "神戸町",
+   "jouyo_yen": 2083000,
+   "katsuyo_yen": 0,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": 2083000,
+   "main_uses": [
+    {
+     "name": "基金への積立",
+     "yen": 2083000
+    }
+   ],
+   "source_url": "https://www.town.godo.gifu.jp/life/other/pdf/shinrinkankyo.pdf",
+   "check": "整合",
+   "note": "令和6年度の事業は「(基金積立)」のみ。譲与税額2,083千円（外部AI2系統が確認）"
+  },
+  {
+   "area_code": "213829",
+   "city_name": "輪之内町",
+   "jouyo_yen": 1081000,
+   "katsuyo_yen": 1238000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": 1084000,
+   "main_uses": [
+    {
+     "name": "基金への積立",
+     "yen": 1084000
+    },
+    {
+     "name": "プラネットプラザ管理（本棚）",
+     "yen": 798000
+    },
+    {
+     "name": "子ども園・児童センター玩具購入",
+     "yen": 440000
+    }
+   ],
+   "source_url": "https://town.wanouchi.gifu.jp/wp-content/uploads/6caa4a27c47c77e0ee9a5a8118285515.pdf",
+   "check": "不一致（資料の値のまま）",
+   "note": "資料は3行のみで、合計行・譲与額の行が無い。基金積立を除く2事業の「うち当該年度の森林環境譲与税」の合計（機械の足し算）。外部AI2系統が確認"
+  },
+  {
+   "area_code": "213837",
+   "city_name": "安八町",
+   "jouyo_yen": 1609000,
+   "katsuyo_yen": null,
+   "katsuyo_basis": null,
+   "kikin_tsumitate_yen": null,
+   "main_uses": [],
+   "source_url": "https://www.town.anpachi.lg.jp/cmsfiles/contents/0000000/420/R6jyouyozi.pdf",
+   "check": "確定できない",
+   "note": "表の列が崩れ、機械で事業ごとの金額を確定できない（読み取れた数値：基金積立の行に1,610 1,610千円）。外部AI2系統が確認"
+  },
+  {
+   "area_code": "214019",
+   "city_name": "揖斐川町",
+   "jouyo_yen": 67229000,
+   "katsuyo_yen": 66869000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": null,
+   "main_uses": [
+    {
+     "name": "私有林整備",
+     "yen": 47196000
+    },
+    {
+     "name": "専門員の雇用・職員育成",
+     "yen": 11466000
+    },
+    {
+     "name": "森林整備計画策定",
+     "yen": 3025000
+    }
+   ],
+   "source_url": "https://www.town.ibigawa.lg.jp/uploaded/attachment/6328.pdf",
+   "check": "不一致（資料の値のまま）",
+   "note": "資料の使途表の「計」66,869千円。使途表に譲与額の行なし。「基金残高 17,840千円」の行は残高で、積立額ではないため載せない。外部AI1系統が入口のページから到達"
+  },
+  {
+   "area_code": "214035",
+   "city_name": "大野町",
+   "jouyo_yen": 3401000,
+   "katsuyo_yen": 3912000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": null,
+   "main_uses": [
+    {
+     "name": "散策道管理委託（支障木除去等）",
+     "yen": 3551000
+    },
+    {
+     "name": "森林現況調査業務委託",
+     "yen": 361000
+    }
+   ],
+   "source_url": "https://www.town-ono.jp/cmsfiles/contents/0000001/1380/R6.pdf",
+   "check": "不一致（資料の値のまま）",
+   "note": "資料の計3,912千円。繰入額511千円（森林環境譲与税基金より）を含む。譲与額3,401千円（外部AI2系統が確認）"
+  },
+  {
+   "area_code": "214043",
+   "city_name": "池田町",
+   "jouyo_yen": 6766000,
+   "katsuyo_yen": 6373000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": null,
+   "main_uses": [
+    {
+     "name": "森林調査",
+     "yen": 2332000
+    },
+    {
+     "name": "その他森林整備（里山道路沿いの除草作業・雑木除去）",
+     "yen": 1977000
+    },
+    {
+     "name": "意向調査",
+     "yen": 1958000
+    }
+   ],
+   "source_url": "https://www.town.gifu-ikeda.lg.jp/cmsfiles/contents/0000002/2201/reiwa6.pdf",
+   "check": "不一致（資料の値のまま）",
+   "note": "資料の計「内譲与税額」6,373千円（4事業の合計と同額）。資料の譲与額6,373千円は総務省の額と異なる。基金積立の行なし。外部AI2系統が確認"
+  },
+  {
+   "area_code": "214213",
+   "city_name": "北方町",
+   "jouyo_yen": 2405000,
+   "katsuyo_yen": 2405000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": null,
+   "main_uses": [
+    {
+     "name": "森林環境税整備事業（エコドーム北面及び東西手摺塗装修繕）",
+     "yen": 2405000
+    }
+   ],
+   "source_url": "https://www.town.kitagata.gifu.jp/material/files/group/8/Use_of_forest_environment_gift_tax_r6_1.pdf",
+   "check": "整合",
+   "note": "事業1件（事業総額5,211,800円のうち森林環境譲与税2,405,000円）。基金積立の行なし（外部AI2系統が確認）"
+  },
+  {
+   "area_code": "215015",
+   "city_name": "坂祝町",
+   "jouyo_yen": 1927000,
+   "katsuyo_yen": 1927000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": null,
+   "main_uses": [
+    {
+     "name": "竹林整備事業",
+     "yen": 1557000
+    },
+    {
+     "name": "林道整備事業",
+     "yen": 370000
+    }
+   ],
+   "source_url": "https://www.town.sakahogi.gifu.jp/administration/administration28.html",
+   "check": "整合",
+   "note": "2事業の「うち当該年度の森林環境譲与税」の合計（機械の足し算）。令和6年度の表に積立の行なし（外部AI2系統が確認）"
+  },
+  {
+   "area_code": "215023",
+   "city_name": "富加町",
+   "jouyo_yen": 2406000,
+   "katsuyo_yen": 2406000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": null,
+   "main_uses": [
+    {
+     "name": "竹材活用素材購入及び使用",
+     "yen": 2406000
+    }
+   ],
+   "source_url": "https://www.town.tomika.gifu.jp/docs/8506.html",
+   "check": "整合",
+   "note": "事業1件（事業総額2,452千円のうち2,406千円）。令和6年度の行は基金積立ではない（外部AI2系統が確認）"
+  },
+  {
+   "area_code": "215031",
+   "city_name": "川辺町",
+   "jouyo_yen": 6746000,
+   "katsuyo_yen": 6746000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": 0,
+   "main_uses": [
+    {
+     "name": "森林経営管理事業",
+     "yen": 6746000
+    }
+   ],
+   "source_url": "https://www.kawabe-gifu.jp/wp-content/uploads/2025/09/%E8%AD%B2%E4%B8%8E%E7%A8%8E%E3%81%AE%E4%BD%BF%E9%80%94.pdf",
+   "check": "整合",
+   "note": "掲載は1事業のみ。列「当年度基金への積立額」は0。譲与額の記載なし。外部AI1系統が入口のリンクから到達"
+  },
+  {
+   "area_code": "215040",
+   "city_name": "七宗町",
+   "jouyo_yen": 24379000,
+   "katsuyo_yen": 29502000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": null,
+   "main_uses": [
+    {
+     "name": "林道修繕・改良",
+     "yen": 9940000
+    },
+    {
+     "name": "竹林整備事業",
+     "yen": 6347000
+    },
+    {
+     "name": "中麻生住宅建設（建築）工事",
+     "yen": 6033000
+    }
+   ],
+   "source_url": "http://www.hichiso.jp/wp-content/uploads/2025b/R6%E6%A3%AE%E6%9E%97%E7%92%B0%E5%A2%83%E8%AD%B2%E4%B8%8E%E7%A8%8E%E3%81%AE%E4%BD%BF%E9%80%94.pdf",
+   "check": "不一致（資料の値のまま）",
+   "note": "資料の「活用額」29,502,000円、譲与額24,379,000円。基金積立の行なし。外部AI2系統が確認"
+  },
+  {
+   "area_code": "215058",
+   "city_name": "八百津町",
+   "jouyo_yen": 35747000,
+   "katsuyo_yen": 35746000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": 0,
+   "main_uses": [
+    {
+     "name": "林道新設事業",
+     "yen": 18378000
+    },
+    {
+     "name": "森林経営管理制度（境界の確認および林相界調査）",
+     "yen": 8731000
+    },
+    {
+     "name": "森林経営管理制度（意向調査）",
+     "yen": 5145000
+    }
+   ],
+   "source_url": "https://www.town.yaotsu.lg.jp/secure/9201/R6_kouhyou.pdf",
+   "check": "整合",
+   "note": "基金積立を除く7事業の「うち当該年度の森林環境譲与税」の合計（機械の足し算）。基金積立の行は0（外部AI2系統が確認）"
+  },
+  {
+   "area_code": "215066",
+   "city_name": "白川町",
+   "jouyo_yen": 86308000,
+   "katsuyo_yen": 82930000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": 6278000,
+   "main_uses": [
+    {
+     "name": "新庁舎整備事業",
+     "yen": 28809000
+    },
+    {
+     "name": "山林境界確定測量委託料",
+     "yen": 17010000
+    },
+    {
+     "name": "間伐実施事業補助金",
+     "yen": 15765000
+    }
+   ],
+   "source_url": "https://www.town.shirakawa.lg.jp/_res/projects/default_project/_page_/001/002/141/r6shinrin.pdf",
+   "check": "不一致（資料の値のまま）",
+   "note": "基金積立を除く9事業の「森林環境譲与税」列の合計（機械の足し算）。資料に合計行・譲与額の記載なし。基金積立は「公共施設木質化基金積立」。外部AI2系統が確認"
+  },
+  {
+   "area_code": "215074",
+   "city_name": "東白川村",
+   "jouyo_yen": 43761000,
+   "katsuyo_yen": 41648000,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": 2113000,
+   "main_uses": [
+    {
+     "name": "林業活性化担い手育成事業",
+     "yen": 7080000
+    },
+    {
+     "name": "林道リフレッシュ事業補助金",
+     "yen": 5000000
+    },
+    {
+     "name": "日照支障木除去委託料",
+     "yen": 4948000
+    }
+   ],
+   "source_url": "https://www.vill.higashishirakawa.gifu.jp/files/upload/68c0dfd8-f454-4c30-b6aa-7225ac100235.pdf",
+   "check": "整合",
+   "note": "基金積立を除く18事業の「うち森林環境譲与税」の合計（機械の足し算）。資料の計は43,761,000円と一致。基金積立は「義務教育学校木質化工事基金積立金」（外部AI2系統が確認）"
+  },
+  {
+   "area_code": "215210",
+   "city_name": "御嵩町",
+   "jouyo_yen": 5767000,
+   "katsuyo_yen": 0,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": 5767000,
+   "main_uses": [
+    {
+     "name": "御嵩町森林環境整備基金積立",
+     "yen": 5767000
+    }
+   ],
+   "source_url": "https://www.town.mitake.lg.jp/wp-content/uploads/4dde6c38cd7dc3bce0153f4859d3b984.pdf",
+   "check": "整合",
+   "note": "「活用額 0」。明細は基金積立のみ（事業費6,393千円のうち森林環境譲与税5,767千円）。入口は404で、Wayback Machineの記録から現行ファイルに到達。外部AI1系統が到達"
+  },
+  {
+   "area_code": "216046",
+   "city_name": "白川村",
+   "jouyo_yen": 5279000,
+   "katsuyo_yen": 0,
+   "katsuyo_basis": "譲与税充当額",
+   "kikin_tsumitate_yen": 5279000,
+   "main_uses": [
+    {
+     "name": "基金への積立",
+     "yen": 5279000
+    }
+   ],
+   "source_url": "https://www.vill.shirakawa.lg.jp/Docs/%E4%BB%A4%E5%92%8C%EF%BC%96%E5%B9%B4%E5%BA%A6%E6%A3%AE%E6%9E%97%E7%92%B0%E5%A2%83%E8%AD%B2%E4%B8%8E%E7%A8%8E%E4%BD%BF%E9%80%94.pdf",
+   "check": "整合",
+   "note": "本文に「今年度の森林環境譲与税の全額は、基金に積み立てることとなりました」。事業充当の行なし（外部AI2系統が確認）"
+  }
+ ]
+}
