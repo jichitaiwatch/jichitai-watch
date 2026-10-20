@@ -45,7 +45,7 @@ PREF_FILTER = "21"
 PREF_SLUG_V1 = "gifu-pref"
 # 県コード → 地域スラッグ（lib/prefectures.ts の prefSlug と同じ値。D-24 共通化で --pref を足した。
 # 岐阜（21）の出力は従来と同一。岐阜以外は試作で、出力先も別ファイル）
-PREF_SLUGS = {"21": "gifu-pref", "23": "aichi-pref", "24": "mie-pref"}
+PREF_SLUGS = {"21": "gifu-pref", "23": "aichi-pref", "24": "mie-pref", "33": "okayama-pref", "34": "hiroshima-pref", "35": "yamaguchi-pref"}
 GIFU_PREF_CODE = "21"
 USER_AGENT = "Mozilla/5.0 (jichitai-watch municipality-master generator)"
 
@@ -755,7 +755,13 @@ def main() -> None:
         attach_area_codes(records)
         return
 
-    xlsx_url = resolve_xlsx_url()
+    # 保存済みの表があれば総務省のページを見に行かない（この作業場所は総務省に接続できない。2026-10-19）。
+    # data/cache は git 管理外なので、リポジトリに保存した写し（運営者が 2026-10-19 に添付した R6.1.1 現在の表）から補う。
+    saved = ROOT / "poc" / "recon-20261019-soumu-code" / "soumu_000925835_lg_code_r6.xlsx"
+    if not CACHE_PATH.exists() and saved.exists():
+        CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
+        CACHE_PATH.write_bytes(saved.read_bytes())
+    xlsx_url = FALLBACK_XLSX_URL if CACHE_PATH.exists() and CACHE_PATH.stat().st_size > 0 else resolve_xlsx_url()
     cache = download_xlsx(xlsx_url, CACHE_PATH)
     wb = load_workbook(cache, read_only=True, data_only=True)
 

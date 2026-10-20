@@ -233,10 +233,31 @@ def main():
         })
         all_groups.extend(parse_year(year))
 
+    # 原本の5桁コードがマスタに無く、自治体名がマスタの1団体と完全一致するときは、マスタのコードに読み替える
+    # （例：岡山市は自治総研の原本が政令市移行前の 33201、マスタは 33100。2026-10-19 追加・D-24）。
+    name_to_code5 = {}
+    for code5, (_c6, name) in MASTER_42.items():
+        name_to_code5.setdefault(name, []).append(code5)
+    for g in all_groups:
+        c5 = g["code5"]
+        hits = name_to_code5.get(g["muni_name"], [])
+        if c5 not in MASTER_42 and len(hits) == 1:
+            print(f"コード読み替え: {g['muni_name']} {c5} -> {hits[0]}（{g['year_file']}年版）")
+            g["code5"] = hits[0]
+
+    # 選挙執行日が原本に無い行（例：2020年版の府中町〔広島〕は「1900年」・月日空欄）は推定で埋めず（D-25）、
+    # 日付のある行より新しいとはみなさない。日付の無い行しか無い団体だけ、その行を使う（当選年月日は空）。
     by_code5 = {}
     for g in all_groups:
         c5 = g["code5"]
-        if c5 not in by_code5 or g["election_date"] > by_code5[c5]["election_date"]:
+        if g["election_date"] is None:
+            print(f"選挙執行日なし: {g['muni_name']}（{c5}・{g['year_file']}年版）")
+        cur = by_code5.get(c5)
+        if cur is None:
+            by_code5[c5] = g
+        elif g["election_date"] is None:
+            continue
+        elif cur["election_date"] is None or g["election_date"] > cur["election_date"]:
             by_code5[c5] = g
 
     missing = [name for code5, (code6, name) in MASTER_42.items() if code5 not in by_code5]
@@ -271,7 +292,7 @@ def main():
             "area_code": code6,
             "市区町村名": name,
             "氏名": candidate_name,
-            "当選年月日": g["election_date"].isoformat(),
+            "当選年月日": g["election_date"].isoformat() if g["election_date"] else None,
             "回": w["term"],
             "投票率": turnout_pct,
             "得票数": votes,

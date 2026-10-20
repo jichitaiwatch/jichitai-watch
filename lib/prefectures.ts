@@ -66,6 +66,9 @@ const ALL_PREFECTURES: PrefectureConfig[] = [
   // 試作県（D-24）。JICHITAI_TRIAL_PREFS に県コードがあるときだけ有効（lib/trial.ts）。
   { prefSlug: "aichi-pref", govSlug: "aichi-ken", prefectureName: "愛知県", prefCode: "23", exampleCities: ["名古屋市", "豊橋市"] },
   { prefSlug: "mie-pref", govSlug: "mie-ken", prefectureName: "三重県", prefCode: "24", exampleCities: ["津市", "四日市市"] },
+  { prefSlug: "okayama-pref", govSlug: "okayama-ken", prefectureName: "岡山県", prefCode: "33", exampleCities: ["岡山市", "倉敷市"] },
+  { prefSlug: "hiroshima-pref", govSlug: "hiroshima-ken", prefectureName: "広島県", prefCode: "34", exampleCities: ["広島市", "福山市"] },
+  { prefSlug: "yamaguchi-pref", govSlug: "yamaguchi-ken", prefectureName: "山口県", prefCode: "35", exampleCities: ["山口市", "下関市"] },
 ];
 
 export const PREFECTURES: PrefectureConfig[] = ALL_PREFECTURES.filter(

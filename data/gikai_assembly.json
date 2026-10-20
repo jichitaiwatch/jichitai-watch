@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-26",
+  "updated": "2026-10-20",
   "data": [
     {
       "area_code": "212016",
@@ -622,28 +622,15 @@
       "area_code": "212113",
       "市区町村名": "美濃加茂市",
       "正副議長": {
-        "議長氏名": "村瀬 正樹",
-        "副議長氏名": "坂井 文好",
-        "status": "有"
+        "議長氏名": null,
+        "副議長氏名": null,
+        "status": "未発見"
       },
       "議員定数": 16,
       "現員数": 16,
       "会派": {
-        "status": "有",
-        "会派一覧": [
-          {
-            "会派名": "結いの会・みのかも農供",
-            "人数": 5
-          },
-          {
-            "会派名": "新生会",
-            "人数": 2
-          },
-          {
-            "会派名": "無会派",
-            "人数": 8
-          }
-        ]
+        "status": "確認できず",
+        "会派一覧": null
       },
       "議事録公開": {
         "status": "有",
@@ -651,7 +638,9 @@
         "url": "https://ssp.kaigiroku.net/tenant/minokamo/SpMinuteSearch.html"
       },
       "status": "data",
-      "data_correction_log": [],
+      "data_correction_log": [
+        "2026-10-20 改選（2026-10-04執行・定数16・立候補22人）に伴い更新。改選前の議長（村瀬正樹）は落選、副議長（坂井文好）は新議員名簿にない。改選後の議員名簿（市の attachment/22513.pdf・2026-10-13現在・任期2026-10-13〜2030-10-12）に正副議長の記載はなく、市の本会議日程（2026-09-18更新）にも臨時会・議長選挙の掲載がないため、正副議長は未発見とした。会派は名簿の会派欄に『結いの会』5名（尾関雅宣・髙井実枝・田口智子・森弓子・山田栄）・『共創みのかも』2名（出口峻佑・渡辺孝男）と記載があり、残り9名は欄が空白。空白の意味（会派に属さない／記載なし）が公式に示されていないため、推定せず確認できずとした（D-25）。議員定数16・現員16は名簿の人数と一致し変更なし。"
+      ],
       "comparison": {
         "value": 16,
         "national_average": 16.9,
@@ -1892,6 +1881,12 @@
       "source_url": "https://www.soumu.go.jp/main_content/001062130.pdf",
       "source_page": "https://www.soumu.go.jp/senkyo/senkyo_s/data/syozoku/index.html",
       "fetched_at": "2026-09-26"
+    },
+    {
+      "role": "美濃加茂市議会 改選後の議員名簿（2026-10-13現在。会派・現員。正副議長の記載なし）",
+      "source_url": "https://www.city.minokamo.lg.jp/uploaded/attachment/22513.pdf",
+      "source_page": "https://www.city.minokamo.lg.jp/site/gikai/8691.html",
+      "fetched_at": "2026-10-20"
     }
   ],
   "notes": [

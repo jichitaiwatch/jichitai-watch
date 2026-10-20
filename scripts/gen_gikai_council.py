@@ -20,8 +20,18 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from pref_args import ROOT, load_master_cities, out_path, parse_pref  # noqa: E402
 
-LEDGER = ROOT / "poc" / "recon-20261018-gikai-aichi-mie"
-INPUTS = {"23": ["aichi1-final.csv", "aichi2-final.csv"], "24": ["mie-final.csv"]}
+LEDGER_AM = ROOT / "poc" / "recon-20261018-gikai-aichi-mie"
+LEDGER_OKA = ROOT / "poc" / "recon-20261019-gikai-okayama"
+LEDGER_HIRO = ROOT / "poc" / "recon-20261019-gikai-hiroshima"
+LEDGER_YAM = ROOT / "poc" / "recon-20261019-gikai-yamaguchi"
+# 県コード → [(台帳のフォルダ, 確定CSV)]。広島・山口は調査が済み次第ここに足す
+INPUTS = {
+    "23": [(LEDGER_AM, "aichi1-final.csv"), (LEDGER_AM, "aichi2-final.csv")],
+    "24": [(LEDGER_AM, "mie-final.csv")],
+    "33": [(LEDGER_OKA, "okayama-final.csv")],
+    "34": [(LEDGER_HIRO, "hiroshima-final.csv")],
+    "35": [(LEDGER_YAM, "yamaguchi-final.csv")],
+}
 FORMAT = {"会議録検索システム": "会議録検索システム", "PDF": "PDF", "その他": "その他（HTML等）"}
 
 
@@ -38,11 +48,11 @@ def fmt_of(s: str) -> str | None:
 def main() -> None:
     pref = parse_pref(sys.argv[1:])
     if pref not in INPUTS:
-        raise SystemExit("--pref は 23 か 24")
+        raise SystemExit("--pref は " + " か ".join(INPUTS))
     cities = load_master_cities(pref)
     src = {}
-    for name in INPUTS[pref]:
-        for r in csv.DictReader(open(LEDGER / name, encoding="utf-8")):
+    for ledger_dir, name in INPUTS[pref]:
+        for r in csv.DictReader(open(ledger_dir / name, encoding="utf-8")):
             src[r["area_code"]] = r
     missing = sorted(set(cities) - set(src))
     extra = sorted(set(src) - set(cities))
@@ -75,7 +85,7 @@ def main() -> None:
     ds = {
         "updated": date.today().isoformat(),
         "notes": [
-            "各議会の公式サイトを Grok→Composer の独立突合で調べ、Claude が公式ページで裁定した確定CSVから生成（台帳＝poc/recon-20261018-gikai-aichi-mie/）。",
+            f"各議会の公式サイトを Grok→Composer の独立突合で調べ、Claude が公式ページで裁定した確定CSVから生成（台帳＝{INPUTS[pref][0][0].relative_to(ROOT).as_posix()}/）。",
             "会派「有」は会派別人数。会派に属さない議員は「会派に属さない議員」1件で数える。議長・副議長が会派を離れている旨が公式に書かれているときは含めない。",
             "会派が空で『確認できず』は、名簿が党派のみ等で会派の記載も会派制を採らない旨の記載も見つからないもの。議事録公開が null は、会議録本文の公開を確認できなかったもの（非公開の意味ではない）。",
         ],

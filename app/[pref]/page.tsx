@@ -89,7 +89,7 @@ export default async function PrefPage({
         >
           <span>
             <span className="block text-base font-bold" style={{ color: PREF_BLUE }}>
-              {prefecture.prefectureName}庁のデータを見る
+              {prefecture.prefectureName}のデータを見る
             </span>
             <span className="mt-1 block fs-label text-stone-600">
               県自身の財政・議会などの統治データ

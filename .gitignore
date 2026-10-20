@@ -13,6 +13,7 @@ watch_*.txt
 watch_*.js
 snapshot-*.txt
 _untracked-triage/
+_ai-out/
 scripts/_tmp_*.py
 docs/_old/
 node_modules

@@ -40,12 +40,20 @@ interface ForestTaxDataset {
   data: ForestTaxRow[];
 }
 
+/** 行ごとのデータ更新日（ファイルの updated）。県単位のファイルで更新日が違うため、固定にしない */
+const updatedByArea = new Map<string, string>();
+
+function readDataset(path: string): ForestTaxRow[] {
+  const ds = JSON.parse(readFileSync(path, "utf-8")) as ForestTaxDataset;
+  for (const r of ds.data) updatedByArea.set(r.area_code, ds.updated);
+  return ds.data;
+}
+
 function load(): ForestTaxRow[] {
   return PREFECTURES.flatMap(({ prefCode: code }) => {
     const path = join(process.cwd(), "data", `forest_tax_use_r6_trial_${code}.json`);
     if (!existsSync(path)) return [];
-    const ds = JSON.parse(readFileSync(path, "utf-8")) as ForestTaxDataset;
-    return ds.data;
+    return readDataset(path);
   });
 }
 
@@ -61,9 +69,9 @@ export function getForestTax(areaCode: string): { row: ForestTaxRow; meta: DataM
     row,
     meta: {
       sourceUrl: row.source_url,
-      updated: "2026-10-17",
+      updated: updatedByArea.get(row.area_code) ?? "2026-10-17",
       periodLabel: "令和6年度",
-      fetchedAt: "2026-10-17",
+      fetchedAt: updatedByArea.get(row.area_code) ?? "2026-10-17",
     },
   };
 }
@@ -74,7 +82,7 @@ let prefCache: ForestTaxRow[] | null = null;
 export function getForestTaxPref(prefCode: string): { row: ForestTaxRow; meta: DataMeta } | null {
   prefCache ??= PREFECTURES.flatMap(({ prefCode: code }) => {
     const path = join(process.cwd(), "data", `forest_tax_use_r6_trial_pref_${code}.json`);
-    return existsSync(path) ? (JSON.parse(readFileSync(path, "utf-8")) as ForestTaxDataset).data : [];
+    return existsSync(path) ? readDataset(path) : [];
   });
   const row = prefCache.find((r) => r.area_code === prefCode);
   if (!row) return null;
@@ -83,9 +91,9 @@ export function getForestTaxPref(prefCode: string): { row: ForestTaxRow; meta: D
     row,
     meta: {
       sourceUrl: row.source_url,
-      updated: "2026-10-17",
+      updated: updatedByArea.get(row.area_code) ?? "2026-10-17",
       periodLabel: "令和6年度",
-      fetchedAt: "2026-10-17",
+      fetchedAt: updatedByArea.get(row.area_code) ?? "2026-10-17",
     },
   };
 }
