@@ -33,6 +33,12 @@
       "scope": "議事録Web公開の有無",
       "reconciled_at": "2026-09-05",
       "reconcile_note": "47/47実ページで確認（有47・無0・確認できず0）。市区町村版と同じ規律（トップページのみで判断せず最低2階層辿る）を適用。詳細記録はrecon/pref-gikai-koho-20260905.md。"
+    },
+    {
+      "role": "正副議長の就任日（岐阜・愛知・三重・岡山・広島・山口の県議会）",
+      "source_url": "poc/recon-20261021-gichou-shunin/",
+      "fetched_at": "2026-10-21",
+      "note": "Grok と Composer が同じ日付を出したものだけ採用（6県以外の41都道府県は未収集のため項目なし）。"
     }
   ],
   "data": [
@@ -644,7 +650,12 @@
         "副議長氏名": "長屋光征",
         "status": "有",
         "出典_grok": "https://www.pref.gifu.lg.jp/site/gikai/56996.html",
-        "出典_composer": "https://www.pref.gifu.lg.jp/site/gikai/gichou-aisatsu.html"
+        "出典_composer": "https://www.pref.gifu.lg.jp/site/gikai/gichou-aisatsu.html",
+        "議長就任日": "2026-05-08",
+        "議長就任日_出典": "https://www.pref.gifu.lg.jp/site/gikai/494401.html",
+        "副議長就任日": "2026-05-08",
+        "副議長就任日_出典": "https://www.pref.gifu.lg.jp/site/gikai/494401.html",
+        "就任日_基準日": "2026-10-20"
       },
       "会派": {
         "会派一覧_grok": "県政自民クラブ:34;県民クラブ:5;岐阜県議会公明党:2;日本共産党:1;無所属:3（令和8年5月1日現在）",
@@ -703,7 +714,12 @@
         "副議長氏名": "成田修",
         "status": "有",
         "出典_grok": "https://www.pref.aichi.jp/site/gikai/aisatsu.html",
-        "出典_composer": "https://www.pref.aichi.jp/gikai/gichou/aisatsu.html"
+        "出典_composer": "https://www.pref.aichi.jp/gikai/gichou/aisatsu.html",
+        "議長就任日": "2026-05-22",
+        "議長就任日_出典": "https://www.pref.aichi.jp/site/gikai/aisatsu.html",
+        "副議長就任日": "2026-05-22",
+        "副議長就任日_出典": "https://www.pref.aichi.jp/site/gikai/aisatsu.html",
+        "就任日_基準日": "2026-10-20"
       },
       "会派": {
         "会派一覧_grok": "自由民主党愛知県議員団:54;あいち民主県議団:26;公明党愛知県議員団:4;減税日本愛知県議員団:4;無所属（県政自民クラブ）:1;無所属（日本共産党愛知県議会議員団）:1;無所属:7（令和8年6月11日更新・欠員5）",
@@ -731,7 +747,12 @@
         "副議長氏名": "津田健児",
         "status": "有",
         "出典_grok": "https://www.pref.mie.lg.jp/KENGIKAI/07681011814.htm",
-        "出典_composer": "https://www.pref.mie.lg.jp/gikai/gichou/aisatsu.html"
+        "出典_composer": "https://www.pref.mie.lg.jp/gikai/gichou/aisatsu.html",
+        "議長就任日": "2026-05-19",
+        "議長就任日_出典": "https://www.pref.mie.lg.jp/KENGIKAI/50101008042.htm",
+        "副議長就任日": "2026-05-19",
+        "副議長就任日_出典": "https://www.pref.mie.lg.jp/common/content/001257554.pdf",
+        "就任日_基準日": "2026-10-20"
       },
       "会派": {
         "会派一覧_grok": "新政みえ:19;自由民主党:16;自民党県議団:5;草莽:3;公明党:2;日本共産党:1;参政党:1（令和7年11月18日現在・欠員1）",
@@ -994,7 +1015,12 @@
         "副議長氏名": "上田勝義",
         "status": "有",
         "出典_grok": "https://www.pref.okayama.jp/site/gikai/1035903.html",
-        "出典_composer": "https://www.pref.okayama.jp/gikai/gichou/aisatsu.html"
+        "出典_composer": "https://www.pref.okayama.jp/gikai/gichou/aisatsu.html",
+        "議長就任日": "2026-05-15",
+        "議長就任日_出典": "https://www.pref.okayama.jp/site/gikai/1035903.html",
+        "副議長就任日": "2026-05-15",
+        "副議長就任日_出典": "https://www.pref.okayama.jp/site/gikai/1035903.html",
+        "就任日_基準日": "2026-10-20"
       },
       "会派": {
         "会派一覧_grok": "自由民主党岡山県議団:33;民主・県民クラブ:10;公明党岡山県議団:6;日本共産党岡山県議会議員団:3",
@@ -1022,7 +1048,12 @@
         "副議長氏名": "東保幸",
         "status": "有",
         "出典_grok": "https://www.pref.hiroshima.lg.jp/site/gikai/gikai-gikai-gi.html",
-        "出典_composer": "https://www.pref.hiroshima.lg.jp/site/gikai/gichou-aisatsu.html"
+        "出典_composer": "https://www.pref.hiroshima.lg.jp/site/gikai/gichou-aisatsu.html",
+        "議長就任日": "2023-05-09",
+        "議長就任日_出典": "https://www.pref.hiroshima.lg.jp/site/gikai/rinjikai050611.html",
+        "副議長就任日": "2026-06-30",
+        "副議長就任日_出典": "https://www.pref.hiroshima.lg.jp/site/gikai/080630photo.html",
+        "就任日_基準日": "2026-10-20"
       },
       "会派": {
         "会派一覧_grok": "自由民主党広島県議会議員連盟:35;広島県議会民主県政会:14;公明党広島県議会議員団:6;自由民主党広島県議会広志会:3;日本共産党広島県議会議員団:2;自由民主党広島県議会議員会:1;無所属ひとわ:1;ひろしま、刷新。:1（令和8年7月1日現在・合計63・欠員1）",
@@ -1050,7 +1081,12 @@
         "副議長氏名": "河野亨",
         "status": "有",
         "出典_grok": "https://www.pref.yamaguchi.lg.jp/site/gikai/25262.html",
-        "出典_composer": "https://www.pref.yamaguchi.lg.jp/site/gikai/gichou-aisatsu.html"
+        "出典_composer": "https://www.pref.yamaguchi.lg.jp/site/gikai/gichou-aisatsu.html",
+        "議長就任日": "2025-05-12",
+        "議長就任日_出典": "https://www.pref.yamaguchi.lg.jp/press/303761.html",
+        "副議長就任日": "2025-05-12",
+        "副議長就任日_出典": "https://www.pref.yamaguchi.lg.jp/site/gikai/25267.html",
+        "就任日_基準日": "2026-10-20"
       },
       "会派": {
         "会派一覧_grok": "自由民主党:27;公明党:5;やまぐち県政会:4;日本共産党:2;社民党・市民連合:1;新政クラブ:1;草の根:1;県民の誇りを育む会:1;すずらんの会:1;未来創政の会:1;無所属の会:1",

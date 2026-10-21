@@ -476,7 +476,16 @@ interface PrefAssemblyRecord {
   現員数: number;
   議会費_total_千円?: number;
   status?: string;
-  正副議長: { 議長氏名: string | null; 副議長氏名: string | null; status?: string };
+  正副議長: {
+    議長氏名: string | null;
+    副議長氏名: string | null;
+    status?: string;
+    議長就任日?: string | null;
+    副議長就任日?: string | null;
+    議長就任日_出典?: string | null;
+    副議長就任日_出典?: string | null;
+    就任日_基準日?: string;
+  };
   会派: { 会派一覧_grok?: string | null; status?: string };
   議事録公開: { status?: string; 公開形式?: string | null; url?: string | string[] | null };
 }
@@ -524,6 +533,11 @@ export function getPrefGikaiAssembly(
     議長氏名: r.正副議長?.議長氏名 ?? null,
     副議長氏名: r.正副議長?.副議長氏名 ?? null,
     status: r.正副議長?.status === "有" ? "有" : "未発見",
+    議長就任日: r.正副議長?.議長就任日,
+    副議長就任日: r.正副議長?.副議長就任日,
+    議長就任日_出典: r.正副議長?.議長就任日_出典,
+    副議長就任日_出典: r.正副議長?.副議長就任日_出典,
+    就任日_基準日: r.正副議長?.就任日_基準日,
   };
 
   const { list, memo } = parseKaihaGrok(r.会派?.会派一覧_grok);

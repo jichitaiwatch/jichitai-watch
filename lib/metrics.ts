@@ -310,6 +310,32 @@ export interface GikaiChoFukucho {
   議長氏名: string | null;
   副議長氏名: string | null;
   status: "有" | "未発見";
+  /**
+   * 就任日（2026-10-21 追加。岐阜・愛知・三重・岡山・広島・山口の6県分のみ収集）。
+   * YYYY-MM-DD。null は確認できず（外部AI2系統が一致しなかった・公式で確認できなかった。推定で埋めない＝D-25）。
+   * 項目自体が無い（undefined）＝未収集の地域。就任日_基準日 があるときだけカードは就任日の行を出す。
+   * 任期は議会ごとの申合せで公式の文言が確認できた団体が少ないため持たない（議員の任期とは別）。
+   */
+  議長就任日?: string | null;
+  副議長就任日?: string | null;
+  議長就任日_出典?: string | null;
+  副議長就任日_出典?: string | null;
+  /** 就任日を確認した日（YYYY-MM-DD）。画面に「○年○月○日現在」で併記する */
+  就任日_基準日?: string;
+  /** 改選後の正副議長が未公表の間、直前の正副議長を任期つきで掲示する（美濃加茂市・L-14） */
+  直前?: GikaiChoFukuchoPrevious;
+}
+
+/** 直前の正副議長（改選などで退任済み）。議長・副議長の任期は議員の任期による（地方自治法103条2項） */
+export interface GikaiChoFukuchoPrevious {
+  議長氏名: string;
+  副議長氏名: string;
+  就任日: string;
+  退任日: string;
+  退任の理由: string;
+  出典: string[];
+  基準日: string;
+  注記: string;
 }
 
 export interface KaihaEntry {

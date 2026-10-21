@@ -801,6 +801,10 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
       <GikaiChoFukuchoCard
         chairName={data.row.正副議長.議長氏名}
         viceChairName={data.row.正副議長.副議長氏名}
+        chairSince={data.row.正副議長.議長就任日}
+        viceChairSince={data.row.正副議長.副議長就任日}
+        sinceAsOf={data.row.正副議長.就任日_基準日}
+        previous={data.row.正副議長.直前}
       />
     ),
   }),
