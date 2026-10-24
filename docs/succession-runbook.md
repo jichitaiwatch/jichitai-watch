@@ -7,7 +7,7 @@
 ---
 
 ## 1. システム全体像（`git ls-files` に基づく）
-- **技術スタック**：Next.js 16.3.8 / React 19.2.8 / TypeScript 5.9.3 / Tailwind v4。静的エクスポート（`next.config.ts`＝`output:'export'`・`images.unoptimized`）。Node **24.11.1**（`.nvmrc`）。データ加工は Python（`scripts/`）。
+- **技術スタック**：Next.js 16.4.1 / React 19.2.8 / TypeScript 5.9.3 / Tailwind v4。静的エクスポート（`next.config.ts`＝`output:'export'`・`images.unoptimized`）。Node **24.11.1**（`.nvmrc`）。データ加工は Python（`scripts/`）。
 - **リポジトリ構成**（単一リポジトリ）：
   - `app/` App Router。公開ルートは `gifu-pref` 固定リテラル配下（`[city]`／`[city]/[tab]`／`[city]/trends/[category]`／`machi`・`gyosei`・`gikai`・`kurashi` の4入口）。※固定リテラルは D-2（他県2件目で動的化）。
   - `components/` 表示カード約40点（`MunicipalityDashboard.tsx` ほか M1〜M3・pref 各カード）。
