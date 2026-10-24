@@ -1,3 +1,5 @@
+import { prefLabel } from "@/lib/place-names";
+import { t, tf } from "@/lib/i18n";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MunicipalityDashboard } from "@/components/MunicipalityDashboard";
@@ -5,7 +7,7 @@ import { ENTRANCE_TABS, cardsForTab, entranceTabsFor } from "@/lib/card-registry
 import { prefCardsForTab, resolvePrefSourceLabel } from "@/lib/pref-card-registry";
 import { MUNICIPALITIES, WARDS, getMunicipalityBySlug, getWardParent } from "@/lib/municipalities";
 import { PREFECTURES, getPrefectureByGovSlug } from "@/lib/prefectures";
-import { govPath, pageMeta, tabDescription } from "@/lib/site";
+import { SITE_NAME, govPath, pageMeta, pageTitleIn, tabDescription } from "@/lib/site";
 
 type PageParams = { pref: string; gov: string; tab: string };
 
@@ -29,15 +31,15 @@ export async function generateMetadata({
   params: Promise<PageParams>;
 }): Promise<Metadata> {
   const { pref, gov, tab } = await params;
-  const tabDef = ENTRANCE_TABS.find((t) => t.tab === tab);
+  const tabDef = ENTRANCE_TABS.find((et) => et.tab === tab);
   const prefecture = getPrefectureByGovSlug(gov);
-  if (!tabDef) return { title: "自治体Watch" }; // dynamicParams=false のため到達しない
+  if (!tabDef) return { title: SITE_NAME }; // dynamicParams=false のため到達しない
   // 説明文のカード名は、そのページに実際に載るカード（県＝prefCardsForTab／市区町村＝cardsForTab）から取る
   if (prefecture) {
     return pageMeta({
-      title: `${tabDef.label} | ${prefecture.prefectureName} | 自治体Watch`,
+      title: pageTitleIn(tabDef.label, prefLabel(prefecture.prefectureName)),
       description: tabDescription(
-        prefecture.prefectureName,
+        prefLabel(prefecture.prefectureName),
         tabDef.label,
         prefCardsForTab(tabDef.tab).map((c) => c.title),
       ),
@@ -45,11 +47,11 @@ export async function generateMetadata({
     });
   }
   const municipality = getMunicipalityBySlug(gov, pref);
-  if (!municipality) return { title: "自治体Watch" };
+  if (!municipality) return { title: SITE_NAME };
   return pageMeta({
-    title: `${tabDef.label} | ${municipality.cityName} | 自治体Watch`,
+    title: pageTitleIn(tabDef.label, municipality.label),
     description: tabDescription(
-      municipality.cityName,
+      municipality.label,
       tabDef.label,
       cardsForTab(tabDef.tab).map((c) => c.title),
     ),
@@ -63,7 +65,7 @@ export default async function GovTabPage({
   params: Promise<PageParams>;
 }) {
   const { pref, gov, tab } = await params;
-  const tabDef = ENTRANCE_TABS.find((t) => t.tab === tab);
+  const tabDef = ENTRANCE_TABS.find((et) => et.tab === tab);
   if (!tabDef) {
     notFound();
   }
@@ -78,15 +80,15 @@ export default async function GovTabPage({
         tabLabel={tabDef.label}
         cardsForTabFn={prefCardsForTab}
         resolveSourceLabelFn={resolvePrefSourceLabel}
-        displayName={prefecture.prefectureName}
+        displayName={prefLabel(prefecture.prefectureName)}
         // 戻り先＝県庁の入口（/{pref}/{gov}）。文言「岐阜県の入口に戻る」どおり（C-2 N-2：
         // 従来は地域ページ /{pref} へ飛び、G-2 で新設した県庁入口を飛ばしていた）。
         backHref={`/${prefecture.prefSlug}/${prefecture.govSlug}`}
         identityColor="#073f91"
         breadcrumb={[
-          { label: "日本", href: "/" },
-          { label: prefecture.prefectureName, href: `/${prefecture.prefSlug}` },
-          { label: `${prefecture.prefectureName}庁`, href: `/${prefecture.prefSlug}/${prefecture.govSlug}` },
+          { label: t("crumb-japan"), href: "/" },
+          { label: prefLabel(prefecture.prefectureName), href: `/${prefecture.prefSlug}` },
+          { label: tf("p-pref-gov", { pref: prefLabel(prefecture.prefectureName) }), href: `/${prefecture.prefSlug}/${prefecture.govSlug}` },
           { label: tabDef.label },
         ]}
       />
@@ -106,10 +108,10 @@ export default async function GovTabPage({
       tab={tabDef.tab}
       tabLabel={tabDef.label}
       breadcrumb={[
-        { label: "日本", href: "/" },
-        { label: municipality.prefectureName, href: `/${municipality.prefSlug}` },
-        ...(parent ? [{ label: parent.cityName, href: `/${parent.prefSlug}/${parent.slug}` }] : []),
-        { label: municipality.cityName, href: `/${municipality.prefSlug}/${municipality.slug}` },
+        { label: t("crumb-japan"), href: "/" },
+        { label: municipality.prefectureLabel, href: `/${municipality.prefSlug}` },
+        ...(parent ? [{ label: parent.label, href: `/${parent.prefSlug}/${parent.slug}` }] : []),
+        { label: municipality.label, href: `/${municipality.prefSlug}/${municipality.slug}` },
         { label: tabDef.label },
       ]}
     />

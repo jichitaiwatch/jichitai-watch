@@ -1,5 +1,9 @@
+import { yenAmountMan } from "@/lib/format-units";
+import { EnMoneyText } from "@/components/MoneyText";
+import { LOCALE } from "@/lib/locale";
 import { formatManOku } from "@/lib/format-yen";
 import { formatManUnit } from "@/lib/format-count";
+import { t, tf } from "@/lib/i18n";
 
 interface FurusatoBlock {
   /** 総額（円）。画面は万円位まで（切り捨て）、正確値は sr-only に保持する */
@@ -32,20 +36,20 @@ export function FurusatoCard({ intake, deduction }: FurusatoCardProps) {
     <div className="flex flex-col gap-3">
       <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
         <Block
-          heading="寄附の受入額"
-          period="令和7年度・決算見込"
+          heading={t("fu-intake")}
+          period={t("fu-intake-period")}
           block={intake}
         />
         <Block
-          heading="控除額（市町村民税分）"
-          period="令和8年度課税・推計含む"
+          heading={t("fu-deduction")}
+          period={t("fu-deduction-period")}
           block={deduction}
         />
       </div>
       <p className="fs-note text-stone-600">
-        2つの値は期間・対象が異なるため、差し引きは示していません。
+        {t("fu-note-1")}
         <br />
-        一人あたり＝金額÷住民基本台帳人口（令和7年1月1日）。
+        {t("fu-note-2")}
       </p>
     </div>
   );
@@ -71,13 +75,13 @@ function Block({
       <div className="px-2.5 pb-2.5 pt-3 text-center">
         <p className="fs-sub text-stone-600">{period}</p>
         <p className="mt-1 text-[24px] font-extrabold leading-none tracking-[-0.02em] text-[var(--identity)]">
-          {formatManOku(Math.floor(block.amountYen / 1000))}
+          {LOCALE === "en" ? <EnMoneyText thousandYen={Math.floor(block.amountYen / 1000)} /> : formatManOku(Math.floor(block.amountYen / 1000))}
         </p>
         <p className="mt-1 fs-label text-stone-600">
           {block.detailLabel} {block.detailValue}
         </p>
         <div className="mt-2 border-t border-stone-200 pt-2 fs-sub text-stone-600">
-          <p>一人あたり {formatManUnit(block.perCapitaYen)}円</p>
+          <p>{t("fu-per-resident")}{tf("p-yen", { amount: yenAmountMan(block.perCapitaYen) })}</p>
           {block.comparison && (
             <>
               <p>{block.comparison.rankSuffix}</p>
@@ -86,9 +90,7 @@ function Block({
           )}
         </div>
         <p className="sr-only">
-          {heading}の正確な値：{block.amountYen.toLocaleString("ja-JP")}
-          円。一人あたり：
-          {block.perCapitaYen.toLocaleString("ja-JP")}円。
+          {tf("p-fu-exact", { heading, amount: block.amountYen.toLocaleString("ja-JP"), per: block.perCapitaYen.toLocaleString("ja-JP") })}
         </p>
       </div>
     </section>

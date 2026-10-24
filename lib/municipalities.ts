@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import municipalityMasterRaw from "@/data/municipality_master.json";
 import { TRIAL_PREF_CODES } from "@/lib/trial";
+import { muniLabel, prefLabel, wardShortLabel } from "@/lib/place-names";
 
 export interface MunicipalityConfig {
   /** 都道府県のURLセグメント（/{prefSlug}/）。gifu-pref固定リテラルをページ側へ増やさないための導出元（D-17） */
@@ -12,6 +13,10 @@ export interface MunicipalityConfig {
   prefectureName: string;
   /** 自治体名。ページ見出しに使用 */
   cityName: string;
+  /** 画面に出す自治体名（日本語版は cityName と同じ。英語版は Gifu City など。lib/place-names.ts）。照合には使わない */
+  label: string;
+  /** 画面に出す都道府県名（日本語版は prefectureName と同じ。英語版は Gifu Prefecture など）。照合には使わない */
+  prefectureLabel: string;
   /** 全国地方公共団体コード（6桁）。全getterの照合キー */
   areaCode: string;
   /**
@@ -27,6 +32,10 @@ export interface MunicipalityConfig {
   kind?: "ward";
   /** 区の親の市の6桁コード（kind="ward" のときだけ） */
   parentAreaCode?: string;
+  /** 区の短い名前（親の市の名前を除く。日本語「熱田区」・英語「Atsuta Ward」。kind="ward" のときだけ） */
+  shortLabel?: string;
+  /** 区の親の市の画面に出す名前（kind="ward" のときだけ） */
+  parentLabel?: string;
 }
 
 interface MunicipalityMasterRecord {
@@ -70,21 +79,36 @@ function loadTrialRecords(): MunicipalityMasterRecord[] {
   });
 }
 
-const ALL_UNITS: MunicipalityConfig[] = [...municipalityMaster.data, ...loadTrialRecords()]
-  .filter((r) => r.status === "active" && r.city_name !== "")
-  .map((r) => ({
+const RECORDS = [...municipalityMaster.data, ...loadTrialRecords()].filter(
+  (r) => r.status === "active" && r.city_name !== "",
+);
+
+const ALL_UNITS: MunicipalityConfig[] = RECORDS.map((r) => {
+  const parent = r.kind === "ward" ? RECORDS.find((x) => x.area_code === r.parent_area_code) : undefined;
+  if (r.kind === "ward" && !parent) throw new Error(`[municipalities] 区の親の市が無い：${r.area_code} ${r.city_name}`);
+  return {
     prefSlug: r.pref_slug,
     slug: r.city_slug,
     prefectureName: r.pref_name,
     cityName: r.city_name,
+    label: muniLabel(r.area_code, r.city_name),
+    prefectureLabel: prefLabel(r.pref_name),
     areaCode: r.area_code,
     kaigoInsurerName: r.kaigo_insurer_name,
     status: r.status,
     effectiveFrom: r.effective_from,
     effectiveTo: r.effective_to,
     successorAreaCode: r.successor_area_code,
-    ...(r.kind === "ward" ? { kind: "ward" as const, parentAreaCode: r.parent_area_code } : {}),
-  }));
+    ...(r.kind === "ward" && parent
+      ? {
+          kind: "ward" as const,
+          parentAreaCode: r.parent_area_code,
+          shortLabel: wardShortLabel(r.area_code, r.city_name, parent.city_name),
+          parentLabel: muniLabel(parent.area_code, parent.city_name),
+        }
+      : {}),
+  };
+});
 
 /** 市区町村（政令市の区を除く）。従来どおりのページ・一覧・検索の対象 */
 export const MUNICIPALITIES: MunicipalityConfig[] = ALL_UNITS.filter((m) => m.kind !== "ward");

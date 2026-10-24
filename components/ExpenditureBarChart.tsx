@@ -1,6 +1,11 @@
+import { prefLabel } from "@/lib/place-names";
+import { yenAmount } from "@/lib/format-units";
 import type { CSSProperties } from "react";
+import { t, tf } from "@/lib/i18n";
 
 export interface ExpenditureBarChartDatum {
+  /** 識別子（費目の日本語名。色の割当・React の key に使う。画面には出さない＝表示は label） */
+  id: string;
   label: string;
   valuePerCapita: number;
   /** 全国平均_円/人（データセット未整備の場合はnull） */
@@ -83,10 +88,10 @@ export function ExpenditureBarChart({ data, prefectureName = "岐阜県" }: Expe
               d.prefectureAverage !== null ? clampPct((d.prefectureAverage / maxValue) * 100) : null;
 
             return (
-              <li key={d.label}>
+              <li key={d.id}>
                 <div className="flex items-baseline justify-between gap-2 fs-key">
                   <span className="font-medium text-[var(--body)]">{d.label}</span>
-                  <span className="font-semibold text-[var(--identity)]">{d.valuePerCapita.toLocaleString()}円</span>
+                  <span className="font-semibold text-[var(--identity)]">{tf("p-yen", { amount: yenAmount(d.valuePerCapita) })}</span>
                 </div>
                 {/* マーカーがバー上下にはみ出すため、marker分の縦余白を確保する。
                     三角+金額が同一行になったため、以前（直上/直下の別行表示）より必要量は小さい。 */}
@@ -96,7 +101,7 @@ export function ExpenditureBarChart({ data, prefectureName = "岐阜県" }: Expe
                       className="h-full rounded-full"
                       style={{
                         width: `${barPct}%`,
-                        backgroundColor: CATEGORY_COLOR[d.label] ?? DEFAULT_CATEGORY_COLOR,
+                        backgroundColor: CATEGORY_COLOR[d.id] ?? DEFAULT_CATEGORY_COLOR,
                       }}
                     />
                   </div>
@@ -107,8 +112,8 @@ export function ExpenditureBarChart({ data, prefectureName = "岐阜県" }: Expe
                       style={markerBlockStyle(nationalPct)}
                     >
                       {nationalPct > MARKER_FLIP_PCT
-                        ? `全国平均 ${d.nationalAverage.toLocaleString()}円 ▼`
-                        : `▼ 全国平均 ${d.nationalAverage.toLocaleString()}円`}
+                        ? tf("p-ex-national-avg-r", { amount: tf("p-yen", { amount: yenAmount(d.nationalAverage) }) })
+                        : tf("p-ex-national-avg-l", { amount: tf("p-yen", { amount: yenAmount(d.nationalAverage) }) })}
                     </span>
                   )}
                   {prefecturePct !== null && d.prefectureAverage !== null && (
@@ -118,8 +123,8 @@ export function ExpenditureBarChart({ data, prefectureName = "岐阜県" }: Expe
                       style={markerBlockStyle(prefecturePct)}
                     >
                       {prefecturePct > MARKER_FLIP_PCT
-                        ? `県内平均 ${d.prefectureAverage.toLocaleString()}円 ▲`
-                        : `▲ 県内平均 ${d.prefectureAverage.toLocaleString()}円`}
+                        ? tf("p-ex-pref-avg-r", { amount: tf("p-yen", { amount: yenAmount(d.prefectureAverage) }) })
+                        : tf("p-ex-pref-avg-l", { amount: tf("p-yen", { amount: yenAmount(d.prefectureAverage) }) })}
                     </span>
                   )}
                 </div>
@@ -130,9 +135,9 @@ export function ExpenditureBarChart({ data, prefectureName = "岐阜県" }: Expe
 
         {hasAnyAverage && (
           <p className="fs-note text-[var(--muted-light)]">
-            <span className="text-[var(--national-text)]">▼</span> 全国平均・
+            <span className="text-[var(--national-text)]">▼</span>{t("ex-legend-national")}
             <span className="text-[var(--prefecture)]">▲</span>
-            {` ${prefectureName}内平均。いずれも人口加重平均（各費目の合計÷人口の合計）で、市町村ごとの円/人の単純平均ではありません（各項目のカード内最大値を100%とした位置に表示）`}
+            {tf("p-ex-legend-pref", { pref: prefLabel(prefectureName) })}
           </p>
         )}
       </div>
@@ -140,23 +145,23 @@ export function ExpenditureBarChart({ data, prefectureName = "岐阜県" }: Expe
       {/* sr-only は table 要素自体には効かない（幅1px・overflow:hiddenが無視され内容幅まで広がり、ページ全体の横スクロール領域を作る＝C-4で検出）。div で包んで切り捨てる。 */}
       <div className="sr-only">
         <table>
-          <caption>住民一人あたり分野別支出（単位：円／人）</caption>
+          <caption>{t("ex-caption")}</caption>
           <thead>
             <tr>
-              <th scope="col">項目</th>
-              <th scope="col">当該自治体</th>
-              <th scope="col">全国平均</th>
-              <th scope="col">{`${prefectureName}内平均`}</th>
+              <th scope="col">{t("col-item")}</th>
+              <th scope="col">{t("col-this-government")}</th>
+              <th scope="col">{t("col-national-avg")}</th>
+              <th scope="col">{tf("p-pref-avg", { pref: prefLabel(prefectureName) })}</th>
             </tr>
           </thead>
           <tbody>
             {data.map((d) => (
-              <tr key={d.label}>
+              <tr key={d.id}>
                 <th scope="row">{d.label}</th>
-                <td>{d.valuePerCapita.toLocaleString()}円</td>
-                <td>{d.nationalAverage !== null ? `${d.nationalAverage.toLocaleString()}円` : "データ未整備"}</td>
+                <td>{tf("p-yen", { amount: yenAmount(d.valuePerCapita) })}</td>
+                <td>{d.nationalAverage !== null ? tf("p-yen", { amount: yenAmount(d.nationalAverage) }) : t("val-data-not-available")}</td>
                 <td>
-                  {d.prefectureAverage !== null ? `${d.prefectureAverage.toLocaleString()}円` : "データ未整備"}
+                  {d.prefectureAverage !== null ? tf("p-yen", { amount: yenAmount(d.prefectureAverage) }) : t("val-data-not-available")}
                 </td>
               </tr>
             ))}

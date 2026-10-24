@@ -1,3 +1,5 @@
+import { t, tf } from "@/lib/i18n";
+
 export type FiscalHealthIndicatorKind = "deficit" | "ratio";
 
 /**
@@ -7,6 +9,8 @@ export type FiscalHealthIndicatorKind = "deficit" | "ratio";
  * regenThreshold が null の指標（将来負担比率）は財政再生基準を描かない（ui-vi §3.1/§3.8）。
  */
 export interface FiscalHealthIndicator {
+  /** 識別子（指標の日本語の正式名。色の割当・React の key に使う。画面には出さない＝表示は formalLabel） */
+  id: string;
   plainLabel: string;
   formalLabel: string;
   kind: FiscalHealthIndicatorKind;
@@ -63,7 +67,7 @@ type ValueState =
  */
 function evaluate(ind: FiscalHealthIndicator): ValueState {
   if (ind.token === "-") {
-    return { kind: "none", label: ind.kind === "deficit" ? "赤字なし" : "負担なし" };
+    return { kind: "none", label: ind.kind === "deficit" ? t("fh-none-deficit") : t("fh-none-burden") };
   }
   if (ind.value === null) {
     return { kind: "unconfirmed" };
@@ -89,12 +93,12 @@ function IndicatorBlock({ ind }: { ind: FiscalHealthIndicator }) {
 
   const statusText =
     s.kind === "unconfirmed"
-      ? "データなし（確認できず）"
+      ? t("fh-status-unconfirmed")
       : s.kind === "value" && s.overRegen
-        ? "財政再生基準に該当"
+        ? t("fh-status-regen")
         : s.kind === "value" && s.overEarly
-          ? "早期健全化基準に該当"
-          : "国の基準内";
+          ? t("fh-status-early")
+          : t("fh-status-within");
 
   return (
     <section className="min-w-0 rounded-[8px] border border-[#e1e8e4] bg-[#fbfcfb] p-2.5">
@@ -127,7 +131,7 @@ function IndicatorBlock({ ind }: { ind: FiscalHealthIndicator }) {
         </span>
       ) : (
         <span className="my-2.5 inline-flex rounded-full border border-[var(--line)] bg-[var(--identity-soft)] px-2.5 py-1 fs-sub font-bold text-[var(--muted)]">
-          確認できず
+          {t("val-not-confirmed")}
         </span>
       )}
 
@@ -139,7 +143,7 @@ function IndicatorBlock({ ind }: { ind: FiscalHealthIndicator }) {
               className="h-full rounded-[2px]"
               style={{
                 width: `${s.fillPct}%`,
-                backgroundColor: INDICATOR_COLOR[ind.formalLabel] ?? DEFAULT_INDICATOR_COLOR,
+                backgroundColor: INDICATOR_COLOR[ind.id] ?? DEFAULT_INDICATOR_COLOR,
               }}
             />
           )}
@@ -167,7 +171,7 @@ function IndicatorBlock({ ind }: { ind: FiscalHealthIndicator }) {
           {/* ラベルは線の上端と重ならないよう、線の外側（上）に完全に浮かせる（2026-09-29運営者指摘：
               文字が線と重なっていたため、線の上端よりさらに上に配置するよう修正）。 */}
           <span className="absolute bottom-full left-0 mb-0.5 -translate-x-1/2 whitespace-nowrap fs-source font-bold text-[#566660]">
-            早期
+            {t("fh-tick-early")}
           </span>
         </span>
         {regenPos !== null && (
@@ -181,17 +185,17 @@ function IndicatorBlock({ ind }: { ind: FiscalHealthIndicator }) {
                 regenPos > 85 ? "right-0" : "left-0 -translate-x-1/2"
               }`}
             >
-              再生
+              {t("fh-tick-regen")}
             </span>
           </span>
         )}
         {/* 目盛ラベル（基準の実数値）。3枠 space-between。再生なしの指標は3枠目を空に */}
         <div className="mt-1 flex justify-between fs-source text-[#566660]">
           <span>0%</span>
-          <span>早期 {ind.earlyThreshold.toLocaleString("ja-JP")}%</span>
+          <span>{t("fh-scale-early")}{ind.earlyThreshold.toLocaleString("ja-JP")}%</span>
           <span>
             {ind.regenThreshold !== null
-              ? `再生 ${ind.regenThreshold.toLocaleString("ja-JP")}%`
+              ? tf("p-fh-scale-regen", { n: ind.regenThreshold.toLocaleString("ja-JP") })
               : ""}
           </span>
         </div>
@@ -219,33 +223,33 @@ export function FiscalHealthCard({ indicators }: FiscalHealthCardProps) {
   return (
     <div className="flex flex-col gap-3">
       <p className="fs-note leading-snug text-[var(--muted)]">
-        各指標の早期健全化基準を同じ位置にそろえ、現在値と国の基準の距離を示します。
+        {t("fh-lead")}
       </p>
 
       <div aria-hidden className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
         {indicators.map((ind) => (
-          <IndicatorBlock key={ind.formalLabel} ind={ind} />
+          <IndicatorBlock key={ind.id} ind={ind} />
         ))}
       </div>
 
       <p className="flex items-center gap-[7px] fs-source text-[#566660]">
         <span aria-hidden className="inline-block w-[18px] border-t-2 border-[var(--baseline)]" />
         <span>
-          縦線＝国が定めた基準（<span className="text-[var(--baseline)]">実線</span>＝早期健全化基準／
-          <span className="text-[var(--baseline)]">破線</span>＝財政再生基準）
+          {t("fh-legend-1")}<span className="text-[var(--baseline)]">{t("fh-legend-solid")}</span>{t("fh-legend-2")}
+          <span className="text-[var(--baseline)]">{t("fh-legend-dashed")}</span>{t("fh-legend-3")}
         </span>
       </p>
 
       {/* sr-only は table 要素自体には効かない（幅1px・overflow:hiddenが無視され内容幅まで広がり、ページ全体の横スクロール領域を作る＝C-4で検出）。div で包んで切り捨てる。 */}
       <div className="sr-only">
         <table>
-          <caption>財政健全化判断比率（単位：%。縦線は国が定めた法定基準）</caption>
+          <caption>{t("fh-caption")}</caption>
           <thead>
             <tr>
-              <th scope="col">指標</th>
-              <th scope="col">値</th>
-              <th scope="col">早期健全化基準</th>
-              <th scope="col">財政再生基準</th>
+              <th scope="col">{t("col-indicator")}</th>
+              <th scope="col">{t("col-value")}</th>
+              <th scope="col">{t("col-early-standard")}</th>
+              <th scope="col">{t("col-regen-standard")}</th>
             </tr>
           </thead>
           <tbody>
@@ -256,18 +260,18 @@ export function FiscalHealthCard({ indicators }: FiscalHealthCardProps) {
                   ? `${s.text}%`
                   : s.kind === "none"
                     ? s.label
-                    : "確認できず";
+                    : t("val-not-confirmed");
               return (
-                <tr key={ind.formalLabel}>
+                <tr key={ind.id}>
                   <th scope="row">
-                    {ind.plainLabel}（{ind.formalLabel}）
+                    {ind.plainLabel}{t("ui-paren-open")}{ind.formalLabel}{t("ui-paren-close")}
                   </th>
                   <td>{valueText}</td>
                   <td>{ind.earlyThreshold.toLocaleString("ja-JP")}%</td>
                   <td>
                     {ind.regenThreshold !== null
                       ? `${ind.regenThreshold.toLocaleString("ja-JP")}%`
-                      : "設定なし"}
+                      : t("val-not-set")}
                   </td>
                 </tr>
               );

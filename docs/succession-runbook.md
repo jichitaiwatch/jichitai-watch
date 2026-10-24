@@ -123,6 +123,7 @@
 3. Lint（任意）：`npm run lint`（`eslint`。`scripts/`・`data/`・`out/`・`.next/` は対象外）。
 4. ビルド：`npm run build`（＝`next build`）。`output:'export'` のため静的ファイルが **`out/`** に生成される。
    - **成功の確認方法**：エラーで止まらずに終わり、`out/index.html` と `out/404.html` ができていること。失敗したときは、表示されたエラーのファイル名・行を直してから再実行する。`out/` は生成物なので手で直さない。
+   - **`npm run build` は、ビルドの直後に自動で `scripts/prune-out.mjs` を実行する**（`scripts/build-site.mjs`。2026-10-24 までは `package.json` の `postbuild`）。英語版を公開にしたあと（`lib/publish-languages.ts` の `ENGLISH_PUBLISHED` が true・`20260808_decisions.md` D-27）は、日本語版と英語版をまとめて作り、英語版の訳し漏れも機械で確かめる（`scripts/build-bilingual.mjs`）。先読み用の補助ファイル（`__next.*.txt`）を `out/` から消し、配信するファイル数を減らす（`20260808_decisions.md` D-26）。出力に「想定外の `__next.*`」などと出て止まったら、Next.js の版で出力の形が変わった合図なので、そのまま先へ進まず D-26 を読む。Next.js の版を上げたときは、`node scripts/qa/nav-check.js` で実ブラウザの移動検査を通す。
 5. 手元で表示を確かめる（任意・推奨）：`node scripts/qa/serve.js` で `out/` を配信し、ブラウザで `http://localhost:4174/` を開く。止めるときは、そのコマンドを実行した画面で Ctrl+C。
 6. 画面に関わる変更をしたときは、`scripts/qa/qa-browser-checks.md` の検査（横あふれ・タップ領域・アクセシビリティ）を行う。
 7. デプロイ：ホスティング＝**Cloudflare**（Workers の静的配信。設定は `wrangler.jsonc`＝`out/` をそのまま配信し、存在しないURLには `out/404.html` を返す。D-22）。公開用リポジトリの `main` に変更が入ると、Cloudflare の自動ビルド（Workers Builds）がビルドと反映を行う予定。Cloudflareアカウントは2FAをアカウント作成と同時に有効化する。

@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
+// 英語版のビルド（NEXT_PUBLIC_JICHITAI_LOCALE=en。lib/locale.ts）は /en の下に置く（frontend-architecture.md §5.8）。
+const EN = process.env.NEXT_PUBLIC_JICHITAI_LOCALE === 'en';
+
 const nextConfig: NextConfig = {
   output: 'export',
+  ...(EN ? { basePath: '/en' } : {}),
   images: {
     unoptimized: true,
   },

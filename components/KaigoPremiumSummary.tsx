@@ -1,6 +1,10 @@
+import { prefLabel } from "@/lib/place-names";
+import { LOCALE } from "@/lib/locale";
+import { yenAmount } from "@/lib/format-units";
 import type { KaigoAverageBlock } from "@/lib/metrics";
 import { MARKER_FLIP_PCT, markerBlockStyle } from "./ExpenditureBarChart";
 import { toFixedHalfUp } from "@/lib/format-decimal";
+import { t, tf } from "@/lib/i18n";
 
 interface KaigoPremiumSummaryProps {
   /** 当該自治体名（バーのラベル・広域連合時のeyebrowに使う） */
@@ -19,7 +23,21 @@ interface KaigoPremiumSummaryProps {
 
 /** "official"＝厚労省公表値。それ以外（単純平均）は注記を付す */
 function averageSuffix(source: "official" | "unweighted_mean"): string {
-  return source === "official" ? "" : "（単純平均）";
+  return source === "official" ? "" : t("kp-simple-avg");
+}
+
+/** グラフの印に付ける単純平均の目印（日本語「（単純平均）」・英語「*」。英語はスマホ幅で印の文字が枠に収まらないため略す） */
+function averageMark(source: "official" | "unweighted_mean"): string {
+  return source === "official" ? "" : t("kp-simple-avg-mark");
+}
+
+/**
+ * 県平均の印の文字。日本語版は「▲ 岐阜県平均 5,854円（単純平均）」（従来どおり）。
+ * 英語版は県名を入れず「▲ Pref avg ¥5,854*」と略す（2026-10-23 運営者裁定。県名と単純平均の意味は読み上げ用の文と注記に残る）。
+ */
+function prefMarkerText(flip: boolean, prefName: string, amount: string, mark: string): string {
+  if (LOCALE === "en") return tf(flip ? "p-ex-pref-avg-r" : "p-ex-pref-avg-l", { amount: `${amount}${mark}` });
+  return tf(flip ? "p-kp-pref-r" : "p-kp-pref-l", { pref: prefName, amount, suffix: mark });
 }
 
 function clampPct(x: number): number {
@@ -53,11 +71,12 @@ export function KaigoPremiumSummary({
   const growthLabel =
     growthRate === 0 ? "±0%" : `${growthRate > 0 ? "+" : ""}${toFixedHalfUp(growthRate, 2)}%`;
   const diff = premiumCurrent - premiumPrevious;
-  const diffLabel = `第8期 ${premiumPrevious.toLocaleString()}円/月${
-    diff !== 0 ? `（${diff > 0 ? "+" : ""}${diff.toLocaleString()}円）` : ""
+  const diffLabel = `${tf("p-kp-prev", { amount: premiumPrevious.toLocaleString() })}${
+    diff !== 0 ? tf("p-kp-diff", { sign: diff > 0 ? "+" : "", d: diff.toLocaleString() }) : ""
   }`;
 
-  const prefName = prefectureAverage?.prefecture ?? "県";
+  // 画面に出す県名（英語版は Gifu Prefecture など。lib/place-names.ts）。県内平均が無いときは使わない
+  const prefName = prefectureAverage ? prefLabel(prefectureAverage.prefecture) : "県";
   const hasAverages = Boolean(nationalAverage || prefectureAverage);
 
   // バー正規化：自治体・全国・県内の最大に少し余白を足した値を上限にする
@@ -93,13 +112,14 @@ export function KaigoPremiumSummary({
       {isWideArea && (
         <div>
           <p className="mb-2.5 fs-label font-extrabold tracking-[0.035em] text-[#315849]">
-            広域連合所属｜{cityName}
+            {t("kp-wide-area-member")}{cityName}
           </p>
           <div className="rounded-[8px] border border-[#dbe6e1] bg-[#f6f9f7] px-2.5 py-2 fs-label text-[#315849]">
-            <span>保険者</span>
-            <b className="mt-[3px] block fs-label text-[var(--identity)]">{insurerName}</b>
+            <span>{t("kp-insurer")}</span>
+            {/* 保険者（広域連合）の名前は団体の名前なので、英語版でも訳さず日本語のまま出す（2026-10-24 運営者承認） */}
+            <b className="mt-[3px] block fs-label text-[var(--identity)]">{LOCALE === "en" ? <span lang="ja">{insurerName}</span> : insurerName}</b>
             <p className="mt-[5px] fs-label leading-[1.45] text-[#66756f]">
-              複数自治体が同一の基準額を共有します。
+              {t("kp-shared")}
             </p>
           </div>
         </div>
@@ -108,14 +128,14 @@ export function KaigoPremiumSummary({
       <div>
         <div className="mx-px mb-3 flex items-end justify-between gap-2.5">
           <div>
-            <small className="block fs-label text-[var(--muted)]">第9期｜月額基準保険料</small>
+            <small className="block fs-label text-[var(--muted)]">{t("kp-current")}</small>
             <strong className="block text-[36px] leading-[1.05] tracking-[-0.03em] text-[#17372c] sm:text-[38px]">
-              {premiumCurrent.toLocaleString()}
-              <em className="ml-1 fs-label not-italic tracking-normal">円</em>
+              {yenAmount(premiumCurrent)}
+              {t("u-yen") && <em className="ml-1 fs-label not-italic tracking-normal">{t("u-yen")}</em>}
             </strong>
           </div>
           <div className="rounded-[7px] bg-[#eef3f1] px-[9px] py-[7px] text-right">
-            <small className="block fs-label text-[var(--muted)]">第8期比</small>
+            <small className="block fs-label text-[var(--muted)]">{t("kp-vs-prev")}</small>
             <b className="fs-label text-[#203e34]">{growthLabel}</b>
           </div>
         </div>
@@ -126,7 +146,7 @@ export function KaigoPremiumSummary({
         <div className="border-t border-[var(--line-soft)] pt-[11px]">
           <div className="mb-[3px] flex items-baseline justify-between gap-2 fs-key">
             <span className="font-medium text-[var(--body)]">{cityName}</span>
-            <span className="font-semibold text-[var(--identity)]">{premiumCurrent.toLocaleString()}円</span>
+            <span className="font-semibold text-[var(--identity)]">{tf("p-yen", { amount: yenAmount(premiumCurrent) })}</span>
           </div>
           <div aria-hidden className="relative mx-1 mt-5 mb-5 h-[9px]">
             <span className="absolute inset-0 rounded-full bg-[#dcefe8]" />
@@ -140,8 +160,8 @@ export function KaigoPremiumSummary({
                 style={markerBlockStyle(nationalPct)}
               >
                 {nationalPct > MARKER_FLIP_PCT
-                  ? `全国平均 ${nationalAverage.premium_9th_yen.toLocaleString()}円${averageSuffix(nationalAverage.premium_average_source)} ▼`
-                  : `▼ 全国平均 ${nationalAverage.premium_9th_yen.toLocaleString()}円${averageSuffix(nationalAverage.premium_average_source)}`}
+                  ? tf("p-kp-nat-r", { amount: tf("p-yen", { amount: yenAmount(nationalAverage.premium_9th_yen) }), suffix: averageMark(nationalAverage.premium_average_source) })
+                  : tf("p-kp-nat-l", { amount: tf("p-yen", { amount: yenAmount(nationalAverage.premium_9th_yen) }), suffix: averageMark(nationalAverage.premium_average_source) })}
               </span>
             )}
             {prefPct !== null && prefectureAverage && (
@@ -149,9 +169,12 @@ export function KaigoPremiumSummary({
                 className="pointer-events-none absolute top-full mt-1 whitespace-nowrap fs-sub font-normal leading-none text-[var(--prefecture)]"
                 style={markerBlockStyle(prefPct)}
               >
-                {prefPct > MARKER_FLIP_PCT
-                  ? `${prefName}平均 ${prefectureAverage.premium_9th_yen.toLocaleString()}円${averageSuffix(prefectureAverage.premium_average_source)} ▲`
-                  : `▲ ${prefName}平均 ${prefectureAverage.premium_9th_yen.toLocaleString()}円${averageSuffix(prefectureAverage.premium_average_source)}`}
+                {prefMarkerText(
+                  prefPct > MARKER_FLIP_PCT,
+                  prefName,
+                  tf("p-yen", { amount: yenAmount(prefectureAverage.premium_9th_yen) }),
+                  averageMark(prefectureAverage.premium_average_source),
+                )}
               </span>
             )}
           </div>
@@ -159,14 +182,12 @@ export function KaigoPremiumSummary({
           <div className="sr-only">
             {nationalAverage && (
               <span>
-                全国平均 {nationalAverage.premium_9th_yen.toLocaleString()}円
-                {averageSuffix(nationalAverage.premium_average_source)}
+                {tf("p-kp-nat-sr", { amount: tf("p-yen", { amount: yenAmount(nationalAverage.premium_9th_yen) }), suffix: averageSuffix(nationalAverage.premium_average_source) })}
               </span>
             )}
             {prefectureAverage && (
               <span>
-                {prefName}平均 {prefectureAverage.premium_9th_yen.toLocaleString()}円
-                {averageSuffix(prefectureAverage.premium_average_source)}
+                {tf("p-kp-pref-sr", { pref: prefName, amount: tf("p-yen", { amount: yenAmount(prefectureAverage.premium_9th_yen) }), suffix: averageSuffix(prefectureAverage.premium_average_source) })}
               </span>
             )}
           </div>
@@ -174,25 +195,25 @@ export function KaigoPremiumSummary({
       )}
 
       <p className="fs-label text-[var(--muted)]">
-        要介護認定率 {toFixedHalfUp(certificationRate, 2)}%
+        {tf("p-kp-cert", { rate: toFixedHalfUp(certificationRate, 2) })}
         {(nationalAverage || prefectureAverage) && (
           // sm未満（スマホ幅）は改行して2行目とし、2行目自体は折り返さない1行にする。sm以上（PC）は
           // 同一行のまま（2026-09-28運営者指摘：外側の括弧は（）と）が連続して読みにくいため【】に変更、
           // 内側の「（単純平均）」は従来どおり（）を維持）。
           <span className="block text-[var(--muted-light)] sm:inline">
-            【
-            {nationalAverage && `全国平均 ${toFixedHalfUp(nationalAverage.certification_rate_pct, 2)}%`}
-            {nationalAverage && prefectureAverage && "・"}
+            {t("ui-bracket-open")}
+            {nationalAverage && tf("p-kp-cert-nat", { rate: toFixedHalfUp(nationalAverage.certification_rate_pct, 2) })}
+            {nationalAverage && prefectureAverage && t("ui-list-sep")}
             {prefectureAverage &&
-              `${prefName}内平均 ${toFixedHalfUp(prefectureAverage.certification_rate_pct, 2)}%`}
-            {certSuffix}】
+              tf("p-kp-cert-pref", { pref: prefName, rate: toFixedHalfUp(prefectureAverage.certification_rate_pct, 2) })}
+            {certSuffix}{t("ui-bracket-close")}
           </span>
         )}
       </p>
 
       {hasUnweighted && (
         <p className="mt-auto rounded-[6px] border border-[#e0e7e3] bg-[#fbfcfb] px-[9px] py-[7px] fs-source leading-[1.5] text-[#566660]">
-          「（単純平均）」は抽出した保険者データの単純算術平均で、人口・被保険者数による加重はしていません。
+          {t("kp-unweighted-note")}
         </p>
       )}
     </div>

@@ -1,9 +1,13 @@
+import { prefLabel } from "@/lib/place-names";
+import { LOCALE } from "@/lib/locale";
 import { noBreakAfterDot } from "@/lib/text";
 import type { Metadata } from "next";
-import { pageMeta } from "@/lib/site";
+import { REGION_DESCRIPTION, SITE_NAME, pageMeta } from "@/lib/site";
+import { msgsFor, t, tf } from "@/lib/i18n";
+import { HOME_SEARCH_MSG_IDS, REGION_PICKER_MSG_IDS } from "@/lib/i18n-ids";
 import { MUNICIPALITIES } from "@/lib/municipalities";
-import { DEFAULT_SEARCH_EXAMPLE, PREFECTURES, type PrefectureConfig, REGION_DESCRIPTION, SEARCH_EXAMPLE } from "@/lib/prefectures";
-import Link from "next/link";
+import { DEFAULT_SEARCH_EXAMPLE, PREFECTURES, type PrefectureConfig, SEARCH_EXAMPLE } from "@/lib/prefectures";
+import Link from "@/components/SiteLink";
 import { HomeSearchBox } from "@/components/HomeSearchBox";
 import { RegionPicker } from "@/components/RegionPicker";
 import { REGIONS } from "@/lib/regions";
@@ -14,7 +18,7 @@ import { Brand } from "@/components/SiteFooter";
 // 岐阜県カード1枚」で対応範囲を正直に示す。色は mock 実測（navy/teal 系）に準拠。
 
 export const metadata: Metadata = pageMeta({
-  title: "自治体Watch｜自治体を探す",
+  title: tf("p-title-home", { site: SITE_NAME, page: t("ui-nav-search") }),
   description: REGION_DESCRIPTION,
   path: "/",
 });
@@ -31,15 +35,15 @@ const INK_MUTED = "#41577d";
 const LINE = "#d8e2ed";
 
 const NAV = [
-  { label: "自治体を探す", href: "/search" },
-  { label: "自治体Watchとは", href: "/about" },
-  { label: "データについて", href: "/data" },
+  { label: t("ui-nav-search"), href: "/search" },
+  { label: t("ui-nav-about"), href: "/about" },
+  { label: t("ui-nav-data"), href: "/data" },
 ];
 
 const FEATURES = [
   {
-    title: "財政の状況",
-    body: "歳入・歳出や財政健全化指標を整理",
+    title: t("home-f1-title"),
+    body: t("home-f1-body"),
     icon: (
       <>
         <path d="M8 51V39h8v12M22 51V30h8v21M36 51V19h8v32" />
@@ -49,8 +53,8 @@ const FEATURES = [
     ),
   },
   {
-    title: "暮らしに関わる制度",
-    body: "子ども医療費助成・介護保険料・ふるさと納税を確認",
+    title: t("home-f2-title"),
+    body: t("home-f2-body"),
     icon: (
       <>
         <circle cx="20" cy="17" r="8" />
@@ -61,8 +65,8 @@ const FEATURES = [
     ),
   },
   {
-    title: "出典までたどれる",
-    body: "出典資料とデータ更新日を明示",
+    title: t("home-f3-title"),
+    body: t("home-f3-body"),
     icon: (
       <>
         <rect x="10" y="8" width="34" height="45" rx="3" />
@@ -98,16 +102,16 @@ function prefCard(p: PrefectureConfig, i: number, keyed: boolean) {
           </span>
           <span className="w-full min-w-0 flex-1">
             <span className="flex flex-wrap items-center gap-x-4 gap-y-2">
-              <strong className="text-3xl font-extrabold tracking-wider" style={{ color: NAVY }}>{p.prefectureName}</strong>
+              <strong className="text-3xl font-extrabold tracking-wider" style={{ color: NAVY }}>{prefLabel(p.prefectureName)}</strong>
               <span className="rounded-full border px-3 py-1 text-base font-bold"
-                style={{ background: TEAL_PALE, borderColor: "#ccebe7", color: TEAL_DARK }}>{`${MUNICIPALITIES.filter((m) => m.prefSlug === p.prefSlug).length}市町村`}</span>
+                style={{ background: TEAL_PALE, borderColor: "#ccebe7", color: TEAL_DARK }}>{tf("p-municipality-count", { n: `${MUNICIPALITIES.filter((m) => m.prefSlug === p.prefSlug).length}` })}</span>
             </span>
             <span className="mt-2 block text-base" style={{ color: INK_MUTED }}>
-              {`${p.prefectureName}内の市町村データを公開しています`}
+              {tf("p-home-pref-published", { pref: prefLabel(p.prefectureName) })}
             </span>
           </span>
           <span className="text-base font-extrabold tracking-wide sm:ml-auto sm:self-center" style={{ color: TEAL_DARK }}>
-            {`${p.prefectureName}の自治体を見る `}<span className="ml-2 text-2xl align-middle">→</span>
+            {tf("p-home-pref-see", { pref: prefLabel(p.prefectureName) })}<span className="ml-2 text-2xl align-middle">→</span>
           </span>
         </Link>
   
@@ -119,7 +123,7 @@ export default function Home() {
     <div style={{ background: "#fff" }}>
       <header className="mx-auto flex w-full max-w-6xl flex-col items-start gap-2 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-10">
         <Link href="/"><Brand /></Link>
-        <nav aria-label="メイン" className="flex flex-wrap items-center gap-x-4 text-base font-bold sm:gap-x-10 sm:text-base" style={{ color: NAVY }}>
+        <nav aria-label={t("ui-aria-main-nav")} className="flex flex-wrap items-center gap-x-4 text-base font-bold sm:gap-x-10 sm:text-base" style={{ color: NAVY }}>
           {NAV.map((n) => (
             <Link key={n.href} href={n.href} className="inline-block py-1.5 hover:opacity-70">{n.label}</Link>
           ))}
@@ -130,31 +134,36 @@ export default function Home() {
         {/* hero */}
         <section className="pt-4">
           <p className="mb-3 text-base font-medium tracking-widest sm:text-lg" style={{ color: TEAL_DARK }}>
-            地方自治を、もっと身近に。
+            {t("home-eyebrow")}
           </p>
           <h1 className="text-3xl font-extrabold leading-snug tracking-wide sm:text-5xl" style={{ color: NAVY }}>
             {/* スマホ幅で「知」と「る。」の間で折れないよう、句ごとに折り返さない塊にする（2026-10-15 運営者指示） */}
-            <span className="inline-block">自分のまちを、</span><span className="inline-block">数字から知る。</span>
+            <span className="inline-block">{t("home-h1-1")}</span>
+            {/* 英語は2つの句の間に空白が要る（塊の端の空白は消えるため、塊の外に置く）。日本語版は従来どおり空白なし */}
+            {LOCALE === "en" ? " " : null}
+            <span className="inline-block">{t("home-h1-2")}</span>
           </h1>
           <p className="mt-4 text-base leading-relaxed sm:text-lg" style={{ color: NAVY2 }}>
-            財政や暮らしの制度を、市町村ごとに分かりやすく整理します。
+            {t("home-lead")}
           </p>
           {/* 既定（岐阜県だけ）と同じ文言のときは渡さない＝公開用ビルドの出力は変わらない */}
-          <HomeSearchBox {...(SEARCH_EXAMPLE === DEFAULT_SEARCH_EXAMPLE ? {} : { example: SEARCH_EXAMPLE })} />
+          <HomeSearchBox {...(SEARCH_EXAMPLE === DEFAULT_SEARCH_EXAMPLE ? {} : { example: SEARCH_EXAMPLE })} msgs={msgsFor(HOME_SEARCH_MSG_IDS)} />
         </section>
 
         {PREFECTURES.length === 1 ? (
           // 県が1つ（公開用ビルド）：従来どおり「現在公開中の地域」の1枚カード
           <section className="mt-8">
-            <h2 className="mb-3 text-xl font-bold sm:text-2xl" style={{ color: NAVY }}>現在公開中の地域</h2>
+            <h2 className="mb-3 text-xl font-bold sm:text-2xl" style={{ color: NAVY }}>{t("home-published")}</h2>
             {prefCard(PREFECTURES[0], 0, false)}
           </section>
         ) : (
           // 県が複数（東海版など）：「地域から探す」。ページのある県だけがリンク、ほかは準備中（§2.6・L-10）
           <section className="mt-8">
-            <h2 className="mb-1 text-xl font-bold sm:text-2xl" style={{ color: NAVY }}>地域から探す</h2>
-            <p className="mb-3 text-base" style={{ color: INK_MUTED }}>地方を選んで、都道府県を選んでください</p>
+            <h2 className="mb-1 text-xl font-bold sm:text-2xl" style={{ color: NAVY }}>{t("home-by-region")}</h2>
+            <p className="mb-3 text-base" style={{ color: INK_MUTED }}>{t("home-region-hint")}</p>
             <RegionPicker
+              msgs={msgsFor(REGION_PICKER_MSG_IDS)}
+              labels={Object.fromEntries(REGIONS.flatMap((r) => r.prefectures).map((n) => [n, prefLabel(n)]))}
               active={PREFECTURES.map((p) => ({
                 name: p.prefectureName,
                 href: `/${p.prefSlug}/`,
@@ -169,7 +178,7 @@ export default function Home() {
 
         {/* 自治体Watchで見られること */}
         <section className="mt-8">
-          <h2 className="mb-3 text-xl font-bold sm:text-2xl" style={{ color: NAVY }}>自治体Watchで見られること</h2>
+          <h2 className="mb-3 text-xl font-bold sm:text-2xl" style={{ color: NAVY }}>{t("home-features")}</h2>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
             {FEATURES.map((f) => (
               <div key={f.title}
@@ -191,7 +200,7 @@ export default function Home() {
           </div>
           <p className="mt-6 text-center text-base" style={{ color: TEAL_DARK }}>
             <Link href="/about" className="hover:opacity-70">
-              自治体Watchについて詳しく見る <span className="ml-2 align-middle text-xl">→</span>
+              {t("home-about-link")}<span className="ml-2 align-middle text-xl">→</span>
             </Link>
           </p>
         </section>
@@ -200,15 +209,15 @@ export default function Home() {
       <footer className="border-t" style={{ borderColor: LINE }}>
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-4 px-5 py-8 sm:flex-row sm:justify-between sm:px-10">
           <Brand />
-          <nav aria-label="サイト情報" className="flex flex-wrap items-center gap-5 text-base font-bold" style={{ color: NAVY }}>
+          <nav aria-label={t("ui-aria-site-info")} className="flex flex-wrap items-center gap-5 text-base font-bold" style={{ color: NAVY }}>
             {NAV.map((n) => (
               <Link key={n.href} href={n.href} className="inline-block py-1.5 hover:opacity-70">{n.label}</Link>
             ))}
             <Link href="/corrections" className="inline-block py-1.5 hover:opacity-70" style={{ color: "#007b76" }}>
-              訂正・お問い合わせ
+              {t("ui-nav-corrections")}
             </Link>
           </nav>
-          <span className="text-base" style={{ color: INK_MUTED }}>© 自治体Watch</span>
+          <span className="text-base" style={{ color: INK_MUTED }}>{t("ui-copyright")}</span>
         </div>
       </footer>
     </div>

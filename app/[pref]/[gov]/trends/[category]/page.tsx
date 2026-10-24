@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/Breadcrumb";
-import Link from "next/link";
+import Link from "@/components/SiteLink";
 import { notFound } from "next/navigation";
 import { MUNICIPALITIES, getMunicipalityBySlug } from "@/lib/municipalities";
 import { getTrendsCard, getTrendsCategory, listTrendsCategories } from "@/lib/card-registry";
 import { shouldSuppressComparison } from "@/lib/staleness";
-import { govPath, pageMeta } from "@/lib/site";
+import { SITE_NAME, govPath, pageMeta, pageTitleIn } from "@/lib/site";
+import { t, tf } from "@/lib/i18n";
 
 type PageParams = { pref: string; gov: string; category: string };
 
@@ -33,10 +34,10 @@ export async function generateMetadata({
   const { pref, gov, category } = await params;
   const municipality = getMunicipalityBySlug(gov, pref);
   const cat = getTrendsCategory(category);
-  if (!municipality || !cat) return { title: "自治体Watch" }; // dynamicParams=false のため到達しない
+  if (!municipality || !cat) return { title: SITE_NAME }; // dynamicParams=false のため到達しない
   return pageMeta({
-    title: `${cat.cardTitle}の推移 | ${municipality.cityName} | 自治体Watch`,
-    description: `${municipality.cityName}の${cat.cardTitle}の推移を、年度ごとに出典つきで掲載しています。`,
+    title: pageTitleIn(tf("p-trends", { card: cat.cardTitle }), municipality.label),
+    description: tf("p-desc-trends", { name: municipality.label, card: cat.cardTitle }),
     path: `${govPath(municipality.prefSlug, municipality.slug)}/trends/${category}`,
   });
 }
@@ -76,11 +77,11 @@ export default async function TrendsPage({
         {/* 各段リンク（ui-vi §2.5・C-2 N-3：従来は文字のみで <a> 0件） */}
         <Breadcrumb
           items={[
-            { label: "日本", href: "/" },
-            { label: municipality.prefectureName, href: `/${municipality.prefSlug}` },
-            { label: municipality.cityName, href: `/${municipality.prefSlug}/${municipality.slug}` },
+            { label: t("crumb-japan"), href: "/" },
+            { label: municipality.prefectureLabel, href: `/${municipality.prefSlug}` },
+            { label: municipality.label, href: `/${municipality.prefSlug}/${municipality.slug}` },
             { label: cat.tabLabel, href: `/${municipality.prefSlug}/${municipality.slug}/${cat.tab}` },
-            { label: `${cat.cardTitle}の推移` },
+            { label: tf("p-trends", { card: cat.cardTitle }) },
           ]}
         />
 
@@ -89,18 +90,18 @@ export default async function TrendsPage({
           href={`/${municipality.prefSlug}/${municipality.slug}/${cat.tab}`}
           className="mt-1 inline-block py-1.5 fs-back text-teal-700 hover:underline"
         >
-          ← {cat.tabLabel}に戻る
+          {tf("p-back-to-tab", { tab: cat.tabLabel })}
         </Link>
 
         <h1 className="mt-2 text-xl font-bold text-teal-950 sm:text-2xl">
-          {municipality.cityName}　{cat.cardTitle}の推移
+          {tf("p-trends-h1", { city: municipality.label, card: cat.cardTitle })}
         </h1>
         <p className="mt-1 fs-label text-stone-600">{trends.lead}</p>
 
         <section className="mt-5 overflow-hidden rounded-xl border border-teal-900/10 bg-white p-3 shadow-sm sm:p-6">
           {suppressTrends ? (
             <p className="fs-label text-stone-600">
-              この指標は長期間データが更新されていないため、経年推移の表示を停止しています。最新の公表状況は下記の出典をご確認ください。
+              {t("tr-suppressed")}
             </p>
           ) : (
             rendered.chart
@@ -108,7 +109,7 @@ export default async function TrendsPage({
         </section>
 
         <footer className="mt-3 fs-note text-stone-600">
-          出典:{" "}
+          {t("frame-source")}{" "}
           {rendered.sourceUrl ? (
             <a
               href={rendered.sourceUrl}
@@ -122,11 +123,11 @@ export default async function TrendsPage({
             trends.sourceLabel
           )}
           <span aria-hidden className="mx-2 text-stone-300">
-            ・
+            {t("ui-dot-sep")}
           </span>
-          データ更新日: {rendered.updated}
+          {t("frame-updated")}{rendered.updated}
           <span aria-hidden className="mx-2 text-stone-300">
-            ・
+            {t("ui-dot-sep")}
           </span>
           {trends.note}
         </footer>

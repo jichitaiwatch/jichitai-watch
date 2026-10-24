@@ -1,0 +1,3593 @@
+{
+ "about": "首長・正副議長の英語版の氏名。scripts/gen_person_names_en.py が i18n/person-names/ から作る（手で直さない）。キーは「団体コードの先頭5桁|データの氏名（空白を除く）」。載っていない人は英語版でも漢字のまま（D-25）",
+ "people": {
+  "21000|松岡正人": {
+   "family_ja": "松岡",
+   "given_ja": "正人",
+   "family_en": "Matsuoka",
+   "given_en": "Masato"
+  },
+  "21000|江崎禎英": {
+   "family_ja": "江崎",
+   "given_ja": "禎英",
+   "family_en": "Esaki",
+   "given_en": "Yoshihide"
+  },
+  "21000|長屋光征": {
+   "family_ja": "長屋",
+   "given_ja": "光征",
+   "family_en": "Nagaya",
+   "given_en": "Kosei"
+  },
+  "21201|柴橋正直": {
+   "family_ja": "柴橋",
+   "given_ja": "正直",
+   "family_en": "Shibahashi",
+   "given_en": "Masanao"
+  },
+  "21201|竹市勲": {
+   "family_ja": "竹市",
+   "given_ja": "勲",
+   "family_en": "Takeichi",
+   "given_en": "Isao"
+  },
+  "21201|西垣信康": {
+   "family_ja": "西垣",
+   "given_ja": "信康",
+   "family_en": "Nishigaki",
+   "given_en": "Nobuyasu"
+  },
+  "21202|不破光司": {
+   "family_ja": "不破",
+   "given_ja": "光司",
+   "family_en": "Fuwa",
+   "given_en": "Koji"
+  },
+  "21202|石田仁": {
+   "family_ja": "石田",
+   "given_ja": "仁",
+   "family_en": "Ishida",
+   "given_en": "Hitoshi"
+  },
+  "21202|近沢正": {
+   "family_ja": "近沢",
+   "given_ja": "正",
+   "family_en": "Chikazawa",
+   "given_en": "Tadashi"
+  },
+  "21203|榎隆司": {
+   "family_ja": "榎",
+   "given_ja": "隆司",
+   "family_en": "Enoki",
+   "given_en": "Takashi"
+  },
+  "21203|田中明": {
+   "family_ja": "田中",
+   "given_ja": "明",
+   "family_en": "Tanaka",
+   "given_en": "Akira"
+  },
+  "21203|石原正裕": {
+   "family_ja": "石原",
+   "given_ja": "正裕",
+   "family_en": "Ishihara",
+   "given_en": "Masahiro"
+  },
+  "21204|仙石三喜男": {
+   "family_ja": "仙石",
+   "given_ja": "三喜男",
+   "family_en": "Sengoku",
+   "given_en": "Mikio"
+  },
+  "21204|葉狩拓也": {
+   "family_ja": "葉狩",
+   "given_ja": "拓也",
+   "family_en": "Hagari",
+   "given_en": "Takuya"
+  },
+  "21204|髙木貴行": {
+   "family_ja": "髙木",
+   "given_ja": "貴行",
+   "family_en": "Takagi",
+   "given_en": "Takayuki"
+  },
+  "21205|山下清司": {
+   "family_ja": "山下",
+   "given_ja": "清司",
+   "family_en": "Yamashita",
+   "given_en": "Kiyoshi"
+  },
+  "21205|池村真一郎": {
+   "family_ja": "池村",
+   "given_ja": "真一郎",
+   "family_en": "Ikemura",
+   "given_en": "Shinichiro"
+  },
+  "21205|渡辺英人": {
+   "family_ja": "渡辺",
+   "given_ja": "英人",
+   "family_en": "Watanabe",
+   "given_en": "Hideto"
+  },
+  "21206|吉村孝志": {
+   "family_ja": "吉村",
+   "given_ja": "孝志",
+   "family_en": "Yoshimura",
+   "given_en": "Takashi"
+  },
+  "21206|小栗仁志": {
+   "family_ja": "小栗",
+   "given_ja": "仁志",
+   "family_en": "Oguri",
+   "given_en": "Hitoshi"
+  },
+  "21206|櫛松直子": {
+   "family_ja": "櫛松",
+   "given_ja": "直子",
+   "family_en": "Kushimatsu",
+   "given_en": "Naoko"
+  },
+  "21207|井川竜徳": {
+   "family_ja": "井川",
+   "given_ja": "竜徳",
+   "family_en": "Ikawa",
+   "given_en": "Tatsunori"
+  },
+  "21207|古田秀文": {
+   "family_ja": "古田",
+   "given_ja": "秀文",
+   "family_en": "Furuta",
+   "given_en": "Hidefumi"
+  },
+  "21207|篠田啓介": {
+   "family_ja": "篠田",
+   "given_ja": "啓介",
+   "family_en": "Shinoda",
+   "given_en": "Keisuke"
+  },
+  "21208|三輪田幸泰": {
+   "family_ja": "三輪田",
+   "given_ja": "幸泰",
+   "family_en": "Miwada",
+   "given_en": "Yukiyasu"
+  },
+  "21208|棚町潤": {
+   "family_ja": "棚町",
+   "given_ja": "潤",
+   "family_en": "Tanamachi",
+   "given_en": "Jun"
+  },
+  "21208|水野光二": {
+   "family_ja": "水野",
+   "given_ja": "光二",
+   "family_en": "Mizuno",
+   "given_en": "Koji"
+  },
+  "21209|南谷清司": {
+   "family_ja": "南谷",
+   "given_ja": "清司",
+   "family_en": "Minatani",
+   "given_en": "Kiyoshi"
+  },
+  "21209|原一郎": {
+   "family_ja": "原",
+   "given_ja": "一郎",
+   "family_en": "Hara",
+   "given_en": "Ichiro"
+  },
+  "21209|松井聡": {
+   "family_ja": "松井",
+   "given_ja": "聡",
+   "family_en": "Matsui",
+   "given_en": "Satoshi"
+  },
+  "21210|伊藤勝彦": {
+   "family_ja": "伊藤",
+   "given_ja": "勝彦",
+   "family_en": "Ito",
+   "given_en": "Katsuhiko"
+  },
+  "21210|小坂喬峰": {
+   "family_ja": "小坂",
+   "given_ja": "喬峰",
+   "family_en": "Kosaka",
+   "given_en": "Takane"
+  },
+  "21210|柘植孝彦": {
+   "family_ja": "柘植",
+   "given_ja": "孝彦",
+   "family_en": "Tsuge",
+   "given_en": "Takahiko"
+  },
+  "21211|坂井文好": {
+   "family_ja": "坂井",
+   "given_ja": "文好",
+   "family_en": "Sakai",
+   "given_en": "Fumiyoshi"
+  },
+  "21211|村瀬正樹": {
+   "family_ja": "村瀬",
+   "given_ja": "正樹",
+   "family_en": "Murase",
+   "given_en": "Masaki"
+  },
+  "21211|藤井浩人": {
+   "family_ja": "藤井",
+   "given_ja": "浩人",
+   "family_en": "Fujii",
+   "given_en": "Hiroto"
+  },
+  "21212|加藤淳司": {
+   "family_ja": "加藤",
+   "given_ja": "淳司",
+   "family_en": "Kato",
+   "given_en": "Junji"
+  },
+  "21212|後藤正樹": {
+   "family_ja": "後藤",
+   "given_ja": "正樹",
+   "family_en": "Goto",
+   "given_en": "Masaki"
+  },
+  "21212|水石玲子": {
+   "family_ja": "水石",
+   "given_ja": "玲子",
+   "family_en": "Mizuishi",
+   "given_en": "Reiko"
+  },
+  "21213|岩田紀正": {
+   "family_ja": "岩田",
+   "given_ja": "紀正",
+   "family_en": "Iwata",
+   "given_en": "Norimasa"
+  },
+  "21213|浅野健司": {
+   "family_ja": "浅野",
+   "given_ja": "健司",
+   "family_en": "Asano",
+   "given_en": "Kenji"
+  },
+  "21213|瀬川利生": {
+   "family_ja": "瀬川",
+   "given_ja": "利生",
+   "family_en": "Segawa",
+   "given_en": "Toshio"
+  },
+  "21214|冨田成輝": {
+   "family_ja": "冨田",
+   "given_ja": "成輝",
+   "family_en": "Tomida",
+   "given_en": "Shigeki"
+  },
+  "21214|天羽良明": {
+   "family_ja": "天羽",
+   "given_ja": "良明",
+   "family_en": "Amo",
+   "given_en": "Yoshiaki"
+  },
+  "21214|髙木将延": {
+   "family_ja": "髙木",
+   "given_ja": "将延",
+   "family_en": "Takagi",
+   "given_en": "Masanobu"
+  },
+  "21215|古川雅一": {
+   "family_ja": "古川",
+   "given_ja": "雅一",
+   "family_en": "Furukawa",
+   "given_en": "Masakazu"
+  },
+  "21215|寺町祥江": {
+   "family_ja": "寺町",
+   "given_ja": "祥江",
+   "family_en": "Teramachi",
+   "given_en": "Sachie"
+  },
+  "21215|林宏優": {
+   "family_ja": "林",
+   "given_ja": "宏優",
+   "family_en": "Hayashi",
+   "given_en": "Hiromasa"
+  },
+  "21216|森和之": {
+   "family_ja": "森",
+   "given_ja": "和之",
+   "family_en": "Mori",
+   "given_en": "Kazuyuki"
+  },
+  "21216|若井千尋": {
+   "family_ja": "若井",
+   "given_ja": "千尋",
+   "family_en": "Wakai",
+   "given_en": "Chihiro"
+  },
+  "21216|藤橋直樹": {
+   "family_ja": "藤橋",
+   "given_ja": "直樹",
+   "family_en": "Fujihashi",
+   "given_en": "Naoki"
+  },
+  "21217|住田清美": {
+   "family_ja": "住田",
+   "given_ja": "清美",
+   "family_en": "Sumida",
+   "given_en": "Kiyomi"
+  },
+  "21217|澤史朗": {
+   "family_ja": "澤",
+   "given_ja": "史朗",
+   "family_en": "Sawa",
+   "given_en": "Shiro"
+  },
+  "21217|都竹淳也": {
+   "family_ja": "都竹",
+   "given_ja": "淳也",
+   "family_en": "Tsuzuku",
+   "given_en": "Junya"
+  },
+  "21218|臼井悦子": {
+   "family_ja": "臼井",
+   "given_ja": "悦子",
+   "family_en": "Usui",
+   "given_en": "Etsuko"
+  },
+  "21218|藤原勉": {
+   "family_ja": "藤原",
+   "given_ja": "勉",
+   "family_en": "Fujiwara",
+   "given_en": "Tsutomu"
+  },
+  "21218|髙橋時男": {
+   "family_ja": "髙橋",
+   "given_ja": "時男",
+   "family_en": "Takahashi",
+   "given_en": "Tokio"
+  },
+  "21219|山川弘保": {
+   "family_ja": "山川",
+   "given_ja": "弘保",
+   "family_en": "Yamakawa",
+   "given_en": "Hiroyasu"
+  },
+  "21219|田中義久": {
+   "family_ja": "田中",
+   "given_ja": "義久",
+   "family_en": "Tanaka",
+   "given_en": "Yoshihisa"
+  },
+  "21219|長岡文男": {
+   "family_ja": "長岡",
+   "given_ja": "文男",
+   "family_en": "Nagaoka",
+   "given_en": "Fumio"
+  },
+  "21220|尾里集務": {
+   "family_ja": "尾里",
+   "given_ja": "集務",
+   "family_en": "Ozato",
+   "given_en": "Atsumu"
+  },
+  "21220|山内登": {
+   "family_ja": "山内",
+   "given_ja": "登",
+   "family_en": "Yamauchi",
+   "given_en": "Noboru"
+  },
+  "21220|田中喜登": {
+   "family_ja": "田中",
+   "given_ja": "喜登",
+   "family_en": "Tanaka",
+   "given_en": "Kinori"
+  },
+  "21221|古川理沙": {
+   "family_ja": "古川",
+   "given_ja": "理沙",
+   "family_en": "Furukawa",
+   "given_en": "Risa"
+  },
+  "21221|横川真澄": {
+   "family_ja": "横川",
+   "given_ja": "真澄",
+   "family_en": "Yokogawa",
+   "given_en": "Masumi"
+  },
+  "21221|里雄淳意": {
+   "family_ja": "里雄",
+   "given_ja": "淳意",
+   "family_en": "Satoo",
+   "given_en": "Juni"
+  },
+  "21302|加藤雅浩": {
+   "family_ja": "加藤",
+   "given_ja": "雅浩",
+   "family_en": "Kato",
+   "given_en": "Masahiro"
+  },
+  "21302|後藤友紀": {
+   "family_ja": "後藤",
+   "given_ja": "友紀",
+   "family_en": "Goto",
+   "given_en": "Yuki"
+  },
+  "21302|松原浩二": {
+   "family_ja": "松原",
+   "given_ja": "浩二",
+   "family_en": "Matsubara",
+   "given_en": "Koji"
+  },
+  "21302|松本暁大": {
+   "family_ja": "松本",
+   "given_ja": "暁大",
+   "family_en": "Matsumoto",
+   "given_en": "Akihiro"
+  },
+  "21302|長谷川淳": {
+   "family_ja": "長谷川",
+   "given_ja": "淳",
+   "family_en": "Hasegawa",
+   "given_en": "Jun"
+  },
+  "21303|古田聖人": {
+   "family_ja": "古田",
+   "given_ja": "聖人",
+   "family_en": "Furuta",
+   "given_en": "Kiyohito"
+  },
+  "21303|川島功士": {
+   "family_ja": "川島",
+   "given_ja": "功士",
+   "family_en": "Kawashima",
+   "given_en": "Koji"
+  },
+  "21303|竹中光重": {
+   "family_ja": "竹中",
+   "given_ja": "光重",
+   "family_en": "Takenaka",
+   "given_en": "Mitsushige"
+  },
+  "21341|川地憲元": {
+   "family_ja": "川地",
+   "given_ja": "憲元",
+   "family_en": "Kawachi",
+   "given_en": "Norimoto"
+  },
+  "21341|西脇康": {
+   "family_ja": "西脇",
+   "given_ja": "康",
+   "family_en": "Nishiwaki",
+   "given_en": "Yasushi"
+  },
+  "21341|野村永一": {
+   "family_ja": "野村",
+   "given_ja": "永一",
+   "family_en": "Nomura",
+   "given_en": "Eiichi"
+  },
+  "21361|乾豊": {
+   "family_ja": "乾",
+   "given_ja": "豊",
+   "family_en": "Inui",
+   "given_en": "Yutaka"
+  },
+  "21361|広瀬隆博": {
+   "family_ja": "広瀬",
+   "given_ja": "隆博",
+   "family_en": "Hirose",
+   "given_en": "Takahiro"
+  },
+  "21361|早野博文": {
+   "family_ja": "早野",
+   "given_ja": "博文",
+   "family_en": "Hayano",
+   "given_en": "Hirofumi"
+  },
+  "21362|松井正樹": {
+   "family_ja": "松井",
+   "given_ja": "正樹",
+   "family_en": "Matsui",
+   "given_en": "Masaki"
+  },
+  "21362|西脇康世": {
+   "family_ja": "西脇",
+   "given_ja": "康世",
+   "family_en": "Nishiwaki",
+   "given_en": "Yasuyo"
+  },
+  "21362|谷口輝男": {
+   "family_ja": "谷口",
+   "given_ja": "輝男",
+   "family_en": "Taniguchi",
+   "given_en": "Teruo"
+  },
+  "21381|宮嶋健太郎": {
+   "family_ja": "宮嶋",
+   "given_ja": "健太郎",
+   "family_en": "Miyajima",
+   "given_en": "Kentaro"
+  },
+  "21381|藤井弘之": {
+   "family_ja": "藤井",
+   "given_ja": "弘之",
+   "family_en": "Fujii",
+   "given_en": "Hiroyuki"
+  },
+  "21381|飯沼満": {
+   "family_ja": "飯沼",
+   "given_ja": "満",
+   "family_en": "Iinuma",
+   "given_en": "Mitsuru"
+  },
+  "21382|上野賢二": {
+   "family_ja": "上野",
+   "given_ja": "賢二",
+   "family_en": "Ueno",
+   "given_en": "Kenji"
+  },
+  "21382|朝倉和仁": {
+   "family_ja": "朝倉",
+   "given_ja": "和仁",
+   "family_en": "Asakura",
+   "given_en": "Kazuhito"
+  },
+  "21382|浅野重行": {
+   "family_ja": "浅野",
+   "given_ja": "重行",
+   "family_en": "Asano",
+   "given_en": "Shigeyuki"
+  },
+  "21383|大平文雄": {
+   "family_ja": "大平",
+   "given_ja": "文雄",
+   "family_en": "Ohira",
+   "given_en": "Fumio"
+  },
+  "21383|岡田立": {
+   "family_ja": "岡田",
+   "given_ja": "立",
+   "family_en": "Okada",
+   "given_en": "Todomu"
+  },
+  "21383|渡邊裕光": {
+   "family_ja": "渡邊",
+   "given_ja": "裕光",
+   "family_en": "Watanabe",
+   "given_en": "Hiromitsu"
+  },
+  "21401|大西惠子": {
+   "family_ja": "大西",
+   "given_ja": "惠子",
+   "family_en": "Onishi",
+   "given_en": "Keiko"
+  },
+  "21401|岡部栄一": {
+   "family_ja": "岡部",
+   "given_ja": "栄一",
+   "family_en": "Okabe",
+   "given_en": "Eiichi"
+  },
+  "21401|若園敏朗": {
+   "family_ja": "若園",
+   "given_ja": "敏朗",
+   "family_en": "Wakazono",
+   "given_en": "Toshiro"
+  },
+  "21401|高橋径夫": {
+   "family_ja": "高橋",
+   "given_ja": "径夫",
+   "family_en": "Takahashi",
+   "given_en": "Michio"
+  },
+  "21403|国枝利樹": {
+   "family_ja": "国枝",
+   "given_ja": "利樹",
+   "family_en": "Kunieda",
+   "given_en": "Toshiki"
+  },
+  "21403|宇佐美晃三": {
+   "family_ja": "宇佐美",
+   "given_ja": "晃三",
+   "family_en": "Usami",
+   "given_en": "Kozo"
+  },
+  "21403|野村光宣": {
+   "family_ja": "野村",
+   "given_ja": "光宣",
+   "family_en": "Nomura",
+   "given_en": "Mitsunobu"
+  },
+  "21404|竹中誉": {
+   "family_ja": "竹中",
+   "given_ja": "誉",
+   "family_en": "Takenaka",
+   "given_en": "Homare"
+  },
+  "21404|臼井幹夫": {
+   "family_ja": "臼井",
+   "given_ja": "幹夫",
+   "family_en": "Usui",
+   "given_en": "Mikio"
+  },
+  "21404|重綱秀次": {
+   "family_ja": "重綱",
+   "given_ja": "秀次",
+   "family_en": "Shigetsuna",
+   "given_en": "Hidetsugu"
+  },
+  "21421|安藤哲雄": {
+   "family_ja": "安藤",
+   "given_ja": "哲雄",
+   "family_en": "Ando",
+   "given_en": "Tetsuo"
+  },
+  "21421|戸部哲哉": {
+   "family_ja": "戸部",
+   "given_ja": "哲哉",
+   "family_en": "Tobe",
+   "given_en": "Tetsuya"
+  },
+  "21421|杉本真由美": {
+   "family_ja": "杉本",
+   "given_ja": "真由美",
+   "family_en": "Sugimoto",
+   "given_en": "Mayumi"
+  },
+  "21501|伊藤敬宏": {
+   "family_ja": "伊藤",
+   "given_ja": "敬宏",
+   "family_en": "Ito",
+   "given_en": "Takahiro"
+  },
+  "21501|佐藤猛": {
+   "family_ja": "佐藤",
+   "given_ja": "猛",
+   "family_en": "Sato",
+   "given_en": "Takeru"
+  },
+  "21501|竹内浩一": {
+   "family_ja": "竹内",
+   "given_ja": "浩一",
+   "family_en": "Takeuchi",
+   "given_en": "Koichi"
+  },
+  "21502|森利和": {
+   "family_ja": "森",
+   "given_ja": "利和",
+   "family_en": "Mori",
+   "given_en": "Toshikazu"
+  },
+  "21502|渡邉圭太": {
+   "family_ja": "渡邉",
+   "given_ja": "圭太",
+   "family_en": "Watanabe",
+   "given_en": "Keita"
+  },
+  "21502|福田定道": {
+   "family_ja": "福田",
+   "given_ja": "定道",
+   "family_en": "Fukuta",
+   "given_en": "Sadamichi"
+  },
+  "21503|佐伯雄幸": {
+   "family_ja": "佐伯",
+   "given_ja": "雄幸",
+   "family_en": "Saeki",
+   "given_en": "Yuko"
+  },
+  "21503|木下宙": {
+   "family_ja": "木下",
+   "given_ja": "宙",
+   "family_en": "Kinoshita",
+   "given_en": "Hiroshi"
+  },
+  "21503|石原利春": {
+   "family_ja": "石原",
+   "given_ja": "利春",
+   "family_en": "Ishihara",
+   "given_en": "Toshiharu"
+  },
+  "21504|和田真一郎": {
+   "family_ja": "和田",
+   "given_ja": "真一郎",
+   "family_en": "Wada",
+   "given_en": "Shinichiro"
+  },
+  "21504|堀部勝広": {
+   "family_ja": "堀部",
+   "given_ja": "勝広",
+   "family_en": "Horibe",
+   "given_en": "Katsuhiro"
+  },
+  "21504|松山成美": {
+   "family_ja": "松山",
+   "given_ja": "成美",
+   "family_en": "Matsuyama",
+   "given_en": "Narumi"
+  },
+  "21505|加藤良治": {
+   "family_ja": "加藤",
+   "given_ja": "良治",
+   "family_en": "Kato",
+   "given_en": "Ryoji"
+  },
+  "21505|後藤一夫": {
+   "family_ja": "後藤",
+   "given_ja": "一夫",
+   "family_en": "Goto",
+   "given_en": "Kazuo"
+  },
+  "21505|金子政則": {
+   "family_ja": "金子",
+   "given_ja": "政則",
+   "family_en": "Kaneko",
+   "given_en": "Masanori"
+  },
+  "21506|三戸勝徳": {
+   "family_ja": "三戸",
+   "given_ja": "勝徳",
+   "family_en": "Santo",
+   "given_en": "Katsunori"
+  },
+  "21506|伊佐治優": {
+   "family_ja": "伊佐治",
+   "given_ja": "優",
+   "family_en": "Isaji",
+   "given_en": "Masaru"
+  },
+  "21506|佐伯正貴": {
+   "family_ja": "佐伯",
+   "given_ja": "正貴",
+   "family_en": "Saeki",
+   "given_en": "Masataka"
+  },
+  "21506|杉山哉史": {
+   "family_ja": "杉山",
+   "given_ja": "哉史",
+   "family_en": "Sugiyama",
+   "given_en": "Chikashi"
+  },
+  "21506|田口守也": {
+   "family_ja": "田口",
+   "given_ja": "守也",
+   "family_en": "Taguchi",
+   "given_en": "Moriya"
+  },
+  "21507|安江健二": {
+   "family_ja": "安江",
+   "given_ja": "健二",
+   "family_en": "Yasue",
+   "given_en": "Kenji"
+  },
+  "21507|安江真治": {
+   "family_ja": "安江",
+   "given_ja": "真治",
+   "family_en": "Yasue",
+   "given_en": "Shinji"
+  },
+  "21507|桂川憲生": {
+   "family_ja": "桂川",
+   "given_ja": "憲生",
+   "family_en": "Katsuragawa",
+   "given_en": "Norio"
+  },
+  "21521|広川大介": {
+   "family_ja": "広川",
+   "given_ja": "大介",
+   "family_en": "Hirokawa",
+   "given_en": "Daisuke"
+  },
+  "21521|渡邉幸伸": {
+   "family_ja": "渡邉",
+   "given_ja": "幸伸",
+   "family_en": "Watanabe",
+   "given_en": "Yukinobu"
+  },
+  "21521|高山由行": {
+   "family_ja": "高山",
+   "given_ja": "由行",
+   "family_en": "Takayama",
+   "given_en": "Yoshiyuki"
+  },
+  "21604|宮部俊典": {
+   "family_ja": "宮部",
+   "given_ja": "俊典",
+   "family_en": "Miyabe",
+   "given_en": "Toshinori"
+  },
+  "21604|成原茂": {
+   "family_ja": "成原",
+   "given_ja": "茂",
+   "family_en": "Narihara",
+   "given_en": "Shigeru"
+  },
+  "21604|森崎敏克": {
+   "family_ja": "森崎",
+   "given_ja": "敏克",
+   "family_en": "Morisaki",
+   "given_en": "Toshikatsu"
+  },
+  "23000|大村秀章": {
+   "family_ja": "大村",
+   "given_ja": "秀章",
+   "family_en": "Omura",
+   "given_en": "Hideaki"
+  },
+  "23000|島倉誠": {
+   "family_ja": "島倉",
+   "given_ja": "誠",
+   "family_en": "Shimakura",
+   "given_en": "Makoto"
+  },
+  "23000|成田修": {
+   "family_ja": "成田",
+   "given_ja": "修",
+   "family_en": "Narita",
+   "given_en": "Osamu"
+  },
+  "23100|小出昭司": {
+   "family_ja": "小出",
+   "given_ja": "昭司",
+   "family_en": "Koide",
+   "given_en": "Shoji"
+  },
+  "23100|廣澤一郎": {
+   "family_ja": "廣澤",
+   "given_ja": "一郎",
+   "family_en": "Hirosawa",
+   "given_en": "Ichiro"
+  },
+  "23100|森ともお": {
+   "family_ja": "森",
+   "given_ja": "ともお",
+   "family_en": "Mori",
+   "given_en": "Tomoo"
+  },
+  "23201|山本賢太郎": {
+   "family_ja": "山本",
+   "given_ja": "賢太郎",
+   "family_en": "Yamamoto",
+   "given_en": "Kentaro"
+  },
+  "23201|松崎正尚": {
+   "family_ja": "松崎",
+   "given_ja": "正尚",
+   "family_en": "Matsuzaki",
+   "given_en": "Masanao"
+  },
+  "23201|長坂尚登": {
+   "family_ja": "長坂",
+   "given_ja": "尚登",
+   "family_en": "Nagasaka",
+   "given_en": "Naoto"
+  },
+  "23202|内田康宏": {
+   "family_ja": "内田",
+   "given_ja": "康宏",
+   "family_en": "Uchida",
+   "given_en": "Yasuhiro"
+  },
+  "23202|畑尻宣長": {
+   "family_ja": "畑尻",
+   "given_ja": "宣長",
+   "family_en": "Hatajiri",
+   "given_en": "Norinaga"
+  },
+  "23202|荻野秀範": {
+   "family_ja": "荻野",
+   "given_ja": "秀範",
+   "family_en": "Ogino",
+   "given_en": "Hidenori"
+  },
+  "23203|中村かずひと": {
+   "family_ja": "中村",
+   "given_ja": "かずひと",
+   "family_en": "Nakamura",
+   "given_en": "Kazuhito"
+  },
+  "23203|中野正康": {
+   "family_ja": "中野",
+   "given_ja": "正康",
+   "family_en": "Nakano",
+   "given_en": "Masayasu"
+  },
+  "23203|渡辺之良": {
+   "family_ja": "渡辺",
+   "given_ja": "之良",
+   "family_en": "Watanabe",
+   "given_en": "Yukiyoshi"
+  },
+  "23204|冨田宗一": {
+   "family_ja": "冨田",
+   "given_ja": "宗一",
+   "family_en": "Tomida",
+   "given_en": "Munekazu"
+  },
+  "23204|川本雅之": {
+   "family_ja": "川本",
+   "given_ja": "雅之",
+   "family_en": "Kawamoto",
+   "given_en": "Masayuki"
+  },
+  "23204|髙島淳": {
+   "family_ja": "髙島",
+   "given_ja": "淳",
+   "family_en": "Takashima",
+   "given_en": "Jun"
+  },
+  "23205|久世孝宏": {
+   "family_ja": "久世",
+   "given_ja": "孝宏",
+   "family_en": "Kuze",
+   "given_en": "Takahiro"
+  },
+  "23205|澤田勝": {
+   "family_ja": "澤田",
+   "given_ja": "勝",
+   "family_en": "Sawada",
+   "given_en": "Masaru"
+  },
+  "23205|芳金秀展": {
+   "family_ja": "芳金",
+   "given_ja": "秀展",
+   "family_en": "Yoshikane",
+   "given_en": "Hidenobu"
+  },
+  "23206|前田学": {
+   "family_ja": "前田",
+   "given_ja": "学",
+   "family_en": "Maeda",
+   "given_en": "Manabu"
+  },
+  "23206|石黒直樹": {
+   "family_ja": "石黒",
+   "given_ja": "直樹",
+   "family_en": "Ishiguro",
+   "given_en": "Naoki"
+  },
+  "23206|長谷川達也": {
+   "family_ja": "長谷川",
+   "given_ja": "達也",
+   "family_en": "Hasegawa",
+   "given_en": "Tatsuya"
+  },
+  "23207|中川雅之": {
+   "family_ja": "中川",
+   "given_ja": "雅之",
+   "family_en": "Nakagawa",
+   "given_en": "Masayuki"
+  },
+  "23207|冨田潤": {
+   "family_ja": "冨田",
+   "given_ja": "潤",
+   "family_en": "Tomita",
+   "given_en": "Jun"
+  },
+  "23207|竹本幸夫": {
+   "family_ja": "竹本",
+   "given_ja": "幸夫",
+   "family_en": "Takemoto",
+   "given_en": "Yukio"
+  },
+  "23208|宇藤久子": {
+   "family_ja": "宇藤",
+   "given_ja": "久子",
+   "family_en": "Uto",
+   "given_en": "Hisako"
+  },
+  "23208|日比一昭": {
+   "family_ja": "日比",
+   "given_ja": "一昭",
+   "family_en": "Hibi",
+   "given_en": "Kazuaki"
+  },
+  "23208|服部哲也": {
+   "family_ja": "服部",
+   "given_ja": "哲也",
+   "family_en": "Hattori",
+   "given_en": "Tetsuya"
+  },
+  "23209|小池友妃子": {
+   "family_ja": "小池",
+   "given_ja": "友妃子",
+   "family_en": "Koike",
+   "given_en": "Yukiko"
+  },
+  "23209|神谷悟": {
+   "family_ja": "神谷",
+   "given_ja": "悟",
+   "family_en": "Kamiya",
+   "given_en": "Satoru"
+  },
+  "23209|藤浦伸介": {
+   "family_ja": "藤浦",
+   "given_ja": "伸介",
+   "family_en": "Fujiura",
+   "given_en": "Shinsuke"
+  },
+  "23210|佐原充恭": {
+   "family_ja": "佐原",
+   "given_ja": "充恭",
+   "family_en": "Sahara",
+   "given_en": "Mitsuyasu"
+  },
+  "23210|深谷英貴": {
+   "family_ja": "深谷",
+   "given_ja": "英貴",
+   "family_en": "Fukaya",
+   "given_en": "Hideki"
+  },
+  "23210|稲垣武": {
+   "family_ja": "稲垣",
+   "given_ja": "武",
+   "family_en": "Inagaki",
+   "given_en": "Takeshi"
+  },
+  "23211|太田稔彦": {
+   "family_ja": "太田",
+   "given_ja": "稔彦",
+   "family_en": "Ota",
+   "given_en": "Toshihiko"
+  },
+  "23211|岩田淳": {
+   "family_ja": "岩田",
+   "given_ja": "淳",
+   "family_en": "Iwata",
+   "given_en": "Jun"
+  },
+  "23211|浅井保孝": {
+   "family_ja": "浅井",
+   "given_ja": "保孝",
+   "family_en": "Asai",
+   "given_en": "Yasutaka"
+  },
+  "23212|三星元人": {
+   "family_ja": "三星",
+   "given_ja": "元人",
+   "family_en": "Mitsuboshi",
+   "given_en": "Motohito"
+  },
+  "23212|松本佳栄": {
+   "family_ja": "松本",
+   "given_ja": "佳栄",
+   "family_en": "Matsumoto",
+   "given_en": "Kae"
+  },
+  "23212|石川いくこ": {
+   "family_ja": "石川",
+   "given_ja": "いくこ",
+   "family_en": "Ishikawa",
+   "given_en": "Ikuko"
+  },
+  "23213|中村なおゆき": {
+   "family_ja": "中村",
+   "given_ja": "なおゆき",
+   "family_en": "Nakamura",
+   "given_en": "Naoyuki"
+  },
+  "23213|中村健": {
+   "family_ja": "中村",
+   "given_ja": "健",
+   "family_en": "Nakamura",
+   "given_en": "Ken"
+  },
+  "23213|松崎隆治": {
+   "family_ja": "松崎",
+   "given_ja": "隆治",
+   "family_en": "Matsuzaki",
+   "given_en": "Ryuji"
+  },
+  "23214|大場康議": {
+   "family_ja": "大場",
+   "given_ja": "康議",
+   "family_en": "Oba",
+   "given_en": "Yasunori"
+  },
+  "23214|藤田裕喜": {
+   "family_ja": "藤田",
+   "given_ja": "裕喜",
+   "family_en": "Fujita",
+   "given_en": "Hiroki"
+  },
+  "23214|鈴木寿明": {
+   "family_ja": "鈴木",
+   "given_ja": "寿明",
+   "family_en": "Suzuki",
+   "given_en": "Hisaaki"
+  },
+  "23215|原欣伸": {
+   "family_ja": "原",
+   "given_ja": "欣伸",
+   "family_en": "Hara",
+   "given_en": "Yoshinobu"
+  },
+  "23215|大沢秀教": {
+   "family_ja": "大沢",
+   "given_ja": "秀教",
+   "family_en": "Osawa",
+   "given_en": "Hidenori"
+  },
+  "23215|玉置幸哉": {
+   "family_ja": "玉置",
+   "given_ja": "幸哉",
+   "family_en": "Tamaoki",
+   "given_en": "Yukiya"
+  },
+  "23216|伊藤辰矢": {
+   "family_ja": "伊藤",
+   "given_ja": "辰矢",
+   "family_en": "Ito",
+   "given_en": "Tatsuya"
+  },
+  "23216|加藤久豊": {
+   "family_ja": "加藤",
+   "given_ja": "久豊",
+   "family_en": "Kato",
+   "given_en": "Hisatoyo"
+  },
+  "23216|大川秀徳": {
+   "family_ja": "大川",
+   "given_ja": "秀徳",
+   "family_en": "Okawa",
+   "given_en": "Hidenori"
+  },
+  "23217|伊藤吉弘": {
+   "family_ja": "伊藤",
+   "given_ja": "吉弘",
+   "family_en": "Ito",
+   "given_en": "Yoshihiro"
+  },
+  "23217|澤田和延": {
+   "family_ja": "澤田",
+   "given_ja": "和延",
+   "family_en": "Sawada",
+   "given_en": "Kazunobu"
+  },
+  "23217|長尾光春": {
+   "family_ja": "長尾",
+   "given_ja": "光春",
+   "family_en": "Nagao",
+   "given_en": "Mitsuharu"
+  },
+  "23219|加藤晶子": {
+   "family_ja": "加藤",
+   "given_ja": "晶子",
+   "family_en": "Kato",
+   "given_en": "Akiko"
+  },
+  "23219|天野正基": {
+   "family_ja": "天野",
+   "given_ja": "正基",
+   "family_en": "Amano",
+   "given_en": "Masaki"
+  },
+  "23219|小沢国大": {
+   "family_ja": "小沢",
+   "given_ja": "国大",
+   "family_en": "Kozawa",
+   "given_en": "Kunihiro"
+  },
+  "23219|山下史守朗": {
+   "family_ja": "山下",
+   "given_ja": "史守朗",
+   "family_en": "Yamashita",
+   "given_en": "Shizuo"
+  },
+  "23219|舟橋秀和": {
+   "family_ja": "舟橋",
+   "given_ja": "秀和",
+   "family_en": "Funahashi",
+   "given_en": "Hidekazu"
+  },
+  "23219|谷田貝将典": {
+   "family_ja": "谷田貝",
+   "given_ja": "将典",
+   "family_en": "Yatagai",
+   "given_en": "Masanori"
+  },
+  "23220|六鹿順二": {
+   "family_ja": "六鹿",
+   "given_ja": "順二",
+   "family_en": "Mutsuga",
+   "given_en": "Junji"
+  },
+  "23220|加藤錠司郎": {
+   "family_ja": "加藤",
+   "given_ja": "錠司郎",
+   "family_en": "Kato",
+   "given_en": "Jojiro"
+  },
+  "23220|志智央": {
+   "family_ja": "志智",
+   "given_ja": "央",
+   "family_en": "Shichi",
+   "given_en": "O"
+  },
+  "23221|下江洋行": {
+   "family_ja": "下江",
+   "given_ja": "洋行",
+   "family_en": "Shimoe",
+   "given_en": "Hiroyuki"
+  },
+  "23221|丸山隆弘": {
+   "family_ja": "丸山",
+   "given_ja": "隆弘",
+   "family_en": "Maruyama",
+   "given_en": "Takahiro"
+  },
+  "23221|佐宗龍俊": {
+   "family_ja": "佐宗",
+   "given_ja": "龍俊",
+   "family_en": "Saso",
+   "given_en": "Tatsutoshi"
+  },
+  "23222|冨田博巳": {
+   "family_ja": "冨田",
+   "given_ja": "博巳",
+   "family_en": "Tomita",
+   "given_en": "Hiromi"
+  },
+  "23222|江川祐之": {
+   "family_ja": "江川",
+   "given_ja": "祐之",
+   "family_en": "Egawa",
+   "given_en": "Masayuki"
+  },
+  "23222|花田勝重": {
+   "family_ja": "花田",
+   "given_ja": "勝重",
+   "family_en": "Hanada",
+   "given_en": "Katsushige"
+  },
+  "23223|岡村秀人": {
+   "family_ja": "岡村",
+   "given_ja": "秀人",
+   "family_en": "Okamura",
+   "given_en": "Hideto"
+  },
+  "23223|早川高光": {
+   "family_ja": "早川",
+   "given_ja": "高光",
+   "family_en": "Hayakawa",
+   "given_en": "Takamitsu"
+  },
+  "23223|藤本宗久": {
+   "family_ja": "藤本",
+   "given_ja": "宗久",
+   "family_en": "Fujimoto",
+   "given_en": "Munehisa"
+  },
+  "23224|伊藤清一郎": {
+   "family_ja": "伊藤",
+   "given_ja": "清一郎",
+   "family_en": "Ito",
+   "given_en": "Seiichiro"
+  },
+  "23224|渡邉眞弓": {
+   "family_ja": "渡邉",
+   "given_ja": "眞弓",
+   "family_en": "Watanabe",
+   "given_en": "Mayumi"
+  },
+  "23224|藤沢巌": {
+   "family_ja": "藤沢",
+   "given_ja": "巌",
+   "family_en": "Fujisawa",
+   "given_en": "Iwao"
+  },
+  "23225|中島清志": {
+   "family_ja": "中島",
+   "given_ja": "清志",
+   "family_en": "Nakashima",
+   "given_en": "Kiyoshi"
+  },
+  "23225|石川智子": {
+   "family_ja": "石川",
+   "given_ja": "智子",
+   "family_en": "Ishikawa",
+   "given_en": "Tomoko"
+  },
+  "23225|神谷文明": {
+   "family_ja": "神谷",
+   "given_ja": "文明",
+   "family_en": "Kamiya",
+   "given_en": "Fumiaki"
+  },
+  "23226|さかえ章演": {
+   "family_ja": "さかえ",
+   "given_ja": "章演",
+   "family_en": "Sakae",
+   "given_en": "Akihiro"
+  },
+  "23226|大島もえ": {
+   "family_ja": "大島",
+   "given_ja": "もえ",
+   "family_en": "Oshima",
+   "given_en": "Moe"
+  },
+  "23226|柴田浩": {
+   "family_ja": "柴田",
+   "given_ja": "浩",
+   "family_en": "Shibata",
+   "given_en": "Hiroshi"
+  },
+  "23227|杉浦康憲": {
+   "family_ja": "杉浦",
+   "given_ja": "康憲",
+   "family_en": "Sugiura",
+   "given_en": "Yasunori"
+  },
+  "23227|神谷直子": {
+   "family_ja": "神谷",
+   "given_ja": "直子",
+   "family_en": "Kamiya",
+   "given_en": "Naoko"
+  },
+  "23227|荒川義孝": {
+   "family_ja": "荒川",
+   "given_ja": "義孝",
+   "family_en": "Arakawa",
+   "given_en": "Yoshitaka"
+  },
+  "23228|久保田桂朗": {
+   "family_ja": "久保田",
+   "given_ja": "桂朗",
+   "family_en": "Kubota",
+   "given_en": "Katsurao"
+  },
+  "23228|片岡健一郎": {
+   "family_ja": "片岡",
+   "given_ja": "健一郎",
+   "family_en": "Kataoka",
+   "given_en": "Kenichiro"
+  },
+  "23228|須藤智子": {
+   "family_ja": "須藤",
+   "given_ja": "智子",
+   "family_en": "Suto",
+   "given_en": "Tomoko"
+  },
+  "23229|小浮正典": {
+   "family_ja": "小浮",
+   "given_ja": "正典",
+   "family_en": "Kouki",
+   "given_en": "Masafumi"
+  },
+  "23229|服部龍一": {
+   "family_ja": "服部",
+   "given_ja": "龍一",
+   "family_en": "Hattori",
+   "given_en": "Ryuichi"
+  },
+  "23229|毛受明宏": {
+   "family_ja": "毛受",
+   "given_ja": "明宏",
+   "family_en": "Menjo",
+   "given_en": "Akihiro"
+  },
+  "23230|川嶋恵美": {
+   "family_ja": "川嶋",
+   "given_ja": "恵美",
+   "family_en": "Kawashima",
+   "given_en": "Emi"
+  },
+  "23230|水野たかはる": {
+   "family_ja": "水野",
+   "given_ja": "たかはる",
+   "family_en": "Mizuno",
+   "given_en": "Takaharu"
+  },
+  "23230|近藤裕貴": {
+   "family_ja": "近藤",
+   "given_ja": "裕貴",
+   "family_en": "Kondo",
+   "given_en": "Hiroki"
+  },
+  "23231|古川美栄": {
+   "family_ja": "古川",
+   "given_ja": "美栄",
+   "family_en": "Furukawa",
+   "given_en": "Misaka"
+  },
+  "23231|山下政良": {
+   "family_ja": "山下",
+   "given_ja": "政良",
+   "family_en": "Yamashita",
+   "given_en": "Masayoshi"
+  },
+  "23231|岡本禎稔": {
+   "family_ja": "岡本",
+   "given_ja": "禎稔",
+   "family_en": "Okamoto",
+   "given_en": "Sadaaki"
+  },
+  "23232|佐藤信男": {
+   "family_ja": "佐藤",
+   "given_ja": "信男",
+   "family_en": "Sato",
+   "given_en": "Nobuo"
+  },
+  "23232|日永貴章": {
+   "family_ja": "日永",
+   "given_ja": "貴章",
+   "family_en": "Hinaga",
+   "given_en": "Takaaki"
+  },
+  "23232|髙松幸雄": {
+   "family_ja": "髙松",
+   "given_ja": "幸雄",
+   "family_en": "Takamatsu",
+   "given_en": "Yukio"
+  },
+  "23233|小﨑進一": {
+   "family_ja": "小﨑",
+   "given_ja": "進一",
+   "family_en": "Kozaki",
+   "given_en": "Shinichi"
+  },
+  "23233|永田純夫": {
+   "family_ja": "永田",
+   "given_ja": "純夫",
+   "family_en": "Nagata",
+   "given_en": "Sumio"
+  },
+  "23233|浅妻奈々子": {
+   "family_ja": "浅妻",
+   "given_ja": "奈々子",
+   "family_en": "Asazuma",
+   "given_en": "Nanako"
+  },
+  "23234|上野雅美": {
+   "family_ja": "上野",
+   "given_ja": "雅美",
+   "family_en": "Ueno",
+   "given_en": "Masami"
+  },
+  "23234|井上一男": {
+   "family_ja": "井上",
+   "given_ja": "一男",
+   "family_en": "Inoue",
+   "given_en": "Kazuo"
+  },
+  "23234|太田考則": {
+   "family_ja": "太田",
+   "given_ja": "考則",
+   "family_en": "Ota",
+   "given_en": "Takanori"
+  },
+  "23235|加藤克之": {
+   "family_ja": "加藤",
+   "given_ja": "克之",
+   "family_en": "Kato",
+   "given_en": "Katsuyuki"
+  },
+  "23235|安藤正明": {
+   "family_ja": "安藤",
+   "given_ja": "正明",
+   "family_en": "Ando",
+   "given_en": "Seimei"
+  },
+  "23235|高橋八重典": {
+   "family_ja": "高橋",
+   "given_ja": "八重典",
+   "family_en": "Takahashi",
+   "given_en": "Yaenori"
+  },
+  "23236|増岡義弘": {
+   "family_ja": "増岡",
+   "given_ja": "義弘",
+   "family_en": "Masuoka",
+   "given_en": "Yoshihiro"
+  },
+  "23236|小山祐": {
+   "family_ja": "小山",
+   "given_ja": "祐",
+   "family_en": "Oyama",
+   "given_en": "Tasuku"
+  },
+  "23236|小嶋立夫": {
+   "family_ja": "小嶋",
+   "given_ja": "立夫",
+   "family_en": "Kojima",
+   "given_en": "Tatsuo"
+  },
+  "23237|八島堅志": {
+   "family_ja": "八島",
+   "given_ja": "堅志",
+   "family_en": "Yashima",
+   "given_en": "Kenji"
+  },
+  "23237|山内隆久": {
+   "family_ja": "山内",
+   "given_ja": "隆久",
+   "family_en": "Yamauchi",
+   "given_en": "Takahisa"
+  },
+  "23237|後藤幸正": {
+   "family_ja": "後藤",
+   "given_ja": "幸正",
+   "family_en": "Goto",
+   "given_en": "Yukimasa"
+  },
+  "23238|なかじま和代": {
+   "family_ja": "なかじま",
+   "given_ja": "和代",
+   "family_en": "Nakajima",
+   "given_en": "Kazuyo"
+  },
+  "23238|佐藤有美": {
+   "family_ja": "佐藤",
+   "given_ja": "有美",
+   "family_en": "Sato",
+   "given_en": "Yumi"
+  },
+  "23238|山田けんたろう": {
+   "family_ja": "山田",
+   "given_ja": "けんたろう",
+   "family_en": "Yamada",
+   "given_en": "Kentaro"
+  },
+  "23302|水川淳": {
+   "family_ja": "水川",
+   "given_ja": "淳",
+   "family_en": "Mizukawa",
+   "given_en": "Atsushi"
+  },
+  "23302|石橋直季": {
+   "family_ja": "石橋",
+   "given_ja": "直季",
+   "family_en": "Ishibashi",
+   "given_en": "Naoki"
+  },
+  "23302|高木佳子": {
+   "family_ja": "高木",
+   "given_ja": "佳子",
+   "family_en": "Takagi",
+   "given_en": "Keiko"
+  },
+  "23342|坪井孝仁": {
+   "family_ja": "坪井",
+   "given_ja": "孝仁",
+   "family_en": "Tsuboi",
+   "given_en": "Takahito"
+  },
+  "23342|岡島剛": {
+   "family_ja": "岡島",
+   "given_ja": "剛",
+   "family_en": "Okajima",
+   "given_en": "Tsuyoshi"
+  },
+  "23342|服部正樹": {
+   "family_ja": "服部",
+   "given_ja": "正樹",
+   "family_en": "Hattori",
+   "given_en": "Masaki"
+  },
+  "23361|鈴木雅博": {
+   "family_ja": "鈴木",
+   "given_ja": "雅博",
+   "family_en": "Suzuki",
+   "given_en": "Masahiro"
+  },
+  "23361|飯田正志": {
+   "family_ja": "飯田",
+   "given_ja": "正志",
+   "family_en": "Iida",
+   "given_en": "Masashi"
+  },
+  "23361|齊木一三": {
+   "family_ja": "齊木",
+   "given_ja": "一三",
+   "family_en": "Saiki",
+   "given_en": "Ichizo"
+  },
+  "23362|千田勝文": {
+   "family_ja": "千田",
+   "given_ja": "勝文",
+   "family_en": "Senda",
+   "given_en": "Katsufumi"
+  },
+  "23362|杉浦敏男": {
+   "family_ja": "杉浦",
+   "given_ja": "敏男",
+   "family_en": "Sugiura",
+   "given_en": "Toshio"
+  },
+  "23362|鯖瀬武": {
+   "family_ja": "鯖瀬",
+   "given_ja": "武",
+   "family_en": "Sabase",
+   "given_en": "Takeshi"
+  },
+  "23424|横井良隆": {
+   "family_ja": "横井",
+   "given_ja": "良隆",
+   "family_en": "Yokoi",
+   "given_en": "Yoshitaka"
+  },
+  "23424|若山照洋": {
+   "family_ja": "若山",
+   "given_ja": "照洋",
+   "family_en": "Wakayama",
+   "given_en": "Akihiro"
+  },
+  "23424|鈴木満": {
+   "family_ja": "鈴木",
+   "given_ja": "満",
+   "family_en": "Suzuki",
+   "given_en": "Mitsuru"
+  },
+  "23425|伊藤俊一": {
+   "family_ja": "伊藤",
+   "given_ja": "俊一",
+   "family_en": "Ito",
+   "given_en": "Shunichi"
+  },
+  "23425|佐藤茂": {
+   "family_ja": "佐藤",
+   "given_ja": "茂",
+   "family_en": "Sato",
+   "given_en": "Shigeru"
+  },
+  "23425|横江淳一": {
+   "family_ja": "横江",
+   "given_ja": "淳一",
+   "family_en": "Yokoe",
+   "given_en": "Junichi"
+  },
+  "23427|上田光彦": {
+   "family_ja": "上田",
+   "given_ja": "光彦",
+   "family_en": "Ueda",
+   "given_en": "Mitsuhiko"
+  },
+  "23427|中山恵美賀": {
+   "family_ja": "中山",
+   "given_ja": "恵美賀",
+   "family_en": "Nakayama",
+   "given_en": "Emika"
+  },
+  "23427|加藤光彦": {
+   "family_ja": "加藤",
+   "given_ja": "光彦",
+   "family_en": "Kato",
+   "given_en": "Mitsuhiko"
+  },
+  "23441|田中清高": {
+   "family_ja": "田中",
+   "given_ja": "清高",
+   "family_en": "Tanaka",
+   "given_en": "Kiyotaka"
+  },
+  "23441|竹内卓美": {
+   "family_ja": "竹内",
+   "given_ja": "卓美",
+   "family_en": "Takeuchi",
+   "given_en": "Takumi"
+  },
+  "23441|鈴村算久": {
+   "family_ja": "鈴村",
+   "given_ja": "算久",
+   "family_en": "Suzumura",
+   "given_en": "Kazuhisa"
+  },
+  "23442|日髙輝夫": {
+   "family_ja": "日髙",
+   "given_ja": "輝夫",
+   "family_en": "Hidaka",
+   "given_en": "Teruo"
+  },
+  "23442|鏡味昭史": {
+   "family_ja": "鏡味",
+   "given_ja": "昭史",
+   "family_en": "Kagami",
+   "given_en": "Akihito"
+  },
+  "23442|間瀬宗則": {
+   "family_ja": "間瀬",
+   "given_ja": "宗則",
+   "family_en": "Mase",
+   "given_en": "Munenori"
+  },
+  "23445|石黒和彦": {
+   "family_ja": "石黒",
+   "given_ja": "和彦",
+   "family_en": "Ishiguro",
+   "given_en": "Kazuhiko"
+  },
+  "23445|藤井満久": {
+   "family_ja": "藤井",
+   "given_ja": "満久",
+   "family_en": "Fujii",
+   "given_en": "Michihisa"
+  },
+  "23445|鈴木浩二": {
+   "family_ja": "鈴木",
+   "given_ja": "浩二",
+   "family_en": "Suzuki",
+   "given_en": "Koji"
+  },
+  "23446|八谷充則": {
+   "family_ja": "八谷",
+   "given_ja": "充則",
+   "family_en": "Yatsuya",
+   "given_en": "Mitsunori"
+  },
+  "23446|廣澤毅": {
+   "family_ja": "廣澤",
+   "given_ja": "毅",
+   "family_en": "Hirosawa",
+   "given_en": "Tsuyoshi"
+  },
+  "23446|野田増男": {
+   "family_ja": "野田",
+   "given_ja": "増男",
+   "family_en": "Noda",
+   "given_en": "Masuo"
+  },
+  "23447|石川よしはる": {
+   "family_ja": "石川",
+   "given_ja": "よしはる",
+   "family_en": "Ishikawa",
+   "given_en": "Yoshiharu"
+  },
+  "23447|石川喜次": {
+   "family_ja": "石川",
+   "given_ja": "喜次",
+   "family_en": "Ishikawa",
+   "given_en": "Yoshiji"
+  },
+  "23447|鳥羽悠史": {
+   "family_ja": "鳥羽",
+   "given_ja": "悠史",
+   "family_en": "Toba",
+   "given_en": "Hisashi"
+  },
+  "23501|廣野房男": {
+   "family_ja": "廣野",
+   "given_ja": "房男",
+   "family_en": "Hirono",
+   "given_en": "Fusao"
+  },
+  "23501|成瀬敦": {
+   "family_ja": "成瀬",
+   "given_ja": "敦",
+   "family_en": "Naruse",
+   "given_en": "Atsushi"
+  },
+  "23501|都築幸夫": {
+   "family_ja": "都築",
+   "given_ja": "幸夫",
+   "family_en": "Tsuzuki",
+   "given_en": "Yukio"
+  },
+  "23561|原田直幸": {
+   "family_ja": "原田",
+   "given_ja": "直幸",
+   "family_en": "Harada",
+   "given_en": "Naoyuki"
+  },
+  "23561|土屋浩": {
+   "family_ja": "土屋",
+   "given_ja": "浩",
+   "family_en": "Tsuchiya",
+   "given_en": "Hiroshi"
+  },
+  "23561|金田敏行": {
+   "family_ja": "金田",
+   "given_ja": "敏行",
+   "family_en": "Kanada",
+   "given_en": "Toshiyuki"
+  },
+  "23562|加藤彰男": {
+   "family_ja": "加藤",
+   "given_ja": "彰男",
+   "family_en": "Kato",
+   "given_en": "Akio"
+  },
+  "23562|村上孝治": {
+   "family_ja": "村上",
+   "given_ja": "孝治",
+   "family_en": "Murakami",
+   "given_en": "Takaji"
+  },
+  "23562|村本敏美": {
+   "family_ja": "村本",
+   "given_ja": "敏美",
+   "family_en": "Muramoto",
+   "given_en": "Toshimi"
+  },
+  "23563|伊藤浩亘": {
+   "family_ja": "伊藤",
+   "given_ja": "浩亘",
+   "family_en": "Ito",
+   "given_en": "Hironobu"
+  },
+  "23563|田原長一郎": {
+   "family_ja": "田原",
+   "given_ja": "長一郎",
+   "family_en": "Tahara",
+   "given_en": "Choichiro"
+  },
+  "23563|金指春男": {
+   "family_ja": "金指",
+   "given_ja": "春男",
+   "family_en": "Kanasashi",
+   "given_en": "Haruo"
+  },
+  "24000|一見勝之": {
+   "family_ja": "一見",
+   "given_ja": "勝之",
+   "family_en": "Ichimi",
+   "given_en": "Katsuyuki"
+  },
+  "24000|津田健児": {
+   "family_ja": "津田",
+   "given_ja": "健児",
+   "family_en": "Tsuda",
+   "given_en": "Kenji"
+  },
+  "24000|藤田宜三": {
+   "family_ja": "藤田",
+   "given_ja": "宜三",
+   "family_en": "Fujita",
+   "given_en": "Yoshimi"
+  },
+  "24201|前葉泰幸": {
+   "family_ja": "前葉",
+   "given_ja": "泰幸",
+   "family_en": "Maeba",
+   "given_en": "Yasuyuki"
+  },
+  "24201|安積むつみ": {
+   "family_ja": "安積",
+   "given_ja": "むつみ",
+   "family_en": "Azumi",
+   "given_en": "Mutsumi"
+  },
+  "24201|小野欽市": {
+   "family_ja": "小野",
+   "given_ja": "欽市",
+   "family_en": "Ono",
+   "given_en": "Kinichi"
+  },
+  "24202|中川雅晶": {
+   "family_ja": "中川",
+   "given_ja": "雅晶",
+   "family_en": "Nakagawa",
+   "given_en": "Masaaki"
+  },
+  "24202|平野貴之": {
+   "family_ja": "平野",
+   "given_ja": "貴之",
+   "family_en": "Hirano",
+   "given_en": "Takayuki"
+  },
+  "24202|森智広": {
+   "family_ja": "森",
+   "given_ja": "智広",
+   "family_en": "Mori",
+   "given_en": "Tomohiro"
+  },
+  "24203|北村勝": {
+   "family_ja": "北村",
+   "given_ja": "勝",
+   "family_en": "Kitamura",
+   "given_en": "Masaru"
+  },
+  "24203|吉井詩子": {
+   "family_ja": "吉井",
+   "given_ja": "詩子",
+   "family_en": "Yoshii",
+   "given_en": "Utako"
+  },
+  "24203|鈴木健一": {
+   "family_ja": "鈴木",
+   "given_ja": "健一",
+   "family_en": "Suzuki",
+   "given_en": "Kenichi"
+  },
+  "24204|市野幸男": {
+   "family_ja": "市野",
+   "given_ja": "幸男",
+   "family_en": "Ichino",
+   "given_en": "Yukio"
+  },
+  "24204|沖和哉": {
+   "family_ja": "沖",
+   "given_ja": "和哉",
+   "family_en": "Oki",
+   "given_en": "Kazuya"
+  },
+  "24204|竹上真人": {
+   "family_ja": "竹上",
+   "given_ja": "真人",
+   "family_en": "Takegami",
+   "given_en": "Masato"
+  },
+  "24205|伊藤徳宇": {
+   "family_ja": "伊藤",
+   "given_ja": "徳宇",
+   "family_en": "Ito",
+   "given_en": "Narutaka"
+  },
+  "24205|倉田明子": {
+   "family_ja": "倉田",
+   "given_ja": "明子",
+   "family_en": "Kurata",
+   "given_en": "Akiko"
+  },
+  "24205|近藤浩": {
+   "family_ja": "近藤",
+   "given_ja": "浩",
+   "family_en": "Kondo",
+   "given_en": "Hiroshi"
+  },
+  "24207|加藤公友": {
+   "family_ja": "加藤",
+   "given_ja": "公友",
+   "family_en": "Kato",
+   "given_en": "Koyu"
+  },
+  "24207|末松則子": {
+   "family_ja": "末松",
+   "given_ja": "則子",
+   "family_en": "Suematsu",
+   "given_en": "Noriko"
+  },
+  "24207|野間芳実": {
+   "family_ja": "野間",
+   "given_ja": "芳実",
+   "family_en": "Noma",
+   "given_en": "Yoshimi"
+  },
+  "24208|北川裕之": {
+   "family_ja": "北川",
+   "given_ja": "裕之",
+   "family_en": "Kitagawa",
+   "given_en": "Hiroyuki"
+  },
+  "24208|坂本直司": {
+   "family_ja": "坂本",
+   "given_ja": "直司",
+   "family_en": "Sakamoto",
+   "given_en": "Naoji"
+  },
+  "24208|永岡禎": {
+   "family_ja": "永岡",
+   "given_ja": "禎",
+   "family_en": "Nagaoka",
+   "given_en": "Tadashi"
+  },
+  "24209|仲明": {
+   "family_ja": "仲",
+   "given_ja": "明",
+   "family_en": "Naka",
+   "given_en": "Akira"
+  },
+  "24209|加藤千速": {
+   "family_ja": "加藤",
+   "given_ja": "千速",
+   "family_en": "Kato",
+   "given_en": "Chihaya"
+  },
+  "24209|小川公明": {
+   "family_ja": "小川",
+   "given_ja": "公明",
+   "family_en": "Ogawa",
+   "given_en": "Kimiaki"
+  },
+  "24210|岡本公秀": {
+   "family_ja": "岡本",
+   "given_ja": "公秀",
+   "family_en": "Okamoto",
+   "given_en": "Kimihide"
+  },
+  "24210|櫻井義之": {
+   "family_ja": "櫻井",
+   "given_ja": "義之",
+   "family_en": "Sakurai",
+   "given_en": "Yoshiyuki"
+  },
+  "24210|豊田恵理": {
+   "family_ja": "豊田",
+   "given_ja": "恵理",
+   "family_en": "Toyoda",
+   "given_en": "Eri"
+  },
+  "24211|南川則之": {
+   "family_ja": "南川",
+   "given_ja": "則之",
+   "family_en": "Minamigawa",
+   "given_en": "Noriyuki"
+  },
+  "24211|小竹篤": {
+   "family_ja": "小竹",
+   "given_ja": "篤",
+   "family_en": "Kotake",
+   "given_en": "Atsushi"
+  },
+  "24211|河村孝": {
+   "family_ja": "河村",
+   "given_ja": "孝",
+   "family_en": "Kawamura",
+   "given_en": "Takashi"
+  },
+  "24212|大橋秀行": {
+   "family_ja": "大橋",
+   "given_ja": "秀行",
+   "family_en": "Ohashi",
+   "given_en": "Hideyuki"
+  },
+  "24212|岩本有史": {
+   "family_ja": "岩本",
+   "given_ja": "有史",
+   "family_en": "Iwamoto",
+   "given_en": "Yushi"
+  },
+  "24212|河上敢二": {
+   "family_ja": "河上",
+   "given_ja": "敢二",
+   "family_en": "Kawakami",
+   "given_en": "Kanji"
+  },
+  "24214|位田まさ子": {
+   "family_ja": "位田",
+   "given_ja": "まさ子",
+   "family_en": "Inden",
+   "given_en": "Masako"
+  },
+  "24214|日沖靖": {
+   "family_ja": "日沖",
+   "given_ja": "靖",
+   "family_en": "Hioki",
+   "given_en": "Yasushi"
+  },
+  "24214|渡辺一弘": {
+   "family_ja": "渡辺",
+   "given_ja": "一弘",
+   "family_en": "Watanabe",
+   "given_en": "Kazuhiro"
+  },
+  "24215|下村卓也": {
+   "family_ja": "下村",
+   "given_ja": "卓也",
+   "family_en": "Shimomura",
+   "given_en": "Takuya"
+  },
+  "24215|橋爪政吉": {
+   "family_ja": "橋爪",
+   "given_ja": "政吉",
+   "family_en": "Hashizume",
+   "given_en": "Masayoshi"
+  },
+  "24215|濱口卓": {
+   "family_ja": "濱口",
+   "given_ja": "卓",
+   "family_en": "Hamaguchi",
+   "given_en": "Takashi"
+  },
+  "24216|山下典子": {
+   "family_ja": "山下",
+   "given_ja": "典子",
+   "family_en": "Yamashita",
+   "given_en": "Noriko"
+  },
+  "24216|稲森稔尚": {
+   "family_ja": "稲森",
+   "given_ja": "稔尚",
+   "family_en": "Inamori",
+   "given_en": "Toshinao"
+  },
+  "24216|西口和成": {
+   "family_ja": "西口",
+   "given_ja": "和成",
+   "family_en": "Nishiguchi",
+   "given_en": "Kazushige"
+  },
+  "24303|三輪一雅": {
+   "family_ja": "三輪",
+   "given_ja": "一雅",
+   "family_en": "Miwa",
+   "given_en": "Kazumasa"
+  },
+  "24303|加藤眞人": {
+   "family_ja": "加藤",
+   "given_ja": "眞人",
+   "family_en": "Kato",
+   "given_en": "Mahito"
+  },
+  "24303|服部芙二夫": {
+   "family_ja": "服部",
+   "given_ja": "芙二夫",
+   "family_en": "Hattori",
+   "given_en": "Fujio"
+  },
+  "24324|三宅耕三": {
+   "family_ja": "三宅",
+   "given_ja": "耕三",
+   "family_en": "Miyake",
+   "given_en": "Kozo"
+  },
+  "24324|三林浩": {
+   "family_ja": "三林",
+   "given_ja": "浩",
+   "family_en": "Mitsubayashi",
+   "given_en": "Hiroshi"
+  },
+  "24324|水谷俊郎": {
+   "family_ja": "水谷",
+   "given_ja": "俊郎",
+   "family_en": "Mizutani",
+   "given_en": "Toshio"
+  },
+  "24341|加藤大輝": {
+   "family_ja": "加藤",
+   "given_ja": "大輝",
+   "family_en": "Kato",
+   "given_en": "Hiroki"
+  },
+  "24341|藤田賢吾": {
+   "family_ja": "藤田",
+   "given_ja": "賢吾",
+   "family_en": "Fujita",
+   "given_en": "Kengo"
+  },
+  "24341|諸岡高幸": {
+   "family_ja": "諸岡",
+   "given_ja": "高幸",
+   "family_en": "Morooka",
+   "given_en": "Takayuki"
+  },
+  "24343|宮本秀治": {
+   "family_ja": "宮本",
+   "given_ja": "秀治",
+   "family_en": "Miyamoto",
+   "given_en": "Shuji"
+  },
+  "24343|清将人": {
+   "family_ja": "清",
+   "given_ja": "将人",
+   "family_en": "Sei",
+   "given_en": "Masato"
+  },
+  "24343|矢野純男": {
+   "family_ja": "矢野",
+   "given_ja": "純男",
+   "family_en": "Yano",
+   "given_en": "Sumio"
+  },
+  "24344|城田政幸": {
+   "family_ja": "城田",
+   "given_ja": "政幸",
+   "family_en": "Shirota",
+   "given_en": "Masayuki"
+  },
+  "24344|杉本雅照": {
+   "family_ja": "杉本",
+   "given_ja": "雅照",
+   "family_en": "Sugimoto",
+   "given_en": "Masateru"
+  },
+  "24344|森英郎": {
+   "family_ja": "森",
+   "given_ja": "英郎",
+   "family_en": "Mori",
+   "given_en": "Hideo"
+  },
+  "24441|坂井信久": {
+   "family_ja": "坂井",
+   "given_ja": "信久",
+   "family_en": "Sakai",
+   "given_en": "Nobuhisa"
+  },
+  "24441|筒井尚之": {
+   "family_ja": "筒井",
+   "given_ja": "尚之",
+   "family_en": "Tsutsui",
+   "given_en": "Hisayuki"
+  },
+  "24441|藤田清隆": {
+   "family_ja": "藤田",
+   "given_ja": "清隆",
+   "family_en": "Fujita",
+   "given_en": "Kiyotaka"
+  },
+  "24442|下井清史": {
+   "family_ja": "下井",
+   "given_ja": "清史",
+   "family_en": "Shimoi",
+   "given_en": "Kiyofumi"
+  },
+  "24442|下村由美子": {
+   "family_ja": "下村",
+   "given_ja": "由美子",
+   "family_en": "Shimomura",
+   "given_en": "Yumiko"
+  },
+  "24442|辻井成人": {
+   "family_ja": "辻井",
+   "given_ja": "成人",
+   "family_en": "Tsujii",
+   "given_en": "Narito"
+  },
+  "24443|上瀬裕美": {
+   "family_ja": "上瀬",
+   "given_ja": "裕美",
+   "family_en": "Jose",
+   "given_en": "Hiromi"
+  },
+  "24443|古家大輔": {
+   "family_ja": "古家",
+   "given_ja": "大輔",
+   "family_en": "Furuya",
+   "given_en": "Daisuke"
+  },
+  "24443|岸良隆": {
+   "family_ja": "岸",
+   "given_ja": "良隆",
+   "family_en": "Kishi",
+   "given_en": "Yoshitaka"
+  },
+  "24461|中川泰成": {
+   "family_ja": "中川",
+   "given_ja": "泰成",
+   "family_en": "Nakagawa",
+   "given_en": "Yasunari"
+  },
+  "24461|小林豊": {
+   "family_ja": "小林",
+   "given_ja": "豊",
+   "family_en": "Kobayashi",
+   "given_en": "Yutaka"
+  },
+  "24461|福田泰生": {
+   "family_ja": "福田",
+   "given_ja": "泰生",
+   "family_en": "Fukuta",
+   "given_en": "Yasuo"
+  },
+  "24470|中村忠彦": {
+   "family_ja": "中村",
+   "given_ja": "忠彦",
+   "family_en": "Nakamura",
+   "given_en": "Tadahiko"
+  },
+  "24470|大野原德": {
+   "family_ja": "大野",
+   "given_ja": "原德",
+   "family_en": "Ono",
+   "given_en": "Gentoku"
+  },
+  "24470|若宮淳也": {
+   "family_ja": "若宮",
+   "given_ja": "淳也",
+   "family_en": "Wakamiya",
+   "given_en": "Junya"
+  },
+  "24471|中世古健": {
+   "family_ja": "中世古",
+   "given_ja": "健",
+   "family_en": "Nakaseko",
+   "given_en": "Ken"
+  },
+  "24471|元坂明": {
+   "family_ja": "元坂",
+   "given_ja": "明",
+   "family_en": "Gensaka",
+   "given_en": "Akira"
+  },
+  "24471|服部吉人": {
+   "family_ja": "服部",
+   "given_ja": "吉人",
+   "family_en": "Hattori",
+   "given_en": "Yoshito"
+  },
+  "24472|上村久仁": {
+   "family_ja": "上村",
+   "given_ja": "久仁",
+   "family_en": "Uemura",
+   "given_en": "Hisahito"
+  },
+  "24472|田中喜一郎": {
+   "family_ja": "田中",
+   "given_ja": "喜一郎",
+   "family_en": "Tanaka",
+   "given_en": "Kiichiro"
+  },
+  "24472|田岡悟": {
+   "family_ja": "田岡",
+   "given_ja": "悟",
+   "family_en": "Taoka",
+   "given_en": "Satoru"
+  },
+  "24543|入江康仁": {
+   "family_ja": "入江",
+   "given_ja": "康仁",
+   "family_en": "Irie",
+   "given_en": "Yasushi"
+  },
+  "24543|奥村仁": {
+   "family_ja": "奥村",
+   "given_ja": "仁",
+   "family_en": "Okumura",
+   "given_en": "Hitoshi"
+  },
+  "24543|尾上壽一": {
+   "family_ja": "尾上",
+   "given_ja": "壽一",
+   "family_en": "Onoue",
+   "given_en": "Toshikazu"
+  },
+  "24561|宇城公子": {
+   "family_ja": "宇城",
+   "given_ja": "公子",
+   "family_en": "Ushiro",
+   "given_en": "Kimiko"
+  },
+  "24561|東地正登": {
+   "family_ja": "東地",
+   "given_ja": "正登",
+   "family_en": "Higashiji",
+   "given_en": "Masato"
+  },
+  "24561|髙岡洋": {
+   "family_ja": "髙岡",
+   "given_ja": "洋",
+   "family_en": "Takaoka",
+   "given_en": "Hiroshi"
+  },
+  "24562|向井美樹也": {
+   "family_ja": "向井",
+   "given_ja": "美樹也",
+   "family_en": "Mukai",
+   "given_en": "Mikiya"
+  },
+  "24562|大倉孝司": {
+   "family_ja": "大倉",
+   "given_ja": "孝司",
+   "family_en": "Okura",
+   "given_en": "Takashi"
+  },
+  "24562|萩野進也": {
+   "family_ja": "萩野",
+   "given_ja": "進也",
+   "family_en": "Hagino",
+   "given_en": "Shinya"
+  },
+  "33000|上田勝義": {
+   "family_ja": "上田",
+   "given_ja": "勝義",
+   "family_en": "Ueda",
+   "given_en": "Katsuyoshi"
+  },
+  "33000|伊原木隆太": {
+   "family_ja": "伊原木",
+   "given_ja": "隆太",
+   "family_en": "Ibaragi",
+   "given_en": "Ryuta"
+  },
+  "33000|太田正孝": {
+   "family_ja": "太田",
+   "given_ja": "正孝",
+   "family_en": "Ota",
+   "given_en": "Masataka"
+  },
+  "33100|大森雅夫": {
+   "family_ja": "大森",
+   "given_ja": "雅夫",
+   "family_en": "Omori",
+   "given_en": "Masao"
+  },
+  "33100|小川信幸": {
+   "family_ja": "小川",
+   "given_ja": "信幸",
+   "family_en": "Ogawa",
+   "given_en": "Nobuyuki"
+  },
+  "33100|田口裕士": {
+   "family_ja": "田口",
+   "given_ja": "裕士",
+   "family_en": "Taguchi",
+   "given_en": "Hiroshi"
+  },
+  "33202|伊東香織": {
+   "family_ja": "伊東",
+   "given_ja": "香織",
+   "family_en": "Ito",
+   "given_en": "Kaori"
+  },
+  "33202|荒木竜二": {
+   "family_ja": "荒木",
+   "given_ja": "竜二",
+   "family_en": "Araki",
+   "given_en": "Ryuji"
+  },
+  "33202|藤井昭佐": {
+   "family_ja": "藤井",
+   "given_ja": "昭佐",
+   "family_en": "Fujii",
+   "given_en": "Shosuke"
+  },
+  "33203|光井聡": {
+   "family_ja": "光井",
+   "given_ja": "聡",
+   "family_en": "Mitsui",
+   "given_en": "Satoshi"
+  },
+  "33204|大月博光": {
+   "family_ja": "大月",
+   "given_ja": "博光",
+   "family_en": "Otsuki",
+   "given_en": "Hiromitsu"
+  },
+  "33204|柴田義朗": {
+   "family_ja": "柴田",
+   "given_ja": "義朗",
+   "family_en": "Shibata",
+   "given_en": "Yoshiro"
+  },
+  "33204|藤原仁子": {
+   "family_ja": "藤原",
+   "given_ja": "仁子",
+   "family_en": "Fujiwara",
+   "given_en": "Hitoko"
+  },
+  "33205|仁科文秀": {
+   "family_ja": "仁科",
+   "given_ja": "文秀",
+   "family_en": "Nishina",
+   "given_en": "Fumihide"
+  },
+  "33205|大山盛久": {
+   "family_ja": "大山",
+   "given_ja": "盛久",
+   "family_en": "Oyama",
+   "given_en": "Morihisa"
+  },
+  "33205|栗尾典子": {
+   "family_ja": "栗尾",
+   "given_ja": "典子",
+   "family_en": "Kurio",
+   "given_en": "Noriko"
+  },
+  "33207|佐藤豊": {
+   "family_ja": "佐藤",
+   "given_ja": "豊",
+   "family_en": "Sato",
+   "given_en": "Yutaka"
+  },
+  "33207|大舌勲": {
+   "family_ja": "大舌",
+   "given_ja": "勲",
+   "family_en": "Oshita",
+   "given_en": "Isao"
+  },
+  "33207|山下憲雄": {
+   "family_ja": "山下",
+   "given_ja": "憲雄",
+   "family_en": "Yamashita",
+   "given_en": "Norio"
+  },
+  "33208|三上周治": {
+   "family_ja": "三上",
+   "given_ja": "周治",
+   "family_en": "Mikami",
+   "given_en": "Shuji"
+  },
+  "33208|三宅啓介": {
+   "family_ja": "三宅",
+   "given_ja": "啓介",
+   "family_en": "Miyake",
+   "given_en": "Keisuke"
+  },
+  "33208|片岡聡一": {
+   "family_ja": "片岡",
+   "given_ja": "聡一",
+   "family_en": "Kataoka",
+   "given_en": "Soichi"
+  },
+  "33209|伊藤泰樹": {
+   "family_ja": "伊藤",
+   "given_ja": "泰樹",
+   "family_en": "Ito",
+   "given_en": "Yasuki"
+  },
+  "33209|倉野嗣雄": {
+   "family_ja": "倉野",
+   "given_ja": "嗣雄",
+   "family_en": "Kurano",
+   "given_en": "Tsugio"
+  },
+  "33209|石田芳生": {
+   "family_ja": "石田",
+   "given_ja": "芳生",
+   "family_en": "Ishida",
+   "given_en": "Yoshio"
+  },
+  "33210|仲田芳人": {
+   "family_ja": "仲田",
+   "given_ja": "芳人",
+   "family_en": "Nakada",
+   "given_en": "Yoshito"
+  },
+  "33210|石田實": {
+   "family_ja": "石田",
+   "given_ja": "實",
+   "family_en": "Ishida",
+   "given_en": "Minoru"
+  },
+  "33210|藤澤正則": {
+   "family_ja": "藤澤",
+   "given_ja": "正則",
+   "family_en": "Fujisawa",
+   "given_en": "Masanori"
+  },
+  "33211|石原和人": {
+   "family_ja": "石原",
+   "given_ja": "和人",
+   "family_en": "Ishihara",
+   "given_en": "Kazuto"
+  },
+  "33211|藪内靖": {
+   "family_ja": "藪内",
+   "given_ja": "靖",
+   "family_en": "Yabuuchi",
+   "given_en": "Yasushi"
+  },
+  "33211|長﨑信行": {
+   "family_ja": "長﨑",
+   "given_ja": "信行",
+   "family_en": "Nagasaki",
+   "given_en": "Nobuyuki"
+  },
+  "33212|厚東晃央": {
+   "family_ja": "厚東",
+   "given_ja": "晃央",
+   "family_en": "Koto",
+   "given_en": "Akio"
+  },
+  "33212|小野田光": {
+   "family_ja": "小野田",
+   "given_ja": "光",
+   "family_en": "Onoda",
+   "given_en": "Hikaru"
+  },
+  "33212|黒石健太郎": {
+   "family_ja": "黒石",
+   "given_ja": "健太郎",
+   "family_en": "Kuroishi",
+   "given_en": "Kentaro"
+  },
+  "33213|佐藤武文": {
+   "family_ja": "佐藤",
+   "given_ja": "武文",
+   "family_en": "Sato",
+   "given_en": "Takefumi"
+  },
+  "33213|前田正之": {
+   "family_ja": "前田",
+   "given_ja": "正之",
+   "family_en": "Maeda",
+   "given_en": "Masayuki"
+  },
+  "33213|永徳省二": {
+   "family_ja": "永徳",
+   "given_ja": "省二",
+   "family_en": "Eitoku",
+   "given_en": "Shoji"
+  },
+  "33214|太田昇": {
+   "family_ja": "太田",
+   "given_ja": "昇",
+   "family_en": "Ota",
+   "given_en": "Noboru"
+  },
+  "33214|緒形尚": {
+   "family_ja": "緒形",
+   "given_ja": "尚",
+   "family_en": "Ogata",
+   "given_en": "Hisashi"
+  },
+  "33214|長尾修": {
+   "family_ja": "長尾",
+   "given_ja": "修",
+   "family_en": "Nagao",
+   "given_en": "Osamu"
+  },
+  "33215|安藤功": {
+   "family_ja": "安藤",
+   "given_ja": "功",
+   "family_en": "Ando",
+   "given_en": "Isao"
+  },
+  "33215|萩原誠司": {
+   "family_ja": "萩原",
+   "given_ja": "誠司",
+   "family_en": "Hagiwara",
+   "given_en": "Seiji"
+  },
+  "33215|西山正志": {
+   "family_ja": "西山",
+   "given_ja": "正志",
+   "family_en": "Nishiyama",
+   "given_en": "Masashi"
+  },
+  "33216|伊澤誠": {
+   "family_ja": "伊澤",
+   "given_ja": "誠",
+   "family_en": "Izawa",
+   "given_en": "Makoto"
+  },
+  "33216|斎藤貴士": {
+   "family_ja": "斎藤",
+   "given_ja": "貴士",
+   "family_en": "Saito",
+   "given_en": "Takashi"
+  },
+  "33216|栗山康彦": {
+   "family_ja": "栗山",
+   "given_ja": "康彦",
+   "family_en": "Kuriyama",
+   "given_en": "Yasuhiko"
+  },
+  "33346|太田啓補": {
+   "family_ja": "太田",
+   "given_ja": "啓補",
+   "family_en": "Ota",
+   "given_en": "Keisuke"
+  },
+  "33346|広瀬正男": {
+   "family_ja": "広瀬",
+   "given_ja": "正男",
+   "family_en": "Hirose",
+   "given_en": "Masao"
+  },
+  "33346|從野勝": {
+   "family_ja": "從野",
+   "given_ja": "勝",
+   "family_en": "Yorino",
+   "given_en": "Masaru"
+  },
+  "33423|佐藤博文": {
+   "family_ja": "佐藤",
+   "given_ja": "博文",
+   "family_en": "Sato",
+   "given_en": "Hirofumi"
+  },
+  "33423|平岡江利子": {
+   "family_ja": "平岡",
+   "given_ja": "江利子",
+   "family_en": "Hiraoka",
+   "given_en": "Eriko"
+  },
+  "33423|根木一": {
+   "family_ja": "根木",
+   "given_ja": "一",
+   "family_en": "Neki",
+   "given_en": "Hajime"
+  },
+  "33445|仁科英麿": {
+   "family_ja": "仁科",
+   "given_ja": "英麿",
+   "family_en": "Nishina",
+   "given_en": "Hidemaro"
+  },
+  "33445|平野敏弘": {
+   "family_ja": "平野",
+   "given_ja": "敏弘",
+   "family_en": "Hirano",
+   "given_en": "Toshihiro"
+  },
+  "33445|赤木功": {
+   "family_ja": "赤木",
+   "given_ja": "功",
+   "family_en": "Akagi",
+   "given_en": "Isao"
+  },
+  "33461|原田秀史": {
+   "family_ja": "原田",
+   "given_ja": "秀史",
+   "family_en": "Harada",
+   "given_en": "Hideshi"
+  },
+  "33461|山岡敦": {
+   "family_ja": "山岡",
+   "given_ja": "敦",
+   "family_en": "Yamaoka",
+   "given_en": "Atsushi"
+  },
+  "33461|田中輝夫": {
+   "family_ja": "田中",
+   "given_ja": "輝夫",
+   "family_en": "Tanaka",
+   "given_en": "Teruo"
+  },
+  "33586|坂本英典": {
+   "family_ja": "坂本",
+   "given_ja": "英典",
+   "family_en": "Sakamoto",
+   "given_en": "Eisuke"
+  },
+  "33586|石藤延史": {
+   "family_ja": "石藤",
+   "given_ja": "延史",
+   "family_en": "Ishido",
+   "given_en": "Nobuchika"
+  },
+  "33586|鈴木照明": {
+   "family_ja": "鈴木",
+   "given_ja": "照明",
+   "family_en": "Suzuki",
+   "given_en": "Teruaki"
+  },
+  "33606|原章倫": {
+   "family_ja": "原",
+   "given_ja": "章倫",
+   "family_en": "Hara",
+   "given_en": "Akinori"
+  },
+  "33606|瀬島栄史": {
+   "family_ja": "瀬島",
+   "given_ja": "栄史",
+   "family_en": "Sejima",
+   "given_en": "Masafumi"
+  },
+  "33606|牧田俊一": {
+   "family_ja": "牧田",
+   "given_ja": "俊一",
+   "family_en": "Makita",
+   "given_en": "Toshikazu"
+  },
+  "33622|森本孝道": {
+   "family_ja": "森本",
+   "given_ja": "孝道",
+   "family_en": "Morimoto",
+   "given_en": "Takamichi"
+  },
+  "33622|水嶋淳治": {
+   "family_ja": "水嶋",
+   "given_ja": "淳治",
+   "family_en": "Mizushima",
+   "given_en": "Junji"
+  },
+  "33622|浅田剛至": {
+   "family_ja": "浅田",
+   "given_ja": "剛至",
+   "family_en": "Asada",
+   "given_en": "Takeshi"
+  },
+  "33623|上原伸介": {
+   "family_ja": "上原",
+   "given_ja": "伸介",
+   "family_en": "Uehara",
+   "given_en": "Shinsuke"
+  },
+  "33623|奥正親": {
+   "family_ja": "奥",
+   "given_ja": "正親",
+   "family_en": "Oku",
+   "given_en": "Masachika"
+  },
+  "33623|岡立": {
+   "family_ja": "岡",
+   "given_ja": "立",
+   "family_en": "Oka",
+   "given_en": "Ritsu"
+  },
+  "33643|青木秀樹": {
+   "family_ja": "青木",
+   "given_ja": "秀樹",
+   "family_en": "Aoki",
+   "given_en": "Hideki"
+  },
+  "33663|政廣幹夫": {
+   "family_ja": "政廣",
+   "given_ja": "幹夫",
+   "family_en": "Masahiro",
+   "given_en": "Mikio"
+  },
+  "33663|河原重義": {
+   "family_ja": "河原",
+   "given_ja": "重義",
+   "family_en": "Kawara",
+   "given_en": "Shigeyoshi"
+  },
+  "33663|片山篤": {
+   "family_ja": "片山",
+   "given_ja": "篤",
+   "family_en": "Katayama",
+   "given_en": "Atsushi"
+  },
+  "33666|山本宏治": {
+   "family_ja": "山本",
+   "given_ja": "宏治",
+   "family_en": "Yamamoto",
+   "given_en": "Koji"
+  },
+  "33666|松島啓": {
+   "family_ja": "松島",
+   "given_ja": "啓",
+   "family_en": "Matsushima",
+   "given_en": "Hiromu"
+  },
+  "33666|青野高陽": {
+   "family_ja": "青野",
+   "given_ja": "高陽",
+   "family_en": "Aono",
+   "given_en": "Takaharu"
+  },
+  "33681|山本雅則": {
+   "family_ja": "山本",
+   "given_ja": "雅則",
+   "family_en": "Yamamoto",
+   "given_en": "Masanori"
+  },
+  "33681|西山宗弘": {
+   "family_ja": "西山",
+   "given_ja": "宗弘",
+   "family_en": "Nishiyama",
+   "given_en": "Shuko"
+  },
+  "33681|黒田員米": {
+   "family_ja": "黒田",
+   "given_ja": "員米",
+   "family_en": "Kuroda",
+   "given_en": "Kazuyone"
+  },
+  "34000|中本隆志": {
+   "family_ja": "中本",
+   "given_ja": "隆志",
+   "family_en": "Nakamoto",
+   "given_en": "Takashi"
+  },
+  "34000|東保幸": {
+   "family_ja": "東",
+   "given_ja": "保幸",
+   "family_en": "Higashi",
+   "given_en": "Yasuyuki"
+  },
+  "34000|横田美香": {
+   "family_ja": "横田",
+   "given_ja": "美香",
+   "family_en": "Yokota",
+   "given_en": "Mika"
+  },
+  "34100|八條範彦": {
+   "family_ja": "八條",
+   "given_ja": "範彦",
+   "family_en": "Hachijo",
+   "given_en": "Norihiko"
+  },
+  "34100|山路英男": {
+   "family_ja": "山路",
+   "given_ja": "英男",
+   "family_en": "Yamaji",
+   "given_en": "Hideo"
+  },
+  "34100|松井一實": {
+   "family_ja": "松井",
+   "given_ja": "一實",
+   "family_en": "Matsui",
+   "given_en": "Kazumi"
+  },
+  "34202|小田晃士朗": {
+   "family_ja": "小田",
+   "given_ja": "晃士朗",
+   "family_en": "Oda",
+   "given_en": "Koshiro"
+  },
+  "34202|新原芳明": {
+   "family_ja": "新原",
+   "given_ja": "芳明",
+   "family_en": "Shinhara",
+   "given_en": "Yoshiake"
+  },
+  "34202|林田浩秋": {
+   "family_ja": "林田",
+   "given_ja": "浩秋",
+   "family_en": "Hayashida",
+   "given_en": "Hiroaki"
+  },
+  "34203|山元経穂": {
+   "family_ja": "山元",
+   "given_ja": "経穂",
+   "family_en": "Yamamoto",
+   "given_en": "Tsuneo"
+  },
+  "34203|平井明道": {
+   "family_ja": "平井",
+   "given_ja": "明道",
+   "family_en": "Hirai",
+   "given_en": "Akimichi"
+  },
+  "34203|高重洋介": {
+   "family_ja": "高重",
+   "given_ja": "洋介",
+   "family_en": "Takashige",
+   "given_en": "Yosuke"
+  },
+  "34204|岡田吉弘": {
+   "family_ja": "岡田",
+   "given_ja": "吉弘",
+   "family_en": "Okada",
+   "given_en": "Yoshihiro"
+  },
+  "34204|杉谷辰次": {
+   "family_ja": "杉谷",
+   "given_ja": "辰次",
+   "family_en": "Sugitani",
+   "given_en": "Tatsuji"
+  },
+  "34204|正田洋一": {
+   "family_ja": "正田",
+   "given_ja": "洋一",
+   "family_en": "Shoda",
+   "given_en": "Yoichi"
+  },
+  "34205|二宮仁": {
+   "family_ja": "二宮",
+   "given_ja": "仁",
+   "family_en": "Ninomiya",
+   "given_en": "Hitoshi"
+  },
+  "34205|平谷祐宏": {
+   "family_ja": "平谷",
+   "given_ja": "祐宏",
+   "family_en": "Hiratani",
+   "given_en": "Yuko"
+  },
+  "34205|福原謙二": {
+   "family_ja": "福原",
+   "given_ja": "謙二",
+   "family_en": "Fukuhara",
+   "given_en": "Kenji"
+  },
+  "34207|宮本宏樹": {
+   "family_ja": "宮本",
+   "given_ja": "宏樹",
+   "family_en": "Miyamoto",
+   "given_en": "Hiroki"
+  },
+  "34207|枝廣直幹": {
+   "family_ja": "枝廣",
+   "given_ja": "直幹",
+   "family_en": "Edahiro",
+   "given_en": "Naoki"
+  },
+  "34207|連石武則": {
+   "family_ja": "連石",
+   "given_ja": "武則",
+   "family_en": "Tsureishi",
+   "given_en": "Takenori"
+  },
+  "34208|加島広宣": {
+   "family_ja": "加島",
+   "given_ja": "広宣",
+   "family_en": "Kashima",
+   "given_en": "Hironobu"
+  },
+  "34208|広瀬和彦": {
+   "family_ja": "広瀬",
+   "given_ja": "和彦",
+   "family_en": "Hirose",
+   "given_en": "Kazuhiko"
+  },
+  "34208|荻野雅裕": {
+   "family_ja": "荻野",
+   "given_ja": "雅裕",
+   "family_en": "Ogino",
+   "given_en": "Masahiro"
+  },
+  "34209|山村惠美子": {
+   "family_ja": "山村",
+   "given_ja": "惠美子",
+   "family_en": "Yamamura",
+   "given_en": "Emiko"
+  },
+  "34209|福岡誠志": {
+   "family_ja": "福岡",
+   "given_ja": "誠志",
+   "family_en": "Fukuoka",
+   "given_en": "Satoshi"
+  },
+  "34209|藤岡一弘": {
+   "family_ja": "藤岡",
+   "given_ja": "一弘",
+   "family_en": "Fujioka",
+   "given_en": "Kazuhiro"
+  },
+  "34210|八谷恭介": {
+   "family_ja": "八谷",
+   "given_ja": "恭介",
+   "family_en": "Yatagai",
+   "given_en": "Kyosuke"
+  },
+  "34210|桂藤和夫": {
+   "family_ja": "桂藤",
+   "given_ja": "和夫",
+   "family_en": "Keito",
+   "given_en": "Kazuo"
+  },
+  "34210|福山権二": {
+   "family_ja": "福山",
+   "given_ja": "権二",
+   "family_en": "Fukuyama",
+   "given_en": "Kenji"
+  },
+  "34211|北地範久": {
+   "family_ja": "北地",
+   "given_ja": "範久",
+   "family_en": "Kitachi",
+   "given_en": "Norihisa"
+  },
+  "34211|寺岡公章": {
+   "family_ja": "寺岡",
+   "given_ja": "公章",
+   "family_en": "Teraoka",
+   "given_en": "Kimiaki"
+  },
+  "34211|福田弘美": {
+   "family_ja": "福田",
+   "given_ja": "弘美",
+   "family_en": "Fukuda",
+   "given_en": "Hiromi"
+  },
+  "34212|奥谷求": {
+   "family_ja": "奥谷",
+   "given_ja": "求",
+   "family_en": "Okuya",
+   "given_en": "Motomu"
+  },
+  "34212|岡田育三": {
+   "family_ja": "岡田",
+   "given_ja": "育三",
+   "family_en": "Okada",
+   "given_en": "Ikuso"
+  },
+  "34212|髙垣廣德": {
+   "family_ja": "髙垣",
+   "given_ja": "廣德",
+   "family_en": "Takagaki",
+   "given_en": "Hironori"
+  },
+  "34213|大﨑勇一": {
+   "family_ja": "大﨑",
+   "given_ja": "勇一",
+   "family_en": "Osaki",
+   "given_en": "Yuichi"
+  },
+  "34213|新田茂美": {
+   "family_ja": "新田",
+   "given_ja": "茂美",
+   "family_en": "Nitta",
+   "given_en": "Shigemi"
+  },
+  "34213|松本太郎": {
+   "family_ja": "松本",
+   "given_ja": "太郎",
+   "family_en": "Matsumoto",
+   "given_en": "Taro"
+  },
+  "34214|石飛慶久": {
+   "family_ja": "石飛",
+   "given_ja": "慶久",
+   "family_en": "Ishitobi",
+   "given_en": "Yoshihisa"
+  },
+  "34214|秋田雅朝": {
+   "family_ja": "秋田",
+   "given_ja": "雅朝",
+   "family_en": "Akita",
+   "given_en": "Masatomo"
+  },
+  "34214|藤本悦志": {
+   "family_ja": "藤本",
+   "given_ja": "悦志",
+   "family_en": "Fujimoto",
+   "given_en": "Etsushi"
+  },
+  "34215|上松英邦": {
+   "family_ja": "上松",
+   "given_ja": "英邦",
+   "family_en": "Uematsu",
+   "given_en": "Hidekuni"
+  },
+  "34215|土手三生": {
+   "family_ja": "土手",
+   "given_ja": "三生",
+   "family_en": "Dote",
+   "given_en": "Sansei"
+  },
+  "34215|長坂実子": {
+   "family_ja": "長坂",
+   "given_ja": "実子",
+   "family_en": "Nagasaka",
+   "given_en": "Mitsuko"
+  },
+  "34302|寺尾光司": {
+   "family_ja": "寺尾",
+   "given_ja": "光司",
+   "family_en": "Terao",
+   "given_en": "Koji"
+  },
+  "34302|山口晃司": {
+   "family_ja": "山口",
+   "given_ja": "晃司",
+   "family_en": "Yamaguchi",
+   "given_en": "Koji"
+  },
+  "34302|金澤映理子": {
+   "family_ja": "金澤",
+   "given_ja": "映理子",
+   "family_en": "Kanazawa",
+   "given_en": "Eriko"
+  },
+  "34304|小田久美子": {
+   "family_ja": "小田",
+   "given_ja": "久美子",
+   "family_en": "Oda",
+   "given_en": "Kumiko"
+  },
+  "34304|桑原公治": {
+   "family_ja": "桑原",
+   "given_ja": "公治",
+   "family_en": "Kuwabara",
+   "given_en": "Kimiharu"
+  },
+  "34304|竹野内啓佑": {
+   "family_ja": "竹野内",
+   "given_ja": "啓佑",
+   "family_en": "Takenouchi",
+   "given_en": "Keisuke"
+  },
+  "34307|三村裕史": {
+   "family_ja": "三村",
+   "given_ja": "裕史",
+   "family_en": "Mimura",
+   "given_en": "Hiroshi"
+  },
+  "34307|大瀬戸宏樹": {
+   "family_ja": "大瀬戸",
+   "given_ja": "宏樹",
+   "family_en": "Osedo",
+   "given_en": "Koki"
+  },
+  "34307|時光良造": {
+   "family_ja": "時光",
+   "given_ja": "良造",
+   "family_en": "Tokimitsu",
+   "given_en": "Ryozo"
+  },
+  "34309|吉田隆行": {
+   "family_ja": "吉田",
+   "given_ja": "隆行",
+   "family_en": "Yoshida",
+   "given_en": "Takayuki"
+  },
+  "34309|奥村冨士雄": {
+   "family_ja": "奥村",
+   "given_ja": "冨士雄",
+   "family_en": "Okumura",
+   "given_en": "Fujio"
+  },
+  "34309|川本英輔": {
+   "family_ja": "川本",
+   "given_ja": "英輔",
+   "family_en": "Kawamoto",
+   "given_en": "Eisuke"
+  },
+  "34368|中本正廣": {
+   "family_ja": "中本",
+   "given_ja": "正廣",
+   "family_en": "Nakamoto",
+   "given_en": "Masahiro"
+  },
+  "34368|橋本博明": {
+   "family_ja": "橋本",
+   "given_ja": "博明",
+   "family_en": "Hashimoto",
+   "given_en": "Hiroaki"
+  },
+  "34368|津田宏": {
+   "family_ja": "津田",
+   "given_ja": "宏",
+   "family_en": "Tsuda",
+   "given_en": "Hiroshi"
+  },
+  "34369|亀岡純一": {
+   "family_ja": "亀岡",
+   "given_ja": "純一",
+   "family_en": "Kameoka",
+   "given_en": "Junichi"
+  },
+  "34369|湊俊文": {
+   "family_ja": "湊",
+   "given_ja": "俊文",
+   "family_en": "Minato",
+   "given_en": "Toshifumi"
+  },
+  "34369|箕野博司": {
+   "family_ja": "箕野",
+   "given_ja": "博司",
+   "family_en": "Mino",
+   "given_en": "Hiroshi"
+  },
+  "34431|水橋直行": {
+   "family_ja": "水橋",
+   "given_ja": "直行",
+   "family_en": "Mizuhashi",
+   "given_en": "Naoyuki"
+  },
+  "34431|谷川正芳": {
+   "family_ja": "谷川",
+   "given_ja": "正芳",
+   "family_en": "Tanikawa",
+   "given_en": "Masayoshi"
+  },
+  "34431|閑田大祐": {
+   "family_ja": "閑田",
+   "given_ja": "大祐",
+   "family_en": "Kanda",
+   "given_en": "Daisuke"
+  },
+  "34462|奥田正和": {
+   "family_ja": "奥田",
+   "given_ja": "正和",
+   "family_en": "Okuda",
+   "given_en": "Masakazu"
+  },
+  "34462|田原賢司": {
+   "family_ja": "田原",
+   "given_ja": "賢司",
+   "family_en": "Tahara",
+   "given_en": "Kenji"
+  },
+  "34462|高橋公時": {
+   "family_ja": "高橋",
+   "given_ja": "公時",
+   "family_en": "Takahashi",
+   "given_en": "Koji"
+  },
+  "34545|入江嘉則": {
+   "family_ja": "入江",
+   "given_ja": "嘉則",
+   "family_en": "Irie",
+   "given_en": "Yoshinori"
+  },
+  "35000|村岡嗣政": {
+   "family_ja": "村岡",
+   "given_ja": "嗣政",
+   "family_en": "Muraoka",
+   "given_en": "Tsugumasa"
+  },
+  "35000|柳居俊学": {
+   "family_ja": "柳居",
+   "given_ja": "俊学",
+   "family_en": "Yanai",
+   "given_en": "Shungaku"
+  },
+  "35000|河野亨": {
+   "family_ja": "河野",
+   "given_ja": "亨",
+   "family_en": "Kawano",
+   "given_en": "Toru"
+  },
+  "35201|前田晋太郎": {
+   "family_ja": "前田",
+   "given_ja": "晋太郎",
+   "family_en": "Maeda",
+   "given_en": "Shintaro"
+  },
+  "35201|林真一郎": {
+   "family_ja": "林",
+   "given_ja": "真一郎",
+   "family_en": "Hayashi",
+   "given_en": "Shinichiro"
+  },
+  "35201|江村卓三": {
+   "family_ja": "江村",
+   "given_ja": "卓三",
+   "family_en": "Emura",
+   "given_en": "Takuzo"
+  },
+  "35202|山下節子": {
+   "family_ja": "山下",
+   "given_ja": "節子",
+   "family_en": "Yamashita",
+   "given_en": "Setsuko"
+  },
+  "35202|猶克実": {
+   "family_ja": "猶",
+   "given_ja": "克実",
+   "family_en": "Nao",
+   "given_en": "Katsumi"
+  },
+  "35202|篠﨑圭二": {
+   "family_ja": "篠﨑",
+   "given_ja": "圭二",
+   "family_en": "Shinozaki",
+   "given_en": "Keiji"
+  },
+  "35203|伊藤和貴": {
+   "family_ja": "伊藤",
+   "given_ja": "和貴",
+   "family_en": "Ito",
+   "given_en": "Kazuki"
+  },
+  "35203|伊藤斉": {
+   "family_ja": "伊藤",
+   "given_ja": "斉",
+   "family_en": "Ito",
+   "given_en": "Hitoshi"
+  },
+  "35203|原真也": {
+   "family_ja": "原",
+   "given_ja": "真也",
+   "family_en": "Hara",
+   "given_en": "Shinya"
+  },
+  "35204|瀧口治昭": {
+   "family_ja": "瀧口",
+   "given_ja": "治昭",
+   "family_en": "Takiguchi",
+   "given_en": "Haruaki"
+  },
+  "35204|田中文夫": {
+   "family_ja": "田中",
+   "given_ja": "文夫",
+   "family_en": "Tanaka",
+   "given_en": "Fumio"
+  },
+  "35204|関伸久": {
+   "family_ja": "関",
+   "given_ja": "伸久",
+   "family_en": "Seki",
+   "given_en": "Nobuhisa"
+  },
+  "35206|宇多村史朗": {
+   "family_ja": "宇多村",
+   "given_ja": "史朗",
+   "family_en": "Utamura",
+   "given_en": "Shiro"
+  },
+  "35206|安村政治": {
+   "family_ja": "安村",
+   "given_ja": "政治",
+   "family_en": "Yasumura",
+   "given_en": "Masaji"
+  },
+  "35206|池田豊": {
+   "family_ja": "池田",
+   "given_ja": "豊",
+   "family_en": "Ikeda",
+   "given_en": "Yutaka"
+  },
+  "35207|國井益雄": {
+   "family_ja": "國井",
+   "given_ja": "益雄",
+   "family_en": "Kunii",
+   "given_en": "Masuo"
+  },
+  "35207|松尾一生": {
+   "family_ja": "松尾",
+   "given_ja": "一生",
+   "family_en": "Matsuo",
+   "given_en": "Issei"
+  },
+  "35207|近藤康夫": {
+   "family_ja": "近藤",
+   "given_ja": "康夫",
+   "family_en": "Kondo",
+   "given_en": "Yasuo"
+  },
+  "35208|山本辰哉": {
+   "family_ja": "山本",
+   "given_ja": "辰哉",
+   "family_en": "Yamamoto",
+   "given_en": "Tatsuya"
+  },
+  "35208|片岡勝則": {
+   "family_ja": "片岡",
+   "given_ja": "勝則",
+   "family_en": "Kataoka",
+   "given_en": "Katsunori"
+  },
+  "35208|福田良彦": {
+   "family_ja": "福田",
+   "given_ja": "良彦",
+   "family_en": "Fukuda",
+   "given_en": "Yoshihiko"
+  },
+  "35210|小林隆司": {
+   "family_ja": "小林",
+   "given_ja": "隆司",
+   "family_en": "Kobayashi",
+   "given_en": "Takashi"
+  },
+  "35210|森戸芳史": {
+   "family_ja": "森戸",
+   "given_ja": "芳史",
+   "family_en": "Morito",
+   "given_en": "Yoshifumi"
+  },
+  "35210|芳岡統": {
+   "family_ja": "芳岡",
+   "given_ja": "統",
+   "family_en": "Yoshioka",
+   "given_en": "Osamu"
+  },
+  "35211|吉津弘之": {
+   "family_ja": "吉津",
+   "given_ja": "弘之",
+   "family_en": "Yoshizu",
+   "given_en": "Hiroyuki"
+  },
+  "35211|江原達也": {
+   "family_ja": "江原",
+   "given_ja": "達也",
+   "family_en": "Ehara",
+   "given_en": "Tatsuya"
+  },
+  "35211|重村法弘": {
+   "family_ja": "重村",
+   "given_ja": "法弘",
+   "family_en": "Shigemura",
+   "given_en": "Norihiro"
+  },
+  "35212|井原健太郎": {
+   "family_ja": "井原",
+   "given_ja": "健太郎",
+   "family_en": "Ihara",
+   "given_en": "Kentaro"
+  },
+  "35212|山本達也": {
+   "family_ja": "山本",
+   "given_ja": "達也",
+   "family_en": "Yamamoto",
+   "given_en": "Tatsuya"
+  },
+  "35212|平井保彦": {
+   "family_ja": "平井",
+   "given_ja": "保彦",
+   "family_en": "Hirai",
+   "given_en": "Yasuhiko"
+  },
+  "35213|山中佳子": {
+   "family_ja": "山中",
+   "given_ja": "佳子",
+   "family_en": "Yamanaka",
+   "given_en": "Yoshiko"
+  },
+  "35213|杉山武志": {
+   "family_ja": "杉山",
+   "given_ja": "武志",
+   "family_en": "Sugiyama",
+   "given_en": "Takeshi"
+  },
+  "35213|篠田洋司": {
+   "family_ja": "篠田",
+   "given_ja": "洋司",
+   "family_en": "Shinoda",
+   "given_en": "Yoji"
+  },
+  "35215|佐々木照彦": {
+   "family_ja": "佐々木",
+   "given_ja": "照彦",
+   "family_en": "Sasaki",
+   "given_en": "Teruhiko"
+  },
+  "35215|友田秀明": {
+   "family_ja": "友田",
+   "given_ja": "秀明",
+   "family_en": "Tomota",
+   "given_en": "Hideaki"
+  },
+  "35215|藤井律子": {
+   "family_ja": "藤井",
+   "given_ja": "律子",
+   "family_en": "Fujii",
+   "given_en": "Ritsuko"
+  },
+  "35216|大井淳一朗": {
+   "family_ja": "大井",
+   "given_ja": "淳一朗",
+   "family_en": "Oi",
+   "given_en": "Junichiro"
+  },
+  "35216|藤田剛二": {
+   "family_ja": "藤田",
+   "given_ja": "剛二",
+   "family_en": "Fujita",
+   "given_en": "Goji"
+  },
+  "35216|髙松秀樹": {
+   "family_ja": "髙松",
+   "given_ja": "秀樹",
+   "family_en": "Takamatsu",
+   "given_en": "Hideki"
+  },
+  "35305|藤本淨孝": {
+   "family_ja": "藤本",
+   "given_ja": "淨孝",
+   "family_en": "Fujimoto",
+   "given_en": "Kiyotaka"
+  },
+  "35321|兼本信昌": {
+   "family_ja": "兼本",
+   "given_ja": "信昌",
+   "family_en": "Kanemoto",
+   "given_en": "Nobuaki"
+  },
+  "35321|坂本啓三": {
+   "family_ja": "坂本",
+   "given_ja": "啓三",
+   "family_en": "Sakamoto",
+   "given_en": "Keizo"
+  },
+  "35321|森脇明美": {
+   "family_ja": "森脇",
+   "given_ja": "明美",
+   "family_en": "Moriwaki",
+   "given_en": "Akemi"
+  },
+  "35341|岩木和美": {
+   "family_ja": "岩木",
+   "given_ja": "和美",
+   "family_en": "Iwaki",
+   "given_en": "Kazumi"
+  },
+  "35341|海下竜一郎": {
+   "family_ja": "海下",
+   "given_ja": "竜一郎",
+   "family_en": "Kaishita",
+   "given_en": "Ryuichiro"
+  },
+  "35341|西哲夫": {
+   "family_ja": "西",
+   "given_ja": "哲夫",
+   "family_en": "Nishi",
+   "given_en": "Tetsuo"
+  },
+  "35343|南一成": {
+   "family_ja": "南",
+   "given_ja": "一成",
+   "family_en": "Minami",
+   "given_en": "Kazunari"
+  },
+  "35343|東浩二": {
+   "family_ja": "東",
+   "given_ja": "浩二",
+   "family_en": "Higashi",
+   "given_en": "Koji"
+  },
+  "35343|落合祥二": {
+   "family_ja": "落合",
+   "given_ja": "祥二",
+   "family_en": "Ochiai",
+   "given_en": "Shoji"
+  },
+  "35344|中村武央": {
+   "family_ja": "中村",
+   "given_ja": "武央",
+   "family_en": "Nakamura",
+   "given_en": "Takehiro"
+  },
+  "35344|浅本邦裕": {
+   "family_ja": "浅本",
+   "given_ja": "邦裕",
+   "family_en": "Asamoto",
+   "given_en": "Kunihiro"
+  },
+  "35344|細田留美子": {
+   "family_ja": "細田",
+   "given_ja": "留美子",
+   "family_en": "Hosoda",
+   "given_en": "Rumiko"
+  },
+  "35502|花田憲彦": {
+   "family_ja": "花田",
+   "given_ja": "憲彦",
+   "family_en": "Hanada",
+   "given_en": "Norihiko"
+  }
+ }
+}

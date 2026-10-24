@@ -1,3 +1,4 @@
+import { t } from "@/lib/i18n";
 import ComparisonNote, { type ComparisonNoteProps } from "./ComparisonNote";
 import { toFixedHalfUp } from "@/lib/format-decimal";
 
@@ -37,11 +38,11 @@ export function DaynightRatioStat({ ratio, comparison }: DaynightRatioStatProps)
 
           {/* 目盛り軸 */}
           <div className="absolute inset-x-6 bottom-5 h-0.5 bg-[var(--muted)]" />
-          {TICKS.map((t) => (
-            <div key={t} className="absolute bottom-3.5" style={{ left: posLeft(t) }}>
+          {TICKS.map((tick) => (
+            <div key={tick} className="absolute bottom-3.5" style={{ left: posLeft(tick) }}>
               <div className="h-2 w-px bg-[var(--muted)]" />
               <span className="absolute left-1/2 top-2 -translate-x-1/2 fs-note text-[var(--muted)]">
-                {t}
+                {tick}
               </span>
             </div>
           ))}
@@ -55,7 +56,7 @@ export function DaynightRatioStat({ ratio, comparison }: DaynightRatioStatProps)
         </div>
       </div>
 
-      <p className="fs-sub text-[var(--muted)]">100超は昼間人口が夜間人口を上回ることを示します</p>
+      <p className="fs-sub text-[var(--muted)]">{t("dn-note")}</p>
       {comparison && <ComparisonNote {...comparison} />}
     </div>
   );

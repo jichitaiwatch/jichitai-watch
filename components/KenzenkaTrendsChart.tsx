@@ -13,6 +13,7 @@ import {
 } from "recharts";
 import { SrOnlyDataTable } from "./SrOnlyDataTable";
 import { useScrollRegion, SCROLL_REGION_FOCUS } from "./useScrollRegion";
+import { m, mf, type Msgs } from "@/lib/i18n-client";
 
 /**
  * 1比率の経年系列。value は％（"-"＝該当なし は呼び出し側で 0 に、null＝確認できず はそのまま）。
@@ -34,11 +35,12 @@ const OVER = "#b5533f";
 const POINT_PITCH = 64;
 const CHART_HEIGHT = 220;
 
-function formatValue(value: unknown): string {
-  return typeof value === "number" ? `${value.toLocaleString("ja-JP")}%` : "データなし";
+function formatValue(value: unknown, noData: string): string {
+  return typeof value === "number" ? `${value.toLocaleString("ja-JP")}%` : noData;
 }
-function formatLabel(label: unknown): string {
-  return `${String(label)}年度`;
+/** 年度の表示（日本語「2023年度」・英語「FY2023」。辞書 p-fy） */
+function formatLabel(label: unknown, msgs: Msgs): string {
+  return mf(msgs, "p-fy", { y: String(label) });
 }
 
 interface DotProps {
@@ -66,9 +68,15 @@ function renderDot({ cx, cy, value, index, early }: DotProps): ReactElement {
   );
 }
 
-function SeriesChart({ s }: { s: KenzenkaTrendSeries }) {
+function SeriesChart({ s, msgs }: { s: KenzenkaTrendSeries; msgs: Msgs }) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const scrollRegion = useScrollRegion(scrollRef, `${s.plainLabel}の推移グラフ`);
+  const scrollRegion = useScrollRegion(
+    scrollRef,
+    mf(msgs, "p-scroll-region", { label: mf(msgs, "p-kz-graph", { label: s.plainLabel }) }),
+  );
+  const noData = m(msgs, "val-no-data");
+  const fmt = (value: unknown) => formatValue(value, noData);
+  const fy = (label: unknown) => formatLabel(label, msgs);
   useEffect(() => {
     const el = scrollRef.current;
     if (el) el.scrollLeft = el.scrollWidth;
@@ -89,7 +97,10 @@ function SeriesChart({ s }: { s: KenzenkaTrendSeries }) {
         <span className="fs-label font-semibold text-teal-950">{s.plainLabel}</span>
         <span className="fs-note text-stone-600">{s.formalLabel}</span>
         <span className="fs-note text-stone-600">
-          基準：早期{s.early}%{s.regen !== null ? ` ／ 再生${s.regen}%` : " ／ 再生基準なし"}
+          {mf(msgs, "p-kz-std", {
+            early: `${s.early}`,
+            regen: s.regen !== null ? mf(msgs, "p-kz-std-regen", { n: `${s.regen}` }) : m(msgs, "kz-std-no-regen"),
+          })}
         </span>
       </div>
       <div ref={scrollRef} className={`overflow-x-auto ${SCROLL_REGION_FOCUS}`} {...scrollRegion}>
@@ -108,7 +119,7 @@ function SeriesChart({ s }: { s: KenzenkaTrendSeries }) {
             tick={{ fontSize: 14, fill: "#57534e" }}
             tickFormatter={(v: number) => `${v}`}
           />
-          <Tooltip formatter={formatValue} labelFormatter={formatLabel} />
+          <Tooltip formatter={fmt} labelFormatter={fy} />
           {/* 早期健全化基準＝実線・全幅の水平線（§5.9 1・2） */}
           <ReferenceLine y={s.early} stroke={BASE} strokeWidth={1} ifOverflow="extendDomain" />
           {/* 財政再生基準＝破線（将来負担比率は null で描かない） */}
@@ -134,9 +145,15 @@ function SeriesChart({ s }: { s: KenzenkaTrendSeries }) {
         </LineChart>
       </div>
       <SrOnlyDataTable
-        caption={`${s.plainLabel}（${s.formalLabel}）の年度別推移。早期健全化基準${s.early}%${s.regen !== null ? `、財政再生基準${s.regen}%` : "、財政再生基準なし"}`}
+        caption={mf(msgs, "p-kz-caption", {
+          plain: s.plainLabel,
+          formal: s.formalLabel,
+          early: `${s.early}`,
+          regen: s.regen !== null ? mf(msgs, "p-kz-caption-regen", { n: `${s.regen}` }) : m(msgs, "kz-caption-no-regen"),
+        })}
+        yearHeader={m(msgs, "col-fiscal-year")}
         columns={[s.formalLabel]}
-        rows={s.points.map((p) => ({ label: p.fyLabel, cells: [formatValue(p.value)] }))}
+        rows={s.points.map((p) => ({ label: fy(p.fyLabel), cells: [fmt(p.value)] }))}
       />
     </div>
   );
@@ -153,16 +170,17 @@ function SeriesChart({ s }: { s: KenzenkaTrendSeries }) {
  * - 「-」（該当なし＝赤字なし/負担なし）は 0 として、null（確認できず）は非接続ギャップとして描く（§5.4）。
  * - 固定ピッチ・右端初期スクロール（§5.7）。傾き・高さは事実で、良し悪しの評価ではない（§5.4）。
  */
-export function KenzenkaTrendsChart({ series }: { series: KenzenkaTrendSeries[] }) {
+/** msgs＝lib/i18n-ids.ts の KENZENKA_CHART_MSG_IDS をサーバー側で辞書から引いたもの */
+export function KenzenkaTrendsChart({ series, msgs }: { series: KenzenkaTrendSeries[]; msgs: Msgs }) {
   return (
     <div className="flex flex-col gap-6">
       <p className="fs-note leading-snug text-stone-600">
-        横の<span className="text-stone-600">実線</span>＝早期健全化基準／
-        <span className="text-stone-600">破線</span>＝財政再生基準。点が
-        <span style={{ color: OVER }}>テラコッタ</span>の年は基準に該当した事実を示します。
+        {m(msgs, "kz-legend-1")}<span className="text-stone-600">{m(msgs, "fh-legend-solid")}</span>{m(msgs, "fh-legend-2")}
+        <span className="text-stone-600">{m(msgs, "fh-legend-dashed")}</span>{m(msgs, "kz-legend-3")}
+        <span style={{ color: OVER }}>{m(msgs, "kz-legend-terracotta")}</span>{m(msgs, "kz-legend-4")}
       </p>
       {series.map((s) => (
-        <SeriesChart key={s.formalLabel} s={s} />
+        <SeriesChart key={s.formalLabel} s={s} msgs={msgs} />
       ))}
     </div>
   );

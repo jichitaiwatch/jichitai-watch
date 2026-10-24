@@ -4,6 +4,8 @@
 // 表示するのは「対象年度・取得日」のみ。次回更新予定・有効期限は画面に出さず、
 // 期限超過の判定にだけ使う（2026-09-20運営者裁定）。判定は取得日（fetched_at）起点。
 
+import { LOCALE } from "@/lib/locale";
+import { enPeriodLabel } from "@/lib/format-en";
 /** 更新周期の3類型（spec A-0）。判定できない頻度（選挙ごと等）は null。 */
 export type UpdateCycle = "annual" | "triennial" | "quinquennial";
 
@@ -77,6 +79,8 @@ export function shouldSuppressComparison(
  */
 export function formatPeriodLabel(raw: string | undefined): string | undefined {
   if (!raw) return undefined;
+  // 英語版はデータの文字列をそのまま英語にする（lib/format-en.ts。形が決まっていない文字列はビルドが止まる）
+  if (LOCALE === "en") return enPeriodLabel(raw);
   const wareki = raw.match(/(令和|平成|昭和)\s*\d+\s*年度/);
   const seireki = raw.match(/(\d{4})\s*年度/) ?? raw.match(/(\d{4})/);
   if (wareki && seireki) return `${wareki[0].replace(/\s/g, "")}（${seireki[1]}）`;

@@ -10,8 +10,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { DEFAULT_SEARCH_EXAMPLE } from "@/lib/prefectures";
+import { m, mf, type Msgs } from "@/lib/i18n-client";
 
-export function HomeSearchBox({ example = DEFAULT_SEARCH_EXAMPLE }: { example?: string }) {
+/** msgs＝lib/i18n-ids.ts の HOME_SEARCH_MSG_IDS をサーバー側で辞書から引いたもの */
+export function HomeSearchBox({ example = DEFAULT_SEARCH_EXAMPLE, msgs }: { example?: string; msgs: Msgs }) {
   const router = useRouter();
   const [q, setQ] = useState("");
 
@@ -34,8 +36,8 @@ export function HomeSearchBox({ example = DEFAULT_SEARCH_EXAMPLE }: { example?: 
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="市町村名・都道府県名を入力"
-            aria-label="自治体名"
+            placeholder={m(msgs, "sr-placeholder")}
+            aria-label={m(msgs, "sr-input-label")}
             className="h-[57px] w-full rounded-[10px] border bg-white pl-14 pr-6 text-base outline-none focus:ring-2 sm:h-[66px] sm:text-lg"
             style={{ borderColor: "#cbd8e6", color: "#062657", boxShadow: "0 4px 10px rgba(18,49,88,.08)" }}
           />
@@ -45,10 +47,10 @@ export function HomeSearchBox({ example = DEFAULT_SEARCH_EXAMPLE }: { example?: 
           className="h-[56px] rounded-[10px] px-8 font-extrabold text-white sm:h-[66px] sm:w-[182px]"
           style={{ background: "linear-gradient(135deg,#009b95,#00847e)", boxShadow: "0 7px 16px rgba(0,130,125,.22)" }}
         >
-          自治体を探す
+          {m(msgs, "ui-nav-search")}
         </button>
       </div>
-      <p className="mt-3 text-base" style={{ color: "#41577d" }}>{`例：${example}`}</p>
+      <p className="mt-3 text-base" style={{ color: "#41577d" }}>{mf(msgs, "p-example", { example })}</p>
     </form>
   );
 }

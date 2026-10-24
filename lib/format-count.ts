@@ -1,3 +1,5 @@
+import { LOCALE } from "@/lib/locale";
+import { enCount } from "@/lib/format-en";
 /**
  * 人口・世帯数（単位「人」「世帯」）の生値を「万区切り」の可読文字列へ整形する。
  *
@@ -19,6 +21,8 @@
 
 /** 人口・世帯数の生値 → 「N万M」表記（数値部分のみ・丸めず完全な値を保持） */
 export function formatManUnit(value: number): string {
+  // 英語版は万で区切らず全桁で書く（lib/format-en.ts）
+  if (LOCALE === "en") return enCount(value);
   if (!Number.isFinite(value)) return "確認できず";
   const neg = value < 0;
   const abs = Math.abs(value);

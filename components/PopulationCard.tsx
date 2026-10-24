@@ -1,6 +1,7 @@
 import ComparisonNote, { type ComparisonNoteProps } from "./ComparisonNote";
 import { formatManUnit } from "@/lib/format-count";
 import { toFixedHalfUp } from "@/lib/format-decimal";
+import { t, tf } from "@/lib/i18n";
 
 interface PopulationCardProps {
   male: number;
@@ -32,27 +33,27 @@ export function PopulationCard({ male, female, total, totalPrior, comparison }: 
     const diff = total - prior;
     const sign = diff >= 0 ? "+" : "−";
     const abs = Math.abs(diff);
-    const rate = prior > 0 ? `（${sign}${toFixedHalfUp((abs / prior) * 100, 1)}%）` : "";
-    deltaLabel = `${sign}${formatManUnit(abs)}人${rate}`;
+    const rate = prior > 0 ? tf("p-delta-rate", { sign, pct: toFixedHalfUp((abs / prior) * 100, 1) }) : "";
+    deltaLabel = `${tf("p-people", { n: `${sign}${formatManUnit(abs)}` })}${rate}`;
   }
 
   return (
     <div className="flex flex-col gap-2">
-      <p className="fs-label font-extrabold text-[var(--identity)]">総人口</p>
+      <p className="fs-label font-extrabold text-[var(--identity)]">{t("pop-total")}</p>
       <p className="text-[36px] font-extrabold leading-none tracking-[-0.02em] text-[var(--identity)] sm:text-[38px]">
         {formatManUnit(total)}
-        <span className="ml-0.5 text-[0.55em] font-extrabold">人</span>
+        {t("u-people") && <span className="ml-0.5 text-[0.55em] font-extrabold">{t("u-people")}</span>}
       </p>
 
       <div className="flex items-baseline gap-1.5 fs-label font-semibold">
-        <span className="text-[var(--male-text)]">男 {formatManUnit(male)}</span>
-        <span className="text-[var(--muted)]">／</span>
-        <span className="text-[var(--female-text)]">女 {formatManUnit(female)}</span>
+        <span className="text-[var(--male-text)]">{tf("p-pop-male", { n: formatManUnit(male) })}</span>
+        <span className="text-[var(--muted)]">{t("ui-slash")}</span>
+        <span className="text-[var(--female-text)]">{tf("p-pop-female", { n: formatManUnit(female) })}</span>
       </div>
 
       <div
         className="flex overflow-hidden rounded-full text-center fs-sub font-extrabold leading-[1.9] text-white"
-        aria-label={`男${toFixedHalfUp(malePct, 1)}%、女${toFixedHalfUp(femalePct, 1)}%`}
+        aria-label={tf("p-pop-aria", { m: toFixedHalfUp(malePct, 1), f: toFixedHalfUp(femalePct, 1) })}
       >
         <span className="bg-[var(--male-text)]" style={{ width: `${malePct}%` }}>
           {toFixedHalfUp(malePct, 1)}%
@@ -67,7 +68,7 @@ export function PopulationCard({ male, female, total, totalPrior, comparison }: 
 
       {deltaLabel && (
         <p className="fs-sub text-[var(--muted)]">
-          前年比 <span className="font-semibold text-[var(--body)]">{deltaLabel}</span>
+          {t("fin-yoy")}<span className="font-semibold text-[var(--body)]">{deltaLabel}</span>
         </p>
       )}
 

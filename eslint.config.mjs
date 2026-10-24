@@ -14,6 +14,23 @@ const eslintConfig = defineConfig([
     "scripts/**",
     "data/**",
   ]),
+  // next/link を直接使わない（先読みを止めた共通部品 components/SiteLink.tsx を使う。D-26）。
+  {
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "next/link",
+              message: "components/SiteLink.tsx を使う（先読みを止めてある。20260808_decisions.md D-26）。",
+            },
+          ],
+        },
+      ],
+    },
+  },
+  { files: ["components/SiteLink.tsx"], rules: { "no-restricted-imports": "off" } },
 ]);
 
 export default eslintConfig;

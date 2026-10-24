@@ -1,4 +1,9 @@
+import { t, tf } from "@/lib/i18n";
+import { LOCALE } from "@/lib/locale";
 import type { ChiefRow } from "@/lib/metrics";
+import { nameLabelNode, personName } from "@/components/PersonName";
+import { chiefPartyLabel } from "@/lib/party-labels";
+import { dataTextString } from "@/lib/data-text";
 
 interface ChiefCardProps {
   row: ChiefRow;
@@ -19,9 +24,9 @@ interface ChiefCardProps {
 export function ChiefCard({ row }: ChiefCardProps) {
   const uncontested = row.無投票.is_mutou;
   const pct = (v: number | null) =>
-    v === null ? "確認できず" : `${v.toLocaleString("ja-JP")}%`;
+    v === null ? t("val-not-confirmed") : `${v.toLocaleString("ja-JP")}%`;
   const votes = (v: number | null) =>
-    v === null ? "確認できず" : `${v.toLocaleString("ja-JP")}票`;
+    v === null ? t("val-not-confirmed") : tf("p-votes", { n: v.toLocaleString("ja-JP") });
 
   return (
     <div className="flex flex-col gap-3 text-[var(--body)]">
@@ -34,13 +39,13 @@ export function ChiefCard({ row }: ChiefCardProps) {
         </div>
         <div className="min-w-0">
           <p className="m-0 fs-key font-extrabold leading-tight tracking-[0.025em] text-[#17372c]">
-            {row.氏名}
+            {personName(row.area_code, row.氏名)}
           </p>
           <span className="mt-1.5 inline-flex rounded-full bg-[var(--identity-soft)] px-2.5 py-1 fs-sub font-extrabold text-[var(--identity)]">
-            当選{row.回}回
+            {tf("p-ch-times-elected", { n: `${row.回}` })}
           </span>
           <p className="mt-[7px] fs-sub font-semibold text-[#617069]">
-            {row.党派 || "確認できず"}｜当選日：{row.当選年月日}
+            {row.党派 ? nameLabelNode(chiefPartyLabel(row.党派)) : t("val-not-confirmed")}{t("ch-elected-on")}{row.当選年月日}
           </p>
         </div>
       </div>
@@ -48,14 +53,14 @@ export function ChiefCard({ row }: ChiefCardProps) {
       {uncontested ? (
         <div className="rounded-lg bg-[var(--identity-soft)] px-3 py-2.5">
           <p className="fs-sub font-medium text-[var(--identity)]">
-            無投票（投票率・得票数・絶対得票率はありません）
+            {t("ch-unopposed")}
           </p>
         </div>
       ) : (
         <dl className="grid grid-cols-3 border-y border-[var(--line-soft)]">
-          <Fact label="投票率" value={pct(row.投票率)} />
-          <Fact label="得票数" value={votes(row.得票数)} divider />
-          <Fact label="絶対得票率" value={pct(row.絶対得票率)} divider />
+          <Fact label={t("election-turnout")} value={pct(row.投票率)} />
+          <Fact label={t("ch-votes")} value={votes(row.得票数)} divider />
+          <Fact label={t("ch-absolute-share")} value={pct(row.絶対得票率)} divider />
         </dl>
       )}
 
@@ -63,11 +68,11 @@ export function ChiefCard({ row }: ChiefCardProps) {
         Array.isArray(row._note) ? (
           <ul className="list-disc space-y-1 pl-4 fs-note leading-snug text-[var(--muted)]">
             {row._note.map((line, i) => (
-              <li key={i}>{line}</li>
+              <li key={i}>{dataTextString("chief_note", line)}</li>
             ))}
           </ul>
         ) : (
-          <p className="fs-note leading-snug text-[var(--muted)]">{row._note}</p>
+          <p className="fs-note leading-snug text-[var(--muted)]">{dataTextString("chief_note", row._note)}</p>
         )
       ) : null}
     </div>
@@ -90,14 +95,19 @@ function Fact({
       }`}
     >
       <dt className="mb-0.5 fs-label font-bold text-[var(--muted)]">{label}</dt>
-      {/* 文字数が多い値（得票数が数百万票の都道府県など）でも枠に収まるよう、セル幅（コンテナ）と
+      {/* 英語版の「Could not be confirmed」は数字用の縮め方だと読めないほど小さくなるため、英語版だけ折り返す形にする（日本語版は従来どおり）。
+          数字は、文字数が多い値（得票数が数百万票の都道府県など）でも枠に収まるよう、セル幅（コンテナ）と
           推定文字幅から文字サイズを縮める。上限は標準の主要数値サイズ。 */}
+      {LOCALE === "en" && value === t("val-not-confirmed") ? (
+        <dd className="m-0 fs-sub font-bold leading-snug text-[var(--body)]">{value}</dd>
+      ) : (
       <dd
         className="m-0 whitespace-nowrap font-extrabold text-[var(--body)]"
         style={{ fontSize: `min(var(--fs-key), calc(100cqw / ${estimateEm(value)}))` }}
       >
         {value}
       </dd>
+      )}
     </div>
   );
 }

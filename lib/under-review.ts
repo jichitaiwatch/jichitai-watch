@@ -12,6 +12,8 @@
 //   省略すると、そのカードを表示するすべての団体に出す。
 // - since＝確認を始めた日（YYYY-MM-DD）。画面に表示する。
 
+import { LOCALE } from "@/lib/locale";
+import { enDate } from "@/lib/format-en";
 export interface UnderReviewEntry {
   cardId: string;
   areaCode?: string;
@@ -32,6 +34,7 @@ export function findUnderReview(
 
 /** "2026-10-01" → "2026年10月1日"。形式が違えば元の文字列をそのまま返す。 */
 export function formatSince(since: string): string {
+  if (LOCALE === "en") return enDate(since);
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(since);
   return m ? `${Number(m[1])}年${Number(m[2])}月${Number(m[3])}日` : since;
 }

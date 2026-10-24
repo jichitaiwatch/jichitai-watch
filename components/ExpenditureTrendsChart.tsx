@@ -1,5 +1,6 @@
 "use client";
 
+import { yenAmount } from "@/lib/format-units";
 import { useEffect, useRef } from "react";
 import {
   LineChart,
@@ -12,6 +13,7 @@ import {
 } from "recharts";
 import { SrOnlyDataTable } from "./SrOnlyDataTable";
 import { useScrollRegion, SCROLL_REGION_FOCUS } from "./useScrollRegion";
+import { m, mf, type Msgs } from "@/lib/i18n-client";
 
 /** 1年度=1点。値は住民一人あたり額（円/人）。欠損年は null（点線・非接続で表現） */
 export interface ExpenditureTrendPoint {
@@ -27,10 +29,10 @@ export interface ExpenditureTrendPoint {
  * 赤／緑の信号色は用いず、色はカテゴリ（費目）ラベルとしてのみ機能する。
  */
 const SERIES = [
-  { key: "民生費", color: "#0f766e" },
-  { key: "教育費", color: "#b45309" },
-  { key: "土木費", color: "#6d28d9" },
-  { key: "普通建設事業費", color: "#475569" },
+  { key: "民生費", nameId: "exp-public-welfare", color: "#0f766e" },
+  { key: "教育費", nameId: "exp-education", color: "#b45309" },
+  { key: "土木費", nameId: "exp-civil-eng", color: "#6d28d9" },
+  { key: "普通建設事業費", nameId: "exp-ordinary-construction", color: "#475569" },
 ] as const;
 
 /** 1データ点あたりの固定ピッチ（ui-vi-handoff §5.7）。点数が増えても詰め込まず横スクロールで見せる */
@@ -38,19 +40,24 @@ const POINT_PITCH = 68;
 const CHART_HEIGHT = 340;
 
 /** Recharts の formatter/labelFormatter は unknown 相当の値を渡すため、こちらで数値・文字列に正規化する */
-function formatValue(value: unknown): string {
+function formatValue(value: unknown, noData: string, msgs: Msgs): string {
   return typeof value === "number"
-    ? `${value.toLocaleString("ja-JP")} 円/人`
-    : "データなし";
+    ? mf(msgs, "p-yen-per-person-chart", { amount: yenAmount(value) })
+    : noData;
 }
 
-function formatLabel(label: unknown): string {
-  return `${String(label)}年度`;
+/** 年度の表示（日本語「2023年度」・英語「FY2023」。辞書 p-fy） */
+function formatLabel(label: unknown, msgs: Msgs): string {
+  return mf(msgs, "p-fy", { y: String(label) });
 }
 
-export function ExpenditureTrendsChart({ data }: { data: ExpenditureTrendPoint[] }) {
+/** msgs＝lib/i18n-ids.ts の EXPENDITURE_CHART_MSG_IDS をサーバー側で辞書から引いたもの */
+export function ExpenditureTrendsChart({ data, msgs }: { data: ExpenditureTrendPoint[]; msgs: Msgs }) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const scrollRegion = useScrollRegion(scrollRef, "住民一人あたり分野別支出の推移グラフ");
+  const scrollRegion = useScrollRegion(scrollRef, mf(msgs, "p-scroll-region", { label: m(msgs, "ch-ex-graph") }));
+  const noData = m(msgs, "val-no-data");
+  const fmt = (value: unknown) => formatValue(value, noData, msgs);
+  const fy = (label: unknown) => formatLabel(label, msgs);
 
   // 初期表示は右端（最新年）に寄せる（§5.7）
   useEffect(() => {
@@ -77,14 +84,14 @@ export function ExpenditureTrendsChart({ data }: { data: ExpenditureTrendPoint[]
           tick={{ fontSize: 14, fill: "#57534e" }}
           tickFormatter={(v: number) => v.toLocaleString("ja-JP")}
         />
-        <Tooltip formatter={formatValue} labelFormatter={formatLabel} />
+        <Tooltip formatter={fmt} labelFormatter={fy} />
         <Legend wrapperStyle={{ fontSize: 14 }} />
         {SERIES.map((s) => (
           <Line
             key={s.key}
             type="linear" // 年度ごとの実測点を直線で結ぶ。曲線補間は点間に根拠のない値を描くため使わない（2026-10-03運営者指摘）
             dataKey={s.key}
-            name={s.key}
+            name={m(msgs, s.nameId)}
             stroke={s.color}
             strokeWidth={2}
             dot={{ r: 2 }}
@@ -95,11 +102,12 @@ export function ExpenditureTrendsChart({ data }: { data: ExpenditureTrendPoint[]
       </LineChart>
     </div>
     <SrOnlyDataTable
-      caption="費目別の住民一人あたり決算額の年度別推移（円/人）"
-      columns={SERIES.map((s) => s.key)}
+      caption={m(msgs, "ch-ex-caption")}
+      yearHeader={m(msgs, "col-fiscal-year")}
+      columns={SERIES.map((s) => m(msgs, s.nameId))}
       rows={data.map((d) => ({
-        label: d.fyLabel,
-        cells: SERIES.map((s) => formatValue(d[s.key])),
+        label: fy(d.fyLabel),
+        cells: SERIES.map((s) => fmt(d[s.key])),
       }))}
     />
     </>

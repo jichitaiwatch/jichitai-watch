@@ -1,4 +1,5 @@
-import Link from "next/link";
+import Link from "@/components/SiteLink";
+import { t } from "@/lib/i18n";
 
 // components/Breadcrumb.tsx
 // パンくず（ui-vi-handoff §2.5「各段はリンク・任意階層へジャンプ」／§0.8.4「入口名・カテゴリ名の段を増やす」）。
@@ -14,7 +15,7 @@ export interface BreadcrumbItem {
 
 export function Breadcrumb({ items }: { items: BreadcrumbItem[] }) {
   return (
-    <nav aria-label="パンくず" className="fs-crumb" style={{ color: "var(--muted)" }}>
+    <nav aria-label={t("ui-aria-breadcrumb")} className="fs-crumb" style={{ color: "var(--muted)" }}>
       <ol className="flex flex-wrap items-center gap-x-1 gap-y-0">
         {items.map((item, i) => {
           const isLast = i === items.length - 1;
@@ -27,7 +28,7 @@ export function Breadcrumb({ items }: { items: BreadcrumbItem[] }) {
               ) : (
                 <span aria-current={isLast ? "page" : undefined}>{item.label}</span>
               )}
-              {!isLast && <span aria-hidden="true">＞</span>}
+              {!isLast && <span aria-hidden="true">{t("ui-crumb-sep")}</span>}
             </li>
           );
         })}

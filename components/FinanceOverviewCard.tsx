@@ -1,6 +1,10 @@
+import { EnMoneyText } from "@/components/MoneyText";
+import { LOCALE } from "@/lib/locale";
 import type { FinanceOverviewRow, FinanceSection, FinanceLineItem } from "@/lib/metrics";
 import { formatManOku, formatThousandYenExact } from "@/lib/format-yen";
 import { toFixedHalfUp } from "@/lib/format-decimal";
+import { t } from "@/lib/i18n";
+import { financeItemLabel } from "@/lib/finance-labels";
 
 interface FinanceOverviewCardProps {
   data: FinanceOverviewRow;
@@ -28,7 +32,7 @@ function yearOverYearChips(total: number, prior: number): string[] {
   const diff = total - prior;
   const sign = diff >= 0 ? "+" : "−";
   const abs = Math.abs(diff);
-  const chips = [`前年比 ${sign}${formatManOku(abs)}`];
+  const chips = [`${t("fin-yoy")}${sign}${formatManOku(abs)}`];
   if (prior > 0) chips.push(`${sign}${toFixedHalfUp((abs / prior) * 100, 1)}%`);
   return chips;
 }
@@ -49,10 +53,11 @@ function FinancePanel({
   const restTotal = rest.reduce((s, x) => s + x.value, 0);
   const total = section.total;
 
-  const rows: (FinanceLineItem & { color: string; isOther?: boolean })[] = top.map(
-    (it, i) => ({ ...it, color: PALETTE[kind][i] ?? OTHER_COLOR }),
+  // name はデータの費目名（React の key に使う）。label は画面に出す名前（英語版は辞書の訳。lib/finance-labels.ts）
+  const rows: (FinanceLineItem & { label: string; color: string; isOther?: boolean })[] = top.map(
+    (it, i) => ({ ...it, label: financeItemLabel(it.name), color: PALETTE[kind][i] ?? OTHER_COLOR }),
   );
-  if (restTotal > 0) rows.push({ name: "その他", value: restTotal, color: OTHER_COLOR, isOther: true });
+  if (restTotal > 0) rows.push({ name: t("val-other"), label: t("val-other"), value: restTotal, color: OTHER_COLOR, isOther: true });
 
   const pct = (v: number) => (total > 0 ? (v / total) * 100 : 0);
 
@@ -61,7 +66,7 @@ function FinancePanel({
       <h3 className="m-0 mb-[7px] flex flex-col gap-0.5 fs-label font-extrabold text-[var(--identity)]">
         <span>{heading}</span>
         <span className="fs-key text-[#1c382f]">
-          <NoBreakYen text={formatManOku(total)} />
+          {LOCALE === "en" ? <EnMoneyText thousandYen={total} /> : <NoBreakYen text={formatManOku(total)} />}
         </span>
       </h3>
 
@@ -80,9 +85,9 @@ function FinancePanel({
             className="grid grid-cols-[8px_minmax(0,1fr)_auto] items-center gap-1.5 fs-sub text-[#55665f]"
           >
             <span className="h-[7px] w-[7px] rounded-[2px]" style={{ backgroundColor: r.color }} />
-            <span className={`break-words leading-tight ${r.isOther ? "text-[#566660]" : ""}`}>{r.name}</span>
+            <span className={`break-words leading-tight ${r.isOther ? "text-[#566660]" : ""}`}>{r.label}</span>
             <strong className="whitespace-nowrap fs-sub font-bold text-[#26463b]">
-              {formatManOku(r.value)}
+              {LOCALE === "en" ? <EnMoneyText thousandYen={r.value} /> : formatManOku(r.value)}
             </strong>
           </li>
         ))}
@@ -103,24 +108,24 @@ function FinancePanel({
       {/* sr-only は table 要素自体には効かない（幅1px・overflow:hiddenが無視され内容幅まで広がり、ページ全体の横スクロール領域を作る＝C-4で検出）。div で包んで切り捨てる。 */}
       <div className="sr-only">
         <table>
-          <caption>{heading}（普通会計・単位：千円。カッコ内は総額に対する構成比）</caption>
+          <caption>{heading}{t("fin-caption-tail")}</caption>
           <thead>
             <tr>
-              <th scope="col">項目</th>
-              <th scope="col">金額</th>
-              <th scope="col">構成比</th>
+              <th scope="col">{t("col-item")}</th>
+              <th scope="col">{t("col-amount")}</th>
+              <th scope="col">{t("col-share")}</th>
             </tr>
           </thead>
           <tbody>
             {rows.map((r) => (
               <tr key={r.name}>
-                <th scope="row">{r.name}</th>
+                <th scope="row">{r.label}</th>
                 <td>{yen(r.value)}</td>
                 <td>{toFixedHalfUp(pct(r.value), 1)}%</td>
               </tr>
             ))}
             <tr>
-              <th scope="row">合計</th>
+              <th scope="row">{t("row-total")}</th>
               <td>{yen(total)}</td>
               <td>100.0%</td>
             </tr>
@@ -148,19 +153,19 @@ export function FinanceOverviewCard({ data, topN = 4 }: FinanceOverviewCardProps
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center justify-between gap-2 border-b border-[var(--line-soft)] pb-2">
-        <span className="fs-label font-extrabold text-[#244a3c]">普通会計</span>
-        <span className="fs-source font-semibold text-[#566660]">歳入・歳出</span>
+        <span className="fs-label font-extrabold text-[#244a3c]">{t("fin-ordinary-accounts")}</span>
+        <span className="fs-source font-semibold text-[#566660]">{t("fin-rev-exp")}</span>
       </div>
       <p className="-mt-1 fs-sub leading-snug text-[var(--muted)]">
-        団体間で比較できるよう国が統一集計した<span className="whitespace-nowrap">会計（金額は兆・億・万円で表示）</span>
+        {t("fin-note-1")}<span className="whitespace-nowrap">{t("fin-note-2")}</span>
       </p>
 
       {/* 歳入・歳出は、カード幅（コンテナ）が十分あるときだけ2列。狭いとき（PCの半幅カード等）は1列にして、
           桁の大きい団体（東京都など）でも金額が枠からはみ出さないようにする。 */}
       <div className="[container-type:inline-size]">
         <div className="fin-grid">
-          <FinancePanel kind="revenue" heading="歳入" section={data.revenue} topN={topN} />
-          <FinancePanel kind="expense" heading="歳出" section={data.expenditure} topN={topN} />
+          <FinancePanel kind="revenue" heading={t("revenue")} section={data.revenue} topN={topN} />
+          <FinancePanel kind="expense" heading={t("expenditure")} section={data.expenditure} topN={topN} />
         </div>
       </div>
     </div>

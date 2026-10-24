@@ -1,3 +1,4 @@
+import { t, tf } from "@/lib/i18n";
 import municipalityMasterRaw from "@/data/municipality_master.json";
 import { formatPeriodLabel } from "@/lib/staleness";
 import kodomoIryohiRaw from "@/data/m1_kodomo_iryohi.json";
@@ -878,8 +879,8 @@ export function getKaigoAverages(): {
  */
 export function getKaigoPremiumSourceLabel(insurerName: string): string {
   return insurerName.includes("広域連合")
-    ? `厚生労働省 第9期集計（保険者: ${insurerName}）`
-    : "厚生労働省 第9期集計";
+    ? tf("p-src-mhlw-kaigo-insurer", { insurer: insurerName })
+    : t("src-mhlw-kaigo");
 }
 
 export function getExpenditure(

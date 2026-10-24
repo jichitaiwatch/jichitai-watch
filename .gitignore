@@ -30,3 +30,9 @@ scripts/kaigiroku_*_schedules.json
 
 # 公開用コピーの記録（publish/export.py が毎回作り直す）
 publish/last-export.txt
+
+# 用語辞書の確認用 CSV（scripts/i18n_glossary_csv.py が毎回作り直す。正本は i18n/glossary.json）
+i18n/_glossary_view.csv
+
+# 日本語版・英語版をまとめて作るときの作業用（scripts/build-bilingual.mjs）
+.bilingual-tmp/

@@ -1,4 +1,7 @@
+import { t, tf } from "@/lib/i18n";
 import type { ReactNode } from "react";
+import { nameLabelNode } from "@/components/PersonName";
+import { kaihaLabel } from "@/lib/party-labels";
 
 interface KaihaCardProps {
   status: "有" | "無" | "確認できず";
@@ -102,15 +105,15 @@ function StatePanel({
 
 export function KaihaCard({ status, list, note }: KaihaCardProps) {
   if (status === "無") {
-    return <StatePanel glyph={<KaihaGlyph />} title="会派を組んでいません" note={note} />;
+    return <StatePanel glyph={<KaihaGlyph />} title={t("kh-none")} note={note} />;
   }
 
   if (status === "確認できず" || !list) {
     return (
       <StatePanel
         glyph={<DocGlyph />}
-        title="会派：確認できず"
-        copy="Web上に会派情報が見つかりませんでした"
+        title={t("kh-unconfirmed")}
+        copy={t("kh-not-found")}
         note={note}
       />
     );
@@ -121,7 +124,7 @@ export function KaihaCard({ status, list, note }: KaihaCardProps) {
 
   return (
     <div className="flex flex-col gap-2">
-      <p className="fs-label font-extrabold text-[var(--muted)]">会派別人数</p>
+      <p className="fs-label font-extrabold text-[var(--muted)]">{t("kh-members-heading")}</p>
       <ul className="flex flex-col gap-1.5">
         {list.map((entry, i) => {
           const pct = Math.max(0, Math.min(100, (entry.count / maxCount) * 100));
@@ -131,7 +134,7 @@ export function KaihaCard({ status, list, note }: KaihaCardProps) {
               key={entry.name}
               className="grid grid-cols-[150px_minmax(0,1fr)_40px] items-center gap-2 fs-sub sm:grid-cols-[170px_minmax(0,1fr)_44px]"
             >
-              <span className="break-words leading-tight text-[var(--body)]">{entry.name}</span>
+              <span className="break-words leading-tight text-[var(--body)]">{nameLabelNode(kaihaLabel(entry.name))}</span>
               <span
                 aria-hidden
                 className="h-[18px] overflow-hidden rounded-[5px] bg-[var(--track)]"
@@ -142,14 +145,14 @@ export function KaihaCard({ status, list, note }: KaihaCardProps) {
                 />
               </span>
               <span className="whitespace-nowrap text-right text-[var(--body)]">
-                {entry.count}人
+                {tf("p-people", { n: `${entry.count}` })}
               </span>
             </li>
           );
         })}
       </ul>
       <p className="mt-1 fs-note text-[var(--muted-light)]">
-        色は会派・系統の識別用（評価ではありません）
+        {t("kh-colour-note")}
       </p>
     </div>
   );

@@ -1,6 +1,7 @@
-import Link from "next/link";
+import Link from "@/components/SiteLink";
 import { noBreakAfterDot } from "@/lib/text";
 import { Brand, SITE_NAV, SiteFooter } from "@/components/SiteFooter";
+import { t } from "@/lib/i18n";
 
 // components/SitePageShell.tsx
 // 文書ページ（about/data/corrections）の共通の器。トップ（app/page.tsx）と同じ
@@ -21,7 +22,7 @@ export function SitePageShell({
     <div style={{ background: "#fff" }}>
       <header className="mx-auto flex w-full max-w-6xl flex-col items-start gap-2 px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-10">
         <Link href="/"><Brand /></Link>
-        <nav aria-label="メイン" className="flex flex-wrap items-center gap-x-4 text-base font-bold sm:gap-x-10 sm:text-base" style={{ color: NAVY }}>
+        <nav aria-label={t("ui-aria-main-nav")} className="flex flex-wrap items-center gap-x-4 text-base font-bold sm:gap-x-10 sm:text-base" style={{ color: NAVY }}>
           {SITE_NAV.map((n) => (
             <Link key={n.href} href={n.href} className="inline-block py-1.5 hover:opacity-70">{n.label}</Link>
           ))}

@@ -1,7 +1,9 @@
+import { LOCALE } from "@/lib/locale";
 import type { ReactNode } from "react";
-import Link from "next/link";
+import Link from "@/components/SiteLink";
 import { CardIcon, type CardIconId } from "./CardIcon";
 import { formatSince, type UnderReviewEntry } from "@/lib/under-review";
+import { t } from "@/lib/i18n";
 
 interface MetricCardProps {
   /** ヘッダー層: 指標名 */
@@ -80,8 +82,15 @@ export function MetricCard({
             {title}
           </h2>
         </div>
-        <span className="shrink-0 rounded-full bg-[var(--identity-soft)] px-2.5 py-1 fs-badge font-extrabold leading-none text-[var(--identity)]">
-          更新頻度: {updateFrequency}
+        {/* 英語は更新頻度の文が長く、縮めずに置くとスマホ幅で右へはみ出すので、縮めて折り返す形にする（日本語版は従来どおり） */}
+        <span
+          className={
+            LOCALE === "en"
+              ? "rounded-full bg-[var(--identity-soft)] px-2.5 py-1 fs-badge font-extrabold leading-tight text-[var(--identity)]"
+              : "shrink-0 rounded-full bg-[var(--identity-soft)] px-2.5 py-1 fs-badge font-extrabold leading-none text-[var(--identity)]"
+          }
+        >
+          {t("frame-freq")}{updateFrequency}
         </span>
       </header>
 
@@ -90,9 +99,9 @@ export function MetricCard({
           role="note"
           className="mx-3 mt-3 rounded border border-[var(--line)] bg-[var(--identity-soft)]/40 px-2.5 py-1.5 fs-source font-semibold text-[var(--muted)] sm:mx-4"
         >
-          この内容は、いただいたご指摘をもとに確認中です（{formatSince(underReview.since)}から）。確認が済むまでの間、そのまま表示しています。詳しくは
-          <Link href="/corrections" className="underline underline-offset-2">訂正・お問い合わせ</Link>
-          をご覧ください。
+          {t("frame-review-1")}{formatSince(underReview.since)}{t("frame-review-2")}
+          <Link href="/corrections" className="underline underline-offset-2">{t("ui-nav-corrections")}</Link>
+          {t("frame-review-3")}
         </p>
       )}
 
@@ -101,12 +110,12 @@ export function MetricCard({
       <footer className="border-t border-[var(--line-soft)] bg-[var(--identity-soft)]/40 px-3 py-2.5 fs-source text-[var(--muted-light)] sm:px-4">
         {stale && (
           <p className="mb-1.5 fs-source font-semibold text-[var(--muted)]">
-            この指標は次回更新予定を過ぎています。最新の公表状況をご確認ください。
+            {t("frame-stale")}
           </p>
         )}
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
           <span>
-            出典:{" "}
+            {t("frame-source")}{" "}
             {sourceUrl ? (
               <a
                 href={sourceUrl}
@@ -122,18 +131,18 @@ export function MetricCard({
           </span>
           {periodLabel && (
             <>
-              <span aria-hidden className="text-[var(--line)]">・</span>
-              <span>対象年度: {periodLabel}</span>
+              <span aria-hidden className="text-[var(--line)]">{t("ui-dot-sep")}</span>
+              <span>{t("frame-period")}{periodLabel}</span>
             </>
           )}
           <span aria-hidden className="text-[var(--line)]">
-            ・
+            {t("ui-dot-sep")}
           </span>
-          <span>データ更新日: {updatedDate}</span>
+          <span>{t("frame-updated")}{updatedDate}</span>
           {fetchedDate && (
             <>
-              <span aria-hidden className="text-[var(--line)]">・</span>
-              <span>取得日: {fetchedDate}</span>
+              <span aria-hidden className="text-[var(--line)]">{t("ui-dot-sep")}</span>
+              <span>{t("frame-fetched")}{fetchedDate}</span>
             </>
           )}
           {note && (

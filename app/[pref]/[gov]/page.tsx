@@ -1,5 +1,6 @@
+import { prefLabel } from "@/lib/place-names";
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/SiteLink";
 import { notFound } from "next/navigation";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { EntranceCard } from "@/components/EntranceCard";
@@ -8,7 +9,9 @@ import { getPrefEntranceSummary } from "@/lib/pref-card-registry";
 import { MUNICIPALITIES, WARDS, getMunicipalityBySlug, getWardParent, getWardsOf } from "@/lib/municipalities";
 import { PREFECTURES, getPrefectureByGovSlug } from "@/lib/prefectures";
 import { MunicipalitySwitcher } from "@/components/MunicipalitySwitcher";
-import { govPath, pageMeta } from "@/lib/site";
+import { SITE_NAME, govPath, pageMeta, pageTitle } from "@/lib/site";
+import { msgsFor, t, tf } from "@/lib/i18n";
+import { SWITCHER_MSG_IDS } from "@/lib/i18n-ids";
 
 type PageParams = { pref: string; gov: string };
 
@@ -33,16 +36,16 @@ export async function generateMetadata({
   if (prefecture) {
     // 地域ページ（/gifu-pref・title「岐阜県」）と同名にならないよう県庁は「庁」付き（WCAG 2.4.2・C-7）
     return pageMeta({
-      title: `${prefecture.prefectureName}庁 | 自治体Watch`,
-      description: entranceDescription(prefecture.prefectureName),
+      title: pageTitle(tf("p-pref-gov", { pref: prefLabel(prefecture.prefectureName) })),
+      description: entranceDescription(prefLabel(prefecture.prefectureName)),
       path: govPath(prefecture.prefSlug, prefecture.govSlug),
     });
   }
   const municipality = getMunicipalityBySlug(gov, pref);
-  if (!municipality) return { title: "自治体Watch" }; // dynamicParams=false のため到達しない
+  if (!municipality) return { title: SITE_NAME }; // dynamicParams=false のため到達しない
   return pageMeta({
-    title: `${municipality.cityName} | 自治体Watch`,
-    description: entranceDescription(municipality.cityName, entranceTabsFor(municipality)),
+    title: pageTitle(municipality.label),
+    description: entranceDescription(municipality.label, entranceTabsFor(municipality)),
     path: govPath(municipality.prefSlug, municipality.slug),
   });
 }
@@ -52,8 +55,8 @@ export async function generateMetadata({
  * 県庁・市町村は ENTRANCE_TABS の4入口。政令市の区は entranceTabsFor が返す入口だけ（いまは「まちのすがた」。L-9）。
  */
 function entranceDescription(name: string, tabs: { label: string }[] = ENTRANCE_TABS): string {
-  const labels = tabs.map((t) => `「${t.label}」`).join("");
-  return `${name}の${labels}を、出典つきで見られます。`;
+  const labels = tabs.map((tb) => tf("p-quoted", { x: tb.label })).join(t("ui-join-quoted"));
+  return tf("p-desc-entrance", { name, tabs: labels });
 }
 
 export default async function GovEntrancePage({
@@ -72,9 +75,9 @@ export default async function GovEntrancePage({
           {/* パンくず＋戻る（ui-vi §2.5・C-2 N-1）。1つ上＝地域ページ（県内市町村の一覧） */}
           <Breadcrumb
             items={[
-              { label: "日本", href: "/" },
-              { label: prefecture.prefectureName, href: `/${prefecture.prefSlug}` },
-              { label: `${prefecture.prefectureName}庁` },
+              { label: t("crumb-japan"), href: "/" },
+              { label: prefLabel(prefecture.prefectureName), href: `/${prefecture.prefSlug}` },
+              { label: tf("p-pref-gov", { pref: prefLabel(prefecture.prefectureName) }) },
             ]}
           />
           <Link
@@ -82,13 +85,13 @@ export default async function GovEntrancePage({
             className="mt-1 inline-block py-1.5 fs-back hover:underline"
             style={{ color: "#073f91" }}
           >
-            ← {prefecture.prefectureName}の自治体一覧に戻る
+            {tf("p-back-to-pref-list", { pref: prefLabel(prefecture.prefectureName) })}
           </Link>
           <p className="mt-3 fs-label font-medium" style={{ color: "#073f91" }}>
-            都道府県
+            {t("area-prefecture")}
           </p>
           <h1 className="mt-1 text-2xl font-bold sm:text-3xl" style={{ color: "#073f91" }}>
-            {prefecture.prefectureName}
+            {prefLabel(prefecture.prefectureName)}
           </h1>
 
           <div className="mt-6 grid grid-cols-1 gap-3 sm:mt-8 sm:grid-cols-2 sm:gap-4">
@@ -120,10 +123,10 @@ export default async function GovEntrancePage({
         {/* パンくず＋戻る（ui-vi §2.5・C-2 N-1）。1つ上＝地域ページ（県内市町村の一覧）。区は親の市のページ */}
         <Breadcrumb
           items={[
-            { label: "日本", href: "/" },
-            { label: municipality.prefectureName, href: `/${municipality.prefSlug}` },
-            ...(parent ? [{ label: parent.cityName, href: `/${parent.prefSlug}/${parent.slug}` }] : []),
-            { label: municipality.cityName },
+            { label: t("crumb-japan"), href: "/" },
+            { label: municipality.prefectureLabel, href: `/${municipality.prefSlug}` },
+            ...(parent ? [{ label: parent.label, href: `/${parent.prefSlug}/${parent.slug}` }] : []),
+            { label: municipality.label },
           ]}
         />
         {parent ? (
@@ -132,7 +135,7 @@ export default async function GovEntrancePage({
             className="mt-1 mb-3 inline-block py-1.5 fs-back hover:underline"
             style={{ color: "var(--identity)" }}
           >
-            {`← ${parent.cityName}のページに戻る`}
+            {tf("p-back-to-city", { city: parent.label })}
           </Link>
         ) : (
         <Link
@@ -140,13 +143,14 @@ export default async function GovEntrancePage({
           className="mt-1 mb-3 inline-block py-1.5 fs-back hover:underline"
           style={{ color: "var(--identity)" }}
         >
-          ← {municipality.prefectureName}の自治体一覧に戻る
+          {tf("p-back-to-pref-list", { pref: municipality.prefectureLabel })}
         </Link>
         )}
         {/* h1（C-7）：切替ボタン内の団体名は見出しではないため、読み上げ・見出しナビ用に団体名のh1を置く（見た目は不変） */}
-        <h1 className="sr-only">{municipality.cityName}</h1>
+        <h1 className="sr-only">{municipality.label}</h1>
         <div>
           <MunicipalitySwitcher
+            msgs={msgsFor(SWITCHER_MSG_IDS)}
             current={municipality}
             list={[...MUNICIPALITIES, ...WARDS].filter((x) => x.prefSlug === municipality.prefSlug)}
           />
@@ -166,13 +170,13 @@ export default async function GovEntrancePage({
             ...(wards.length > 0
               ? [
                   <h2 key="wards-heading" className="col-span-full mt-4 fs-title font-semibold text-teal-950">
-                    {`${municipality.cityName}の区`}
+                    {tf("p-city-wards", { city: municipality.label })}
                   </h2>,
                   ...wards.map((w) => (
                     <EntranceCard
                       key={w.slug}
                       href={`/${w.prefSlug}/${w.slug}`}
-                      label={w.cityName.replace(municipality.cityName, "")}
+                      label={w.shortLabel ?? w.label}
                       summary={getEntranceSummary("machi", w)}
                     />
                   )),

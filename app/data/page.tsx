@@ -1,11 +1,13 @@
+import { LOCALE } from "@/lib/locale";
 import type { Metadata } from "next";
-import { pageMeta } from "@/lib/site";
+import { pageMeta, pageTitle } from "@/lib/site";
+import { t, tf } from "@/lib/i18n";
 import { PREFECTURES } from "@/lib/prefectures";
 
 // 日本地図（トップの「地域から探す」）は県が複数のビルドだけに出る。出るときだけ出典の文を足す（岐阜のみの公開用ビルドは変わらない）。
 const MAP_CREDIT =
   PREFECTURES.length > 1
-    ? "トップ画面の日本地図（8つの地方の形）も同じ「地球地図日本」を加工したもので、都道府県の境界を地方ごとに結合し、形を簡略化して描き直しています。沖縄県と遠く離れた小島は描いていません。"
+    ? t("dt-map-credit")
     : "";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -29,6 +31,8 @@ function lucideLicenseText(): string {
 }
 
 // 許諾文の日本語参考訳。法的効力があるのは英語の原文のみ（画面にもそう明記する）。
+// 参考訳（TRANSLATION_NOTE・MIT_BODY_JA・ISC_BODY_JA・Translation の見出し）は日本語版だけのもので、用語辞書には入れない。
+// 英語版は原文（英語）がそのまま読めるため参考訳を出さない（Translation は日本語版のときだけ中身を出す。作業単位6）。
 const TRANSLATION_NOTE = "参考訳（法的効力があるのは英語の原文です）";
 
 const MIT_BODY_JA = [
@@ -43,6 +47,7 @@ const ISC_BODY_JA = [
 ];
 
 function Translation({ blocks }: { blocks: { head: string; paras: string[] }[] }) {
+  if (LOCALE !== "ja") return null;
   return (
     <details>
       <summary className="cursor-pointer py-2 font-bold">{TRANSLATION_NOTE}</summary>
@@ -50,7 +55,7 @@ function Translation({ blocks }: { blocks: { head: string; paras: string[] }[] }
         {blocks.map((b) => (
           <div key={b.head} className="space-y-2">
             <p className="font-bold">{b.head}</p>
-            {b.paras.map((t) => <p key={t}>{t}</p>)}
+            {b.paras.map((para) => <p key={para}>{para}</p>)}
           </div>
         ))}
       </div>
@@ -59,58 +64,58 @@ function Translation({ blocks }: { blocks: { head: string; paras: string[] }[] }
 }
 
 export const metadata: Metadata = pageMeta({
-  title: "データについて | 自治体Watch",
-  description: "出典・加工した数値・AIの扱い・ライセンスについて。",
+  title: pageTitle(t("ui-nav-data")),
+  description: t("ui-desc-data"),
   path: "/data",
 });
 
 export default function DataPage() {
   return (
-    <SitePageShell title="データについて">
+    <SitePageShell title={t("ui-nav-data")}>
       <DocSection>
-        <p>このページでは、自治体Watchが掲載しているデータの扱い方について説明します。</p>
+        <p>{t("dt-intro")}</p>
       </DocSection>
 
-      <DocSection heading="出典について">
-        <p>各カードには、データの提供元（総務省・こども家庭庁・厚生労働省など）、調査名、更新日を明記しています。出典は各カードのフッターから確認できます。原則として、政府・自治体が公表している統計資料をもとにしています。</p>
+      <DocSection heading={t("dt-h-sources")}>
+        <p>{t("dt-sources-p")}</p>
       </DocSection>
 
-      <DocSection heading="加工した数値について">
-        <p>自治体Watchが独自に計算・加工した数値（一人あたりの金額に換算した値など）には、その旨と加工主体（自治体Watch）を明記しています。未加工の統計データと区別できるようにしています。</p>
+      <DocSection heading={t("dt-h-processed")}>
+        <p>{t("dt-processed-p")}</p>
       </DocSection>
 
-      <DocSection heading="AIによる抽出・要約について">
-        <p>自治体Watchでは、統計データの整理にAIを用いる場合があります。AIが生成・抽出したコンテンツには、その旨を示す表示を付け、非公式・要検証の情報であることを明示します。正確な情報が必要な場合は、あわせて表示している出典元の一次資料をご確認ください。</p>
+      <DocSection heading={t("dt-h-ai")}>
+        <p>{t("dt-ai-p")}</p>
       </DocSection>
 
-      <DocSection heading="ライセンスについて" id="license">
+      <DocSection heading={t("dt-h-license")} id="license">
         <p>
-          掲載データの多くは、
-          <a href="https://data.e-gov.go.jp/data/dataset/pulic_data_license" target="_blank" rel="noreferrer" className="underline underline-offset-2">公共データ利用規約（第1.0版・PDL1.0）</a>
-          等のもとで公開されている政府の公開データです。出典の明記と加工した旨の明示を条件に、自由な二次利用が認められています。提供元ごとに利用条件が異なるデータは、各カードの出典に従います。
+          {t("dt-lic-1")}
+          <a href="https://data.e-gov.go.jp/data/dataset/pulic_data_license" target="_blank" rel="noreferrer" className="underline underline-offset-2">{t("ab-data-pdl")}</a>
+          {t("dt-lic-2")}
         </p>
-        <p>サイトのソースコードは、次のMITライセンスで公開しています。MITライセンスはソースコードに適用されるもので、掲載データの利用条件を定めるものではありません。</p>
+        <p>{t("dt-lic-p2")}</p>
         <details>
-          <summary className="cursor-pointer py-2 font-bold">自治体Watch のソースコードのライセンス（MIT・全文・英語）</summary>
-          <pre tabIndex={0} role="region" aria-label="自治体Watch のソースコードのライセンス（矢印キーでスクロールできます）" className="mt-2 max-h-96 overflow-auto whitespace-pre-wrap rounded-lg border p-4 text-sm leading-relaxed" style={{ borderColor: "#d8e2ed" }}>
+          <summary className="cursor-pointer py-2 font-bold">{t("dt-mit-summary")}</summary>
+          <pre tabIndex={0} role="region" aria-label={t("dt-mit-aria")} className="mt-2 max-h-96 overflow-auto whitespace-pre-wrap rounded-lg border p-4 text-sm leading-relaxed" style={{ borderColor: "#d8e2ed" }}>
             {mitLicenseText()}
           </pre>
         </details>
         <Translation blocks={[{ head: "MITライセンス　著作権表示：Copyright (c) 2026 自治体Watch Project", paras: MIT_BODY_JA }]} />
       </DocSection>
 
-      <DocSection heading="素材の出典について">
+      <DocSection heading={t("dt-h-materials")}>
         <p>
-          トップ画面と岐阜県の入口画面にある岐阜県の形のアイコンは、「地球地図日本」（国土地理院）（
+          {t("dt-mat-1")}
           <a href="https://www.gsi.go.jp/kankyochiri/gm_jpn.html" target="_blank" rel="noreferrer" className="break-all underline underline-offset-2">https://www.gsi.go.jp/kankyochiri/gm_jpn.html</a>
-          ）を加工して作成したものです。このデータには
-          <a href="https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html" target="_blank" rel="noreferrer" className="underline underline-offset-2">国土地理院コンテンツ利用規約</a>
-          {`が適用されます。GitHubで公開されている変換データ（dataofjapan/land）から取得し、自治体Watchが輪郭を簡略化して描き直しています。${MAP_CREDIT}`}
+          {t("dt-mat-2")}
+          <a href="https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html" target="_blank" rel="noreferrer" className="underline underline-offset-2">{t("dt-mat-gsi-terms")}</a>
+          {tf("p-dt-mat-3", { mapcredit: MAP_CREDIT })}
         </p>
-        <p>上位3業種カードの業種別アイコンの意匠は、Lucide（ISC License）によります。著作権表示と許諾文は次のとおりです。</p>
+        <p>{t("dt-lucide-p")}</p>
         <details>
-          <summary className="cursor-pointer py-2 font-bold">Lucide の著作権表示と許諾文（全文・英語）</summary>
-          <pre tabIndex={0} role="region" aria-label="Lucide の著作権表示と許諾文（矢印キーでスクロールできます）" className="mt-2 max-h-96 overflow-auto whitespace-pre-wrap rounded-lg border p-4 text-sm leading-relaxed" style={{ borderColor: "#d8e2ed" }}>
+          <summary className="cursor-pointer py-2 font-bold">{t("dt-lucide-summary")}</summary>
+          <pre tabIndex={0} role="region" aria-label={t("dt-lucide-aria")} className="mt-2 max-h-96 overflow-auto whitespace-pre-wrap rounded-lg border p-4 text-sm leading-relaxed" style={{ borderColor: "#d8e2ed" }}>
             {lucideLicenseText()}
           </pre>
         </details>

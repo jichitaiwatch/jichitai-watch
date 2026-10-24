@@ -1,9 +1,12 @@
+import { LOCALE } from "@/lib/locale";
+import { prefLabel } from "@/lib/place-names";
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/SiteLink";
 import { MUNICIPALITIES, getWardsOf } from "@/lib/municipalities";
 import { notFound } from "next/navigation";
 import { PREFECTURES, getPrefectureBySlug } from "@/lib/prefectures";
-import { pageMeta, regionPath } from "@/lib/site";
+import { SITE_NAME, pageMeta, pageTitle, regionPath } from "@/lib/site";
+import { t, tf } from "@/lib/i18n";
 
 // app/[pref]/page.tsx — 地域ページ（/{pref}/。現在の公開は /gifu-pref/ のみ）。正本＝ui-vi §0.13/§2.1。
 // 「岐阜県という地域」＝県内市町村の一覧・県のシルエット・県庁への導線を持つ。
@@ -25,10 +28,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { pref } = await params;
   const prefecture = getPrefectureBySlug(pref);
-  if (!prefecture) return { title: "自治体Watch" }; // dynamicParams=false のため到達しない
+  if (!prefecture) return { title: SITE_NAME }; // dynamicParams=false のため到達しない
   return pageMeta({
-    title: `${prefecture.prefectureName} | 自治体Watch`,
-    description: `${prefecture.prefectureName}内の市町村一覧。市町村ごとに財政や暮らしの制度を見られます。`,
+    title: pageTitle(prefLabel(prefecture.prefectureName)),
+    description: tf("p-desc-region", { pref: prefLabel(prefecture.prefectureName) }),
     path: regionPath(prefecture.prefSlug),
   });
 }
@@ -56,7 +59,7 @@ export default async function PrefPage({
     <main id="main" tabIndex={-1} className="focus:outline-none min-h-screen bg-stone-100 px-3 py-6 sm:px-8 sm:py-10 type-large">
       <div className="mx-auto max-w-6xl">
         <Link href="/" className="inline-flex items-center gap-1 py-1.5 fs-label font-medium text-stone-600">
-          <span aria-hidden="true">←</span> トップ
+          <span aria-hidden="true">←</span>{t("rg-back-top")}
         </Link>
 
         {/* 見出し：県名＋シルエット＋件数 */}
@@ -68,14 +71,14 @@ export default async function PrefPage({
             </svg>
           </span>
           <div className="min-w-0">
-            <p className="fs-label font-medium" style={{ color: PREF_BLUE }}>都道府県</p>
+            <p className="fs-label font-medium" style={{ color: PREF_BLUE }}>{t("area-prefecture")}</p>
             <div className="mt-0.5 flex flex-wrap items-center gap-3">
               <h1 className="text-2xl font-bold sm:text-3xl" style={{ color: PREF_BLUE }}>
-                {prefecture.prefectureName}
+                {prefLabel(prefecture.prefectureName)}
               </h1>
               <span className="rounded-full border px-3 py-1 fs-label font-bold"
                 style={{ background: "#e4eefb", borderColor: "#c3d6f2", color: PREF_BLUE }}>
-                {municipalities.length}市町村
+                {tf("p-municipality-count", { n: `${municipalities.length}` })}
               </span>
             </div>
           </div>
@@ -89,10 +92,10 @@ export default async function PrefPage({
         >
           <span>
             <span className="block text-base font-bold" style={{ color: PREF_BLUE }}>
-              {prefecture.prefectureName}のデータを見る
+              {tf("p-see-pref-gov", { pref: prefLabel(prefecture.prefectureName) })}
             </span>
             <span className="mt-1 block fs-label text-stone-600">
-              県自身の財政・議会などの統治データ
+              {t("rg-pref-gov-desc")}
             </span>
           </span>
           <span className="text-2xl" style={{ color: PREF_BLUE }} aria-hidden="true">→</span>
@@ -101,7 +104,7 @@ export default async function PrefPage({
         {/* 県内市町村一覧 */}
         <section className="mt-8">
           <h2 className="text-lg font-bold text-teal-950">
-            県内の市町村 <span className="fs-label font-normal text-stone-600">{municipalities.length}件</span>
+            {t("rg-municipalities")}<span className="fs-label font-normal text-stone-600">{tf("p-fu-count", { n: `${municipalities.length}` })}</span>
           </h2>
           <ul className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
             {municipalities.flatMap((m) => {
@@ -115,7 +118,10 @@ export default async function PrefPage({
                     className="flex items-center justify-between rounded-xl border bg-white px-4 py-3.5 hover:border-teal-600"
                     style={{ borderColor: "#d5dfda", boxShadow: "0 2px 6px rgba(21,49,86,.03)" }}
                   >
-                    <span className="min-w-0 truncate font-bold text-teal-950">{m.cityName}</span>
+                    {/* 英語の名前（Higashishirakawa Village など）は長く、省略記号で切ると読めないので、英語版だけ折り返す */}
+                    <span className={LOCALE === "en" ? "min-w-0 break-words leading-tight font-bold text-teal-950" : "min-w-0 truncate font-bold text-teal-950"}>
+                      {m.label}
+                    </span>
                     <span className="shrink-0 text-lg text-teal-700" aria-hidden="true">›</span>
                   </Link>
                 </li>,
@@ -124,7 +130,7 @@ export default async function PrefPage({
                       <li key={`${m.areaCode}-wards`} className="col-span-full">
                         <div className="ml-4 border-l-2 pl-4" style={{ borderColor: "#d5dfda" }}>
                           <p className="fs-label font-medium text-stone-600">
-                            {m.cityName}の区 <span className="font-normal">{wards.length}件</span>
+                            {tf("p-rg-wards", { city: m.label })}<span className="font-normal">{tf("p-fu-count", { n: `${wards.length}` })}</span>
                           </p>
                           <ul className="mt-2 flex flex-wrap gap-2">
                             {wards.map((w) => (
@@ -134,7 +140,7 @@ export default async function PrefPage({
                                   className="inline-flex items-center gap-1 rounded-lg border bg-white px-3 py-2 fs-label font-bold text-teal-950 hover:border-teal-600"
                                   style={{ borderColor: "#d5dfda" }}
                                 >
-                                  {w.cityName.replace(m.cityName, "")}
+                                  {w.shortLabel}
                                   <span className="text-teal-700" aria-hidden="true">›</span>
                                 </Link>
                               </li>

@@ -8,6 +8,7 @@ import { useEffect, useState, type RefObject } from "react";
  * 枠がはみ出す（スマホ幅等）ときはこの枠自体を名前付きでフォーカス可能にし、矢印キーでスクロールできるようにする。
  * はみ出さない（PC幅）ときは Tab で止まらない。値の読み上げは SrOnlyDataTable が担う。
  */
+/** label は読み上げ用の名前の全文（「（左右の矢印キーでスクロール）」まで含む。呼び出し側が辞書の p-scroll-region で組み立てて渡す） */
 export function useScrollRegion(ref: RefObject<HTMLDivElement | null>, label: string) {
   const [overflowing, setOverflowing] = useState(false);
 
@@ -25,7 +26,7 @@ export function useScrollRegion(ref: RefObject<HTMLDivElement | null>, label: st
     ? ({
         tabIndex: 0,
         role: "region",
-        "aria-label": `${label}（左右の矢印キーでスクロール）`,
+        "aria-label": label,
       } as const)
     : {};
 }

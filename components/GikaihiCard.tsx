@@ -1,3 +1,6 @@
+import { EnMoneyText } from "@/components/MoneyText";
+import { LOCALE } from "@/lib/locale";
+import { t } from "@/lib/i18n";
 import { type ComparisonNoteProps } from "./ComparisonNote";
 import { formatManOku, formatThousandYenExact } from "@/lib/format-yen";
 import { toFixedHalfUp } from "@/lib/format-decimal";
@@ -22,19 +25,19 @@ export function GikaihiCard({ current, prior }: GikaihiCardProps) {
 
   return (
     <div className="flex flex-col gap-2">
-      <p className="fs-label text-[var(--muted)]">議会費（普通会計）</p>
+      <p className="fs-label text-[var(--muted)]">{t("gh-label")}</p>
       <p className="leading-none text-[var(--identity)]">
         <span className="text-[36px] font-extrabold tracking-[-0.02em] sm:text-[38px]">
-          {current !== null ? formatManOku(current) : "確認できず"}
+          {current !== null ? (LOCALE === "en" ? <EnMoneyText thousandYen={current} /> : formatManOku(current)) : t("val-not-confirmed")}
         </span>
       </p>
       {current !== null && (
-        <span className="sr-only">正確な金額：{formatThousandYenExact(current)}</span>
+        <span className="sr-only">{t("gh-exact")}{formatThousandYenExact(current)}</span>
       )}
       <p className="fs-sub text-[var(--muted)]">
-        前年比（同一団体）：
+        {t("gh-yoy")}
         <span className="font-semibold text-[var(--body)]">
-          {yoy !== null ? `${yoy >= 0 ? "+" : ""}${toFixedHalfUp(yoy, 1)}%` : "確認できず"}
+          {yoy !== null ? `${yoy >= 0 ? "+" : ""}${toFixedHalfUp(yoy, 1)}%` : t("val-not-confirmed")}
         </span>
       </p>
     </div>

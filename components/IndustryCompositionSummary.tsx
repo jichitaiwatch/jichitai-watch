@@ -1,3 +1,4 @@
+import { t, tf } from "@/lib/i18n";
 import ComparisonNote, { type ComparisonNoteProps } from "./ComparisonNote";
 
 interface IndustryCompositionSummaryProps {
@@ -58,11 +59,11 @@ function Sector({
         {FIGURES[figure]}
       </svg>
       <div className="sector-pct flex flex-col items-center gap-0 sm:flex-row sm:items-baseline sm:gap-1">
-        <span className="fs-sub text-[var(--muted)]">構成比</span>
+        <span className="fs-sub text-[var(--muted)]">{t("col-share")}</span>
         <b className="fs-key font-extrabold text-[var(--ink)]">{pct}%</b>
       </div>
       {count != null && (
-        <p className="sector-count mt-0.5 fs-sub text-[var(--muted)]">{count.toLocaleString()}人</p>
+        <p className="sector-count mt-0.5 fs-sub text-[var(--muted)]">{tf("p-people", { n: count.toLocaleString() })}</p>
       )}
       {comparison && (
         <div className="sector-cmp w-full [&_p]:text-center">
@@ -94,9 +95,9 @@ export function IndustryCompositionSummary({
 }: IndustryCompositionSummaryProps) {
   return (
     <div className="sector-grid grid gap-2 [grid-template-columns:repeat(var(--ind-cols),minmax(0,1fr))]">
-      <Sector label="第1次産業" pct={primaryPct} count={primaryCount} colorVar="var(--sector1)" textVar="var(--sector1-text)" bgVar="var(--sector1-bg)" figure="plant" comparison={primaryComparison} />
-      <Sector label="第2次産業" pct={secondaryPct} count={secondaryCount} colorVar="var(--sector2)" textVar="var(--sector2-text)" bgVar="var(--sector2-bg)" figure="factory" comparison={secondaryComparison} />
-      <Sector label="第3次産業" pct={tertiaryPct} count={tertiaryCount} colorVar="var(--sector3)" textVar="var(--sector3-text)" bgVar="var(--sector3-bg)" figure="city" comparison={tertiaryComparison} />
+      <Sector label={t("ind-sector-primary")} pct={primaryPct} count={primaryCount} colorVar="var(--sector1)" textVar="var(--sector1-text)" bgVar="var(--sector1-bg)" figure="plant" comparison={primaryComparison} />
+      <Sector label={t("ind-sector-secondary")} pct={secondaryPct} count={secondaryCount} colorVar="var(--sector2)" textVar="var(--sector2-text)" bgVar="var(--sector2-bg)" figure="factory" comparison={secondaryComparison} />
+      <Sector label={t("ind-sector-tertiary")} pct={tertiaryPct} count={tertiaryCount} colorVar="var(--sector3)" textVar="var(--sector3-text)" bgVar="var(--sector3-bg)" figure="city" comparison={tertiaryComparison} />
     </div>
   );
 }

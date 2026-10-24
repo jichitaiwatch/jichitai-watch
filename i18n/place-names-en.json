@@ -1,0 +1,1116 @@
+{
+  "about": {
+    "role": "県・市区町村の英語の名前（画面に出す名前）。scripts/gen_place_names_en.py が作る。手で直さない。",
+    "rules": "i18n/glossary.json の place_names（2026-10-23 運営者裁定）",
+    "source": "総務省「全国地方公共団体コード」のカナ（data/municipality_kana.json）。直したものの根拠は scripts/gen_place_names_en.py の OVERRIDES",
+    "scope": "47都道府県すべてと、データのある県の市区町村"
+  },
+  "prefectures": {
+    "01": {
+      "ja": "北海道",
+      "en": "Hokkaido"
+    },
+    "02": {
+      "ja": "青森県",
+      "en": "Aomori Prefecture"
+    },
+    "03": {
+      "ja": "岩手県",
+      "en": "Iwate Prefecture"
+    },
+    "04": {
+      "ja": "宮城県",
+      "en": "Miyagi Prefecture"
+    },
+    "05": {
+      "ja": "秋田県",
+      "en": "Akita Prefecture"
+    },
+    "06": {
+      "ja": "山形県",
+      "en": "Yamagata Prefecture"
+    },
+    "07": {
+      "ja": "福島県",
+      "en": "Fukushima Prefecture"
+    },
+    "08": {
+      "ja": "茨城県",
+      "en": "Ibaraki Prefecture"
+    },
+    "09": {
+      "ja": "栃木県",
+      "en": "Tochigi Prefecture"
+    },
+    "10": {
+      "ja": "群馬県",
+      "en": "Gunma Prefecture"
+    },
+    "11": {
+      "ja": "埼玉県",
+      "en": "Saitama Prefecture"
+    },
+    "12": {
+      "ja": "千葉県",
+      "en": "Chiba Prefecture"
+    },
+    "13": {
+      "ja": "東京都",
+      "en": "Tokyo Metropolis"
+    },
+    "14": {
+      "ja": "神奈川県",
+      "en": "Kanagawa Prefecture"
+    },
+    "15": {
+      "ja": "新潟県",
+      "en": "Niigata Prefecture"
+    },
+    "16": {
+      "ja": "富山県",
+      "en": "Toyama Prefecture"
+    },
+    "17": {
+      "ja": "石川県",
+      "en": "Ishikawa Prefecture"
+    },
+    "18": {
+      "ja": "福井県",
+      "en": "Fukui Prefecture"
+    },
+    "19": {
+      "ja": "山梨県",
+      "en": "Yamanashi Prefecture"
+    },
+    "20": {
+      "ja": "長野県",
+      "en": "Nagano Prefecture"
+    },
+    "21": {
+      "ja": "岐阜県",
+      "en": "Gifu Prefecture"
+    },
+    "22": {
+      "ja": "静岡県",
+      "en": "Shizuoka Prefecture"
+    },
+    "23": {
+      "ja": "愛知県",
+      "en": "Aichi Prefecture"
+    },
+    "24": {
+      "ja": "三重県",
+      "en": "Mie Prefecture"
+    },
+    "25": {
+      "ja": "滋賀県",
+      "en": "Shiga Prefecture"
+    },
+    "26": {
+      "ja": "京都府",
+      "en": "Kyoto Prefecture"
+    },
+    "27": {
+      "ja": "大阪府",
+      "en": "Osaka Prefecture"
+    },
+    "28": {
+      "ja": "兵庫県",
+      "en": "Hyogo Prefecture"
+    },
+    "29": {
+      "ja": "奈良県",
+      "en": "Nara Prefecture"
+    },
+    "30": {
+      "ja": "和歌山県",
+      "en": "Wakayama Prefecture"
+    },
+    "31": {
+      "ja": "鳥取県",
+      "en": "Tottori Prefecture"
+    },
+    "32": {
+      "ja": "島根県",
+      "en": "Shimane Prefecture"
+    },
+    "33": {
+      "ja": "岡山県",
+      "en": "Okayama Prefecture"
+    },
+    "34": {
+      "ja": "広島県",
+      "en": "Hiroshima Prefecture"
+    },
+    "35": {
+      "ja": "山口県",
+      "en": "Yamaguchi Prefecture"
+    },
+    "36": {
+      "ja": "徳島県",
+      "en": "Tokushima Prefecture"
+    },
+    "37": {
+      "ja": "香川県",
+      "en": "Kagawa Prefecture"
+    },
+    "38": {
+      "ja": "愛媛県",
+      "en": "Ehime Prefecture"
+    },
+    "39": {
+      "ja": "高知県",
+      "en": "Kochi Prefecture"
+    },
+    "40": {
+      "ja": "福岡県",
+      "en": "Fukuoka Prefecture"
+    },
+    "41": {
+      "ja": "佐賀県",
+      "en": "Saga Prefecture"
+    },
+    "42": {
+      "ja": "長崎県",
+      "en": "Nagasaki Prefecture"
+    },
+    "43": {
+      "ja": "熊本県",
+      "en": "Kumamoto Prefecture"
+    },
+    "44": {
+      "ja": "大分県",
+      "en": "Oita Prefecture"
+    },
+    "45": {
+      "ja": "宮崎県",
+      "en": "Miyazaki Prefecture"
+    },
+    "46": {
+      "ja": "鹿児島県",
+      "en": "Kagoshima Prefecture"
+    },
+    "47": {
+      "ja": "沖縄県",
+      "en": "Okinawa Prefecture"
+    }
+  },
+  "municipalities": {
+    "212016": {
+      "ja": "岐阜市",
+      "en": "Gifu City"
+    },
+    "212024": {
+      "ja": "大垣市",
+      "en": "Ogaki City"
+    },
+    "212032": {
+      "ja": "高山市",
+      "en": "Takayama City"
+    },
+    "212041": {
+      "ja": "多治見市",
+      "en": "Tajimi City"
+    },
+    "212059": {
+      "ja": "関市",
+      "en": "Seki City"
+    },
+    "212067": {
+      "ja": "中津川市",
+      "en": "Nakatsugawa City"
+    },
+    "212075": {
+      "ja": "美濃市",
+      "en": "Mino City"
+    },
+    "212083": {
+      "ja": "瑞浪市",
+      "en": "Mizunami City"
+    },
+    "212091": {
+      "ja": "羽島市",
+      "en": "Hashima City"
+    },
+    "212105": {
+      "ja": "恵那市",
+      "en": "Ena City"
+    },
+    "212113": {
+      "ja": "美濃加茂市",
+      "en": "Minokamo City"
+    },
+    "212121": {
+      "ja": "土岐市",
+      "en": "Toki City"
+    },
+    "212130": {
+      "ja": "各務原市",
+      "en": "Kakamigahara City"
+    },
+    "212148": {
+      "ja": "可児市",
+      "en": "Kani City"
+    },
+    "212156": {
+      "ja": "山県市",
+      "en": "Yamagata City"
+    },
+    "212164": {
+      "ja": "瑞穂市",
+      "en": "Mizuho City"
+    },
+    "212172": {
+      "ja": "飛騨市",
+      "en": "Hida City"
+    },
+    "212181": {
+      "ja": "本巣市",
+      "en": "Motosu City"
+    },
+    "212199": {
+      "ja": "郡上市",
+      "en": "Gujo City"
+    },
+    "212202": {
+      "ja": "下呂市",
+      "en": "Gero City"
+    },
+    "212211": {
+      "ja": "海津市",
+      "en": "Kaizu City"
+    },
+    "213021": {
+      "ja": "岐南町",
+      "en": "Ginan Town"
+    },
+    "213039": {
+      "ja": "笠松町",
+      "en": "Kasamatsu Town"
+    },
+    "213411": {
+      "ja": "養老町",
+      "en": "Yoro Town"
+    },
+    "213616": {
+      "ja": "垂井町",
+      "en": "Tarui Town"
+    },
+    "213624": {
+      "ja": "関ケ原町",
+      "en": "Sekigahara Town"
+    },
+    "213811": {
+      "ja": "神戸町",
+      "en": "Godo Town"
+    },
+    "213829": {
+      "ja": "輪之内町",
+      "en": "Wanouchi Town"
+    },
+    "213837": {
+      "ja": "安八町",
+      "en": "Anpachi Town"
+    },
+    "214019": {
+      "ja": "揖斐川町",
+      "en": "Ibigawa Town"
+    },
+    "214035": {
+      "ja": "大野町",
+      "en": "Ono Town"
+    },
+    "214043": {
+      "ja": "池田町",
+      "en": "Ikeda Town"
+    },
+    "214213": {
+      "ja": "北方町",
+      "en": "Kitagata Town"
+    },
+    "215015": {
+      "ja": "坂祝町",
+      "en": "Sakahogi Town"
+    },
+    "215023": {
+      "ja": "富加町",
+      "en": "Tomika Town"
+    },
+    "215031": {
+      "ja": "川辺町",
+      "en": "Kawabe Town"
+    },
+    "215040": {
+      "ja": "七宗町",
+      "en": "Hichiso Town"
+    },
+    "215058": {
+      "ja": "八百津町",
+      "en": "Yaotsu Town"
+    },
+    "215066": {
+      "ja": "白川町",
+      "en": "Shirakawa Town"
+    },
+    "215074": {
+      "ja": "東白川村",
+      "en": "Higashishirakawa Village"
+    },
+    "215210": {
+      "ja": "御嵩町",
+      "en": "Mitake Town"
+    },
+    "216046": {
+      "ja": "白川村",
+      "en": "Shirakawa Village"
+    },
+    "231002": {
+      "ja": "名古屋市",
+      "en": "Nagoya City"
+    },
+    "231011": {
+      "ja": "名古屋市千種区",
+      "en": "Chikusa Ward, Nagoya City",
+      "short_en": "Chikusa Ward"
+    },
+    "231029": {
+      "ja": "名古屋市東区",
+      "en": "Higashi Ward, Nagoya City",
+      "short_en": "Higashi Ward"
+    },
+    "231037": {
+      "ja": "名古屋市北区",
+      "en": "Kita Ward, Nagoya City",
+      "short_en": "Kita Ward"
+    },
+    "231045": {
+      "ja": "名古屋市西区",
+      "en": "Nishi Ward, Nagoya City",
+      "short_en": "Nishi Ward"
+    },
+    "231053": {
+      "ja": "名古屋市中村区",
+      "en": "Nakamura Ward, Nagoya City",
+      "short_en": "Nakamura Ward"
+    },
+    "231061": {
+      "ja": "名古屋市中区",
+      "en": "Naka Ward, Nagoya City",
+      "short_en": "Naka Ward"
+    },
+    "231070": {
+      "ja": "名古屋市昭和区",
+      "en": "Showa Ward, Nagoya City",
+      "short_en": "Showa Ward"
+    },
+    "231088": {
+      "ja": "名古屋市瑞穂区",
+      "en": "Mizuho Ward, Nagoya City",
+      "short_en": "Mizuho Ward"
+    },
+    "231096": {
+      "ja": "名古屋市熱田区",
+      "en": "Atsuta Ward, Nagoya City",
+      "short_en": "Atsuta Ward"
+    },
+    "231100": {
+      "ja": "名古屋市中川区",
+      "en": "Nakagawa Ward, Nagoya City",
+      "short_en": "Nakagawa Ward"
+    },
+    "231118": {
+      "ja": "名古屋市港区",
+      "en": "Minato Ward, Nagoya City",
+      "short_en": "Minato Ward"
+    },
+    "231126": {
+      "ja": "名古屋市南区",
+      "en": "Minami Ward, Nagoya City",
+      "short_en": "Minami Ward"
+    },
+    "231134": {
+      "ja": "名古屋市守山区",
+      "en": "Moriyama Ward, Nagoya City",
+      "short_en": "Moriyama Ward"
+    },
+    "231142": {
+      "ja": "名古屋市緑区",
+      "en": "Midori Ward, Nagoya City",
+      "short_en": "Midori Ward"
+    },
+    "231151": {
+      "ja": "名古屋市名東区",
+      "en": "Meito Ward, Nagoya City",
+      "short_en": "Meito Ward"
+    },
+    "231169": {
+      "ja": "名古屋市天白区",
+      "en": "Tenpaku Ward, Nagoya City",
+      "short_en": "Tenpaku Ward"
+    },
+    "232017": {
+      "ja": "豊橋市",
+      "en": "Toyohashi City"
+    },
+    "232025": {
+      "ja": "岡崎市",
+      "en": "Okazaki City"
+    },
+    "232033": {
+      "ja": "一宮市",
+      "en": "Ichinomiya City"
+    },
+    "232041": {
+      "ja": "瀬戸市",
+      "en": "Seto City"
+    },
+    "232050": {
+      "ja": "半田市",
+      "en": "Handa City"
+    },
+    "232068": {
+      "ja": "春日井市",
+      "en": "Kasugai City"
+    },
+    "232076": {
+      "ja": "豊川市",
+      "en": "Toyokawa City"
+    },
+    "232084": {
+      "ja": "津島市",
+      "en": "Tsushima City"
+    },
+    "232092": {
+      "ja": "碧南市",
+      "en": "Hekinan City"
+    },
+    "232106": {
+      "ja": "刈谷市",
+      "en": "Kariya City"
+    },
+    "232114": {
+      "ja": "豊田市",
+      "en": "Toyota City"
+    },
+    "232122": {
+      "ja": "安城市",
+      "en": "Anjo City"
+    },
+    "232131": {
+      "ja": "西尾市",
+      "en": "Nishio City"
+    },
+    "232149": {
+      "ja": "蒲郡市",
+      "en": "Gamagori City"
+    },
+    "232157": {
+      "ja": "犬山市",
+      "en": "Inuyama City"
+    },
+    "232165": {
+      "ja": "常滑市",
+      "en": "Tokoname City"
+    },
+    "232173": {
+      "ja": "江南市",
+      "en": "Konan City"
+    },
+    "232190": {
+      "ja": "小牧市",
+      "en": "Komaki City"
+    },
+    "232203": {
+      "ja": "稲沢市",
+      "en": "Inazawa City"
+    },
+    "232211": {
+      "ja": "新城市",
+      "en": "Shinshiro City"
+    },
+    "232220": {
+      "ja": "東海市",
+      "en": "Tokai City"
+    },
+    "232238": {
+      "ja": "大府市",
+      "en": "Obu City"
+    },
+    "232246": {
+      "ja": "知多市",
+      "en": "Chita City"
+    },
+    "232254": {
+      "ja": "知立市",
+      "en": "Chiryu City"
+    },
+    "232262": {
+      "ja": "尾張旭市",
+      "en": "Owariasahi City"
+    },
+    "232271": {
+      "ja": "高浜市",
+      "en": "Takahama City"
+    },
+    "232289": {
+      "ja": "岩倉市",
+      "en": "Iwakura City"
+    },
+    "232297": {
+      "ja": "豊明市",
+      "en": "Toyoake City"
+    },
+    "232301": {
+      "ja": "日進市",
+      "en": "Nisshin City"
+    },
+    "232319": {
+      "ja": "田原市",
+      "en": "Tahara City"
+    },
+    "232327": {
+      "ja": "愛西市",
+      "en": "Aisai City"
+    },
+    "232335": {
+      "ja": "清須市",
+      "en": "Kiyosu City"
+    },
+    "232343": {
+      "ja": "北名古屋市",
+      "en": "Kitanagoya City"
+    },
+    "232351": {
+      "ja": "弥富市",
+      "en": "Yatomi City"
+    },
+    "232360": {
+      "ja": "みよし市",
+      "en": "Miyoshi City"
+    },
+    "232378": {
+      "ja": "あま市",
+      "en": "Ama City"
+    },
+    "232386": {
+      "ja": "長久手市",
+      "en": "Nagakute City"
+    },
+    "233021": {
+      "ja": "東郷町",
+      "en": "Togo Town"
+    },
+    "233421": {
+      "ja": "豊山町",
+      "en": "Toyoyama Town"
+    },
+    "233617": {
+      "ja": "大口町",
+      "en": "Oguchi Town"
+    },
+    "233625": {
+      "ja": "扶桑町",
+      "en": "Fuso Town"
+    },
+    "234249": {
+      "ja": "大治町",
+      "en": "Oharu Town"
+    },
+    "234257": {
+      "ja": "蟹江町",
+      "en": "Kanie Town"
+    },
+    "234273": {
+      "ja": "飛島村",
+      "en": "Tobishima Village"
+    },
+    "234419": {
+      "ja": "阿久比町",
+      "en": "Agui Town"
+    },
+    "234427": {
+      "ja": "東浦町",
+      "en": "Higashiura Town"
+    },
+    "234451": {
+      "ja": "南知多町",
+      "en": "Minamichita Town"
+    },
+    "234460": {
+      "ja": "美浜町",
+      "en": "Mihama Town"
+    },
+    "234478": {
+      "ja": "武豊町",
+      "en": "Taketoyo Town"
+    },
+    "235016": {
+      "ja": "幸田町",
+      "en": "Kota Town"
+    },
+    "235610": {
+      "ja": "設楽町",
+      "en": "Shitara Town"
+    },
+    "235628": {
+      "ja": "東栄町",
+      "en": "Toei Town"
+    },
+    "235636": {
+      "ja": "豊根村",
+      "en": "Toyone Village"
+    },
+    "242012": {
+      "ja": "津市",
+      "en": "Tsu City"
+    },
+    "242021": {
+      "ja": "四日市市",
+      "en": "Yokkaichi City"
+    },
+    "242039": {
+      "ja": "伊勢市",
+      "en": "Ise City"
+    },
+    "242047": {
+      "ja": "松阪市",
+      "en": "Matsusaka City"
+    },
+    "242055": {
+      "ja": "桑名市",
+      "en": "Kuwana City"
+    },
+    "242071": {
+      "ja": "鈴鹿市",
+      "en": "Suzuka City"
+    },
+    "242080": {
+      "ja": "名張市",
+      "en": "Nabari City"
+    },
+    "242098": {
+      "ja": "尾鷲市",
+      "en": "Owase City"
+    },
+    "242101": {
+      "ja": "亀山市",
+      "en": "Kameyama City"
+    },
+    "242110": {
+      "ja": "鳥羽市",
+      "en": "Toba City"
+    },
+    "242128": {
+      "ja": "熊野市",
+      "en": "Kumano City"
+    },
+    "242144": {
+      "ja": "いなべ市",
+      "en": "Inabe City"
+    },
+    "242152": {
+      "ja": "志摩市",
+      "en": "Shima City"
+    },
+    "242161": {
+      "ja": "伊賀市",
+      "en": "Iga City"
+    },
+    "243035": {
+      "ja": "木曽岬町",
+      "en": "Kisosaki Town"
+    },
+    "243248": {
+      "ja": "東員町",
+      "en": "Toin Town"
+    },
+    "243418": {
+      "ja": "菰野町",
+      "en": "Komono Town"
+    },
+    "243434": {
+      "ja": "朝日町",
+      "en": "Asahi Town"
+    },
+    "243442": {
+      "ja": "川越町",
+      "en": "Kawagoe Town"
+    },
+    "244414": {
+      "ja": "多気町",
+      "en": "Taki Town"
+    },
+    "244422": {
+      "ja": "明和町",
+      "en": "Meiwa Town"
+    },
+    "244431": {
+      "ja": "大台町",
+      "en": "Odai Town"
+    },
+    "244619": {
+      "ja": "玉城町",
+      "en": "Tamaki Town"
+    },
+    "244708": {
+      "ja": "度会町",
+      "en": "Watarai Town"
+    },
+    "244716": {
+      "ja": "大紀町",
+      "en": "Taiki Town"
+    },
+    "244724": {
+      "ja": "南伊勢町",
+      "en": "Minamiise Town"
+    },
+    "245437": {
+      "ja": "紀北町",
+      "en": "Kihoku Town"
+    },
+    "245615": {
+      "ja": "御浜町",
+      "en": "Mihama Town"
+    },
+    "245623": {
+      "ja": "紀宝町",
+      "en": "Kiho Town"
+    },
+    "331007": {
+      "ja": "岡山市",
+      "en": "Okayama City"
+    },
+    "331015": {
+      "ja": "岡山市北区",
+      "en": "Kita Ward, Okayama City",
+      "short_en": "Kita Ward"
+    },
+    "331023": {
+      "ja": "岡山市中区",
+      "en": "Naka Ward, Okayama City",
+      "short_en": "Naka Ward"
+    },
+    "331031": {
+      "ja": "岡山市東区",
+      "en": "Higashi Ward, Okayama City",
+      "short_en": "Higashi Ward"
+    },
+    "331040": {
+      "ja": "岡山市南区",
+      "en": "Minami Ward, Okayama City",
+      "short_en": "Minami Ward"
+    },
+    "332020": {
+      "ja": "倉敷市",
+      "en": "Kurashiki City"
+    },
+    "332038": {
+      "ja": "津山市",
+      "en": "Tsuyama City"
+    },
+    "332046": {
+      "ja": "玉野市",
+      "en": "Tamano City"
+    },
+    "332054": {
+      "ja": "笠岡市",
+      "en": "Kasaoka City"
+    },
+    "332071": {
+      "ja": "井原市",
+      "en": "Ibara City"
+    },
+    "332089": {
+      "ja": "総社市",
+      "en": "Soja City"
+    },
+    "332097": {
+      "ja": "高梁市",
+      "en": "Takahashi City"
+    },
+    "332101": {
+      "ja": "新見市",
+      "en": "Niimi City"
+    },
+    "332119": {
+      "ja": "備前市",
+      "en": "Bizen City"
+    },
+    "332127": {
+      "ja": "瀬戸内市",
+      "en": "Setouchi City"
+    },
+    "332135": {
+      "ja": "赤磐市",
+      "en": "Akaiwa City"
+    },
+    "332143": {
+      "ja": "真庭市",
+      "en": "Maniwa City"
+    },
+    "332151": {
+      "ja": "美作市",
+      "en": "Mimasaka City"
+    },
+    "332160": {
+      "ja": "浅口市",
+      "en": "Asakuchi City"
+    },
+    "333468": {
+      "ja": "和気町",
+      "en": "Wake Town"
+    },
+    "334235": {
+      "ja": "早島町",
+      "en": "Hayashima Town"
+    },
+    "334456": {
+      "ja": "里庄町",
+      "en": "Satosho Town"
+    },
+    "334618": {
+      "ja": "矢掛町",
+      "en": "Yakage Town"
+    },
+    "335860": {
+      "ja": "新庄村",
+      "en": "Shinjo Village"
+    },
+    "336068": {
+      "ja": "鏡野町",
+      "en": "Kagamino Town"
+    },
+    "336220": {
+      "ja": "勝央町",
+      "en": "Shoo Town"
+    },
+    "336238": {
+      "ja": "奈義町",
+      "en": "Nagi Town"
+    },
+    "336432": {
+      "ja": "西粟倉村",
+      "en": "Nishiawakura Village"
+    },
+    "336637": {
+      "ja": "久米南町",
+      "en": "Kumenan Town"
+    },
+    "336661": {
+      "ja": "美咲町",
+      "en": "Misaki Town"
+    },
+    "336815": {
+      "ja": "吉備中央町",
+      "en": "Kibichuo Town"
+    },
+    "341002": {
+      "ja": "広島市",
+      "en": "Hiroshima City"
+    },
+    "341011": {
+      "ja": "広島市中区",
+      "en": "Naka Ward, Hiroshima City",
+      "short_en": "Naka Ward"
+    },
+    "341029": {
+      "ja": "広島市東区",
+      "en": "Higashi Ward, Hiroshima City",
+      "short_en": "Higashi Ward"
+    },
+    "341037": {
+      "ja": "広島市南区",
+      "en": "Minami Ward, Hiroshima City",
+      "short_en": "Minami Ward"
+    },
+    "341045": {
+      "ja": "広島市西区",
+      "en": "Nishi Ward, Hiroshima City",
+      "short_en": "Nishi Ward"
+    },
+    "341053": {
+      "ja": "広島市安佐南区",
+      "en": "Asaminami Ward, Hiroshima City",
+      "short_en": "Asaminami Ward"
+    },
+    "341061": {
+      "ja": "広島市安佐北区",
+      "en": "Asakita Ward, Hiroshima City",
+      "short_en": "Asakita Ward"
+    },
+    "341070": {
+      "ja": "広島市安芸区",
+      "en": "Aki Ward, Hiroshima City",
+      "short_en": "Aki Ward"
+    },
+    "341088": {
+      "ja": "広島市佐伯区",
+      "en": "Saeki Ward, Hiroshima City",
+      "short_en": "Saeki Ward"
+    },
+    "342025": {
+      "ja": "呉市",
+      "en": "Kure City"
+    },
+    "342033": {
+      "ja": "竹原市",
+      "en": "Takehara City"
+    },
+    "342041": {
+      "ja": "三原市",
+      "en": "Mihara City"
+    },
+    "342050": {
+      "ja": "尾道市",
+      "en": "Onomichi City"
+    },
+    "342076": {
+      "ja": "福山市",
+      "en": "Fukuyama City"
+    },
+    "342084": {
+      "ja": "府中市",
+      "en": "Fuchu City"
+    },
+    "342092": {
+      "ja": "三次市",
+      "en": "Miyoshi City"
+    },
+    "342106": {
+      "ja": "庄原市",
+      "en": "Shobara City"
+    },
+    "342114": {
+      "ja": "大竹市",
+      "en": "Otake City"
+    },
+    "342122": {
+      "ja": "東広島市",
+      "en": "Higashihiroshima City"
+    },
+    "342131": {
+      "ja": "廿日市市",
+      "en": "Hatsukaichi City"
+    },
+    "342149": {
+      "ja": "安芸高田市",
+      "en": "Akitakata City"
+    },
+    "342157": {
+      "ja": "江田島市",
+      "en": "Etajima City"
+    },
+    "343021": {
+      "ja": "府中町",
+      "en": "Fuchu Town"
+    },
+    "343048": {
+      "ja": "海田町",
+      "en": "Kaita Town"
+    },
+    "343072": {
+      "ja": "熊野町",
+      "en": "Kumano Town"
+    },
+    "343099": {
+      "ja": "坂町",
+      "en": "Saka Town"
+    },
+    "343684": {
+      "ja": "安芸太田町",
+      "en": "Akiota Town"
+    },
+    "343692": {
+      "ja": "北広島町",
+      "en": "Kitahiroshima Town"
+    },
+    "344311": {
+      "ja": "大崎上島町",
+      "en": "Osakikamijima Town"
+    },
+    "344621": {
+      "ja": "世羅町",
+      "en": "Sera Town"
+    },
+    "345458": {
+      "ja": "神石高原町",
+      "en": "Jinsekikogen Town"
+    },
+    "352012": {
+      "ja": "下関市",
+      "en": "Shimonoseki City"
+    },
+    "352021": {
+      "ja": "宇部市",
+      "en": "Ube City"
+    },
+    "352039": {
+      "ja": "山口市",
+      "en": "Yamaguchi City"
+    },
+    "352047": {
+      "ja": "萩市",
+      "en": "Hagi City"
+    },
+    "352063": {
+      "ja": "防府市",
+      "en": "Hofu City"
+    },
+    "352071": {
+      "ja": "下松市",
+      "en": "Kudamatsu City"
+    },
+    "352080": {
+      "ja": "岩国市",
+      "en": "Iwakuni City"
+    },
+    "352101": {
+      "ja": "光市",
+      "en": "Hikari City"
+    },
+    "352110": {
+      "ja": "長門市",
+      "en": "Nagato City"
+    },
+    "352128": {
+      "ja": "柳井市",
+      "en": "Yanai City"
+    },
+    "352136": {
+      "ja": "美祢市",
+      "en": "Mine City"
+    },
+    "352152": {
+      "ja": "周南市",
+      "en": "Shunan City"
+    },
+    "352161": {
+      "ja": "山陽小野田市",
+      "en": "Sanyoonoda City"
+    },
+    "353051": {
+      "ja": "周防大島町",
+      "en": "Suooshima Town"
+    },
+    "353213": {
+      "ja": "和木町",
+      "en": "Waki Town"
+    },
+    "353418": {
+      "ja": "上関町",
+      "en": "Kaminoseki Town"
+    },
+    "353434": {
+      "ja": "田布施町",
+      "en": "Tabuse Town"
+    },
+    "353442": {
+      "ja": "平生町",
+      "en": "Hirao Town"
+    },
+    "355020": {
+      "ja": "阿武町",
+      "en": "Abu Town"
+    }
+  }
+}

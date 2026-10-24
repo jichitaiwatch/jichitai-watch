@@ -1,0 +1,135 @@
+id,団体コード,団体名,役職,氏名（データの表記）,姓,名,姓の読み,名の読み,状態,出典URL,確かめ方
+gifu-001,210005,岐阜県,県議会副議長,長屋光征,長屋,光征,ながや,こうせい,確定,https://www.pref.gifu.lg.jp/site/gikai/56996.html,2系統が一致
+gifu-002,210005,岐阜県,県議会議長,松岡正人,松岡,正人,まつおか,まさと,確定,https://www.pref.gifu.lg.jp/site/gikai/56996.html,2系統が一致
+gifu-003,210005,岐阜県,知事,江崎　禎英,江崎,禎英,えさき,よしひで,確定,https://www.pref.gifu.lg.jp/site/chiji/1.html,2系統が一致
+gifu-004,212016,岐阜市,副議長,西垣 信康,西垣,信康,にしがき,のぶやす,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-005,212016,岐阜市,議長,竹市 勲,竹市,勲,たけいち,いさお,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-006,212016,岐阜市,首長（市町村長）,柴橋　正直,柴橋,正直,しばはし,まさなお,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-007,212024,大垣市,副議長,不破 光司,不破,光司,ふわ,こうじ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-008,212024,大垣市,議長,近沢 正,近沢,正,ちかざわ,ただし,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-009,212024,大垣市,首長（市町村長）,石田　仁,石田,仁,いしだ,ひとし,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-010,212032,高山市,副議長,石原 正裕,石原,正裕,いしはら,まさひろ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-011,212032,高山市,議長,榎 隆司,榎,隆司,えのき,たかし,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-012,212032,高山市,首長（市町村長）,田中　明,田中,明,たなか,あきら,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-013,212041,多治見市,副議長,葉狩 拓也,葉狩,拓也,はがり,たくや,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-014,212041,多治見市,議長,仙石 三喜男,仙石,三喜男,せんごく,みきお,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-015,212041,多治見市,首長（市町村長）,髙木　貴行,髙木,貴行,たかぎ,たかゆき,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-016,212059,関市,副議長,池村 真一郎,池村,真一郎,いけむら,しんいちろう,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-017,212059,関市,議長,渡辺 英人,渡辺,英人,わたなべ,ひでと,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-018,212059,関市,首長（市町村長）,山下　清司,山下,清司,やました,きよし,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-019,212067,中津川市,副議長,櫛松 直子,櫛松,直子,くしまつ,なおこ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-020,212067,中津川市,議長,吉村 孝志,吉村,孝志,よしむら,たかし,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-021,212067,中津川市,首長（市町村長）,小栗　仁志,小栗,仁志,おぐり,ひとし,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない。県の名簿の該当行を Claude が確認
+gifu-022,212075,美濃市,副議長,井川 竜徳,井川,竜徳,いかわ,たつのり,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-023,212075,美濃市,議長,古田 秀文,古田,秀文,ふるた,ひでふみ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-024,212075,美濃市,首長（市町村長）,篠田　啓介,篠田,啓介,しのだ,けいすけ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-025,212083,瑞浪市,副議長,三輪田 幸泰,三輪田,幸泰,みわだ,ゆきやす,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-026,212083,瑞浪市,議長,棚町 潤,棚町,潤,たなまち,じゅん,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-027,212083,瑞浪市,首長（市町村長）,水野　光二,水野,光二,みずの,こうじ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-028,212091,羽島市,副議長,南谷 清司,南谷,清司,みなたに,きよし,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-029,212091,羽島市,議長,原 一郎,原,一郎,はら,いちろう,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-030,212091,羽島市,首長（市町村長）,松井　聡,松井,聡,まつい,さとし,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない。県の名簿の該当行を Claude が確認
+gifu-031,212105,恵那市,副議長,伊藤 勝彦,伊藤,勝彦,いとう,かつひこ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-032,212105,恵那市,議長,柘植 孝彦,柘植,孝彦,つげ,たかひこ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-033,212105,恵那市,首長（市町村長）,小坂　喬峰,小坂,喬峰,こさか,たかね,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-034,212113,美濃加茂市,前の副議長,坂井 文好,坂井,文好,さかい,ふみよし,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-035,212113,美濃加茂市,前の議長,村瀬 正樹,村瀬,正樹,むらせ,まさき,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-036,212113,美濃加茂市,首長（市町村長）,藤井　浩人,藤井,浩人,ふじい,ひろと,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-037,212121,土岐市,副議長,水石 玲子,水石,玲子,みずいし,れいこ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-038,212121,土岐市,議長,後藤 正樹,後藤,正樹,ごとう,まさき,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-039,212121,土岐市,首長（市町村長）,加藤　淳司,加藤,淳司,かとう,じゅんじ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-040,212130,各務原市,副議長,岩田 紀正,岩田,紀正,いわた,のりまさ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-041,212130,各務原市,議長,瀬川 利生,瀬川,利生,せがわ,としお,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-042,212130,各務原市,首長（市町村長）,浅野　健司,浅野,健司,あさの,けんじ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-043,212148,可児市,副議長,天羽 良明,天羽,良明,あもう,よしあき,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-044,212148,可児市,議長,髙木 将延,髙木,将延,たかぎ,まさのぶ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-045,212148,可児市,首長（市町村長）,冨田　成輝,冨田,成輝,とみだ,しげき,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-046,212156,山県市,副議長,寺町 祥江,寺町,祥江,てらまち,さちえ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-047,212156,山県市,議長,古川 雅一,古川,雅一,ふるかわ,まさかず,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-048,212156,山県市,首長（市町村長）,林　宏優,林,宏優,はやし,ひろまさ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-049,212164,瑞穂市,副議長,藤橋 直樹,藤橋,直樹,ふじはし,なおき,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-050,212164,瑞穂市,議長,若井 千尋,若井,千尋,わかい,ちひろ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-051,212164,瑞穂市,首長（市町村長）,森　和之,森,和之,もり,かずゆき,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-052,212172,飛騨市,副議長,住田 清美,住田,清美,すみだ,きよみ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-053,212172,飛騨市,議長,澤 史朗,澤,史朗,さわ,しろう,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-054,212172,飛騨市,首長（市町村長）,都竹　淳也,都竹,淳也,つづく,じゅんや,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-055,212181,本巣市,副議長,髙橋 時男,髙橋,時男,たかはし,ときお,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-056,212181,本巣市,議長,臼井 悦子,臼井,悦子,うすい,えつこ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-057,212181,本巣市,首長（市町村長）,藤原　勉,藤原,勉,ふじわら,つとむ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-058,212199,郡上市,副議長,長岡 文男,長岡,文男,ながおか,ふみお,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-059,212199,郡上市,議長,田中 義久,田中,義久,たなか,よしひさ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-060,212199,郡上市,首長（市町村長）,山川　弘保,山川,弘保,やまかわ,ひろやす,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない。県の名簿の該当行を Claude が確認
+gifu-061,212202,下呂市,副議長,田中 喜登,田中,喜登,たなか,きのり,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-062,212202,下呂市,議長,尾里 集務,尾里,集務,おざと,あつむ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-063,212202,下呂市,首長（市町村長）,山内　登,山内,登,やまうち,のぼる,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-064,212211,海津市,副議長,古川 理沙,古川,理沙,ふるかわ,りさ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-065,212211,海津市,議長,里雄 淳意,里雄,淳意,さとお,じゅんい,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-066,212211,海津市,首長（市町村長）,横川　真澄,横川,真澄,よこがわ,ますみ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない。県の名簿の該当行を Claude が確認
+gifu-067,213021,岐南町,副議長,長谷川 淳,長谷川,淳,はせがわ,じゅん,確定,https://www.town.ginan.lg.jp/1335.htm,2系統が一致
+gifu-068,213021,岐南町,議長,加藤 雅浩,加藤,雅浩,かとう,まさひろ,確定,https://www.town.ginan.lg.jp/1335.htm,2系統が一致
+gifu-069,213021,岐南町,首長（市町村長）,後藤　友紀,後藤,友紀,ごとう,ゆき,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-070,213039,笠松町,副議長,竹中 光重,竹中,光重,たけなか,みつしげ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-071,213039,笠松町,議長,川島 功士,川島,功士,かわしま,こうじ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-072,213039,笠松町,首長（市町村長）,古田　聖人,古田,聖人,ふるた,きよひと,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-073,213411,養老町,副議長,西脇 康,西脇,康,にしわき,やすし,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-074,213411,養老町,議長,野村 永一,野村,永一,のむら,えいいち,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-075,213411,養老町,首長（市町村長）,川地　憲元,川地,憲元,かわち,のりもと,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-076,213616,垂井町,副議長,乾 豊,乾,豊,いぬい,ゆたか,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-077,213616,垂井町,議長,広瀬 隆博,広瀬,隆博,ひろせ,たかひろ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-078,213616,垂井町,首長（市町村長）,早野　博文,早野,博文,はやの,ひろふみ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-079,213624,関ケ原町,副議長,谷口 輝男,谷口,輝男,たにぐち,てるお,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-080,213624,関ケ原町,議長,松井 正樹,松井,正樹,まつい,まさき,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない。県の名簿の該当行を Claude が確認
+gifu-081,213624,関ケ原町,首長（市町村長）,西脇　康世,西脇,康世,にしわき,やすよ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない。県の名簿の該当行を Claude が確認
+gifu-082,213811,神戸町,副議長,飯沼 満,飯沼,満,いいぬま,みつる,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-083,213811,神戸町,議長,宮嶋 健太郎,宮嶋,健太郎,みやじま,けんたろう,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-084,213811,神戸町,首長（市町村長）,藤井　弘之,藤井,弘之,ふじい,ひろゆき,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-085,213829,輪之内町,議長,上野 賢二,上野,賢二,うえの,けんじ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-086,213829,輪之内町,首長（市町村長）,朝倉　和仁,朝倉,和仁,あさくら,かずひと,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-087,213837,安八町,副議長,渡邊 裕光,渡邊,裕光,わたなべ,ひろみつ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-088,213837,安八町,議長,大平 文雄,大平,文雄,おおひら,ふみお,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-089,213837,安八町,首長（市町村長）,岡田　立,岡田,立,おかだ,とどむ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-090,214019,揖斐川町,副議長,高橋 径夫,高橋,径夫,たかはし,みちお,確定,https://go2senkyo.com/local/senkyo/21542,補いの回（2026-10-24）：2系統が一致（Grok：選挙ドットコムの候補者表記／Composer：選挙ドットコムの候補者表記。抜き書きに氏名または候補者名と読み）。この人は今は副議長ではない（揖斐川町の副議長は若園敏朗に交代済み・データは 2026-10-23 に更新済み）。読みは人に付くので残す
+gifu-091,214019,揖斐川町,議長,大西 惠子,大西,惠子,おおにし,けいこ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない。県の名簿の該当行を Claude が確認
+gifu-092,214019,揖斐川町,首長（市町村長）,岡部　栄一,岡部,栄一,おかべ,えいいち,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-093,214035,大野町,副議長,国枝 利樹,国枝,利樹,くにえだ,としき,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-094,214035,大野町,議長,野村 光宣,野村,光宣,のむら,みつのぶ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-095,214035,大野町,首長（市町村長）,宇佐美　晃三,宇佐美,晃三,うさみ,こうぞう,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない。県の名簿の該当行を Claude が確認
+gifu-096,214043,池田町,議長,重綱 秀次,重綱,秀次,しげつな,ひでつぐ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-097,214043,池田町,首長（市町村長）,竹中　誉,竹中,誉,たけなか,ほまれ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-098,214213,北方町,副議長,安藤 哲雄,安藤,哲雄,あんどう,てつお,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-099,214213,北方町,議長,杉本 真由美,杉本,真由美,すぎもと,まゆみ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-100,214213,北方町,首長（市町村長）,戸部　哲哉,戸部,哲哉,とべ,てつや,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-101,215015,坂祝町,副議長,佐藤 猛,佐藤,猛,さとう,たける,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-102,215015,坂祝町,議長,竹内 浩一,竹内,浩一,たけうち,こういち,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-103,215015,坂祝町,首長（市町村長）,伊藤　敬宏,伊藤,敬宏,いとう,たかひろ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-104,215023,富加町,副議長,森 利和,森,利和,もり,としかず,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-105,215023,富加町,議長,福田 定道,福田,定道,ふくた,さだみち,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-106,215023,富加町,首長（市町村長）,渡邉　圭太,渡邉,圭太,わたなべ,けいた,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-107,215031,川辺町,副議長,石原 利春,石原,利春,いしはら,としはる,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-108,215031,川辺町,議長,佐伯 雄幸,佐伯,雄幸,さえき,ゆうこう,確定,https://www.kawabe-gifu.jp/wp-content/uploads/2022/11/173.pdf,2系統が一致
+gifu-109,215031,川辺町,首長（市町村長）,木下　宙,木下,宙,きのした,ひろし,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-110,215040,七宗町,副議長,和田 真一郎,和田,真一郎,わだ,しんいちろう,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-111,215040,七宗町,議長,松山 成美,松山,成美,まつやま,なるみ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-112,215040,七宗町,首長（市町村長）,堀部　勝広,堀部,勝広,ほりべ,かつひろ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-113,215058,八百津町,副議長,加藤 良治,加藤,良治,かとう,りょうじ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-114,215058,八百津町,議長,後藤 一夫,後藤,一夫,ごとう,かずお,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-115,215058,八百津町,首長（市町村長）,金子　政則,金子,政則,かねこ,まさのり,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-116,215066,白川町,副議長,伊佐治 優,伊佐治,優,いさじ,まさる,確定,https://www.town.shirakawa.lg.jp/_res/projects/default_project/_page_/001/003/060/rikkouhotodoke.pdf,2系統が一致
+gifu-117,215066,白川町,議長,田口 守也,田口,守也,たぐち,もりや,確定,https://www.town.shirakawa.lg.jp/_res/projects/default_project/_page_/001/003/060/rikkouhotodoke.pdf,2系統が一致
+gifu-118,215066,白川町,首長（市町村長）,佐伯　正貴,佐伯,正貴,さえき,まさたか,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-119,215074,東白川村,副議長,安江 真治,安江,真治,やすえ,しんじ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-120,215074,東白川村,議長,安江 健二,安江,健二,やすえ,けんじ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-121,215074,東白川村,首長（市町村長）,桂川　憲生,桂川,憲生,かつらがわ,のりお,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-122,215210,御嵩町,副議長,広川 大介,広川,大介,ひろかわ,だいすけ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-123,215210,御嵩町,議長,高山 由行,高山,由行,たかやま,よしゆき,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-124,215210,御嵩町,首長（市町村長）,渡邉　幸伸,渡邉,幸伸,わたなべ,ゆきのぶ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない
+gifu-125,216046,白川村,副議長,宮部 俊典,宮部,俊典,みやべ,としのり,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,2系統が一致
+gifu-126,216046,白川村,議長,森崎 敏克,森崎,敏克,もりさき,としかつ,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない。県の名簿の該当行を Claude が確認
+gifu-127,216046,白川村,首長（市町村長）,成原　茂,成原,茂,なりはら,しげる,確定,https://www.pref.gifu.lg.jp/uploaded/attachment/517634.pdf,Grok の読みを採用。Composer の値は県の名簿の表の行のずれ（隣の人の読み）で、この人の読みではない。県の名簿の該当行を Claude が確認
+gifu-128,213021,岐南町,議長,松原 浩二,松原,浩二,まつばら,こうじ,確定,https://www.town.ginan.lg.jp/1335.htm,町の議員名簿（令和8年9月25日現在）の抜き書き「議長 松原 浩二（まつばら こうじ）」（Grok）。Composer は読みを出さず
+gifu-129,213021,岐南町,副議長,松本 暁大,松本,暁大,まつもと,あきひろ,確定,https://www.town.ginan.lg.jp/1335.htm,町の議員名簿（令和8年9月25日現在）の抜き書き「副議長 松本 暁大（まつもと あきひろ）」（Grok）。Composer は読みを出さず
+gifu-130,214019,揖斐川町,副議長,若園 敏朗,若園,敏朗,わかぞの,としろう,確定,https://go2senkyo.com/local/senkyo/21542,補いの回（2026-10-24）：2系統が一致（Grok：選挙ドットコムの候補者表記／Composer：選挙ドットコムの候補者表記。抜き書きに氏名または候補者名と読み）
+gifu-131,215066,白川町,議長,三戸 勝徳,三戸,勝徳,さんと,かつのり,確定,https://www.town.shirakawa.lg.jp/chousei/gikai/1002054.html,2系統が一致（町の議長就任のあいさつのふりがな）
+gifu-132,215066,白川町,副議長,杉山 哉史,杉山,哉史,すぎやま,ちかし,確定,https://www.town.shirakawa.lg.jp/chousei/gikai/1002054.html,2系統が一致（町の副議長就任のあいさつのふりがな）
+gifu-133,213829,輪之内町,副議長,浅野 重行,浅野,重行,あさの,しげゆき,確定,https://town.wanouchi.gifu.jp/portal/town/parliament/aisatsu/post0046898/,2系統が一致（町の議員紹介のふりがな）
+gifu-134,214043,池田町,副議長,臼井 幹夫,臼井,幹夫,うすい,みきお,確定,https://www.town.gifu-ikeda.lg.jp/0000000131.html,町の議員名簿のカタカナ「臼井 幹夫（ウスイ ミキオ）」（Grok）。Composer は読みを出さず

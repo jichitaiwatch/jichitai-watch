@@ -1,3 +1,6 @@
+import { LOCALE } from "@/lib/locale";
+import { t } from "@/lib/i18n";
+import { industryLabel } from "@/lib/industry-labels";
 import { getIndustryIconColors, IndustryIcon } from "./IndustryIcon";
 
 interface TopIndustryEntry {
@@ -33,10 +36,13 @@ export function TopIndustriesList({ industries }: TopIndustriesListProps) {
             <span className="grid h-7 w-7 place-items-center rounded-full" style={{ backgroundColor: bg }}>
               <IndustryIcon industryName={item.産業名} size={16} />
             </span>
-            <span className="min-w-0 truncate font-semibold text-[var(--body)]">{item.産業名}</span>
+            {/* 英語の産業名は長く、省略記号で切ると名前が読めないので、折り返す形にする（日本語版は従来どおり） */}
+            <span className={LOCALE === "en" ? "min-w-0 break-words leading-tight font-semibold text-[var(--body)]" : "min-w-0 truncate font-semibold text-[var(--body)]"}>
+              {industryLabel(item.産業名)}
+            </span>
             <span className="text-right fs-key font-extrabold text-[var(--current)]">
               {item.就業者数.toLocaleString()}
-              <span className="ml-0.5 fs-sub font-semibold text-[var(--muted)]">人</span>
+              {t("u-people") && <span className="ml-0.5 fs-sub font-semibold text-[var(--muted)]">{t("u-people")}</span>}
             </span>
           </li>
         );

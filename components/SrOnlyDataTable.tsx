@@ -9,12 +9,16 @@ import type { ReactNode } from "react";
 
 export function SrOnlyDataTable({
   caption,
+  yearHeader,
   columns,
   rows,
 }: {
   caption: string;
+  /** 先頭列（年度）の見出し。文言は呼び出し側が辞書（col-fiscal-year）から渡す */
+  yearHeader: string;
   /** 先頭列（年度）の見出しは含めない。系列名のみ */
   columns: string[];
+  /** label は表示する年度の文字列（呼び出し側が辞書 p-fy で組み立てて渡す。日本語「2023年度」・英語「FY2023」） */
   rows: { label: string; cells: ReactNode[] }[];
 }) {
   return (
@@ -23,7 +27,7 @@ export function SrOnlyDataTable({
         <caption>{caption}</caption>
         <thead>
           <tr>
-            <th scope="col">年度</th>
+            <th scope="col">{yearHeader}</th>
             {columns.map((c) => (
               <th key={c} scope="col">
                 {c}
@@ -34,7 +38,7 @@ export function SrOnlyDataTable({
         <tbody>
           {rows.map((r) => (
             <tr key={r.label}>
-              <th scope="row">{r.label}年度</th>
+              <th scope="row">{r.label}</th>
               {r.cells.map((cell, i) => (
                 <td key={i}>{cell}</td>
               ))}

@@ -6,6 +6,7 @@
 // 欠損は推定せず、機械が読み取れたかの事実で示す（20260808_decisions.md D-25）。
 // サーバー側（ビルド時）専用。クライアントコンポーネントから読まない。
 
+import { formatPeriodLabel } from "@/lib/staleness";
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { PREFECTURES } from "@/lib/prefectures";
@@ -70,7 +71,7 @@ export function getForestTax(areaCode: string): { row: ForestTaxRow; meta: DataM
     meta: {
       sourceUrl: row.source_url,
       updated: updatedByArea.get(row.area_code) ?? "2026-10-17",
-      periodLabel: "令和6年度",
+      periodLabel: formatPeriodLabel("令和6年度"),
       fetchedAt: updatedByArea.get(row.area_code) ?? "2026-10-17",
     },
   };
@@ -92,7 +93,7 @@ export function getForestTaxPref(prefCode: string): { row: ForestTaxRow; meta: D
     meta: {
       sourceUrl: row.source_url,
       updated: updatedByArea.get(row.area_code) ?? "2026-10-17",
-      periodLabel: "令和6年度",
+      periodLabel: formatPeriodLabel("令和6年度"),
       fetchedAt: updatedByArea.get(row.area_code) ?? "2026-10-17",
     },
   };

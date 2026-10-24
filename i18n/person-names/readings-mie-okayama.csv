@@ -1,0 +1,171 @@
+id,団体コード,団体名,役職,氏名（データの表記）,姓,名,姓の読み,名の読み,状態,出典URL,確かめ方
+mo-001,240001,三重県,県議会副議長,津田健児,津田,健児,つだ,けんじ,確定,http://www.pref.mie.lg.jp/KENGIKAI/08111011325.htm,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-002,240001,三重県,県議会議長,藤田宜三,藤田,宜三,ふじた,よしみ,確定,https://www.pref.mie.lg.jp/KENGIKAI/89263000001_00001.htm,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-003,240001,三重県,知事,一見　勝之,一見,勝之,いちみ,かつゆき,確定,https://www.pref.mie.lg.jp/SENKAN/HP/0002434750001.htm,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-004,242012,津市,副議長,安積 むつみ,安積,むつみ,あづみ,むつみ,確定,https://gikai.city.tsu.mie.jp/htm/shoukai.htm,姓の読みは Grok の抜き書き（歴代一覧の「あづみ」）。名は資料の表記がひらがな（むつみ）
+mo-005,242012,津市,議長,小野 欽市,小野,欽市,おの,きんいち,確定,https://gikai.city.tsu.mie.jp/htm/shoukai.htm,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-006,242012,津市,首長（市町村長）,前葉　泰幸,前葉,泰幸,まえば,やすゆき,確定,https://www.pref.mie.lg.jp/common/content/001274241.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-007,242021,四日市市,副議長,平野 貴之,平野,貴之,ひらの,たかゆき,確定,https://www5.city.yokkaichi.mie.jp/www/contents/1001000002803/index.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-008,242021,四日市市,議長,中川 雅晶,中川,雅晶,なかがわ,まさあき,確定,https://www5.city.yokkaichi.mie.jp/www/contents/1001000002803/index.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-009,242021,四日市市,首長（市町村長）,森　智広,森,智広,もり,ともひろ,確定,https://www.pref.mie.lg.jp/common/content/001274243.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-010,242039,伊勢市,副議長,吉井 詩子,吉井,詩子,よしい,うたこ,確定,https://www.city.ise.mie.jp/gikai/giin/1009649.html,2系統が一致（抜き書きに読みあり）
+mo-011,242039,伊勢市,議長,北村 勝,北村,勝,きたむら,まさる,確定,https://www.city.ise.mie.jp/gikai/giin/1009649.html,2系統が一致（抜き書きに読みあり）
+mo-012,242039,伊勢市,首長（市町村長）,鈴木　健一,鈴木,健一,すずき,けんいち,確定,https://www.pref.mie.lg.jp/common/content/001274245.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-013,242047,松阪市,副議長,市野 幸男,市野,幸男,いちの,ゆきお,確定,https://www.city.matsusaka.mie.jp/site/gikai/r5-giinmeibo.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-014,242047,松阪市,議長,沖 和哉,沖,和哉,おき,かずや,確定,https://www.city.matsusaka.mie.jp/site/gikai/r5-giinmeibo.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-015,242047,松阪市,首長（市町村長）,竹上　真人,竹上,真人,たけがみ,まさと,確定,https://www.pref.mie.lg.jp/common/content/001274246.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-016,242055,桑名市,副議長,近藤 浩,近藤,浩,こんどう,ひろし,確定,https://www.city.kuwana.lg.jp/gikai/giinjouhou/giinmeibo.html,2系統が一致（抜き書きに読みあり）
+mo-017,242055,桑名市,議長,倉田 明子,倉田,明子,くらた,あきこ,確定,https://www.city.kuwana.lg.jp/gikai/giinjouhou/giinmeibo.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-018,242055,桑名市,首長（市町村長）,伊藤　徳宇,伊藤,徳宇,いとう,なるたか,確定,https://www.pref.mie.lg.jp/common/content/001274247.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-019,242071,鈴鹿市,副議長,加藤 公友,加藤,公友,かとう,こうゆう,確定,https://www.city.suzuka.lg.jp/gikai/1007639/1007641.html,2系統が一致（抜き書きに読みあり）
+mo-020,242071,鈴鹿市,議長,野間 芳実,野間,芳実,のま,よしみ,確定,https://www.city.suzuka.lg.jp/gikai/1007639/1007641.html,2系統が一致（抜き書きに読みあり）
+mo-021,242071,鈴鹿市,首長（市町村長）,末松　則子,末松,則子,すえまつ,のりこ,確定,https://www.pref.mie.lg.jp/common/content/001274249.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-022,242080,名張市,副議長,坂本 直司,坂本,直司,さかもと,なおじ,確定,https://www.city.nabari.lg.jp/s077/150/100/050/20171002133625.html,2系統が一致（抜き書きに読みあり）
+mo-023,242080,名張市,議長,永岡 禎,永岡,禎,ながおか,ただし,確定,https://www.city.nabari.lg.jp/s077/150/100/050/20171002133625.html,2系統が一致（抜き書きに読みあり）
+mo-024,242080,名張市,首長（市町村長）,北川　裕之,北川,裕之,きたがわ,ひろゆき,確定,https://www.pref.mie.lg.jp/common/content/001274251.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-025,242098,尾鷲市,副議長,仲明,仲,明,なか,あきら,確定,https://www.city.owase.lg.jp/cmsfiles/contents/0000000/792/giinmeibo-R8.6.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-026,242098,尾鷲市,議長,小川公明,小川,公明,おがわ,きみあき,確定,https://www.city.owase.lg.jp/cmsfiles/contents/0000000/792/giinmeibo-R8.6.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-027,242098,尾鷲市,首長（市町村長）,加藤　千速,加藤,千速,かとう,ちはや,確定,https://www.pref.mie.lg.jp/common/content/001274252.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-028,242101,亀山市,副議長,豊田 恵理,豊田,恵理,とよだ,えり,確定,https://www.city.kameyama.mie.jp/gikai/giin/2015111300046/file_contents/giinmeibo080420.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-029,242101,亀山市,議長,岡本 公秀,岡本,公秀,おかもと,きみひで,確定,https://www.city.kameyama.mie.jp/gikai/giin/2015111300046/file_contents/giinmeibo080420.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-030,242101,亀山市,首長（市町村長）,櫻井　義之,櫻井,義之,さくらい,よしゆき,確定,https://www.pref.mie.lg.jp/common/content/001274253.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-031,242110,鳥羽市,副議長,南川則之,南川,則之,みなみがわ,のりゆき,確定,https://www.city.toba.mie.jp/soshiki/gikai_jimu/gyomu/gikai/about_gikai/meibo/3063.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-032,242110,鳥羽市,議長,河村孝,河村,孝,かわむら,たかし,確定,https://www.city.toba.mie.jp/soshiki/gikai_jimu/gyomu/gikai/about_gikai/meibo/3063.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-033,242110,鳥羽市,首長（市町村長）,小竹　篤,小竹,篤,こたけ,あつし,確定,https://www.pref.mie.lg.jp/common/content/001274254.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-034,242128,熊野市,副議長,岩本 有史,岩本,有史,いわもと,ゆうし,確定,https://www.city.kumano.lg.jp/administration/?content=206,2系統が一致（抜き書きに読みあり）
+mo-035,242128,熊野市,議長,大橋 秀行,大橋,秀行,おおはし,ひでゆき,確定,https://www.city.kumano.lg.jp/administration/?content=206,2系統が一致（抜き書きに読みあり）
+mo-036,242128,熊野市,首長（市町村長）,河上　敢二,河上,敢二,かわかみ,かんじ,確定,https://www.pref.mie.lg.jp/common/content/001274258.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-037,242144,いなべ市,副議長,位田 まさ子,位田,まさ子,いんでん,まさこ,確定,https://www.city.inabe.mie.jp/gikai/1013010/1010747.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-038,242144,いなべ市,議長,渡辺 一弘,渡辺,一弘,わたなべ,かずひろ,確定,https://www.city.inabe.mie.jp/gikai/1013010/1010747.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-039,242144,いなべ市,首長（市町村長）,日沖　靖,日沖,靖,ひおき,やすし,確定,https://www.pref.mie.lg.jp/common/content/001274261.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-040,242152,志摩市,副議長,下村 卓也,下村,卓也,しもむら,たくや,確定,https://www.city.shima.mie.jp/shimashigikai/5296.html,2系統が一致（抜き書きに読みあり）
+mo-041,242152,志摩市,議長,濱口 卓,濱口,卓,はまぐち,たかし,確定,https://www.city.shima.mie.jp/shimashigikai/5296.html,2系統が一致（抜き書きに読みあり）
+mo-042,242152,志摩市,首長（市町村長）,橋爪　政吉,橋爪,政吉,はしづめ,まさよし,確定,https://www.pref.mie.lg.jp/common/content/001274262.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-043,242161,伊賀市,副議長,山下 典子,山下,典子,やました,のりこ,確定,https://www.city.iga.lg.jp/0000009040.html,2系統が一致（抜き書きに読みあり）
+mo-044,242161,伊賀市,議長,西口 和成,西口,和成,にしぐち,かずしげ,確定,https://www.city.iga.lg.jp/0000009040.html,2系統が一致（抜き書きに読みあり）
+mo-045,242161,伊賀市,首長（市町村長）,稲森　稔尚,稲森,稔尚,いなもり,としなお,確定,https://www.pref.mie.lg.jp/common/content/001274264.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-046,243035,木曽岬町,副議長,加藤 眞人,加藤,眞人,かとう,まひと,確定,https://www.town.kisosaki.lg.jp/0000002455.html,2系統が一致（抜き書きに読みあり）
+mo-047,243035,木曽岬町,議長,服部 芙二夫,服部,芙二夫,はっとり,ふじお,確定,https://www.town.kisosaki.lg.jp/0000002455.html,2系統が一致（抜き書きに読みあり）
+mo-048,243035,木曽岬町,首長（市町村長）,三輪　一雅,三輪,一雅,みわ,かずまさ,確定,https://www.pref.mie.lg.jp/common/content/001274267.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-049,243248,東員町,副議長,三林 浩,三林,浩,みつばやし,ひろし,確定,https://www.town.toin.lg.jp/soshiki/1018/1/1/5057.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-050,243248,東員町,議長,三宅 耕三,三宅,耕三,みやけ,こうぞう,確定,https://www.town.toin.lg.jp/soshiki/1018/1/1/5057.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-051,243248,東員町,首長（市町村長）,水谷　俊郎,水谷,俊郎,みずたに,としお,確定,https://www.pref.mie.lg.jp/common/content/001274268.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-052,243418,菰野町,副議長,加藤 大輝,加藤,大輝,かとう,ひろき,確定,https://www.pref.mie.lg.jp/common/content/001274270.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-053,243418,菰野町,議長,藤田 賢吾,藤田,賢吾,ふじた,けんご,確定,https://www.pref.mie.lg.jp/common/content/001274270.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-054,243418,菰野町,首長（市町村長）,諸岡　高幸,諸岡,高幸,もろおか,たかゆき,確定,https://www.pref.mie.lg.jp/common/content/001274270.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-055,243434,朝日町,副議長,宮本　秀治,宮本,秀治,みやもと,しゅうじ,確定,https://www.pref.mie.lg.jp/common/content/001274272.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-056,243434,朝日町,議長,清　将人,清,将人,せい,まさと,確定,https://www.pref.mie.lg.jp/common/content/001274272.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-057,243434,朝日町,首長（市町村長）,矢野　純男,矢野,純男,やの,すみお,確定,https://www.pref.mie.lg.jp/common/content/001274272.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-058,243442,川越町,副議長,杉本雅照,杉本,雅照,すぎもと,まさてる,確定,https://www.pref.mie.lg.jp/common/content/001274273.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-059,243442,川越町,議長,森 英郎,森,英郎,もり,ひでお,確定,https://www.pref.mie.lg.jp/common/content/001274273.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-060,243442,川越町,首長（市町村長）,城田　政幸,城田,政幸,しろた,まさゆき,確定,https://www.pref.mie.lg.jp/common/content/001274273.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-061,244414,多気町,副議長,藤田　清隆,藤田,清隆,ふじた,きよたか,確定,https://www.town.taki.mie.jp/material/files/group/14/giinmeiboR88.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-062,244414,多気町,議長,坂井　信久,坂井,信久,さかい,のぶひさ,確定,https://www.town.taki.mie.jp/material/files/group/14/giinmeiboR88.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-063,244414,多気町,首長（市町村長）,筒井　尚之,筒井,尚之,つつい,ひさゆき,確定,https://www.pref.mie.lg.jp/common/content/001274274.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-064,244422,明和町,副議長,下井　　清史,下井,清史,しもい,きよふみ,確定,https://www.town.meiwa.mie.jp/main/soshiki/gikai/shomuk/1452227178462.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-065,244422,明和町,議長,辻井　　成人,辻井,成人,つじい,なりと,確定,https://www.town.meiwa.mie.jp/main/soshiki/gikai/shomuk/1452227178462.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-066,244422,明和町,首長（市町村長）,下村　由美子,下村,由美子,しもむら,ゆみこ,確定,https://www.pref.mie.lg.jp/common/content/001274275.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-067,244431,大台町,副議長,古家 大輔,古家,大輔,ふるや,だいすけ,確定,https://www.pref.mie.lg.jp/common/content/001274276.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-068,244431,大台町,議長,岸良 隆,岸,良隆,きし,よしたか,確定,https://www.pref.mie.lg.jp/common/content/001274276.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-069,244431,大台町,首長（市町村長）,上瀬　裕美,上瀬,裕美,じょうせ,ひろみ,確定,https://www.pref.mie.lg.jp/common/content/001274276.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-070,244619,玉城町,副議長,福田 泰生,福田,泰生,ふくた,やすお,確定,https://kizuna.town.tamaki.mie.jp/chosei/senkyogikai/gikai/kosei/syoukai.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-071,244619,玉城町,議長,小林 豊,小林,豊,こばやし,ゆたか,確定,https://kizuna.town.tamaki.mie.jp/chosei/senkyogikai/gikai/kosei/syoukai.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-072,244619,玉城町,首長（市町村長）,中川　泰成,中川,泰成,なかがわ,やすなり,確定,https://www.pref.mie.lg.jp/common/content/001274277.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-073,244708,度会町,副議長,大野原德,大野,原德,おおの,げんとく,確定,https://www.pref.mie.lg.jp/common/content/001274283.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-074,244708,度会町,議長,若宮 淳也,若宮,淳也,わかみや,じゅんや,確定,https://www.pref.mie.lg.jp/common/content/001274283.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-075,244708,度会町,首長（市町村長）,中村　忠彦,中村,忠彦,なかむら,ただひこ,確定,https://www.pref.mie.lg.jp/common/content/001274283.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-076,244716,大紀町,副議長,中世古 健,中世古,健,なかせこ,けん,確定,https://www.pref.mie.lg.jp/common/content/001274285.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-077,244716,大紀町,議長,元坂 明,元坂,明,げんさか,あきら,確定,https://www.pref.mie.lg.jp/common/content/001274285.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-078,244716,大紀町,首長（市町村長）,服部　吉人,服部,吉人,はっとり,よしと,確定,https://www.pref.mie.lg.jp/common/content/001274285.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-079,244724,南伊勢町,副議長,田岡 悟,田岡,悟,たおか,さとる,確定,https://www.pref.mie.lg.jp/common/content/001274286.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-080,244724,南伊勢町,議長,田中 喜一郎,田中,喜一郎,たなか,きいちろう,確定,https://www.pref.mie.lg.jp/common/content/001274286.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-081,244724,南伊勢町,首長（市町村長）,上村　久仁,上村,久仁,うえむら,ひさひと,確定,https://www.town.minamiise.lg.jp/admin/shoshiki/soumu/townmayor/455.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-082,245437,紀北町,副議長,奥村 仁,奥村,仁,おくむら,ひとし,確定,https://www.town.mie-kihoku.lg.jp/2024/12/02/369/,2系統が一致（抜き書きに読みあり）
+mo-083,245437,紀北町,議長,入江 康仁,入江,康仁,いりえ,やすし,確定,https://www.town.mie-kihoku.lg.jp/2024/12/02/369/,2系統が一致（抜き書きに読みあり）
+mo-084,245437,紀北町,首長（市町村長）,尾上　壽一,尾上,壽一,おのうえ,としかず,確定,https://www.pref.mie.lg.jp/common/content/001274292.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-085,245615,御浜町,副議長,宇城 公子,宇城,公子,うしろ,きみこ,確定,https://www.pref.mie.lg.jp/common/content/001274295.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-086,245615,御浜町,議長,髙岡 洋,髙岡,洋,たかおか,ひろし,確定,https://www.pref.mie.lg.jp/common/content/001274295.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-087,245615,御浜町,首長（市町村長）,東地　正登,東地,正登,ひがしじ,まさと,確定,https://www.pref.mie.lg.jp/common/content/001274295.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず。町のページ（要覧）では副町長。2026-09-27 の町長選挙で無投票当選（データ・報道）。2系統が示した町長「大畑覚」の資料は選挙より前のもの
+mo-088,245623,紀宝町,副議長,大倉 孝司,大倉,孝司,おおくら,たかし,確定,https://www.pref.mie.lg.jp/common/content/001274296.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-089,245623,紀宝町,議長,萩野 進也,萩野,進也,はぎの,しんや,確定,https://www.pref.mie.lg.jp/common/content/001274296.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-090,245623,紀宝町,首長（市町村長）,向井　美樹也,向井,美樹也,むかい,みきや,確定,https://www.pref.mie.lg.jp/common/content/001274296.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-091,330001,岡山県,県議会副議長,上田勝義,上田,勝義,うえだ,かつよし,確定,https://www.pref.okayama.jp/site/gikai/03-06.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-092,330001,岡山県,県議会議長,太田正孝,太田,正孝,おおた,まさたか,確定,https://www.pref.okayama.jp/site/gikai/04-01.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-093,330001,岡山県,知事,伊原木　隆太,伊原木,隆太,いばらぎ,りゅうた,確定,https://www.pref.okayama.jp/page/298941.html,2系統が一致（抜き書きに読みあり）
+mo-094,331007,岡山市,副議長,小川 信幸,小川,信幸,おがわ,のぶゆき,確定,https://www.city.okayama.jp/gikai/0000015696.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-095,331007,岡山市,議長,田口 裕士,田口,裕士,たぐち,ひろし,確定,https://www.city.okayama.jp/gikai/0000015807.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-096,331007,岡山市,首長（市町村長）,大森　雅夫,大森,雅夫,おおもり,まさお,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-097,332020,倉敷市,副議長,藤井 昭佐,藤井,昭佐,ふじい,しょうすけ,確定,https://www.city.kurashiki.okayama.jp/cityinfo/assembly/1008324/1008325.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-098,332020,倉敷市,議長,荒木 竜二,荒木,竜二,あらき,りゅうじ,確定,https://www.city.kurashiki.okayama.jp/cityinfo/assembly/1008324/1008325.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-099,332020,倉敷市,首長（市町村長）,伊東　香織,伊東,香織,いとう,かおり,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-100,332038,津山市,首長（市町村長）,光井　聡,光井,聡,みつい,さとし,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-101,332046,玉野市,副議長,藤原 仁子,藤原,仁子,ふじわら,ひとこ,確定,https://www.city.tamano.lg.jp/site/gikai/2462.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は1つ目の版では読みを出さず、2つ目の版の抜き書きで同じ読み
+mo-102,332046,玉野市,議長,大月 博光,大月,博光,おおつき,ひろみつ,確定,https://www.city.tamano.lg.jp/site/gikai/2462.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は1つ目の版では読みを出さず、2つ目の版の抜き書きで同じ読み
+mo-103,332046,玉野市,首長（市町村長）,柴田　義朗,柴田,義朗,しばた,よしろう,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-104,332054,笠岡市,副議長,大山 盛久,大山,盛久,おおやま,もりひさ,確定,https://www.city.kasaoka.okayama.jp/soshiki/48/3578.html,2系統が一致（抜き書きに読みあり）
+mo-105,332054,笠岡市,議長,仁科 文秀,仁科,文秀,にしな,ふみひで,確定,https://www.city.kasaoka.okayama.jp/soshiki/48/3578.html,2系統が一致（抜き書きに読みあり）
+mo-106,332054,笠岡市,首長（市町村長）,栗尾　典子,栗尾,典子,くりお,のりこ,確定,https://www.city.kasaoka.okayama.jp/site/mayor/3121.html,データの「村上典子」は市・県の公表に無く、市長は栗尾典子（Grok：市の市長のページ「栗尾 典子（くりお のりこ）」・県の一覧「クリオ ノリコ」。Claude：選挙ドットコムの当選者「くりお 典子」）。氏名を直した（scripts/apply_kasaoka_20261023.py）
+mo-107,332071,井原市,副議長,佐藤 豊,佐藤,豊,さとう,ゆたか,確定,https://www.city.ibara.okayama.jp/site/gikai/2599.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は1つ目の版では読みを出さず、2つ目の版の抜き書きで同じ読み
+mo-108,332071,井原市,議長,山下憲雄,山下,憲雄,やました,のりお,確定,https://www.city.ibara.okayama.jp/site/gikai/2599.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は1つ目の版では読みを出さず、2つ目の版の抜き書きで同じ読み
+mo-109,332071,井原市,首長（市町村長）,大舌　勲,大舌,勲,おおした,いさお,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-110,332089,総社市,副議長,三上 周治,三上,周治,みかみ,しゅうじ,確定,https://www.city.soja.okayama.jp/site/gikai/4987.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は1つ目の版では読みを出さず、2つ目の版の抜き書きで同じ読み
+mo-111,332089,総社市,議長,三宅 啓介,三宅,啓介,みやけ,けいすけ,確定,https://www.city.soja.okayama.jp/site/gikai/4987.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は1つ目の版では読みを出さず、2つ目の版の抜き書きで同じ読み
+mo-112,332089,総社市,首長（市町村長）,片岡　聡一,片岡,聡一,かたおか,そういち,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-113,332097,高梁市,副議長,倉野 嗣雄,倉野,嗣雄,くらの,つぎお,確定,https://www.city.takahashi.lg.jp/site/gikai/giinmeibo.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は1つ目の版では読みを出さず、2つ目の版の抜き書きで同じ読み
+mo-114,332097,高梁市,議長,伊藤 泰樹,伊藤,泰樹,いとう,やすき,確定,https://www.city.takahashi.lg.jp/site/gikai/giinmeibo.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は1つ目の版では読みを出さず、2つ目の版の抜き書きで同じ読み
+mo-115,332097,高梁市,首長（市町村長）,石田　芳生,石田,芳生,いしだ,よしお,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-116,332101,新見市,副議長,仲田 芳人,仲田,芳人,なかだ,よしと,確定,https://www.city.niimi.okayama.jp/media_images_01/files/giinmeibo20260619.pdf,Composer の2つ目の版の抜き書き（市の議員名簿 令和8年6月19日、同じ行に氏名と読み）。Grok は議会要覧で確認できず。Claude：選挙ドットコムの2025-04-13市議選の候補者表記「仲田 よしと（ナカダ ヨシト）」と読みが合うことを確認
+mo-117,332101,新見市,議長,藤澤 正則,藤澤,正則,ふじさわ,まさのり,確定,https://www.city.niimi.okayama.jp/media_images_01/files/giinmeibo20260619.pdf,Composer の2つ目の版の抜き書き（市の議員名簿 令和8年6月19日、同じ行に氏名と読み）。Grok は議会要覧で確認できず。Claude：選挙ドットコムの2025-04-13市議選の候補者表記「ふじさわ 正則（フジサワ マサノリ）」と読みが合うことを確認
+mo-118,332101,新見市,首長（市町村長）,石田　實,石田,實,いしだ,みのる,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-119,332119,備前市,副議長,藪内 靖,藪内,靖,やぶうち,やすし,確定,https://www.city.bizen.okayama.jp/soshiki/23/19367.html,2系統が一致（抜き書きに読みあり）
+mo-120,332119,備前市,議長,石原 和人,石原,和人,いしはら,かずと,確定,https://www.city.bizen.okayama.jp/soshiki/23/19367.html,2系統が一致（抜き書きに読みあり）
+mo-121,332119,備前市,首長（市町村長）,長﨑　信行,長﨑,信行,ながさき,のぶゆき,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-122,332127,瀬戸内市,副議長,厚東 晃央,厚東,晃央,ことう,あきお,確定,https://www.city.setouchi.lg.jp/site/setouchishigikai/152127.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は1つ目の版では読みを出さず、2つ目の版の抜き書きで同じ読み
+mo-123,332127,瀬戸内市,議長,小野田 光,小野田,光,おのだ,ひかる,確定,https://www.city.setouchi.lg.jp/site/setouchishigikai/152127.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は1つ目の版では読みを出さず、2つ目の版の抜き書きで同じ読み
+mo-124,332127,瀬戸内市,首長（市町村長）,黒石　健太郎,黒石,健太郎,くろいし,けんたろう,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-125,332135,赤磐市,副議長,永徳 省二,永徳,省二,えいとく,しょうじ,確定,https://www.city.akaiwa.lg.jp/annai/gikai/gikai/shisei/gikai/about/gikaikousei/7920.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は1つ目の版では読みを出さず、2つ目の版の抜き書きで同じ読み
+mo-126,332135,赤磐市,議長,佐藤 武文,佐藤,武文,さとう,たけふみ,確定,https://www.city.akaiwa.lg.jp/annai/gikai/gikai/shisei/gikai/about/gikaikousei/7920.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は1つ目の版では読みを出さず、2つ目の版の抜き書きで同じ読み
+mo-127,332135,赤磐市,首長（市町村長）,前田　正之,前田,正之,まえだ,まさゆき,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-128,332143,真庭市,副議長,緒形 尚,緒形,尚,おがた,ひさし,確定,https://www.city.maniwa.lg.jp/site/shigikai/42667.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は1つ目の版では読みを出さず、2つ目の版の抜き書きで同じ読み
+mo-129,332143,真庭市,議長,長尾 修,長尾,修,ながお,おさむ,確定,https://www.city.maniwa.lg.jp/site/shigikai/42667.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は1つ目の版では読みを出さず、2つ目の版の抜き書きで同じ読み
+mo-130,332143,真庭市,首長（市町村長）,太田　昇,太田,昇,おおた,のぼる,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-131,332151,美作市,副議長,西山 正志,西山,正志,にしやま,まさし,確定,https://www.city.mimasaka.lg.jp/soshiki/gikai/kousei/1450139365077.html,2系統が一致（抜き書きに読みあり）
+mo-132,332151,美作市,議長,安藤 功,安藤,功,あんどう,いさお,確定,https://www.city.mimasaka.lg.jp/soshiki/gikai/kousei/1450139365077.html,2系統が一致（抜き書きに読みあり）
+mo-133,332151,美作市,首長（市町村長）,萩原　誠司,萩原,誠司,はぎわら,せいじ,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-134,332160,浅口市,副議長,斎藤 貴士,斎藤,貴士,さいとう,たかし,確定,https://www.city.asakuchi.lg.jp/site/asakuchishigikai/2526.html,2系統が一致（抜き書きに読みあり）
+mo-135,332160,浅口市,議長,伊澤 誠,伊澤,誠,いざわ,まこと,確定,https://www.city.asakuchi.lg.jp/site/asakuchishigikai/2526.html,2系統が一致（抜き書きに読みあり）
+mo-136,332160,浅口市,首長（市町村長）,栗山　康彦,栗山,康彦,くりやま,やすひこ,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-137,333468,和気町,副議長,從野　勝,從野,勝,よりの,まさる,確定,https://www.town.wake.lg.jp/material/files/group/14/810131.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-138,333468,和気町,議長,広瀬　正男,広瀬,正男,ひろせ,まさお,確定,https://www.town.wake.lg.jp/material/files/group/14/810131.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-139,333468,和気町,首長（市町村長）,太田　啓補,太田,啓補,おおた,けいすけ,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-140,334235,早島町,副議長,根木 一,根木,一,ねき,はじめ,確定,https://www.komei.or.jp/election/detail/2026_08_23_e697a9e5b3b6e794ba,補いの回（2026-10-24）：Grok：公明党の選挙情報「根木 一 （ねき はじめ）」（同じ欄に氏名と読み）。Composer は町の開票結果まで（読み無し）
+mo-141,334235,早島町,議長,平岡 江利子,平岡,江利子,ひらおか,えりこ,確定,https://www.sanyonews.jp/article/1993910,補いの回（2026-10-24）：Grok：山陽新聞「平岡 江利子氏（ひらおか・えりこ）」（2026-09-24、議長選出の記事）。Composer：町の2026-08-23町議選の開票結果の候補者表記「平岡 えりこ」（名の読みが一致）
+mo-142,334235,早島町,首長（市町村長）,佐藤　博文,佐藤,博文,さとう,ひろふみ,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-143,334456,里庄町,副議長,仁科 英麿,仁科,英麿,にしな,ひでまろ,確定,https://www.town.satosho.okayama.jp/site/gikai/2749.html,2系統が一致（抜き書きに読みあり）
+mo-144,334456,里庄町,議長,平野 敏弘,平野,敏弘,ひらの,としひろ,確定,https://www.town.satosho.okayama.jp/site/gikai/2749.html,2系統が一致（抜き書きに読みあり）
+mo-145,334456,里庄町,首長（市町村長）,赤木　功,赤木,功,あかぎ,いさお,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-146,334618,矢掛町,副議長,原田秀史,原田,秀史,はらだ,ひでし,確定,https://go2senkyo.com/local/senkyo/25983,補いの回（2026-10-24）：2系統が一致（Grok：選挙ドットコムの候補者表記／Composer：選挙の結果・候補者一覧（選挙管理委員会）。抜き書きに氏名または候補者名と読み）
+mo-147,334618,矢掛町,議長,田中輝夫,田中,輝夫,たなか,てるお,確定,https://go2senkyo.com/local/senkyo/25983,補いの回（2026-10-24）：2系統が一致（Grok：選挙ドットコムの候補者表記／Composer：選挙の結果・候補者一覧（選挙管理委員会）。抜き書きに氏名または候補者名と読み）
+mo-148,334618,矢掛町,首長（市町村長）,山岡　敦,山岡,敦,やまおか,あつし,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-149,335860,新庄村,副議長,鈴木 照明,鈴木,照明,すずき,てるあき,確定,https://go2senkyo.com/local/senkyo/22147,補いの回（2026-10-24）：2系統が一致（Grok：選挙ドットコムの候補者表記／Composer：選挙ドットコムの候補者表記。抜き書きに氏名または候補者名と読み）
+mo-150,335860,新庄村,議長,坂本 英典,坂本,英典,さかもと,えいすけ,確定,https://go2senkyo.com/seijika/160472,補いの回（2026-10-24）：2系統が一致（Grok：選挙ドットコムの候補者表記／Composer：選挙ドットコムの候補者表記。抜き書きに氏名または候補者名と読み）
+mo-151,335860,新庄村,首長（市町村長）,石藤　延史,石藤,延史,いしどう,のぶちか,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-152,336068,鏡野町,副議長,牧田 俊一,牧田,俊一,まきた,としかず,確定,https://www.town.kagamino.lg.jp/site/gikai/1114.html,2系統が一致（抜き書きに読みあり）
+mo-153,336068,鏡野町,議長,原 章倫,原,章倫,はら,あきのり,確定,https://www.town.kagamino.lg.jp/site/gikai/1114.html,2系統が一致（抜き書きに読みあり）
+mo-154,336068,鏡野町,首長（市町村長）,瀬島　栄史,瀬島,栄史,せじま,まさふみ,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-155,336220,勝央町,副議長,森本 孝道,森本,孝道,もりもと,たかみち,確定,https://www.town.shoo.lg.jp/site/gikai/1118.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+mo-156,336220,勝央町,議長,浅田 剛至,浅田,剛至,あさだ,たけし,確定,https://www.town.shoo.lg.jp/site/gikai/1118.html,2系統が一致（抜き書きに読みあり）
+mo-157,336220,勝央町,首長（市町村長）,水嶋　淳治,水嶋,淳治,みずしま,じゅんじ,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-158,336238,奈義町,副議長,上原 伸介,上原,伸介,うえはら,しんすけ,確定,https://www.town.nagi.okayama.jp/gyousei/chousei/chougikai/chougikai/ginshoukai.html,2系統が一致（抜き書きに読みあり）
+mo-159,336238,奈義町,議長,岡 立,岡,立,おか,りつ,確定,https://www.town.nagi.okayama.jp/gyousei/chousei/chougikai/chougikai/ginshoukai.html,2系統が一致（抜き書きに読みあり）
+mo-160,336238,奈義町,首長（市町村長）,奥　正親,奥,正親,おく,まさちか,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-161,336432,西粟倉村,首長（市町村長）,青木　秀樹,青木,秀樹,あおき,ひでき,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-162,336637,久米南町,副議長,政廣 幹夫,政廣,幹夫,まさひろ,みきお,確定,https://go2senkyo.com/local/senkyo/13073,補いの回（2026-10-24）：Grok：選挙ドットコムの2014年町議選の候補者表記「政広 幹夫（マサヒロ ミキオ）」。Composer：町の2026-04-05町議選の開票結果「まさひろ 幹夫」（姓の読みが一致。Composer は名の欄に書いていた）
+mo-163,336637,久米南町,議長,河原 重義,河原,重義,かわら,しげよし,確定,https://go2senkyo.com/local/senkyo/13073,補いの回（2026-10-24）：Grok：選挙ドットコムの候補者表記「河原 重義（カワラ シゲヨシ）」・山陽新聞（かわら・しげよし）。Composer：町の開票結果「河原 しげよし」（名の読みが一致）
+mo-164,336637,久米南町,首長（市町村長）,片山　篤,片山,篤,かたやま,あつし,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-165,336661,美咲町,副議長,山本 宏治,山本,宏治,やまもと,こうじ,確定,https://go2senkyo.com/local/senkyo/22224,補いの回（2026-10-24）：Grok は確認できず。Composer：町の開票結果の当選人「山本 こうじ」（名だけ）。Claude：選挙ドットコムの2025-04-13町議選の候補者表記「山本 こうじ（ヤマモト コウジ）」。同じ選挙の山本姓の当選者はもう1人「山本 たすく」で、データの「山本 宏治」は「こうじ」の方
+mo-166,336661,美咲町,議長,松島 啓,松島,啓,まつしま,ひろむ,確定,https://go2senkyo.com/local/senkyo/22224,補いの回（2026-10-24）：Grok は確認できず。Composer：町の開票結果の当選人「松島 ひろむ」（名だけ）。Claude：選挙ドットコムの2025-04-13町議選の候補者表記「松島 ひろむ（マツシマ ヒロム）」
+mo-167,336661,美咲町,首長（市町村長）,青野　高陽,青野,高陽,あおの,たかはる,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）
+mo-168,336815,吉備中央町,副議長,黒田 員米,黒田,員米,くろだ,かずよね,確定,https://www.town.kibichuo.lg.jp/uploaded/attachment/10960.pdf,Composer の抜き書き（同じ行に氏名と読み）。Grok は確認できず
+mo-169,336815,吉備中央町,議長,西山 宗弘,西山,宗弘,にしやま,しゅうこう,確定,https://www.town.kibichuo.lg.jp/uploaded/attachment/10960.pdf,Composer の抜き書き（同じ行に氏名と読み）。Grok は確認できず
+mo-170,336815,吉備中央町,首長（市町村長）,山本　雅則,山本,雅則,やまもと,まさのり,確定,https://www.pref.okayama.jp/uploaded/attachment/421893.pdf,2系統が一致（抜き書きに読みあり）

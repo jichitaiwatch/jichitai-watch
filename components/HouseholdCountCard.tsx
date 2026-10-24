@@ -1,3 +1,4 @@
+import { t, tf } from "@/lib/i18n";
 import ComparisonNote, { type ComparisonNoteProps } from "./ComparisonNote";
 import { formatManUnit } from "@/lib/format-count";
 import { toFixedHalfUp } from "@/lib/format-decimal";
@@ -29,18 +30,18 @@ export function HouseholdCountCard({
     const diff = households - prior;
     const sign = diff >= 0 ? "+" : "−";
     const abs = Math.abs(diff);
-    const rate = prior > 0 ? `（${sign}${toFixedHalfUp((abs / prior) * 100, 1)}%）` : "";
-    deltaLabel = `${sign}${formatManUnit(abs)}世帯${rate}`;
+    const rate = prior > 0 ? tf("p-delta-rate", { sign, pct: toFixedHalfUp((abs / prior) * 100, 1) }) : "";
+    deltaLabel = `${tf("p-households", { n: `${sign}${formatManUnit(abs)}` })}${rate}`;
   }
 
   return (
     <div className="text-center">
       <p className="text-[36px] font-bold leading-none text-[var(--current)] sm:text-[38px]">
-        {formatManUnit(households)}世帯
+        {tf("p-households", { n: formatManUnit(households) })}
       </p>
       {deltaLabel && (
         <p className="mt-1 fs-sub text-[var(--muted)]">
-          前年比 <span className="font-semibold text-[var(--body)]">{deltaLabel}</span>
+          {t("fin-yoy")}<span className="font-semibold text-[var(--body)]">{deltaLabel}</span>
         </p>
       )}
       {comparison && <ComparisonNote {...comparison} />}

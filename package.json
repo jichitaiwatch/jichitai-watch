@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/build-site.mjs",
+    "build:bilingual": "node scripts/build-bilingual.mjs",
     "start": "next start",
     "lint": "eslint"
   },

@@ -80,8 +80,7 @@ export const PREFECTURES: PrefectureConfig[] = ALL_PREFECTURES.filter(
  * 岐阜県だけのとき（公開用ビルド）は従来どおりの文言になり、県が増えると PREFECTURES から作り直される
  * （県を足したときに文言の直し漏れが出ないように、文言は県の一覧から作る。launch-backlog.md L-9）。
  */
-export const REGION_LABEL = PREFECTURES.map((p) => p.prefectureName).join("・");
-export const REGION_DESCRIPTION = `${REGION_LABEL}内の市町村の財政や暮らしの制度を、市町村ごとに整理して見られます。`;
+export const REGION_NAMES: readonly string[] = PREFECTURES.map((p) => p.prefectureName);
 /** 岐阜県だけのときの入力例。クライアント側の既定値にも使う（この値と同じなら画面へ渡さない）。 */
 export const DEFAULT_SEARCH_EXAMPLE = "岐阜市、大垣市";
 export const SEARCH_EXAMPLE = (

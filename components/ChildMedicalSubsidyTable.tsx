@@ -1,5 +1,7 @@
+import { LOCALE } from "@/lib/locale";
 import type { ReactNode } from "react";
 import type { KodomoDistribution } from "@/lib/metrics";
+import { t, tf } from "@/lib/i18n";
 
 interface ChildMedicalSubsidyTableProps {
   ageOutpatient: string;
@@ -14,15 +16,31 @@ interface ChildMedicalSubsidyTableProps {
   studentMedical?: boolean;
 }
 
+const EN_AGE_STYLE = { fontSize: "0.85em" } as const;
+
+/**
+ * 年齢ごとの団体数の一覧の年齢（データの「18歳年度末」「上記以外」）。日本語版はそのまま、英語版は辞書で引く。
+ * 知らない形はビルドを止める（訳し漏れを出さない）
+ */
+function ageListLabel(label: string): string {
+  if (LOCALE === "ja") return label;
+  const m = label.match(/^(\d+)歳年度末$/);
+  if (m) return tf("p-cm-age-list", { n: m[1] });
+  if (label === "上記以外") return t("cm-age-other");
+  throw new Error(`[i18n] 子ども医療費の年齢の区分に英語が無い：${label}`);
+}
+
 /** 「15歳年度末」のような機械抽出データ表記を「15歳の年度末まで」に補って読みやすくする */
 function formatAge(age: string): ReactNode {
   const m = age.match(/^(\d+)歳年度末$/);
   if (!m) return age;
   return (
     <>
-      <span className="whitespace-nowrap">{m[1]}歳の</span>
+      {/* 英語の「Up to age 24」は日本語より幅を取り、スマホ幅の2列ではみ出すので、英語だけ字を少し小さくする */}
+      <span className="whitespace-nowrap" style={LOCALE === "en" ? EN_AGE_STYLE : undefined}>{tf("p-cm-age-1", { n: m[1] })}</span>
       <wbr />
-      <span className="whitespace-nowrap">年度末まで</span>
+      {/* 英語は「(until the end of that fiscal year)」が長く1行に収まらないので、折り返してよい形にする（日本語版は従来どおり） */}
+      <span className={LOCALE === "en" ? undefined : "whitespace-nowrap"}>{t("cm-age-2")}</span>
     </>
   );
 }
@@ -44,13 +62,15 @@ export function ChildMedicalSubsidyTable({
 }: ChildMedicalSubsidyTableProps) {
   const panels = [
     {
-      label: "通院",
+      key: "通院",
+      label: t("cm-outpatient"),
       age: ageOutpatient,
       incomeLimit: incomeLimitOutpatient,
       copay: copayOutpatient,
     },
     {
-      label: "入院",
+      key: "入院",
+      label: t("cm-inpatient"),
       age: ageInpatient,
       incomeLimit: incomeLimitInpatient,
       copay: copayInpatient,
@@ -64,7 +84,7 @@ export function ChildMedicalSubsidyTable({
       <div className="grid grid-cols-2 gap-2.5">
         {panels.map((p) => (
           <section
-            key={p.label}
+            key={p.key}
             className="min-w-0 overflow-hidden rounded-[9px] border border-[#dce6e1] bg-[#fbfcfb]"
           >
             <h3 className="m-0 bg-[#edf5f1] px-2.5 py-[7px] fs-label font-extrabold text-[var(--identity)]">
@@ -72,7 +92,7 @@ export function ChildMedicalSubsidyTable({
             </h3>
             <div className="px-2.5 pb-2.5 pt-3.5 text-center">
               <small className="mb-1 block fs-label text-[var(--muted)]">
-                対象年齢
+                {t("cm-age")}
               </small>
               <strong className="block fs-key font-bold leading-[1.1] text-[#17372c]">
                 {formatAge(p.age)}
@@ -80,29 +100,28 @@ export function ChildMedicalSubsidyTable({
             </div>
             <dl className="mx-2.5 mb-2.5 grid border-t border-[var(--line-soft)] fs-label">
               <div className="flex items-center justify-between border-b border-[var(--line-soft)] px-0.5 py-[9px]">
-                <dt className="text-[var(--muted)]">所得制限</dt>
-                <dd className="fs-label text-[var(--body)]">{p.incomeLimit}</dd>
+                <dt className="text-[var(--muted)]">{t("cm-income-limit")}</dt>
+                <dd className="fs-label text-[var(--body)]">{p.incomeLimit === "有" ? t("val-yes") : t("val-no")}</dd>
               </div>
               <div className="flex items-center justify-between px-0.5 py-[9px]">
-                <dt className="text-[var(--muted)]">一部自己負担</dt>
-                <dd className="fs-label text-[var(--body)]">{p.copay}</dd>
+                <dt className="text-[var(--muted)]">{t("cm-copay")}</dt>
+                <dd className="fs-label text-[var(--body)]">{p.copay === "有" ? t("val-yes") : t("val-no")}</dd>
               </div>
             </dl>
             {distribution && (
               <div className="mx-2.5 mb-2.5 border-t border-[var(--line-soft)] pt-2 fs-sub text-[var(--muted)]">
                 <p className="m-0 mb-1">
-                  対象年齢ごとの団体数（県内{distribution.prefTotal}／全国
-                  {fmt(distribution.nationalTotal)}）
+                  {tf("p-cm-dist", { pref: `${distribution.prefTotal}`, national: fmt(distribution.nationalTotal) })}
                 </p>
                 <ul className="m-0 grid list-none gap-0.5 p-0">
-                  {distribution.age[p.label].map((a) => (
+                  {distribution.age[p.key].map((a) => (
                     <li
                       key={a.label}
                       className="flex justify-between gap-1 text-[var(--body)]"
                     >
-                      <span>{a.label}</span>
+                      <span>{ageListLabel(a.label)}</span>
                       <span className="whitespace-nowrap">
-                        {fmt(a.pref)}／{fmt(a.national)}
+                        {tf("p-cm-pair", { pref: fmt(a.pref), national: fmt(a.national) })}
                       </span>
                     </li>
                   ))}
@@ -116,7 +135,7 @@ export function ChildMedicalSubsidyTable({
         // 「※」の団体だけ注記を足す。それ以外は従来と同じ子要素のまま（岐阜の出力を変えない）
         <>
           <p className="m-0 fs-note text-stone-600">
-            ※ 18歳年度末以降は学生医療として実施しており、対象は大学等に通う者に限る。（一定の所得制限あり。）
+            {t("cm-student-note")}
           </p>
           {distribution && <PolicyNote d={distribution} />}
         </>
@@ -137,20 +156,22 @@ function PolicyNote({ d }: { d: KodomoDistribution }) {
     d.copayYes.入院.pref;
   const lead =
     prefYes === 0
-      ? `県内${d.prefTotal}市町村は、すべて所得制限・一部自己負担とも「無」です。`
-      : `県内${d.prefTotal}市町村の所得制限・一部自己負担の「有」の団体数は次のとおりです。`;
+      ? tf("p-cm-lead-none", { n: `${d.prefTotal}` })
+      : tf("p-cm-lead-some", { n: `${d.prefTotal}` });
   const nationalLine = (
     <p className="m-0">
-      全国{fmt(d.nationalTotal)}市区町村で「有」の団体数：所得制限は通院
-      {fmt(d.incomeYes.通院.national)}・入院
-      {fmt(d.incomeYes.入院.national)}、一部自己負担は通院
-      {fmt(d.copayYes.通院.national)}・入院
-      {fmt(d.copayYes.入院.national)}。
+      {tf("p-cm-national", {
+        total: fmt(d.nationalTotal),
+        io: fmt(d.incomeYes.通院.national),
+        ii: fmt(d.incomeYes.入院.national),
+        co: fmt(d.copayYes.通院.national),
+        ci: fmt(d.copayYes.入院.national),
+      })}
     </p>
   );
   const unitLine = (
     <p className="m-0">
-      各数字は「県内の団体数／全国の団体数」。団体数であり、優劣を示すものではありません。
+      {t("cm-unit-line")}
     </p>
   );
   // 県内に「有」の団体があるときだけ、県内の団体数も併記する（無いときは従来と同じ表示）
@@ -158,11 +179,16 @@ function PolicyNote({ d }: { d: KodomoDistribution }) {
     <div className="fs-note text-stone-600">
       <p className="m-0">{lead}</p>
       <p className="m-0">
-        「有」の団体数（県内／全国）：所得制限は通院
-        {fmt(d.incomeYes.通院.pref)}／{fmt(d.incomeYes.通院.national)}・入院
-        {fmt(d.incomeYes.入院.pref)}／{fmt(d.incomeYes.入院.national)}、一部自己負担は通院
-        {fmt(d.copayYes.通院.pref)}／{fmt(d.copayYes.通院.national)}・入院
-        {fmt(d.copayYes.入院.pref)}／{fmt(d.copayYes.入院.national)}。
+        {tf("p-cm-pref-national", {
+          iop: fmt(d.incomeYes.通院.pref),
+          ion: fmt(d.incomeYes.通院.national),
+          iip: fmt(d.incomeYes.入院.pref),
+          iin: fmt(d.incomeYes.入院.national),
+          cop: fmt(d.copayYes.通院.pref),
+          con: fmt(d.copayYes.通院.national),
+          cip: fmt(d.copayYes.入院.pref),
+          cin: fmt(d.copayYes.入院.national),
+        })}
       </p>
       {nationalLine}
       {unitLine}

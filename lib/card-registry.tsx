@@ -8,6 +8,14 @@
 //   - getter の戻り row を各可視化コンポーネントの props 形へ変換する責務は、本レジストリの
 //     renderVisualization が担う（従来 MunicipalityDashboard.tsx が直書きしていた変換をここへ集約）。
 
+import { muniLabel } from "@/lib/place-names";
+import { nameLabelNode, personName } from "@/components/PersonName";
+import { kaihaLabel } from "@/lib/party-labels";
+import { dataTextString } from "@/lib/data-text";
+import { similarGroupLabel } from "@/lib/similar-group";
+import { manYenAmount, yenAmountMan } from "@/lib/format-units";
+import { msgsFor, t, tf } from "@/lib/i18n";
+import { EXPENDITURE_CHART_MSG_IDS, FINANCE_SCALE_CHART_MSG_IDS, KENZENKA_CHART_MSG_IDS } from "@/lib/i18n-ids";
 import type { ReactNode } from "react";
 import type { MunicipalityConfig } from "@/lib/municipalities";
 import type {
@@ -138,23 +146,24 @@ export type FrozenTrendCardKey = (typeof FROZEN_TREND_CARD_KEYS)[number];
  * この配列を共通で参照する単一定義。
  */
 export const ENTRANCE_TABS: { tab: IaTab; label: string }[] = [
-  { tab: "machi", label: "まちのすがた" },
-  { tab: "gyosei", label: "行政のすがた" },
-  { tab: "gikai", label: "議会のすがた" },
-  { tab: "kurashi", label: "くらし" },
+  { tab: "machi", label: t("tab-machi") },
+  { tab: "gyosei", label: t("tab-gyosei") },
+  { tab: "gikai", label: t("tab-gikai") },
+  { tab: "kurashi", label: t("tab-kurashi") },
 ];
 
 /** 入口サマリー1項目（#19・content-spec §7.15 0-1〜0-4）。value は事実の文字列のみ（D-4/D-6/D-12） */
 export interface EntranceSummaryItem {
   label: string;
-  value: string;
+  /** 日本語版は文字列。英語版は、訳さない名前（会派名・氏名の漢字）に lang="ja" を付けた要素になることがある */
+  value: ReactNode;
 }
 
 /** 符号付き人数表記（5年増減用）。0は±0人（増減なしを明示。欠損の"—"とは区別する） */
 function formatSignedCount(diff: number): string {
-  if (diff === 0) return "±0人";
+  if (diff === 0) return tf("p-people", { n: "±0" });
   const sign = diff > 0 ? "+" : "−";
-  return `${sign}${Math.abs(diff).toLocaleString()}人`;
+  return tf("p-people", { n: `${sign}${Math.abs(diff).toLocaleString()}` });
 }
 
 /**
@@ -164,12 +173,12 @@ function formatSignedCount(diff: number): string {
  */
 
 /** 入口サマリーの「最大会派」表示（有＝最大人数の会派名／無＝会派なし／確認できず） */
-function maxKaihaLabel(kaiha: GikaiCouncilRow["会派"]): string {
+function maxKaihaLabel(kaiha: GikaiCouncilRow["会派"]): ReactNode {
   if (kaiha.status === "有") {
     const max = (kaiha.会派一覧 ?? []).reduce<KaihaEntry | null>((acc, e) => (!acc || e.人数 > acc.人数 ? e : acc), null);
-    return max ? max.会派名 : "—";
+    return max ? nameLabelNode(kaihaLabel(max.会派名)) : "—";
   }
-  return kaiha.status === "無" ? "会派なし" : "確認できず";
+  return kaiha.status === "無" ? t("val-no-groups") : t("val-not-confirmed");
 }
 
 export function getEntranceSummary(tab: IaTab, m: MunicipalityConfig): EntranceSummaryItem[] {
@@ -178,24 +187,24 @@ export function getEntranceSummary(tab: IaTab, m: MunicipalityConfig): EntranceS
     // 試作（D-24）：公開分に無い area_code は試作データ（公開用ビルドでは常に null）
     const aging = getAgingRate(m.areaCode) ?? getAgingRateTrial(m.areaCode);
     const populationValue = population
-      ? `${population.row.r8_2026.人口_計.toLocaleString()}人`
+      ? tf("p-people", { n: population.row.r8_2026.人口_計.toLocaleString() })
       : "—";
     const diffValue = population
       ? formatSignedCount(population.row.r8_2026.人口_計 - population.row.r3_2021.人口_計)
       : "—";
     const agingValue = aging ? `${toFixedHalfUp(aging.row.高齢化率, 1)}%` : "—";
     return [
-      { label: "人口", value: populationValue },
-      { label: "5年増減", value: diffValue },
-      { label: "高齢化率", value: agingValue },
+      { label: t("pop-population"), value: populationValue },
+      { label: t("sum-5yr-change"), value: diffValue },
+      { label: t("pop-ageing-rate"), value: agingValue },
     ];
   }
 
   if (tab === "gyosei") {
     const chief = getChief(m.areaCode) ?? getChiefTrial(m.areaCode);
     return [
-      { label: "首長", value: chief ? chief.row.氏名 : "—" },
-      { label: "当選回数", value: chief ? `当選${chief.row.回}回` : "—" },
+      { label: t("gov-local-head"), value: chief ? personName(chief.row.area_code, chief.row.氏名) : "—" },
+      { label: t("sum-times-elected"), value: chief ? tf("p-times-elected", { n: `${chief.row.回}` }) : "—" },
     ];
   }
 
@@ -206,30 +215,30 @@ export function getEntranceSummary(tab: IaTab, m: MunicipalityConfig): EntranceS
       const teiin = getGikaiTeiinTrial(m.areaCode);
       const council = getGikaiCouncilTrial(m.areaCode);
       return [
-        { label: "議員定数", value: teiin ? `${teiin.row.議員定数}` : "—" },
-        { label: "最大会派", value: council ? maxKaihaLabel(council.row.会派) : "—" },
-        { label: "欠員", value: teiin && teiin.row.現員数 !== null ? `${teiin.row.議員定数 - teiin.row.現員数}人` : "—" },
+        { label: t("card-assembly-seats"), value: teiin ? `${teiin.row.議員定数}` : "—" },
+        { label: t("sum-largest-group"), value: council ? maxKaihaLabel(council.row.会派) : "—" },
+        { label: t("gov-vacancy"), value: teiin && teiin.row.現員数 !== null ? tf("p-people", { n: `${teiin.row.議員定数 - teiin.row.現員数}` }) : "—" },
       ];
     }
     const row = assembly.row;
     const maxKaihaValue = maxKaihaLabel(row.会派);
     return [
-      { label: "議員定数", value: `${row.議員定数}` },
-      { label: "最大会派", value: maxKaihaValue },
-      { label: "欠員", value: `${row.議員定数 - row.現員数}人` },
+      { label: t("card-assembly-seats"), value: `${row.議員定数}` },
+      { label: t("sum-largest-group"), value: maxKaihaValue },
+      { label: t("gov-vacancy"), value: tf("p-people", { n: `${row.議員定数 - row.現員数}` }) },
     ];
   }
 
   // kurashi
   const kodomoIryohi = getKodomoIryohi(m.areaCode) ?? getKodomoIryohiTrial(m.areaCode);
   const kaigoPremium = getKaigoPremium(m.areaCode) ?? getKaigoPremiumTrial(m);
-  const kodomoValue = kodomoIryohi && kodomoIryohi.row.対象年齢_通院 ? "あり" : "—";
+  const kodomoValue = kodomoIryohi && kodomoIryohi.row.対象年齢_通院 ? t("val-available") : "—";
   const kaigoValue = kaigoPremium
-    ? `${kaigoPremium.row.第9期月額基準保険料_円.toLocaleString()}円/月`
+    ? tf("p-yen-per-month", { n: kaigoPremium.row.第9期月額基準保険料_円.toLocaleString() })
     : "—";
   return [
-    { label: "子ども医療費助成", value: kodomoValue },
-    { label: "介護保険料", value: kaigoValue },
+    { label: t("card-child-medical"), value: kodomoValue },
+    { label: t("sum-care-premium"), value: kaigoValue },
   ];
 }
 
@@ -336,10 +345,10 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     gridSize: "compact",
     tab: "machi",
     order: 10,
-    title: "人口",
-    updateFrequency: "年1回",
-    sourceLabel: "住民基本台帳",
-    note: "自治体Watchが最新年（令和8年）のみを抽出して表示。",
+    title: t("card-population"),
+    updateFrequency: t("freq-once-a-year"),
+    sourceLabel: t("src-juki"),
+    note: t("note-latest-year"),
     // 試作（D-24）：公開分に無い area_code は試作データ（公開用ビルドでは常に null）
     resolve: (m) => getPopulationTimeseries(m.areaCode) ?? getPopulationTimeseriesTrial(m.areaCode),
     renderVisualization: (data, _m, suppressComparison) => {
@@ -356,8 +365,8 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
             !c || suppressComparison
               ? undefined
               : {
-                  rankText: `全国${c.rank}位／${c.rank_out_of}市区町村`,
-                  averageText: `類似団体平均（${c.group_code}）：${formatManUnit(Math.round(c.group_average))}人`,
+                  rankText: tf("p-rank-national", { rank: `${c.rank}`, total: `${c.rank_out_of}` }),
+                  averageText: tf("p-similar-avg", { group: similarGroupLabel(c.group_code), amount: tf("p-people", { n: formatManUnit(Math.round(c.group_average)) }) }),
                 }
           }
         />
@@ -370,10 +379,10 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     gridSize: "compact",
     tab: "machi",
     order: 20,
-    title: "世帯数",
-    updateFrequency: "年1回",
-    sourceLabel: "住民基本台帳",
-    note: "自治体Watchが最新年（令和8年）のみを抽出して表示。人口カードと同一データ。",
+    title: t("card-households"),
+    updateFrequency: t("freq-once-a-year"),
+    sourceLabel: t("src-juki"),
+    note: t("note-latest-year-same"),
     // 試作（D-24）：公開分に無い area_code は試作データ（公開用ビルドでは常に null）
     resolve: (m) => getPopulationTimeseries(m.areaCode) ?? getPopulationTimeseriesTrial(m.areaCode),
     renderVisualization: (data, _m, suppressComparison) => {
@@ -386,8 +395,8 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
             !c || suppressComparison
               ? undefined
               : {
-                  rankText: `全国${c.rank}位／${c.rank_out_of}市区町村`,
-                  averageText: `類似団体平均（${c.group_code}）：${formatManUnit(Math.round(c.group_average))}世帯`,
+                  rankText: tf("p-rank-national", { rank: `${c.rank}`, total: `${c.rank_out_of}` }),
+                  averageText: tf("p-similar-avg", { group: similarGroupLabel(c.group_code), amount: tf("p-households", { n: formatManUnit(Math.round(c.group_average)) }) }),
                 }
           }
         />
@@ -400,7 +409,7 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     gridSize: "compact",
     tab: "machi",
     order: 30,
-    title: "単身世帯・高齢化率",
+    title: t("card-one-person-ageing"),
     // 2026-09-21修正：旧「年1回〜（国勢調査は5年ごと）」は lib/staleness.ts の classifyCycle()
     // が"3年"→"5年"→"年1回/年次"の順で部分一致判定するため、"5年"にマッチして無条件に
     // 5年周期扱いになっていた（単身世帯割合側の年次相当の陳腐化を検知できないバグ）。
@@ -410,9 +419,9 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     // 複合カード1枚に対しclassifyCycle()は単一の周期しか判定できないため、
     // 2指標のうち厳しい方（年次）をカード全体のupdateFrequencyとして採用する
     // （緩い方に倒すと年次側の陳腐化を見逃す。厳しい方に倒す誤りは無駄な確認を促すだけで実害がない）。
-    updateFrequency: "年次",
-    sourceLabel: "総務省 国勢調査／住民基本台帳",
-    note: "自治体Watchが2つの統計を1枚に整理して表示。単身世帯割合は国勢調査（5年周期）、高齢化率は住民基本台帳（年次）が出典で、指標ごとに更新周期が異なる。陳腐化判定はカード全体として厳しい方（年次）を採用。",
+    updateFrequency: t("freq-annual"),
+    sourceLabel: t("src-census-juki"),
+    note: t("note-two-stats-detail"),
     resolve: (m) => {
       // 試作（D-24）：公開分に無い area_code は試作データ（公開用ビルドでは常に null）
       const single = getSingleHousehold(m.areaCode) ?? getSingleHouseholdTrial(m.areaCode);
@@ -423,7 +432,7 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
       // 更新日は新しい方、取得日は古い方（陳腐化判定を厳しい側に倒す）、系譜は両方を連結する。
       const periodLabel =
         single.meta.periodLabel && aging.meta.periodLabel
-          ? `単身世帯 ${single.meta.periodLabel}／高齢化率 ${aging.meta.periodLabel}`
+          ? tf("p-sha-period", { a: `${single.meta.periodLabel}`, b: `${aging.meta.periodLabel}` })
           : undefined;
       const fetchedCandidates = [single.meta.fetchedAt, aging.meta.fetchedAt].filter(
         (d): d is string => Boolean(d),
@@ -445,8 +454,8 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
         !c || suppressComparison
           ? undefined
           : {
-              rankText: `全国${c.rank}位／${c.rank_out_of}市区町村`,
-              averageText: `類似団体平均（${c.group_code}）：${c.group_average}${unit}`,
+              rankText: tf("p-rank-national", { rank: `${c.rank}`, total: `${c.rank_out_of}` }),
+              averageText: tf("p-similar-avg", { group: similarGroupLabel(c.group_code), amount: `${c.group_average}${unit}` }),
             };
       return (
         <SingleHouseholdAgingSummary
@@ -463,10 +472,10 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     iconId: "pie",
     tab: "machi",
     order: 40,
-    title: "産業別就業者構成比",
-    updateFrequency: "5年ごと（国勢調査）",
-    sourceLabel: "総務省 国勢調査",
-    note: "自治体Watchが第1〜3次産業の構成比を算出して表示。",
+    title: t("card-employment-by-industry"),
+    updateFrequency: t("freq-5yr-census"),
+    sourceLabel: t("src-census"),
+    note: t("note-sectors"),
     // 試作（D-24）：公開分に無い area_code は試作データ（公開用ビルドでは常に null）
     resolve: (m) => getIndustry(m.areaCode) ?? getIndustryTrial(m.areaCode),
     renderVisualization: (data, _m, suppressComparison) => {
@@ -475,8 +484,8 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
         !v || suppressComparison
           ? undefined
           : {
-              rankText: `全国${v.rank}位／${v.rank_out_of}市区町村`,
-              averageText: `類似団体平均（${v.group_code}）：${v.group_average}%`,
+              rankText: tf("p-rank-national", { rank: `${v.rank}`, total: `${v.rank_out_of}` }),
+              averageText: tf("p-similar-avg", { group: similarGroupLabel(v.group_code), amount: `${v.group_average}%` }),
             };
       return (
         <IndustryCompositionSummary
@@ -498,10 +507,10 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     iconId: "industry-bars",
     tab: "machi",
     order: 50,
-    title: "構成比が高い上位3業種",
-    updateFrequency: "5年ごと（国勢調査）",
-    sourceLabel: "総務省 国勢調査",
-    note: "自治体Watchが就業者数の降順で機械抽出。順位は事実提示であり優劣評価ではない。",
+    title: t("card-top3-industries"),
+    updateFrequency: t("freq-5yr-census"),
+    sourceLabel: t("src-census"),
+    note: t("note-top3"),
     // 試作（D-24）：公開分に無い area_code は試作データ（公開用ビルドでは常に null）
     resolve: (m) => getIndustry(m.areaCode) ?? getIndustryTrial(m.areaCode),
     renderVisualization: (data) => <TopIndustriesList industries={data.row.上位3業種} />,
@@ -511,9 +520,9 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     iconId: "daynight",
     tab: "machi",
     order: 60,
-    title: "昼夜間人口比率",
-    updateFrequency: "5年ごと（国勢調査）",
-    sourceLabel: "総務省 国勢調査",
+    title: t("card-day-night-ratio"),
+    updateFrequency: t("freq-5yr-census"),
+    sourceLabel: t("src-census"),
     // 試作（D-24）：公開分に無い area_code は試作データ（公開用ビルドでは常に null）
     resolve: (m) => getDaynight(m.areaCode) ?? getDaynightTrial(m.areaCode),
     renderVisualization: (data, _m, suppressComparison) => {
@@ -525,8 +534,8 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
             !c || suppressComparison
               ? undefined
               : {
-                  rankText: `全国${c.rank}位／${c.rank_out_of}市区町村`,
-                  averageText: `類似団体平均（${c.group_code}）：${toFixedHalfUp(c.group_average, 1)}`,
+                  rankText: tf("p-rank-national", { rank: `${c.rank}`, total: `${c.rank_out_of}` }),
+                  averageText: tf("p-similar-avg", { group: similarGroupLabel(c.group_code), amount: `${toFixedHalfUp(c.group_average, 1)}` }),
                 }
           }
         />
@@ -537,9 +546,9 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     id: "m1-taxable-income",
     tab: "machi",
     order: 70,
-    title: "一人あたり課税対象所得",
-    updateFrequency: "年1回",
-    sourceLabel: "e-Stat 統計でみる市区町村のすがた",
+    title: t("card-taxable-income"),
+    updateFrequency: t("freq-once-a-year"),
+    sourceLabel: t("src-estat-municipal"),
     // 試作（D-24）：公開分に無い area_code は試作データ（公開用ビルドでは常に null）
     resolve: (m) => getTaxableIncome(m.areaCode) ?? getTaxableIncomeTrial(m.areaCode),
     renderVisualization: (data, _m, suppressComparison) => {
@@ -551,8 +560,8 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
             suppressComparison
               ? undefined
               : {
-                  rankText: `全国${c.rank}位／${c.rank_out_of}市区町村`,
-                  averageText: `類似団体平均（${c.group_code}）：${toFixedHalfUp(c.group_average, 1)}万円`,
+                  rankText: tf("p-rank-national", { rank: `${c.rank}`, total: `${c.rank_out_of}` }),
+                  averageText: tf("p-similar-avg", { group: similarGroupLabel(c.group_code), amount: tf("p-man-yen", { amount: manYenAmount(toFixedHalfUp(c.group_average, 1)) }) }),
                 }
           }
         />
@@ -567,11 +576,13 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     iconId: "person",
     tab: "gyosei",
     order: 10,
-    title: "首長",
-    updateFrequency: "選挙ごと",
+    title: t("card-local-head"),
+    updateFrequency: t("freq-each-election"),
     // 自治総研 利用条件（using-data-note）: 実施機関名＋「自治体選挙結果調査」の明記が必須（content-spec §7.4）
-    sourceLabel: "地方自治総合研究所（自治体選挙結果調査）",
+    sourceLabel: t("src-jichisoken-elections"),
     // 経年導線なし（ui-vi §0.9）。生値・事実提示ゆえ加工主体明示（フッター③）は付与しない（§4.5 I3）
+    // 英語版だけの注記（辞書の ja は空＝日本語版には出さない。2026-10-23 運営者裁定）
+    note: t("note-family-name-first") || undefined,
     resolve: (m) => getChief(m.areaCode) ?? getChiefTrial(m.areaCode),
     renderVisualization: (data) => <ChiefCard row={data.row} />,
   }),
@@ -580,9 +591,9 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     iconId: "gauge",
     tab: "gyosei",
     order: 20,
-    title: "財政概況",
-    updateFrequency: "年次",
-    sourceLabel: "総務省 市町村別決算状況調",
+    title: t("card-finance-overview"),
+    updateFrequency: t("freq-annual"),
+    sourceLabel: t("src-mic-municipal-accounts"),
     // V1は普通会計1系統（統計比較のため国が統一集計した会計。一般会計を中核に含む）。特別会計・
     //   企業会計はデータ不在かつ需要の観点から外す（ui-vi §4.6 の3区分展開はV1では採らない・
     //   absence as content・§0.9追補2026-09-09）。
@@ -590,9 +601,9 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     //   経年画面の描画は ui-vi §5.8。trends ページ汎用化と同時に付与済み。
     trendsCategory: "finance",
     trends: {
-      lead: "歳入・歳出決算総額（財政規模）の推移。",
-      sourceLabel: "総務省 市町村別決算状況調",
-      note: "普通会計の歳入・歳出決算総額（生値・千円）。縦軸は億円表示。",
+      lead: t("lead-finance-scale"),
+      sourceLabel: t("src-mic-municipal-accounts"),
+      note: t("note-finance-scale"),
       render: (m) => {
         const ts = getFinanceScaleTimeseries(m.areaCode) ?? getFinanceScaleTimeseriesTrial(m.areaCode);
         if (!ts) return null;
@@ -600,7 +611,7 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
           const v = ts.row[k];
           return { fyLabel: k.replace("fy", ""), 歳入: v ? v["歳入総額_千円"] : null, 歳出: v ? v["歳出総額_千円"] : null };
         });
-        return { chart: <FinanceScaleTrendsChart data={points} />, sourceUrl: ts.meta.sourceUrl, updated: ts.meta.updated };
+        return { chart: <FinanceScaleTrendsChart data={points} msgs={msgsFor(FINANCE_SCALE_CHART_MSG_IDS)} />, sourceUrl: ts.meta.sourceUrl, updated: ts.meta.updated };
       },
     },
     // 前年比は同一団体（§7.12 2-2e）。生値ゆえ加工主体明示（フッター③）は付与しない。
@@ -611,17 +622,17 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     id: "m2-fiscal-health",
     tab: "gyosei",
     order: 30,
-    title: "財政の健全性",
-    updateFrequency: "年次",
-    sourceLabel: "総務省 市町村別決算状況調／健全化判断比率の概要",
+    title: t("card-fiscal-soundness"),
+    updateFrequency: t("freq-annual"),
+    sourceLabel: t("src-mic-municipal-accounts-soundness"),
     // 経年（trends/fiscal-health＝比率ごと折れ線＋水平法定基準線）: m2_4_kenzenka_shichoson_multiyear.json
     //   （FY2015〜FY2024）。経年画面の描画は ui-vi §5.9。基準線は単年（m2_2）側の getter から取る
     //   （赤字系の早期＝団体別／その他＝共通）。trends ページ汎用化と同時に付与済み。
     trendsCategory: "fiscal-health",
     trends: {
-      lead: "健全化判断比率の推移。横の実線＝早期健全化基準、破線＝財政再生基準（将来負担比率は再生基準なし）。線の高さは基準までの距離を示す事実で、良し悪しの評価ではありません。",
-      sourceLabel: "総務省 健全化判断比率及び資金不足比率の概要（各年度）",
-      note: "早期健全化基準・財政再生基準は法定の一定値（実質赤字・連結実質赤字の早期基準は標準財政規模に応じ団体別）。「-」（赤字なし・負担なし）は0として表示。",
+      lead: t("lead-kenzenka"),
+      sourceLabel: t("src-mic-soundness-summary"),
+      note: t("note-soundness-standards"),
       render: (m) => {
         const ts = getKenzenkaTimeseries(m.areaCode) ?? getKenzenkaTimeseriesTrial(m.areaCode);
         const single = getKenzenkaSingleYear(m.areaCode) ?? getKenzenkaSingleYearTrial(m.areaCode);
@@ -636,35 +647,35 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
           });
         const series: KenzenkaTrendSeries[] = [
           {
-            plainLabel: "一般会計の赤字の程度",
-            formalLabel: "実質赤字比率",
+            plainLabel: t("fh-plain-real-deficit"),
+            formalLabel: t("ind-real-deficit"),
             early: single.row.実質赤字比率_早期健全化基準,
             regen: c.実質赤字比率_財政再生基準_市区町村,
             points: pointsOf((f) => f.実質赤字比率),
           },
           {
-            plainLabel: "全会計の赤字の程度",
-            formalLabel: "連結実質赤字比率",
+            plainLabel: t("fh-plain-consolidated-deficit"),
+            formalLabel: t("ind-consolidated-real-deficit"),
             early: single.row.連結実質赤字比率_早期健全化基準,
             regen: c.連結実質赤字比率_財政再生基準_市区町村,
             points: pointsOf((f) => f.連結実質赤字比率),
           },
           {
-            plainLabel: "借金返済の重さ",
-            formalLabel: "実質公債費比率",
+            plainLabel: t("fh-plain-debt-service"),
+            formalLabel: t("ind-real-debt-service"),
             early: c.実質公債費比率_早期健全化基準,
             regen: c.実質公債費比率_財政再生基準,
             points: pointsOf((f) => f.実質公債費比率),
           },
           {
-            plainLabel: "将来へ残す負担の大きさ",
-            formalLabel: "将来負担比率",
+            plainLabel: t("fh-plain-future-burden"),
+            formalLabel: t("ind-future-burden"),
             early: c.将来負担比率_早期健全化基準_市区町村,
             regen: c.将来負担比率_財政再生基準,
             points: pointsOf((f) => f.将来負担比率),
           },
         ];
-        return { chart: <KenzenkaTrendsChart series={series} />, sourceUrl: ts.meta.sourceUrl, updated: ts.meta.updated };
+        return { chart: <KenzenkaTrendsChart series={series} msgs={msgsFor(KENZENKA_CHART_MSG_IDS)} />, sourceUrl: ts.meta.sourceUrl, updated: ts.meta.updated };
       },
     },
     // 法定事実の提示ゆえ加工主体明示（フッター③）は付与しない（ui-vi §0.9・§4.5 I3）
@@ -672,43 +683,47 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     renderVisualization: (data) => {
       const row = data.row;
       const c = getKenzenkaStatutoryCommon();
-      const t = row.ratio_source_tokens;
+      const tokens = row.ratio_source_tokens;
       // 順序は健全化判断比率の法定列挙順（実質赤字→連結実質赤字→実質公債費→将来負担。ui-vi §3.8）。
       // 評価順ではない（D-4）。早期基準は 赤字系＝レコード別／比率系＝共通。将来負担の再生基準は null（§3.1）。
       const indicators: FiscalHealthIndicator[] = [
         {
-          plainLabel: "一般会計の赤字の程度",
-          formalLabel: "実質赤字比率",
+          plainLabel: t("fh-plain-real-deficit"),
+          formalLabel: t("ind-real-deficit"),
+          id: "実質赤字比率",
           kind: "deficit",
           value: row.実質赤字比率,
-          token: t.実質赤字比率,
+          token: tokens.実質赤字比率,
           earlyThreshold: row.実質赤字比率_早期健全化基準,
           regenThreshold: c.実質赤字比率_財政再生基準_市区町村,
         },
         {
-          plainLabel: "全会計の赤字の程度",
-          formalLabel: "連結実質赤字比率",
+          plainLabel: t("fh-plain-consolidated-deficit"),
+          formalLabel: t("ind-consolidated-real-deficit"),
+          id: "連結実質赤字比率",
           kind: "deficit",
           value: row.連結実質赤字比率,
-          token: t.連結実質赤字比率,
+          token: tokens.連結実質赤字比率,
           earlyThreshold: row.連結実質赤字比率_早期健全化基準,
           regenThreshold: c.連結実質赤字比率_財政再生基準_市区町村,
         },
         {
-          plainLabel: "借金返済の重さ",
-          formalLabel: "実質公債費比率",
+          plainLabel: t("fh-plain-debt-service"),
+          formalLabel: t("ind-real-debt-service"),
+          id: "実質公債費比率",
           kind: "ratio",
           value: row.実質公債費比率,
-          token: t.実質公債費比率,
+          token: tokens.実質公債費比率,
           earlyThreshold: c.実質公債費比率_早期健全化基準,
           regenThreshold: c.実質公債費比率_財政再生基準,
         },
         {
-          plainLabel: "将来へ残す負担の大きさ",
-          formalLabel: "将来負担比率",
+          plainLabel: t("fh-plain-future-burden"),
+          formalLabel: t("ind-future-burden"),
+          id: "将来負担比率",
           kind: "ratio",
           value: row.将来負担比率,
-          token: t.将来負担比率,
+          token: tokens.将来負担比率,
           earlyThreshold: c.将来負担比率_早期健全化基準_市区町村,
           regenThreshold: c.将来負担比率_財政再生基準,
         },
@@ -721,16 +736,16 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     iconId: "bars",
     tab: "gyosei",
     order: 40,
-    title: "住民一人あたり分野別支出",
-    updateFrequency: "年1回",
-    sourceLabel: "総務省 地方財政状況調査（決算統計）",
-    note: "各費目の決算額（千円）を人口で除して自治体Watchが算出。",
+    title: t("card-expenditure-per-resident"),
+    updateFrequency: t("freq-once-a-year"),
+    sourceLabel: t("src-mic-local-finance-survey"),
+    note: t("note-per-resident"),
     // 経年（trends/spending）: m3_expenditure_multiyear.json（FY2015〜FY2024）が実在（§5.3・§5.8 折れ線）
     trendsCategory: "spending",
     trends: {
-      lead: "住民一人あたり額（円/人）の推移。色は費目の識別のためのもので、金額の優劣を表すものではありません。",
-      sourceLabel: "総務省 地方財政状況調査（決算統計）",
-      note: "各費目の決算額（千円）を各年度の人口で除して自治体Watchが算出。",
+      lead: t("lead-expenditure"),
+      sourceLabel: t("src-mic-local-finance-survey"),
+      note: t("note-per-resident-yearly"),
       render: (m) => {
         const ts = getExpenditureTimeseries(m.areaCode) ?? getExpenditureTimeseriesTrial(m.areaCode);
         if (!ts) return null;
@@ -744,7 +759,7 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
             普通建設事業費: v ? v["普通建設事業費_円/人"] : null,
           };
         });
-        return { chart: <ExpenditureTrendsChart data={points} />, sourceUrl: ts.meta.sourceUrl, updated: ts.meta.updated };
+        return { chart: <ExpenditureTrendsChart data={points} msgs={msgsFor(EXPENDITURE_CHART_MSG_IDS)} />, sourceUrl: ts.meta.sourceUrl, updated: ts.meta.updated };
       },
     },
     resolve: (m) => getExpenditure(m.areaCode) ?? getExpenditureTrial(m.areaCode), // area_code 照合（試作県はあとから）
@@ -759,25 +774,25 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
       const nat = (v: number | null) => (suppressComparison ? null : v);
       const chartData: ExpenditureBarChartDatum[] = [
         {
-          label: "民生費",
+          label: t("exp-public-welfare"), id: "民生費",
           valuePerCapita: r["民生費_円/人"],
           nationalAverage: nat(na ? na["民生費_円/人"] : null),
           prefectureAverage: nat(pa ? pa["民生費_円/人"] : null),
         },
         {
-          label: "教育費",
+          label: t("exp-education"), id: "教育費",
           valuePerCapita: r["教育費_円/人"],
           nationalAverage: nat(na ? na["教育費_円/人"] : null),
           prefectureAverage: nat(pa ? pa["教育費_円/人"] : null),
         },
         {
-          label: "土木費",
+          label: t("exp-civil-eng"), id: "土木費",
           valuePerCapita: r["土木費_円/人"],
           nationalAverage: nat(na ? na["土木費_円/人"] : null),
           prefectureAverage: nat(pa ? pa["土木費_円/人"] : null),
         },
         {
-          label: "普通建設事業費",
+          label: t("exp-ordinary-construction"), id: "普通建設事業費",
           valuePerCapita: r["普通建設事業費_円/人"],
           nationalAverage: nat(na ? na["普通建設事業費_円/人"] : null),
           prefectureAverage: nat(pa ? pa["普通建設事業費_円/人"] : null),
@@ -793,12 +808,15 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     iconId: "gikai-chair",
     tab: "gikai",
     order: 10,
-    title: "議長・副議長",
-    updateFrequency: "改選ごと",
-    sourceLabel: "各議会サイト個別調査",
+    title: t("card-chair-vice"),
+    updateFrequency: t("freq-each-assembly-election"),
+    sourceLabel: t("src-assembly-websites"),
+    // 英語版だけの注記（辞書の ja は空＝日本語版には出さない。2026-10-23 運営者裁定）
+    note: t("note-family-name-first") || undefined,
     resolve: (m) => getGikaiAssembly(m.areaCode) ?? getGikaiCouncilTrial(m.areaCode),
-    renderVisualization: (data) => (
+    renderVisualization: (data, m) => (
       <GikaiChoFukuchoCard
+        areaCode={m.areaCode}
         chairName={data.row.正副議長.議長氏名}
         viceChairName={data.row.正副議長.副議長氏名}
         chairSince={data.row.正副議長.議長就任日}
@@ -813,15 +831,15 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     iconId: "gikai-seats",
     tab: "gikai",
     order: 20,
-    title: "議員定数",
-    updateFrequency: "年次",
-    sourceLabel: "総務省『議員定数に関する調』",
+    title: t("card-assembly-seats"),
+    updateFrequency: t("freq-annual"),
+    sourceLabel: t("src-mic-assembly-seats"),
     resolve: (m) => getGikaiAssembly(m.areaCode) ?? getGikaiTeiinTrial(m.areaCode),
     renderVisualization: (data, _m, suppressComparison) => {
       const c = data.row.comparison;
       return (
         <CouncilSeatsCard
-          cityName={data.row.市区町村名}
+          cityName={muniLabel(data.row.area_code, data.row.市区町村名)}
           teisu={data.row.議員定数}
           genin={data.row.現員数}
           nationalAverage={!c || suppressComparison ? null : c.national_average}
@@ -835,16 +853,17 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     iconId: "gikai-kaiha",
     tab: "gikai",
     order: 30,
-    title: "会派",
-    updateFrequency: "年次",
-    sourceLabel: "各議会サイト個別調査",
-    note: "自治体Watchが議会公式サイトを確認し3状態（有・\u2060無・\u2060確認できず）で整理。「確認できず」は非公開の意味ではない。",
+    title: t("card-political-groups"),
+    updateFrequency: t("freq-annual"),
+    sourceLabel: t("src-assembly-websites"),
+    // 英語版だけ、会派名を日本語のまま出す旨を足す（辞書の ja は空＝日本語版の注記は変わらない）
+    note: [t("note-three-states"), t("note-kaiha-names-ja")].filter(Boolean).join(" "),
     resolve: (m) => getGikaiAssembly(m.areaCode) ?? getGikaiCouncilTrial(m.areaCode),
     renderVisualization: (data) => (
       <KaihaCard
         status={data.row.会派.status}
         list={data.row.会派.会派一覧?.map((e) => ({ name: e.会派名, count: e.人数 })) ?? null}
-        note={data.row.会派.参考メモ}
+        note={data.row.会派.参考メモ ? dataTextString("kaiha_memo", data.row.会派.参考メモ) : data.row.会派.参考メモ}
       />
     ),
   }),
@@ -853,10 +872,10 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     iconId: "gikai-cost",
     tab: "gikai",
     order: 40,
-    title: "議会費",
-    updateFrequency: "年次",
-    sourceLabel: "総務省 市町村別決算状況調",
-    note: "財政概況カードと同一データの再配置（自治体Watchが加工なしで抽出）。",
+    title: t("card-assembly-expenditure"),
+    updateFrequency: t("freq-annual"),
+    sourceLabel: t("src-mic-municipal-accounts"),
+    note: t("note-same-as-overview"),
     resolve: (m) => getGikaihi(m.areaCode) ?? getGikaihiTrial(m.areaCode),
     renderVisualization: (data) => (
       <GikaihiCard current={data.row.議会費_千円} prior={data.row.議会費_前年_千円} />
@@ -867,9 +886,9 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     iconId: "gikai-minutes",
     tab: "gikai",
     order: 50,
-    title: "議事録Web公開",
-    updateFrequency: "年次",
-    sourceLabel: "各議会サイト個別調査",
+    title: t("card-minutes-online"),
+    updateFrequency: t("freq-annual"),
+    sourceLabel: t("src-assembly-websites"),
     resolve: (m) => {
       const hit = getGikaiAssembly(m.areaCode) ?? getGikaiCouncilTrial(m.areaCode);
       // 試作県で会議録本文の公開を確認できなかった団体（議事録公開 null）は「データ未整備」
@@ -889,10 +908,10 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     id: "m1-kodomo-iryohi",
     tab: "kurashi",
     order: 10,
-    title: "子ども医療費助成",
-    updateFrequency: "年1回",
-    sourceLabel: "こども家庭庁 実施状況調査",
-    note: "公表資料を自治体Watchが表形式に整理。",
+    title: t("card-child-medical"),
+    updateFrequency: t("freq-once-a-year"),
+    sourceLabel: t("src-cfa-child-medical"),
+    note: t("note-table"),
     resolve: (m) => getKodomoIryohi(m.areaCode) ?? getKodomoIryohiTrial(m.areaCode),
     renderVisualization: (data) => {
       const r = data.row;
@@ -916,10 +935,10 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     id: "m2-kaigo-premium",
     tab: "kurashi",
     order: 20,
-    title: "介護保険料 基準額",
-    updateFrequency: "3年ごと",
-    sourceLabel: "厚生労働省",
-    note: "公表された基準額（第1号・月額）を自治体Watchが整理。",
+    title: t("card-care-premium"),
+    updateFrequency: t("freq-3yr"),
+    sourceLabel: t("src-mhlw"),
+    note: t("note-care-premium"),
     // 試作（D-24）：公開分に無い団体は試作データ（公開用ビルドでは常に null）
     resolve: (m) => getKaigoPremium(m.areaCode) ?? getKaigoPremiumTrial(m),
     resolveSourceLabel: (m) => getKaigoPremiumSourceLabel(m.kaigoInsurerName),
@@ -929,7 +948,7 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
       const averages = getKaigoPremium(m.areaCode) ? getKaigoAverages() : getKaigoAveragesTrial(m.prefectureName);
       return (
         <KaigoPremiumSummary
-          cityName={m.cityName}
+          cityName={m.label}
           insurerName={r.市区町村名}
           premiumCurrent={r.第9期月額基準保険料_円}
           premiumPrevious={r.第8期月額基準保険料_円}
@@ -945,10 +964,10 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     id: "m4-5-furusato",
     tab: "kurashi",
     order: 30,
-    title: "ふるさと納税",
-    updateFrequency: "年1回",
-    sourceLabel: "総務省 ふるさと納税に関する現況調査",
-    note: "公表資料を自治体Watchが整理し、人口一人あたりに換算。",
+    title: t("card-furusato"),
+    updateFrequency: t("freq-once-a-year"),
+    sourceLabel: t("src-mic-furusato"),
+    note: t("note-furusato"),
     // 試作（D-24）：公開分に無い area_code は試作データ（公開用ビルドでは常に null）
     resolve: (m) => getFurusato(m.areaCode) ?? getFurusatoTrial(m.areaCode),
     renderVisualization: (data, _m, suppressComparison) => {
@@ -959,23 +978,23 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
         suppressComparison
           ? undefined
           : {
-              rankSuffix: `全国${c.rank}位／${c.rank_out_of}市区町村`,
-              averageText: `類似団体平均（${c.group_code}）：${formatManUnit(c.group_average)}円`,
+              rankSuffix: tf("p-rank-national", { rank: `${c.rank}`, total: `${c.rank_out_of}` }),
+              averageText: tf("p-similar-avg", { group: similarGroupLabel(c.group_code), amount: tf("p-yen", { amount: yenAmountMan(c.group_average) }) }),
             };
       return (
         <FurusatoCard
           intake={{
             amountYen: r.受入_金額_円,
             perCapitaYen: r.一人あたり受入額_円,
-            detailLabel: "寄附件数",
-            detailValue: `${formatManUnit(r.受入_件数)}件`,
+            detailLabel: t("fu-count"),
+            detailValue: tf("p-fu-count", { n: formatManUnit(r.受入_件数) }),
             comparison: cmp(cIn),
           }}
           deduction={{
             amountYen: r.控除_市町村民税_控除額_円,
             perCapitaYen: r.一人あたり控除額_円,
-            detailLabel: "控除人数",
-            detailValue: `${formatManUnit(r.控除_市町村民税_人数)}人`,
+            detailLabel: t("fu-people"),
+            detailValue: tf("p-people", { n: formatManUnit(r.控除_市町村民税_人数) }),
             comparison: cmp(cOut),
           }}
         />
@@ -987,10 +1006,10 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
     id: "l8-forest-tax",
     tab: "kurashi",
     order: 40,
-    title: "森林環境譲与税",
-    updateFrequency: "年1回",
-    sourceLabel: "各自治体の森林環境譲与税の使途公表／総務省 森林環境譲与税の譲与額",
-    note: "各自治体の公表資料を自治体Watchが整理。基金の残高は載せていません。",
+    title: t("card-forest-tax"),
+    updateFrequency: t("freq-once-a-year"),
+    sourceLabel: t("src-forest-municipal"),
+    note: t("note-forest-municipal"),
     resolve: (m) => getForestTax(m.areaCode),
     renderVisualization: (data) => {
       const r = data.row;
@@ -998,7 +1017,7 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
         <ForestTaxCard
           jouyoYen={r.jouyo_yen}
           katsuyoYen={r.katsuyo_yen}
-          katsuyoNote={r.katsuyo_basis !== null && r.katsuyo_basis !== "譲与税充当額" ? r.katsuyo_basis : undefined}
+          katsuyoNote={r.katsuyo_basis !== null && r.katsuyo_basis !== "譲与税充当額" ? dataTextString("forest_basis", r.katsuyo_basis) : undefined}
           tsumitateYen={r.kikin_tsumitate_yen}
           uses={r.main_uses}
         />
@@ -1011,7 +1030,7 @@ export const CARD_REGISTRY: CardDefinition<unknown>[] = [
 /** 入口のタブ。政令市の区は、「まちのすがた」と、区の値があるカードを持つタブだけ（無いタブは出さない）。区以外は ENTRANCE_TABS のまま */
 export function entranceTabsFor(m: MunicipalityConfig): { tab: IaTab; label: string }[] {
   if (m.kind !== "ward") return ENTRANCE_TABS;
-  return ENTRANCE_TABS.filter((t) => t.tab === "machi" || cardsForTab(t.tab).some((d) => d.resolve(m) !== null));
+  return ENTRANCE_TABS.filter((et) => et.tab === "machi" || cardsForTab(et.tab).some((d) => d.resolve(m) !== null));
 }
 
 export function cardsForTab(tab: IaTab): CardDefinition<unknown>[] {
@@ -1043,7 +1062,7 @@ export function listTrendsCategories(): TrendsCategoryMeta[] {
   return CARD_REGISTRY.filter((c) => c.trendsCategory).map((c) => ({
     category: c.trendsCategory!,
     tab: c.tab,
-    tabLabel: ENTRANCE_TABS.find((t) => t.tab === c.tab)?.label ?? c.tab,
+    tabLabel: ENTRANCE_TABS.find((et) => et.tab === c.tab)?.label ?? c.tab,
     cardTitle: c.title,
     cardId: c.id,
   }));

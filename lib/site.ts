@@ -11,18 +11,48 @@
 // - URL は凍結（frontend-architecture.md §5.1）。ここで作るパスは各ルートの generateStaticParams と同じ集合で、
 //   ビルド後の `out/` と一致することを検査で確認する（一致しなければ D-2 の受入れ不可）。
 
+import { prefLabel } from "@/lib/place-names";
+import { BILINGUAL, LOCALE, localePath } from "@/lib/locale";
 import type { Metadata } from "next";
 import { MUNICIPALITIES, WARDS } from "@/lib/municipalities";
-import { PREFECTURES, REGION_DESCRIPTION } from "@/lib/prefectures";
+import { PREFECTURES, REGION_NAMES } from "@/lib/prefectures";
 import { STAGING } from "@/lib/staging";
 import { ENTRANCE_TABS, entranceTabsFor, listTrendsCategories } from "@/lib/card-registry";
+import { t, tf } from "@/lib/i18n";
 
 export const SITE_URL = "https://jichitaiwatch.jp";
-export const SITE_NAME = "自治体Watch";
+export const SITE_NAME = t("ui-site-name");
+
+/**
+ * 公開中の地域を指す説明文（トップの説明・共有画像の代替文）。地域の名前は県の一覧から作る（lib/prefectures.ts の REGION_LABEL・L-9）。
+ * 文言は用語辞書（lib/i18n.ts）から引くため、ブラウザ用の部品も読む lib/prefectures.ts ではなくここに置く。
+ */
+/** 公開中の地域の名前を並べた文字列（日本語「岐阜県・愛知県…」）。区切りは用語辞書 ui-join。lib/prefectures.ts はブラウザ側の部品も読むので、辞書を引く処理はここに置く */
+export const REGION_LABEL = REGION_NAMES.map((n) => prefLabel(n)).join(t("ui-join"));
+
+export const REGION_DESCRIPTION = tf("p-desc-region-all", { region: REGION_LABEL });
+
+/** ページのタイトル（ページ名｜サイト名）。 */
+export function pageTitle(page: string): string {
+  return tf("p-title", { page, site: SITE_NAME });
+}
+
+/** 自治体ごとのページのタイトル（ページ名｜自治体名｜サイト名）。 */
+export function pageTitleIn(page: string, place: string): string {
+  return tf("p-title-in", { page, place, site: SITE_NAME });
+}
 
 /** 各ページの metadata に渡す canonical（metadataBase＝SITE_URL からの相対パス）。 */
 export function canonicalOf(path: string): Metadata["alternates"] {
-  return { canonical: path };
+  // 英語版のビルドでは頭に /en を付ける（metadataBase は basePath を足さないため）。日本語版は従来どおり。
+  const canonical = localePath(path, LOCALE);
+  if (!BILINGUAL) return { canonical };
+  // 日本語版と英語版をまとめて作ったときだけ、対になる別の言語のページを検索エンジンに示す（hreflang）。
+  // x-default（言語を決められない読者向け）は日本語版にする。
+  return {
+    canonical,
+    languages: { ja: localePath(path, "ja"), en: localePath(path, "en"), "x-default": localePath(path, "ja") },
+  };
 }
 
 /**
@@ -34,11 +64,11 @@ export function canonicalOf(path: string): Metadata["alternates"] {
  * description は事実だけを書き、評価の言葉を使わない（20260808_decisions.md D-4/D-6）。
  */
 /** 共有画像。実体は app/opengraph-image.png（scripts/gen_site_images.py が生成）で、/opengraph-image.png に書き出される。 */
-const SHARE_IMAGE = {
+export const SHARE_IMAGE = {
   url: "/opengraph-image.png",
   width: 1200,
   height: 630,
-  alt: `自治体Watch：${REGION_DESCRIPTION}`,
+  alt: tf("p-share-alt", { site: SITE_NAME, desc: REGION_DESCRIPTION }),
 };
 
 export function pageMeta({
@@ -57,10 +87,10 @@ export function pageMeta({
     openGraph: {
       type: "website",
       siteName: SITE_NAME,
-      locale: "ja_JP",
+      locale: LOCALE === "en" ? "en_GB" : "ja_JP",
       title,
       description,
-      url: path,
+      url: localePath(path, LOCALE),
       images: [SHARE_IMAGE],
     },
     twitter: { card: "summary_large_image", title, description, images: [SHARE_IMAGE.url] },
@@ -72,8 +102,8 @@ export function pageMeta({
 /** 4入口の各ページの説明文。載っているカード名をそのまま並べる（手書きしない＝カード増減に追随）。 */
 export function tabDescription(name: string, tabLabel: string, cardTitles: string[]): string {
   // カードの無い区分（例：県庁の「くらし」）は画面も「この区分の情報は現在準備中です」と出す。それに合わせる。
-  if (cardTitles.length === 0) return `${name}の「${tabLabel}」。この区分の情報は現在準備中です。`;
-  return `${name}の「${tabLabel}」。${cardTitles.join("・")}を、出典つきで掲載しています。`;
+  if (cardTitles.length === 0) return tf("p-desc-tab-empty", { name, tab: tabLabel });
+  return tf("p-desc-tab", { name, tab: tabLabel, cards: cardTitles.join(t("ui-join")) });
 }
 
 /** 地域ページ（/{prefSlug}） */

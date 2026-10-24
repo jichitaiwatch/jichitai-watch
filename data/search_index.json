@@ -1,7 +1,8 @@
 {
 "generated_from": [
 "data/municipality_master.json",
-"data/municipality_kana.json"
+"data/municipality_kana.json",
+"i18n/place-names-en.json"
 ],
 "notes": [
 "検索クライアント索引（frontend-architecture §7.2 生成物）。手書き禁止・再生成でのみ更新。",
@@ -22364,7 +22365,7 @@
 "name": "総社市",
 "pref_name": "岡山県",
 "keys": [
-"sojiyashi",
+"sojashi",
 "ソウジヤシ",
 "岡山県総社市",
 "総社市"
@@ -22424,7 +22425,7 @@
 "name": "瀬戸内市",
 "pref_name": "岡山県",
 "keys": [
-"setochishi",
+"setouchishi",
 "セトウチシ",
 "岡山県瀬戸内市",
 "瀬戸内市"
@@ -22559,7 +22560,7 @@
 "name": "新庄村",
 "pref_name": "岡山県",
 "keys": [
-"shinjiyoson",
+"shinjoson",
 "シンジヨウソン",
 "岡山県新庄村",
 "新庄村"
@@ -22589,7 +22590,7 @@
 "name": "勝央町",
 "pref_name": "岡山県",
 "keys": [
-"shocho",
+"shoocho",
 "ショウオウチョウ",
 "勝央町",
 "岡山県勝央町"
@@ -23352,7 +23353,7 @@
 "name": "山陽小野田市",
 "pref_name": "山口県",
 "keys": [
-"sanyonodashi",
+"sanyoonodashi",
 "サンヨウオノダシ",
 "山口県山陽小野田市",
 "山陽小野田市"

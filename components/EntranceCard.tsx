@@ -1,5 +1,6 @@
-import Link from "next/link";
+import Link from "@/components/SiteLink";
 import type { EntranceSummaryItem } from "@/lib/card-registry";
+import { t } from "@/lib/i18n";
 
 interface EntranceCardProps {
   href: string;
@@ -24,7 +25,7 @@ export function EntranceCard({ href, label, summary }: EntranceCardProps) {
         <div className="mt-1 flex flex-col gap-0.5">
           {summary.map((item) => (
             <span key={item.label} className="fs-sub text-stone-600">
-              {item.label}：{item.value}
+              {item.label}{t("ui-label-sep")}{item.value}
             </span>
           ))}
         </div>

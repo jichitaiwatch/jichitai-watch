@@ -1,3 +1,4 @@
+import { t } from "@/lib/i18n";
 import ComparisonNote, { type ComparisonNoteProps } from "./ComparisonNote";
 
 interface SingleHouseholdAgingSummaryProps {
@@ -38,12 +39,12 @@ export function SingleHouseholdAgingSummary({
   return (
     <div className="pair-grid grid gap-3 [grid-template-columns:repeat(var(--pair-cols),minmax(0,1fr))]">
       <div className="flex flex-col gap-2">
-        <p className="flex min-h-[2.7em] items-end justify-center text-center fs-label font-semibold text-[var(--muted)]">単身世帯割合</p>
+        <p className="flex min-h-[2.7em] items-end justify-center text-center fs-label font-semibold text-[var(--muted)]">{t("pop-one-person-share")}</p>
         <Donut value={singleHouseholdRatio} colorVar="var(--single)" textVar="var(--single-text)" />
         {singleHouseholdComparison && <ComparisonNote {...singleHouseholdComparison} />}
       </div>
       <div className="flex flex-col gap-2">
-        <p className="flex min-h-[2.7em] items-end justify-center text-center fs-label font-semibold text-[var(--muted)]">高齢化率（65歳以上）</p>
+        <p className="flex min-h-[2.7em] items-end justify-center text-center fs-label font-semibold text-[var(--muted)]">{t("sha-ageing-label")}</p>
         <Donut value={agingRate} colorVar="var(--aging)" textVar="var(--aging-text)" />
         {agingComparison && <ComparisonNote {...agingComparison} />}
       </div>

@@ -1,6 +1,14 @@
+import { enDate } from "@/lib/format-en";
+import { LOCALE } from "@/lib/locale";
+import { t, tf } from "@/lib/i18n";
 import type { GikaiChoFukuchoPrevious } from "@/lib/metrics";
+import { personName } from "@/components/PersonName";
+import { personNameLabel } from "@/lib/person-names";
+import { dataTextString } from "@/lib/data-text";
 
 interface GikaiChoFukuchoCardProps {
+  /** 団体コード（市区町村は6桁、都道府県は2桁の pref_code）。英語版の氏名を引くのに使う */
+  areaCode: string;
   chairName: string | null;
   viceChairName: string | null;
   /** 就任日（YYYY-MM-DD）。null＝確認できず。undefined＝この地域は未収集（行を出さない） */
@@ -15,6 +23,7 @@ interface GikaiChoFukuchoCardProps {
 /** "2026-05-08" → "2026年5月8日"。形式が違う値は推測せずそのまま返す */
 function ymd(s: string): string {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+  if (m && LOCALE === "en") return enDate(s);
   return m ? `${m[1]}年${Number(m[2])}月${Number(m[3])}日` : s;
 }
 
@@ -27,6 +36,7 @@ function ymd(s: string): string {
  * 事実提示のみ。
  */
 export function GikaiChoFukuchoCard({
+  areaCode,
   chairName,
   viceChairName,
   chairSince,
@@ -35,22 +45,34 @@ export function GikaiChoFukuchoCard({
   previous,
 }: GikaiChoFukuchoCardProps) {
   const showSince = sinceAsOf !== undefined;
-  const rows: [string, string | null, string | null | undefined][] = [
-    ["議長", chairName, chairSince],
-    ["副議長", viceChairName, viceChairSince],
+  // [識別子（日本語・React の key）, 画面に出す役職名, 氏名, 就任日]
+  const rows: [string, string, string | null, string | null | undefined][] = [
+    ["議長", t("gov-chair"), chairName, chairSince],
+    ["副議長", t("gov-vice-chair"), viceChairName, viceChairSince],
   ];
   return (
     <div className="flex flex-col gap-3">
       <div className="grid grid-cols-2 gap-3">
-        {rows.map(([role, name, since]) => (
-          <div key={role} className="flex min-w-0 flex-col rounded-[9px] bg-[var(--panel)] p-3.5">
+        {rows.map(([key, role, name, since]) => (
+          <div
+            key={key}
+            className="flex min-w-0 flex-col rounded-[9px] bg-[var(--panel)] p-3.5"
+            {...(LOCALE === "en" ? { style: { containerType: "inline-size" } } : {})}
+          >
             <small className="fs-label text-[var(--muted)]">{role}</small>
-            <strong className="mt-1.5 truncate fs-key font-bold text-[var(--body)]">
-              {name ?? "確認できず"}
+            {/* 英語版は「ローマ字 (漢字)」で長くなるため、1行で切らずに語の切れ目で折り返し、文字の大きさを欄の幅に合わせる
+                （上限は日本語版と同じ fs-key。いま最も長い語 Mitsubayashi が 6.6em なので、欄の幅÷6.7 を下限側にする。
+                スマホ幅で語の途中で折れないため）。日本語版は従来どおり（style を undefined で渡すとページ移動用のデータが
+                変わるため、英語版だけ付ける） */}
+            <strong
+              className="mt-1.5 truncate fs-key font-bold text-[var(--body)]"
+              {...(LOCALE === "en" ? { style: { whiteSpace: "normal", fontSize: "min(var(--fs-key), calc(100cqw / 6.7))" } } : {})}
+            >
+              {name ? personName(areaCode, name) : t("val-not-confirmed")}
             </strong>
             {showSince && name ? (
               <span className="mt-1.5 fs-sub text-[var(--muted)]">
-                就任日：{since ? ymd(since) : "確認できず"}
+                {t("gc-took-office")}{since ? ymd(since) : t("val-not-confirmed")}
               </span>
             ) : null}
           </div>
@@ -58,23 +80,21 @@ export function GikaiChoFukuchoCard({
       </div>
       {previous ? (
         <div className="rounded-[9px] bg-[var(--panel)] p-3.5 fs-sub leading-snug text-[var(--body)]">
-          <p className="m-0 font-bold">直前の議長・副議長</p>
+          <p className="m-0 font-bold">{t("gc-previous")}</p>
           <ul className="m-0 mt-1.5 list-none space-y-1 p-0">
             <li>
-              議長：{previous.議長氏名}（{ymd(previous.就任日)}就任、{ymd(previous.退任日)}に
-              {previous.退任の理由}で退任）
+              {tf("p-gc-prev-chair", { name: personNameLabel(areaCode, previous.議長氏名), start: ymd(previous.就任日), end: ymd(previous.退任日), reason: dataTextString("leaving_reason", previous.退任の理由) })}
             </li>
             <li>
-              副議長：{previous.副議長氏名}（{ymd(previous.就任日)}就任、{ymd(previous.退任日)}に
-              {previous.退任の理由}で退任）
+              {tf("p-gc-prev-vice", { name: personNameLabel(areaCode, previous.副議長氏名), start: ymd(previous.就任日), end: ymd(previous.退任日), reason: dataTextString("leaving_reason", previous.退任の理由) })}
             </li>
           </ul>
           <p className="m-0 mt-1.5 text-[var(--muted)]">
-            {previous.注記}（{ymd(previous.基準日)}現在）
+            {tf("p-gc-note", { note: dataTextString("chair_note", previous.注記), date: ymd(previous.基準日) })}
           </p>
         </div>
       ) : showSince ? (
-        <p className="m-0 fs-note text-[var(--muted)]">就任日は{ymd(sinceAsOf)}現在の確認結果です。</p>
+        <p className="m-0 fs-note text-[var(--muted)]">{tf("p-gc-asof", { date: ymd(sinceAsOf) })}</p>
       ) : null}
     </div>
   );

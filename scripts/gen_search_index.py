@@ -33,6 +33,7 @@ DATA = os.path.join(ROOT, "data")
 
 MASTER = os.path.join(DATA, "municipality_master.json")
 KANA = os.path.join(DATA, "municipality_kana.json")
+PLACE_EN = os.path.join(ROOT, "i18n", "place-names-en.json")
 OUT = os.path.join(DATA, "search_index.json")
 
 
@@ -133,9 +134,42 @@ def load_json(path):
         return json.load(f)
 
 
+# 種類の部分（市・町・村・区）の読み。カナの末尾で決める（町＝チョウ／マチ、村＝ソン／ムラ）
+_SUFFIX_ROMAJI = (("チョウ", "cho"), ("マチ", "machi"), ("ソン", "son"), ("ムラ", "mura"), ("シ", "shi"), ("ク", "ku"))
+
+
+def _suffix_romaji(kana_raw: str) -> str:
+    k = unicodedata.normalize("NFKC", kana_raw)
+    for tail, rom in _SUFFIX_ROMAJI:
+        if k.endswith(tail):
+            return rom
+    raise SystemExit(f"[search-index] 止めた：種類の読みが分からないカナ {kana_raw}")
+
+
+def romaji_key_from_english(ac: str, kana_by_code: dict, place_en: dict) -> str | None:
+    """
+    英語の名前（i18n/place-names-en.json。読みを確かめて作ったもの）があれば、その名前の部分から読みローマ字キーを作る
+    （2026-10-24 作業単位8）。カナからの機械変換（kana_to_romaji）は、小さい「ャュョ」を大きく書いたカナ（総社 ｿｳｼﾞﾔ）や
+    漢字の境目をまたぐ伸ばす音（山陽小野田 サンヨウオノダ）で誤るため、英語の名前のある団体はこちらを使う。
+    区は「親の市＋shi＋区＋ku」（従来のキーの形 nagoyashiatsutaku と同じ）。
+    """
+    e = place_en.get(ac)
+    if not e:
+        return None
+    kana = kana_by_code[ac]
+    if "short_en" in e:  # 政令指定都市の区："Atsuta Ward, Nagoya City"
+        ward_stem = e["short_en"].rsplit(" ", 1)[0]
+        parent_stem = e["en"].split(", ", 1)[1].rsplit(" ", 1)[0]
+        return normalize_key(f"{parent_stem}shi{ward_stem}ku")
+    stem = e["en"].rsplit(" ", 1)[0]
+    return normalize_key(stem + _suffix_romaji(kana))
+
+
 def main():
     master = load_json(MASTER)["data"]
     kana = load_json(KANA)["data"]
+    place_en = load_json(PLACE_EN)["municipalities"]
+    kana_by_code = {r["area_code"]: r["kana"] for r in kana}
 
     # pref_code → 都道府県表示名（kana の level=prefecture 行から）
     pref_name_by_code = {
@@ -171,10 +205,13 @@ def main():
         pub = published.get(ac)
 
         # 読みローマ字キー：published は確定スラッグを優先（凍結値と整合）
+        # 未公開でも英語の名前があれば（データのある県）、そこから作る。無ければカナから機械で作る
         if pub and pub["city_slug"]:
             romaji_key = normalize_key(pub["city_slug"])
         else:
-            romaji_key = normalize_key(kana_to_romaji(r["kana"]))
+            romaji_key = romaji_key_from_english(ac, kana_by_code, place_en) if level == "municipality" else None
+            if romaji_key is None:
+                romaji_key = normalize_key(kana_to_romaji(r["kana"]))
 
         keys = {
             normalize_key(name),              # 名称キー
@@ -207,6 +244,7 @@ def main():
         "generated_from": [
             "data/municipality_master.json",
             "data/municipality_kana.json",
+            "i18n/place-names-en.json",
         ],
         "notes": [
             "検索クライアント索引（frontend-architecture §7.2 生成物）。手書き禁止・再生成でのみ更新。",

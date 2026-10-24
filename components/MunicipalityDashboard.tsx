@@ -1,5 +1,6 @@
+import { t, tf } from "@/lib/i18n";
 import type { ReactNode } from "react";
-import Link from "next/link";
+import Link from "@/components/SiteLink";
 import { MetricCard } from "./MetricCard";
 import { Breadcrumb, type BreadcrumbItem } from "./Breadcrumb";
 import type { MunicipalityConfig } from "@/lib/municipalities";
@@ -28,8 +29,8 @@ interface MunicipalityDashboardProps<E = MunicipalityConfig> {
 function DataPlaceholder({ label }: { label: string }) {
   return (
     <div className="flex h-full min-h-[88px] flex-col items-center justify-center gap-1 rounded-lg border border-dashed border-[var(--line)] bg-[var(--identity-soft)]/40 px-3 py-6 text-center sm:min-h-[120px] sm:gap-1.5">
-      <span className="fs-label font-semibold text-[var(--muted)]">データ未整備</span>
-      <span className="fs-note text-[var(--muted-light)]">{label}のデータは現在準備中です</span>
+      <span className="fs-label font-semibold text-[var(--muted)]">{t("val-data-not-available")}</span>
+      <span className="fs-note text-[var(--muted-light)]">{tf("p-db-preparing", { label })}</span>
     </div>
   );
 }
@@ -37,7 +38,7 @@ function DataPlaceholder({ label }: { label: string }) {
 function EmptyTabPlaceholder() {
   return (
     <div className="mt-6 rounded-lg border border-dashed border-[var(--line)] bg-[var(--surface)] px-4 py-10 text-center fs-label text-[var(--muted)] sm:mt-8">
-      この区分の情報は現在準備中です
+      {t("db-tab-empty")}
     </div>
   );
 }
@@ -77,15 +78,15 @@ export function MunicipalityDashboard<E = MunicipalityConfig>({
   // 市区町村パス（既存呼び出し）のみ。trendsCategory は都道府県カードに一つも設定されない
   // （V1に経年画面なし）ため、経年リンク分岐も pref 呼び出しでは発火しない。
   const muni = municipality as unknown as MunicipalityConfig;
-  const resolvedDisplayName = displayName ?? muni.cityName;
+  const resolvedDisplayName = displayName ?? muni.label;
   const resolvedBackHref = backHref ?? `/${muni.prefSlug}/${muni.slug}`;
   // identityColor 明示時（都道府県）はその色を、未指定時（市区町村）は VI トークン --identity を使う。
   const identity = identityColor ?? "var(--identity)";
   const identityStyle = { color: identity };
 
   // 区の注記（運営者裁定 2026-10-17）。順位＝区の値を全国の市区町村の値と並べたときの位置、類似団体平均＝親の市の区分
-  const wardParent = isWard ? ((muni.cityName.match(/^(.+?市)/) ?? [])[1] ?? "") : "";
-  const wardNote = `区は全国の市区町村に含まれないため、順位は区の値を全国の市区町村の値と並べたときの位置。類似団体平均は${wardParent}の区分（大都市）。`;
+  const wardParent = isWard ? (muni.parentLabel ?? "") : "";
+  const wardNote = tf("p-db-ward-note", { city: wardParent });
 
   const renderCard = (def: CardDefinition<unknown, E>) => {
     const data = def.resolve(municipality);
@@ -106,7 +107,7 @@ export function MunicipalityDashboard<E = MunicipalityConfig>({
             className="mt-3 inline-flex w-fit items-center gap-1 rounded-full border px-2.5 py-1 fs-sub font-medium hover:bg-[var(--identity-soft)]"
             style={{ color: identity, borderColor: `color-mix(in srgb, ${identity} 30%, transparent)` }}
           >
-            推移を見る →
+            {t("db-see-trends")}
           </Link>
         </div>
       ) : (
@@ -147,7 +148,7 @@ export function MunicipalityDashboard<E = MunicipalityConfig>({
           className={`inline-block py-1.5 fs-back hover:underline ${breadcrumb ? "mt-1" : ""}`}
           style={identityStyle}
         >
-          ← {resolvedDisplayName}の入口に戻る
+          {tf("p-db-back", { name: resolvedDisplayName })}
         </Link>
 
         <p className="mt-3 text-sm font-medium" style={identityStyle}>

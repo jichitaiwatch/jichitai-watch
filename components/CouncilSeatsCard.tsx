@@ -1,3 +1,4 @@
+import { t, tf } from "@/lib/i18n";
 import ComparisonNote, { type ComparisonNoteProps } from "./ComparisonNote";
 
 interface CouncilSeatsCardProps {
@@ -41,9 +42,9 @@ export function CouncilSeatsCard({
   const vacancy = teisu - genin;
 
   const kpis: { label: string; value: number }[] = [
-    { label: "条例定数", value: teisu },
-    { label: "現員", value: genin },
-    { label: "欠員", value: vacancy },
+    { label: t("cs-ordinance-seats"), value: teisu },
+    { label: t("cs-current"), value: genin },
+    { label: t("gov-vacancy"), value: vacancy },
   ];
 
   return (
@@ -54,7 +55,7 @@ export function CouncilSeatsCard({
             <dt className="fs-label text-[var(--muted)]">{k.label}</dt>
             <dd className="mt-2 text-[var(--body)]">
               <span className="fs-key font-bold leading-none">{k.value}</span>
-              <span className="ml-1 fs-sub text-[var(--muted)]">人</span>
+              {t("u-people") && <span className="ml-1 fs-sub text-[var(--muted)]">{t("u-people")}</span>}
             </dd>
           </div>
         ))}
@@ -88,8 +89,8 @@ function MunicipalityCompare({
 }) {
   const compareRows: { label: string; value: number | null; color: string }[] = [
     { label: cityName, value: teisu, color: "var(--current)" },
-    { label: "全国平均", value: nationalAverage, color: "var(--national)" },
-    { label: "類似団体平均", value: similarAverage, color: "var(--similar)" },
+    { label: t("col-national-avg"), value: nationalAverage, color: "var(--national)" },
+    { label: t("cs-similar-avg"), value: similarAverage, color: "var(--similar)" },
   ];
 
   // 表示可能な値の最大を 100% とする（自団体は常に存在するため最低1件）
@@ -103,14 +104,14 @@ function MunicipalityCompare({
 
   return (
     <>
-      <p className="mt-4 fs-label font-extrabold text-[var(--muted)]">条例定数の比較</p>
+      <p className="mt-4 fs-label font-extrabold text-[var(--muted)]">{t("cs-compare-heading")}</p>
       <div className="mt-2 flex flex-col gap-1">
         {compareRows.map((r) => {
           if (r.value === null) {
             return (
               <div key={r.label} className={rowCls}>
                 <span className="break-words leading-tight text-[var(--body)]">{r.label}</span>
-                <span className="col-span-2 text-right text-[var(--muted-light)]">データ未整備</span>
+                <span className="col-span-2 text-right text-[var(--muted-light)]">{t("val-data-not-available")}</span>
               </div>
             );
           }
@@ -124,12 +125,12 @@ function MunicipalityCompare({
                   style={{ width: `${barPct}%`, backgroundColor: r.color, borderRadius: "inherit" }}
                 />
               </span>
-              <span className="whitespace-nowrap text-right text-[var(--body)]">{r.value}人</span>
+              <span className="whitespace-nowrap text-right text-[var(--body)]">{tf("p-people", { n: `${r.value}` })}</span>
             </div>
           );
         })}
       </div>
-      <p className="mt-2.5 fs-note text-[var(--muted-light)]">色は識別のために使用</p>
+      <p className="mt-2.5 fs-note text-[var(--muted-light)]">{t("ui-colour-note")}</p>
     </>
   );
 }

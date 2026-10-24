@@ -1,3 +1,5 @@
+import { LOCALE } from "@/lib/locale";
+import { enMoneyFromThousandYen, enYenExactFromThousandYen } from "@/lib/format-en";
 /**
  * 総額系金額（千円単位の生値）を「兆・億・万区切り」の可読文字列へ整形する（1兆円以上のみ兆を使う）。
  *
@@ -18,6 +20,8 @@
 
 /** 千円単位の生値 → 「N兆M億K万円」表記（画面用・万円位まで・切り捨て。1兆円未満は従来どおり「N億M万円」） */
 export function formatManOku(valueThousandYen: number): string {
+  // 英語版は million・billion で書く（lib/format-en.ts。2026-10-22 運営者裁定）
+  if (LOCALE === "en") return enMoneyFromThousandYen(valueThousandYen).text;
   if (!Number.isFinite(valueThousandYen)) return "確認できず";
 
   const neg = valueThousandYen < 0;
@@ -51,6 +55,7 @@ export function formatManOku(valueThousandYen: number): string {
 
 /** 千円単位の生値 → 正確な「N千円」表記（sr-only・非加工の正確値保持用） */
 export function formatThousandYenExact(valueThousandYen: number): string {
+  if (LOCALE === "en") return enYenExactFromThousandYen(valueThousandYen);
   if (!Number.isFinite(valueThousandYen)) return "確認できず";
   return `${valueThousandYen.toLocaleString("ja-JP")}千円`;
 }

@@ -1,0 +1,169 @@
+id,団体コード,団体名,役職,氏名（データの表記）,姓,名,姓の読み,名の読み,状態,出典URL,確かめ方
+aichi-001,230006,愛知県,県議会副議長,成田修,成田,修,なりた,おさむ,確定,https://www.pref.aichi.jp/site/gikai/giin-012.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-002,230006,愛知県,県議会議長,島倉誠,島倉,誠,しまくら,まこと,確定,https://www.pref.aichi.jp/site/gikai/giin-047.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-003,230006,愛知県,知事,大村　秀章,大村,秀章,おおむら,ひであき,確定,https://www.pref.aichi.jp/senkyo/chijisenkyo20190117.pdf,2系統が一致（Grok の抜き書きに読みあり）
+aichi-004,231002,名古屋市,副議長,森ともお,森,ともお,もり,ともお,確定,https://www.city.nagoya.jp/shikai/about/1030778/1030800.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-005,231002,名古屋市,議長,小出昭司,小出,昭司,こいで,しょうじ,確定,https://www.city.nagoya.jp/shikai/about/1030778/1030800.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-006,231002,名古屋市,首長（市町村長）,廣澤　一郎,廣澤,一郎,ひろさわ,いちろう,確定,https://www.city.nagoya.jp/mayor/1002561.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-007,232017,豊橋市,副議長,山本 賢太郎,山本,賢太郎,やまもと,けんたろう,確定,https://www.city.toyohashi.lg.jp/secure/9867/no354.pdf,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-008,232017,豊橋市,議長,松崎 正尚,松崎,正尚,まつざき,まさなお,確定,https://www.city.toyohashi.lg.jp/secure/9867/no354.pdf,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-009,232017,豊橋市,首長（市町村長）,長坂　尚登,長坂,尚登,ながさか,なおと,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-010,232025,岡崎市,副議長,畑尻 宣長,畑尻,宣長,はたじり,のりなが,確定,https://www.city.okazaki.lg.jp/shigikai/meibo/1009845.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-011,232025,岡崎市,議長,荻野 秀範,荻野,秀範,おぎの,ひでのり,確定,https://www.city.okazaki.lg.jp/shigikai/meibo/1009845.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-012,232025,岡崎市,首長（市町村長）,内田　康宏,内田,康宏,うちだ,やすひろ,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-013,232033,一宮市,副議長,中村 かずひと,中村,かずひと,なかむら,かずひと,確定,https://www.city.ichinomiya.aichi.jp/shisei/houdouhappyo/1068631/1074627/1075524.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-014,232033,一宮市,議長,渡辺 之良,渡辺,之良,わたなべ,ゆきよし,確定,https://www.city.ichinomiya.aichi.jp/shisei/houdouhappyo/1068631/1074627/1075524.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-015,232033,一宮市,首長（市町村長）,中野　正康,中野,正康,なかの,まさやす,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-016,232041,瀬戸市,副議長,冨田 宗一,冨田,宗一,とみだ,むねかず,確定,https://www.city.seto.aichi.jp/docs/2015/05/13/00045/index.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-017,232041,瀬戸市,議長,髙島 淳,髙島,淳,たかしま,じゅん,確定,https://www.city.seto.aichi.jp/docs/2015/05/13/00045/index.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-018,232041,瀬戸市,首長（市町村長）,川本　雅之,川本,雅之,かわもと,まさゆき,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-019,232050,半田市,副議長,芳金 秀展,芳金,秀展,よしかね,ひでのぶ,確定,https://www.city.handa.lg.jp/_res/projects/default_project/_page_/001/004/474/r80626giinmeibo.pdf,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-020,232050,半田市,議長,澤田 勝,澤田,勝,さわだ,まさる,確定,https://www.city.handa.lg.jp/_res/projects/default_project/_page_/001/004/474/r80626giinmeibo.pdf,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-021,232050,半田市,首長（市町村長）,久世　孝宏,久世,孝宏,くぜ,たかひろ,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-022,232068,春日井市,副議長,前田 学,前田,学,まえだ,まなぶ,確定,https://www.city.kasugai.lg.jp/shisei/shigikai/gicyou.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-023,232068,春日井市,議長,長谷川 達也,長谷川,達也,はせがわ,たつや,確定,https://www.city.kasugai.lg.jp/shisei/shigikai/gicyou.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-024,232068,春日井市,首長（市町村長）,石黒　直樹,石黒,直樹,いしぐろ,なおき,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-025,232076,豊川市,副議長,中川 雅之,中川,雅之,なかがわ,まさゆき,確定,https://www.city.toyokawa.lg.jp/soshiki/gikaijimukyoku/giji/1/3/1/976.html,Composer の抜き書き（同じ行に氏名と読み）。Grok は確認できず
+aichi-026,232076,豊川市,議長,冨田 潤,冨田,潤,とみた,じゅん,確定,https://www.city.toyokawa.lg.jp/soshiki/gikaijimukyoku/giji/1/3/1/976.html,Composer の抜き書き（同じ行に氏名と読み）。Grok は確認できず
+aichi-027,232076,豊川市,首長（市町村長）,竹本　幸夫,竹本,幸夫,たけもと,ゆきお,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-028,232084,津島市,副議長,服部哲也,服部,哲也,はっとり,てつや,確定,https://go2senkyo.com/seijika/158719,補いの回（2026-10-24）：2系統が一致（Grok：選挙ドットコムの候補者表記／Composer：選挙ドットコムの候補者表記。抜き書きに氏名または候補者名と読み）
+aichi-029,232084,津島市,議長,宇藤久子,宇藤,久子,うとう,ひさこ,確定,https://go2senkyo.com/seijika/54769,補いの回（2026-10-24）：2系統が一致（Grok：選挙ドットコムの候補者表記／Composer：選挙ドットコムの候補者表記。抜き書きに氏名または候補者名と読み）
+aichi-030,232084,津島市,首長（市町村長）,日比　一昭,日比,一昭,ひび,かずあき,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-031,232092,碧南市,副議長,藤浦 伸介,藤浦,伸介,ふじうら,しんすけ,確定,http://www.city.hekinan.aichi.jp/GIKAI/councilor/,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-032,232092,碧南市,議長,神谷 悟,神谷,悟,かみや,さとる,確定,http://www.city.hekinan.aichi.jp/GIKAI/councilor/,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-033,232092,碧南市,首長（市町村長）,小池　友妃子,小池,友妃子,こいけ,ゆきこ,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-034,232106,刈谷市,副議長,深谷英貴,深谷,英貴,ふかや,ひでき,確定,https://www.city.kariya.lg.jp/shigikai/giin/meibo/1001343.html,Composer の抜き書き（同じ行に氏名と読み）。Grok は確認できず
+aichi-035,232106,刈谷市,議長,佐原充恭,佐原,充恭,さはら,みつやす,確定,https://www.city.kariya.lg.jp/shigikai/giin/meibo/1001343.html,Composer の抜き書き（同じ行に氏名と読み）。Grok は確認できず
+aichi-036,232106,刈谷市,首長（市町村長）,稲垣　武,稲垣,武,いながき,たけし,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-037,232114,豊田市,副議長,浅井保孝,浅井,保孝,あさい,やすたか,確定,https://www.city.toyota.aichi.jp/_res/projects/default_project/_page_/001/076/634/01.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+aichi-038,232114,豊田市,議長,岩田淳,岩田,淳,いわた,じゅん,確定,https://www.city.toyota.aichi.jp/_res/projects/default_project/_page_/001/076/634/01.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+aichi-039,232114,豊田市,首長（市町村長）,太田　稔彦,太田,稔彦,おおた,としひこ,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-040,232122,安城市,副議長,石川いくこ,石川,いくこ,いしかわ,いくこ,確定,https://www.anjo-shigikai.jp/representative/gicho.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：その他（備考に説明）。抜き書きに氏名または候補者名と読み）
+aichi-041,232122,安城市,議長,松本 佳栄,松本,佳栄,まつもと,かえ,確定,https://www.city.anjo.aichi.jp/shisei/pressrelease/documents/26051104.pdf,Composer の抜き書き（同じ行に氏名と読み）。Grok は確認できず
+aichi-042,232122,安城市,首長（市町村長）,三星　元人,三星,元人,みつぼし,もとひと,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-043,232131,西尾市,副議長,中村なおゆき,中村,なおゆき,なかむら,なおゆき,確定,https://www.city.nishio.aichi.jp/gikai/shokai/1005910/1005945.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-044,232131,西尾市,議長,松崎隆治,松崎,隆治,まつざき,りゅうじ,確定,https://www.city.nishio.aichi.jp/gikai/shokai/1005910/1005937.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+aichi-045,232131,西尾市,首長（市町村長）,中村　健,中村,健,なかむら,けん,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-046,232149,蒲郡市,副議長,藤田裕喜,藤田,裕喜,ふじた,ひろき,確定,https://www.city.gamagori.lg.jp/site/gikai/meibo.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-047,232149,蒲郡市,議長,大場 康議,大場,康議,おおば,やすのり,確定,https://www.city.gamagori.lg.jp/site/gikai/gicho.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-048,232149,蒲郡市,首長（市町村長）,鈴木　寿明,鈴木,寿明,すずき,ひさあき,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-049,232157,犬山市,副議長,玉置 幸哉,玉置,幸哉,たまおき,ゆきや,確定,https://www.city.inuyama.aichi.jp/shisei/gikai/1000340/1000341/index.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-050,232157,犬山市,議長,大沢 秀教,大沢,秀教,おおさわ,ひでのり,確定,https://www.city.inuyama.aichi.jp/shisei/gikai/1000340/1000341/index.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-051,232157,犬山市,首長（市町村長）,原　欣伸,原,欣伸,はら,よしのぶ,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-052,232165,常滑市,副議長,大川 秀徳,大川,秀徳,おおかわ,ひでのり,確定,https://www.city.tokoname.aichi.jp/_res/projects/default_project/_page_/001/009/374/R8gityoprof.pdf,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-053,232165,常滑市,議長,加藤 久豊,加藤,久豊,かとう,ひさとよ,確定,https://www.city.tokoname.aichi.jp/_res/projects/default_project/_page_/001/009/374/R8gityoprof.pdf,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-054,232165,常滑市,首長（市町村長）,伊藤　辰矢,伊藤,辰矢,いとう,たつや,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-055,232173,江南市,副議長,長尾 光春,長尾,光春,ながお,みつはる,確定,https://www.city.konan.lg.jp/gikai/giin/1001412.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-056,232173,江南市,議長,伊藤 吉弘,伊藤,吉弘,いとう,よしひろ,確定,https://www.city.konan.lg.jp/gikai/giin/1001412.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-057,232173,江南市,首長（市町村長）,澤田　和延,澤田,和延,さわだ,かずのぶ,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-058,232190,小牧市,副議長,谷田貝 将典,谷田貝,将典,やたがい,まさのり,確定,https://www.city.komaki.aichi.jp/admin/soshiki/gikai/giji/3/1/27014.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-059,232190,小牧市,議長,舟橋 秀和,舟橋,秀和,ふなはし,ひでかず,確定,https://www.city.komaki.aichi.jp/admin/soshiki/gikai/giji/3/1/27017.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-060,232190,小牧市,首長（市町村長）,山下　史守朗,山下,史守朗,やました,しずお,確定,https://www.city.komaki.aichi.jp/material/files/group/86/syujyu2023tojitsu1.pdf,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-061,232203,稲沢市,副議長,志智央,志智,央,しち,おう,確定,https://www.city.inazawa.aichi.jp/0000003627.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-062,232203,稲沢市,議長,六鹿順二,六鹿,順二,むつが,じゅんじ,確定,https://www.city.inazawa.aichi.jp/0000003627.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-063,232203,稲沢市,首長（市町村長）,加藤　錠司郎,加藤,錠司郎,かとう,じょうじろう,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-064,232211,新城市,副議長,丸山隆弘,丸山,隆弘,まるやま,たかひろ,確定,https://www.city.shinshiro.lg.jp/shigikai/gikai/giinnmeibo.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-065,232211,新城市,議長,佐宗龍俊,佐宗,龍俊,さそう,たつとし,確定,https://www.city.shinshiro.lg.jp/shigikai/gikai/giinnmeibo.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-066,232211,新城市,首長（市町村長）,下江　洋行,下江,洋行,しもえ,ひろゆき,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-067,232220,東海市,副議長,江川 祐之,江川,祐之,えがわ,まさゆき,確定,https://www.city.tokai.aichi.jp/council/1004396/1006626/1004398.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-068,232220,東海市,議長,冨田 博巳,冨田,博巳,とみた,ひろみ,確定,https://www.city.tokai.aichi.jp/council/1004396/1006626/1004399.html,Composer の抜き書き（同じ行に氏名と読み）。Grok は確認できず
+aichi-069,232220,東海市,首長（市町村長）,花田　勝重,花田,勝重,はなだ,かつしげ,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-070,232238,大府市,副議長,藤本宗久,藤本,宗久,ふじもと,むねひさ,確定,https://www.city.obu.aichi.jp/gikai/gicho/1035387.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-071,232238,大府市,議長,早川高光,早川,高光,はやかわ,たかみつ,確定,https://www.city.obu.aichi.jp/gikai/gicho/1035387.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-072,232238,大府市,首長（市町村長）,岡村　秀人,岡村,秀人,おかむら,ひでと,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-073,232246,知多市,副議長,藤沢 巌,藤沢,巌,ふじさわ,いわお,確定,https://www.city.chita.lg.jp/docs/2014013000061/,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-074,232246,知多市,議長,渡邉眞弓,渡邉,眞弓,わたなべ,まゆみ,確定,https://www.city.chita.lg.jp/docs/2014013000061/,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-075,232246,知多市,首長（市町村長）,伊藤　清一郎,伊藤,清一郎,いとう,せいいちろう,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-076,232254,知立市,副議長,神谷文明,神谷,文明,かみや,ふみあき,確定,https://www.city.chiryu.aichi.jp/soshiki/gikai/giji/gyomu/9/16723.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-077,232254,知立市,議長,中島清志,中島,清志,なかしま,きよし,確定,https://www.city.chiryu.aichi.jp/soshiki/gikai/giji/gyomu/9/16723.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-078,232254,知立市,首長（市町村長）,石川　智子,石川,智子,いしかわ,ともこ,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-079,232262,尾張旭市,副議長,大島 もえ,大島,もえ,おおしま,もえ,確定,https://www.city.owariasahi.lg.jp/site/gikai/3478.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-080,232262,尾張旭市,議長,さかえ章演,さかえ,章演,さかえ,あきひろ,確定,https://www.city.owariasahi.lg.jp/site/gikai/3478.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-081,232262,尾張旭市,首長（市町村長）,柴田　浩,柴田,浩,しばた,ひろし,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-082,232271,高浜市,副議長,荒川 義孝,荒川,義孝,あらかわ,よしたか,確定,https://www.city.takahama.lg.jp/site/gikai/1996.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-083,232271,高浜市,議長,神谷 直子,神谷,直子,かみや,なおこ,確定,https://www.city.takahama.lg.jp/site/gikai/1996.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-084,232271,高浜市,首長（市町村長）,杉浦　康憲,杉浦,康憲,すぎうら,やすのり,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-085,232289,岩倉市,副議長,片岡健一郎,片岡,健一郎,かたおか,けんいちろう,確定,https://www.city.iwakura.aichi.jp/gikai/0000004431.html,Composer の抜き書き（同じ行に氏名と読み）。Grok は確認できず
+aichi-086,232289,岩倉市,議長,須藤智子,須藤,智子,すとう,ともこ,確定,https://www.city.iwakura.aichi.jp/gikai/0000004431.html,Composer の抜き書き（同じ行に氏名と読み）。Grok は確認できず
+aichi-087,232289,岩倉市,首長（市町村長）,久保田　桂朗,久保田,桂朗,くぼた,かつらお,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-088,232297,豊明市,副議長,服部 龍一,服部,龍一,はっとり,りゅういち,確定,https://www.city.toyoake.lg.jp/4603.htm,Composer の抜き書き（同じ行に氏名と読み）。Grok は確認できず
+aichi-089,232297,豊明市,議長,毛受 明宏,毛受,明宏,めんじょう,あきひろ,確定,https://www.city.toyoake.lg.jp/4603.htm,Composer の抜き書き（同じ行に氏名と読み）。Grok は確認できず
+aichi-090,232297,豊明市,首長（市町村長）,小浮　正典,小浮,正典,こうき,まさふみ,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-091,232301,日進市,副議長,川嶋 恵美,川嶋,恵美,かわしま,えみ,確定,https://www.city.nisshin.lg.jp/department/gikai/giji/4/3/5553.html,Composer の抜き書き（同じ行に氏名と読み）。Grok は確認できず
+aichi-092,232301,日進市,議長,水野 たかはる,水野,たかはる,みずの,たかはる,確定,https://www.city.nisshin.lg.jp/department/gikai/giji/4/3/8192.html,Composer の抜き書き（同じ行に氏名と読み）。Grok は確認できず
+aichi-093,232301,日進市,首長（市町村長）,近藤　裕貴,近藤,裕貴,こんどう,ひろき,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-094,232319,田原市,副議長,古川 美栄,古川,美栄,ふるかわ,みさか,確定,https://www2.city.tahara.aichi.jp/gikai/syoukai/index.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-095,232319,田原市,議長,岡本 禎稔,岡本,禎稔,おかもと,さだあき,確定,https://www2.city.tahara.aichi.jp/gikai/syoukai/index.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-096,232319,田原市,首長（市町村長）,山下　政良,山下,政良,やました,まさよし,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-097,232327,愛西市,副議長,髙松幸雄,髙松,幸雄,たかまつ,ゆきお,確定,https://www.city.aisai.lg.jp/0000018230.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-098,232327,愛西市,議長,佐藤信男,佐藤,信男,さとう,のぶお,確定,https://www.city.aisai.lg.jp/0000018230.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-099,232327,愛西市,首長（市町村長）,日永　貴章,日永,貴章,ひなが,たかあき,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-100,232335,清須市,副議長,浅妻 奈々子,浅妻,奈々子,あさづま,ななこ,確定,https://kiyosu.gijiroku.com/g07_giinlistS.asp?SrchID=2,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議会だより・広報。抜き書きに氏名または候補者名と読み）
+aichi-101,232335,清須市,議長,小﨑 進一,小﨑,進一,こざき,しんいち,確定,https://kiyosu.gijiroku.com/g07_giinlistP.asp,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議会だより・広報。抜き書きに氏名または候補者名と読み）
+aichi-102,232335,清須市,首長（市町村長）,永田　純夫,永田,純夫,ながた,すみお,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-103,232343,北名古屋市,副議長,上野 雅美,上野,雅美,うえの,まさみ,確定,https://www.city.kitanagoya.lg.jp/gikai/shokai/1005414/1005431.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-104,232343,北名古屋市,議長,井上 一男,井上,一男,いのうえ,かずお,確定,https://www.city.kitanagoya.lg.jp/gikai/shokai/1005414/1005423.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-105,232343,北名古屋市,首長（市町村長）,太田　考則,太田,考則,おおた,たかのり,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-106,232351,弥富市,副議長,加藤 克之,加藤,克之,かとう,かつゆき,確定,https://www.city.yatomi.lg.jp/gikai/1000007/1000008.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-107,232351,弥富市,議長,高橋 八重典,高橋,八重典,たかはし,やえのり,確定,https://www.city.yatomi.lg.jp/gikai/1000007/1000008.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-108,232351,弥富市,首長（市町村長）,安藤　正明,安藤,正明,あんどう,せいめい,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-109,232360,みよし市,副議長,小嶋 立夫,小嶋,立夫,こじま,たつお,確定,https://www.city.aichi-miyoshi.lg.jp/soshiki/gikai/1/3/20250319/9218.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-110,232360,みよし市,議長,増岡 義弘,増岡,義弘,ますおか,よしひろ,確定,https://www.city.aichi-miyoshi.lg.jp/soshiki/gikai/1/3/20250319/9208.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-111,232360,みよし市,首長（市町村長）,小山　祐,小山,祐,おやま,たすく,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-112,232378,あま市,副議長,後藤 幸正,後藤,幸正,ごとう,ゆきまさ,確定,https://www.city.ama.aichi.jp/gikai/1003923.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-113,232378,あま市,議長,山内 隆久,山内,隆久,やまうち,たかひさ,確定,https://www.city.ama.aichi.jp/gikai/1003923.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-114,232378,あま市,首長（市町村長）,八島　堅志,八島,堅志,やしま,けんじ,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-115,232386,長久手市,副議長,なかじま和代,なかじま,和代,なかじま,かずよ,確定,https://www.city.nagakute.lg.jp/soshiki/gikai/gijika/1/1/1502.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-116,232386,長久手市,議長,山田けんたろう,山田,けんたろう,やまだ,けんたろう,確定,https://www.city.nagakute.lg.jp/soshiki/gikai/gijika/1/1/1502.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-117,232386,長久手市,首長（市町村長）,佐藤　有美,佐藤,有美,さとう,ゆみ,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-118,233021,東郷町,副議長,高木佳子,高木,佳子,たかぎ,けいこ,確定,https://www.town.aichi-togo.lg.jp/soshikikarasagasu/gikaijimukyoku/gyomuannai/2/4/2909.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-119,233021,東郷町,議長,水川淳,水川,淳,みずかわ,あつし,確定,https://www.town.aichi-togo.lg.jp/soshikikarasagasu/gikaijimukyoku/gyomuannai/2/4/2909.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-120,233021,東郷町,首長（市町村長）,石橋　直季,石橋,直季,いしばし,なおき,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-121,233421,豊山町,副議長,岡島　剛,岡島,剛,おかじま,つよし,確定,https://www.town.toyoyama.lg.jp/_res/projects/default_project/_page_/001/001/171/r05giin-meibo_01.pdf,Composer の抜き書き（同じ行に氏名と読み）。Grok は確認できず
+aichi-122,233421,豊山町,議長,坪井　孝仁,坪井,孝仁,つぼい,たかひと,確定,https://www.town.toyoyama.lg.jp/_res/projects/default_project/_page_/001/001/171/r05giin-meibo_01.pdf,Composer の抜き書き（同じ行に氏名と読み）。Grok は確認できず
+aichi-123,233421,豊山町,首長（市町村長）,服部　正樹,服部,正樹,はっとり,まさき,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-124,233617,大口町,副議長,飯田 正志,飯田,正志,いいだ,まさし,確定,https://www.town.oguchi.lg.jp/4708.htm,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-125,233617,大口町,議長,齊木 一三,齊木,一三,さいき,いちぞう,確定,https://www.town.oguchi.lg.jp/4708.htm,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-126,233617,大口町,首長（市町村長）,鈴木　雅博,鈴木,雅博,すずき,まさひろ,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-127,233625,扶桑町,副議長,杉浦 敏男,杉浦,敏男,すぎうら,としお,確定,https://www.town.fuso.lg.jp/gikai/1002216/1004442.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-128,233625,扶桑町,議長,千田 勝文,千田,勝文,せんだ,かつふみ,確定,https://www.town.fuso.lg.jp/gikai/1002216/1004442.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-129,233625,扶桑町,首長（市町村長）,鯖瀬　武,鯖瀬,武,さばせ,たけし,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-130,234249,大治町,副議長,鈴木 満,鈴木,満,すずき,みつる,確定,https://www.town.oharu.aichi.jp/4100.htm,2系統が一致（Grok の抜き書きに読みあり）
+aichi-131,234249,大治町,議長,若山 照洋,若山,照洋,わかやま,あきひろ,確定,https://www.town.oharu.aichi.jp/4100.htm,Grok の抜き書き（同じ行に氏名と読み）。Composer は読みを出さず
+aichi-132,234249,大治町,首長（市町村長）,横井　良隆,横井,良隆,よこい,よしたか,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-133,234257,蟹江町,副議長,佐藤 茂,佐藤,茂,さとう,しげる,確定,https://www.town.kanie.aichi.jp/site/gikai/gikai-giin.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-134,234257,蟹江町,議長,伊藤俊一,伊藤,俊一,いとう,しゅんいち,確定,https://www.town.kanie.aichi.jp/site/gikai/gikai-giin.html,Composer の抜き書き（同じ行に氏名と読み）。Grok は確認できず
+aichi-135,234257,蟹江町,首長（市町村長）,横江　淳一,横江,淳一,よこえ,じゅんいち,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-136,234273,飛島村,副議長,中山恵美賀,中山,恵美賀,なかやま,えみか,確定,https://www.vill.tobishima.aichi.jp/sonsei/gikai/1002189.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-137,234273,飛島村,議長,上田光彦,上田,光彦,うえだ,みつひこ,確定,https://www.vill.tobishima.aichi.jp/sonsei/gikai/1002189.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-138,234273,飛島村,首長（市町村長）,加藤　光彦,加藤,光彦,かとう,みつひこ,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-139,234419,阿久比町,副議長,鈴村 算久,鈴村,算久,すずむら,かずひさ,確定,https://www.town.agui.lg.jp/cmsfiles/contents/0000002/2814/R7.5giinsyasin.pdf,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-140,234419,阿久比町,議長,竹内 卓美,竹内,卓美,たけうち,たくみ,確定,https://www.town.agui.lg.jp/cmsfiles/contents/0000002/2814/R7.5giinsyasin.pdf,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-141,234419,阿久比町,首長（市町村長）,田中　清高,田中,清高,たなか,きよたか,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-142,234427,東浦町,副議長,間瀬 宗則,間瀬,宗則,ませ,むねのり,確定,https://www.town.aichi-higashiura.lg.jp/gyosei/gikai/gichosroom/1508822814554.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-143,234427,東浦町,議長,鏡味 昭史,鏡味,昭史,かがみ,あきひと,確定,https://www.town.aichi-higashiura.lg.jp/gyosei/gikai/gichosroom/1508822814554.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-144,234427,東浦町,首長（市町村長）,日髙　輝夫,日髙,輝夫,ひだか,てるお,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-145,234451,南知多町,副議長,藤井　満久,藤井,満久,ふじい,みちひさ,確定,https://www.town.minamichita.lg.jp/_res/projects/default_project/_page_/001/001/926/r7giinmeibo2.pdf,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-146,234451,南知多町,議長,鈴木　浩二,鈴木,浩二,すずき,こうじ,確定,https://www.town.minamichita.lg.jp/_res/projects/default_project/_page_/001/001/926/r7giinmeibo2.pdf,Composer の抜き書き（同じ行に氏名と読み）。Grok は確認できず
+aichi-147,234451,南知多町,首長（市町村長）,石黒　和彦,石黒,和彦,いしぐろ,かずひこ,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-148,234460,美浜町,副議長,廣澤 毅,廣澤,毅,ひろさわ,つよし,確定,https://www.town.aichi-mihama.lg.jp/material/files/group/36/R0505.pdf,補いの回（2026-10-24）：2系統が一致（Grok：議会だより・広報／Composer：議会だより・広報。抜き書きに氏名または候補者名と読み）
+aichi-149,234460,美浜町,議長,野田 増男,野田,増男,のだ,ますお,確定,https://www.town.aichi-mihama.lg.jp/material/files/group/36/R0505.pdf,補いの回（2026-10-24）：2系統が一致（Grok：議会だより・広報／Composer：議会だより・広報。抜き書きに氏名または候補者名と読み）
+aichi-150,234460,美浜町,首長（市町村長）,八谷　充則,八谷,充則,やつや,みつのり,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は抜き書きに読みの無い別の読み（やつやみつなり）で採らない
+aichi-151,234478,武豊町,副議長,石川 喜次,石川,喜次,いしかわ,よしじ,確定,https://www.town.taketoyo.lg.jp/gikai/1002800/1002819.html,Grok の抜き書き（同じ行に氏名と読み）。Composer は抜き書きに読みの無い別の読み（いしかわきよし）で採らない
+aichi-152,234478,武豊町,議長,石川 よしはる,石川,よしはる,いしかわ,よしはる,確定,https://www.town.taketoyo.lg.jp/gikai/1002800/1002819.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-153,234478,武豊町,首長（市町村長）,鳥羽　悠史,鳥羽,悠史,とば,ひさし,確定,https://www.town.taketoyo.lg.jp/1001550/1002923.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-154,235016,幸田町,副議長,都築 幸夫,都築,幸夫,つづき,ゆきお,確定,https://www.town.kota.lg.jp/site/gikai/1138.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-155,235016,幸田町,議長,廣野 房男,廣野,房男,ひろの,ふさお,確定,https://www.town.kota.lg.jp/site/gikai/1138.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-156,235016,幸田町,首長（市町村長）,成瀬　敦,成瀬,敦,なるせ,あつし,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-157,235610,設楽町,副議長,原田　直幸,原田,直幸,はらだ,なおゆき,確定,https://www.town.shitara.lg.jp/uploaded/attachment/4656.pdf,2系統が一致（Grok の抜き書きに読みあり）
+aichi-158,235610,設楽町,議長,金田　敏行,金田,敏行,かなだ,としゆき,確定,https://www.town.shitara.lg.jp/uploaded/attachment/4656.pdf,Grok の抜き書き（同じ行に氏名と読み）。Composer は抜き書きに読みの無い別の読み（かねだとしゆき）で採らない
+aichi-159,235610,設楽町,首長（市町村長）,土屋　浩,土屋,浩,つちや,ひろし,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-160,235628,東栄町,副議長,村本敏美,村本,敏美,むらもと,としみ,確定,https://www.town.toei.aichi.jp/5346.htm,2系統が一致（Grok の抜き書きに読みあり）
+aichi-161,235628,東栄町,議長,加藤彰男,加藤,彰男,かとう,あきお,確定,https://www.town.toei.aichi.jp/5346.htm,2系統が一致（Grok の抜き書きに読みあり）
+aichi-162,235628,東栄町,首長（市町村長）,村上　孝治,村上,孝治,むらかみ,たかじ,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）・Composer も抜き書きに読みあり
+aichi-163,235636,豊根村,副議長,金指 春男,金指,春男,かなさし,はるお,確定,https://www.vill.toyone.aichi.jp/soshiki/soumu/senkyo/toyonemurasenkyo/79.html,補いの回（2026-10-24）：2系統が一致（Grok：選挙の結果・候補者一覧（選挙管理委員会）／Composer：選挙の結果・候補者一覧（選挙管理委員会）。抜き書きに氏名または候補者名と読み）
+aichi-164,235636,豊根村,議長,田原 長一郎,田原,長一郎,たはら,ちょういちろう,確定,https://www.vill.toyone.aichi.jp/soshiki/soumu/senkyo/toyonemurasenkyo/79.html,補いの回（2026-10-24）：2系統が一致（Grok：選挙の結果・候補者一覧（選挙管理委員会）／Composer：選挙の結果・候補者一覧（選挙管理委員会）。抜き書きに氏名または候補者名と読み）
+aichi-165,235636,豊根村,首長（市町村長）,伊藤　浩亘,伊藤,浩亘,いとう,ひろのぶ,確定,https://www.pref.aichi.jp/soshiki/shichoson/0000046285.html,2系統が一致（Grok の抜き書きに読みあり）
+aichi-166,232190,小牧市,首長（市町村長）,天野　正基,天野,正基,あまの,まさき,確定,https://go2senkyo.com/local/senkyo/26565,Grok：愛知県の市町村長等名簿「天野 正基（あまの まさき）」。Claude：選挙ドットコムの候補者表記「天野 まさき（アマノ マサキ）」で姓と名の読みを確認
+aichi-167,232190,小牧市,議長,加藤 晶子,加藤,晶子,かとう,あきこ,確定,https://www.city.komaki.aichi.jp/admin/soshiki/gikai/giji/3/1/26282.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）
+aichi-168,232190,小牧市,副議長,小沢 国大,小沢,国大,こざわ,くにひろ,確定,https://www.city.komaki.aichi.jp/admin/soshiki/gikai/giji/3/1/26282.html,補いの回（2026-10-24）：2系統が一致（Grok：議員名簿（振り仮名つき）／Composer：議員名簿（振り仮名つき）。抜き書きに氏名または候補者名と読み）

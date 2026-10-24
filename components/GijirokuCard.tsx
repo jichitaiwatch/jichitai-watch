@@ -1,3 +1,6 @@
+import { t } from "@/lib/i18n";
+import { nameLabelNode } from "@/components/PersonName";
+import { dataTextLabel } from "@/lib/data-text";
 interface GijirokuCardProps {
   status: "有" | "無";
   format: string | null;
@@ -11,7 +14,7 @@ interface GijirokuCardProps {
  */
 export function GijirokuCard({ status, format, url }: GijirokuCardProps) {
   if (status === "無") {
-    return <p className="fs-label text-[var(--muted)]">会議録本文のWeb公開なし</p>;
+    return <p className="fs-label text-[var(--muted)]">{t("gj-none")}</p>;
   }
 
   const urls = url === null ? [] : Array.isArray(url) ? url : [url];
@@ -31,8 +34,8 @@ export function GijirokuCard({ status, format, url }: GijirokuCardProps) {
         <div className="my-2 h-0.5 w-2/3 bg-[#d9e4de]" />
       </div>
       <div className="min-w-0">
-        <strong className="block fs-key font-bold text-[var(--body)]">会議録本文を<span className="whitespace-nowrap">Web公開</span></strong>
-        {format && <p className="mt-1.5 fs-sub text-[var(--muted)]">公開形式：{format}</p>}
+        <strong className="block fs-key font-bold text-[var(--body)]">{t("gj-published-1")}<span className="whitespace-nowrap">{t("gj-published-2")}</span></strong>
+        {format && <p className="mt-1.5 fs-sub text-[var(--muted)]">{t("gj-format")}{nameLabelNode(dataTextLabel("minutes_format", format))}</p>}
         {urls.map((u) => (
           <a
             key={u}

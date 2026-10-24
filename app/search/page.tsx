@@ -17,10 +17,13 @@
 
 import { Suspense, useMemo, useState, useSyncExternalStore } from "react";
 import { useSearchExample, useSearchExtraPages } from "@/components/SearchExtraPages";
-import Link from "next/link";
+import { useSearchEnglish, type SearchEnglish } from "@/components/SearchEnglish";
+import Link from "@/components/SiteLink";
 import { useSearchParams } from "next/navigation";
 import searchIndex from "@/data/search_index.json";
 import { normalizeSearchKey } from "@/lib/search-normalize";
+import { useMsgs } from "@/components/MessagesProvider";
+import { m, mf } from "@/lib/i18n-client";
 
 interface SearchRecord {
   area_code: string;
@@ -31,6 +34,25 @@ interface SearchRecord {
   keys: string[];
   published: boolean;
   url: string | null;
+  /** 英語版だけ：英語の名前（無い団体は undefined＝日本語の名前を lang="ja" で出す） */
+  nameEn?: string;
+  prefEn?: string;
+}
+
+/**
+ * 英語版だけ：英語の名前と英語の検索キーを索引に重ねる（作業単位8）。日本語の名前・キーはそのまま残す
+ * （英語版でも漢字・かな・統計局の形 Gifu-shi で探せる）。
+ */
+function withEnglish(index: SearchRecord[], en: SearchEnglish): SearchRecord[] {
+  return index.map((r) => {
+    const unit = r.level === "prefecture" ? en.prefs[r.pref_code] : en.units[r.area_code];
+    return {
+      ...r,
+      keys: unit ? [...r.keys, ...unit.keys] : r.keys,
+      nameEn: unit?.name,
+      prefEn: en.prefs[r.pref_code]?.name,
+    };
+  });
 }
 
 const INDEX = (searchIndex as { data: SearchRecord[] }).data;
@@ -86,25 +108,30 @@ function BuildingIcon() {
 }
 
 function ResultCard({ rec }: { rec: SearchRecord }) {
+  const msgs = useMsgs();
+  // 英語版：英語の名前があれば英語、無ければ日本語の名前に lang="ja" を付ける。日本語版は従来どおり
+  const english = rec.prefEn !== undefined;
+  const prefName = english ? rec.prefEn : rec.pref_name;
+  const name = !english ? rec.name : rec.nameEn ?? <span lang="ja">{rec.name}</span>;
   const inner = (
     <div className="flex items-center gap-4 rounded-2xl border bg-white p-4 sm:p-5"
       style={{ borderColor: "var(--line)", boxShadow: "var(--card-shadow)" }}>
       <BuildingIcon />
       <div className="min-w-0 flex-1">
         <p className="fs-label font-semibold" style={{ color: "var(--identity)" }}>
-          {rec.pref_name}
+          {prefName}
         </p>
         <p className="mt-0.5 text-xl font-bold sm:text-2xl" style={{ color: "var(--body)" }}>
-          {rec.name}
+          {name}
         </p>
         <p className="mt-1 fs-label" style={{ color: "var(--muted)" }}>
-          {rec.pref_name}
+          {prefName}
           <span className="mx-1.5" aria-hidden="true">›</span>
-          {rec.name}
+          {name}
         </p>
         <p className="mt-1.5 fs-label font-medium"
           style={{ color: rec.published ? "var(--identity)" : "var(--muted-light)" }}>
-          {rec.published ? "自治体ページ" : "準備中"}
+          {rec.published ? m(msgs, "sr-municipality-page") : m(msgs, "val-in-preparation")}
         </p>
       </div>
       {rec.published && (
@@ -162,15 +189,18 @@ function SearchResults() {
   const [typed, setQuery] = useState<string | null>(null);
   const query = typed ?? hashQ ?? initialQ;
 
+  const msgs = useMsgs();
   const extra = useSearchExtraPages();
-  const example = useSearchExample();
-  const index = useMemo(
-    () =>
+  const english = useSearchEnglish();
+  const jaExample = useSearchExample();
+  const example = english ? english.example : jaExample;
+  const index = useMemo(() => {
+    const base =
       Object.keys(extra).length === 0
         ? INDEX
-        : INDEX.map((r) => (extra[r.area_code] ? { ...r, published: true, url: extra[r.area_code] } : r)),
-    [extra],
-  );
+        : INDEX.map((r) => (extra[r.area_code] ? { ...r, published: true, url: extra[r.area_code] } : r));
+    return english ? withEnglish(base, english) : base;
+  }, [extra, english]);
   const hits = useMemo(() => runSearch(query, index), [query, index]);
 
   const prefs = hits.filter((h) => h.rec.level === "prefecture");
@@ -192,11 +222,11 @@ function SearchResults() {
       <div className="mx-auto max-w-3xl">
         <Link href="/" className="inline-flex items-center gap-1 py-1.5 fs-label font-medium"
           style={{ color: "var(--muted)" }}>
-          <span aria-hidden="true">←</span> 戻る
+          <span aria-hidden="true">←</span>{m(msgs, "sr-back")}
         </Link>
 
         <h1 className="mt-3 text-2xl font-bold sm:text-3xl" style={{ color: "var(--body)" }}>
-          {trimmed ? `「${trimmed}」の検索結果` : "自治体を探す"}
+          {trimmed ? mf(msgs, "p-sr-results", { q: trimmed }) : m(msgs, "ui-nav-search")}
         </h1>
 
         {/* 検索窓（design/mock トップ画面の検索窓に準拠） */}
@@ -212,8 +242,8 @@ function SearchResults() {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="市町村名・都道府県名を入力"
-            aria-label="自治体名"
+            placeholder={m(msgs, "sr-placeholder")}
+            aria-label={m(msgs, "sr-input-label")}
             className="w-full rounded-xl border bg-white py-4 pl-12 pr-12 text-lg outline-none focus:ring-2"
             style={{ borderColor: "var(--line)", color: "var(--body)" }}
           />
@@ -221,7 +251,7 @@ function SearchResults() {
             <button
               type="button"
               onClick={() => setQuery("")}
-              aria-label="入力をクリア"
+              aria-label={m(msgs, "sr-clear")}
               className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1"
               style={{ color: "var(--muted)" }}
             >
@@ -236,29 +266,29 @@ function SearchResults() {
 
         {trimmed === "" ? (
           <p className="mt-6 fs-label" style={{ color: "var(--muted)" }}>
-            {`市町村名または都道府県名を入力してください。例：${example}`}
+            {mf(msgs, "p-sr-hint", { example })}
           </p>
         ) : !hasResults ? (
           <div className="mt-6">
             <p className="text-base" style={{ color: "var(--body)" }}>
-              該当する自治体が見つかりませんでした。
+              {m(msgs, "sr-none")}
             </p>
             <p className="mt-2 fs-label" style={{ color: "var(--muted)" }}>
-              表記や読みを変えて試してください。都道府県名を加えると絞り込めます（例：東京都 府中市）。
+              {m(msgs, "sr-none-tip")}
             </p>
           </div>
         ) : (
           <>
             {hasDuplicateName && (
               <InfoBar>
-                同名の市町村が複数あります。都道府県を確認して選択してください。
+                {m(msgs, "sr-dup")}
               </InfoBar>
             )}
 
             {prefs.length > 0 && (
               <section className="mt-6">
                 <h2 className="text-lg font-bold" style={{ color: "var(--body)" }}>
-                  都道府県 <span className="fs-label font-normal" style={{ color: "var(--muted)" }}>{prefs.length}件</span>
+                  {m(msgs, "sr-prefs")}<span className="fs-label font-normal" style={{ color: "var(--muted)" }}>{mf(msgs, "p-fu-count", { n: `${prefs.length}` })}</span>
                 </h2>
                 <ul className="mt-3 space-y-3">
                   {prefs.map((h) => (
@@ -271,7 +301,7 @@ function SearchResults() {
             {munis.length > 0 && (
               <section className="mt-6">
                 <h2 className="text-lg font-bold" style={{ color: "var(--body)" }}>
-                  市町村 <span className="fs-label font-normal" style={{ color: "var(--muted)" }}>{munis.length}件</span>
+                  {m(msgs, "sr-munis")}<span className="fs-label font-normal" style={{ color: "var(--muted)" }}>{mf(msgs, "p-fu-count", { n: `${munis.length}` })}</span>
                 </h2>
                 <ul className="mt-3 space-y-3">
                   {munis.map((h) => (
@@ -289,8 +319,8 @@ function SearchResults() {
                 <path d="M12 11v5M12 7.5v.5" strokeLinecap="round" />
               </svg>
               <span className="min-w-0">
-                都道府県名を加えて検索すると絞り込めます<br />
-                例：東京都 府中市、広島県 府中市
+                {m(msgs, "sr-narrow-1")}<br />
+                {m(msgs, "sr-narrow-2")}
               </span>
             </p>
           </>
@@ -301,14 +331,15 @@ function SearchResults() {
 }
 
 export default function SearchPage() {
+  const msgs = useMsgs();
   return (
     <Suspense
       fallback={
         <main id="main" tabIndex={-1} className="focus:outline-none min-h-screen bg-stone-100 px-3 py-5 sm:px-8 sm:py-8 type-large">
           <div className="mx-auto max-w-3xl">
             {/* 静的HTMLにもh1を持たせる（C-7）。水和後は SearchResults の h1 に置き換わる */}
-            <h1 className="text-2xl font-bold sm:text-3xl" style={{ color: "var(--body)" }}>自治体を探す</h1>
-            <p className="mt-3 fs-label" style={{ color: "var(--muted)" }}>読み込み中…</p>
+            <h1 className="text-2xl font-bold sm:text-3xl" style={{ color: "var(--body)" }}>{m(msgs, "ui-nav-search")}</h1>
+            <p className="mt-3 fs-label" style={{ color: "var(--muted)" }}>{m(msgs, "sr-loading")}</p>
           </div>
         </main>
       }
