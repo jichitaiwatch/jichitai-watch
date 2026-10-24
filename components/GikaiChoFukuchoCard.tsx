@@ -68,7 +68,7 @@ export function GikaiChoFukuchoCard({
               className="mt-1.5 truncate fs-key font-bold text-[var(--body)]"
               {...(LOCALE === "en" ? { style: { whiteSpace: "normal", fontSize: "min(var(--fs-key), calc(100cqw / 6.7))" } } : {})}
             >
-              {name ? personName(areaCode, name) : t("val-not-confirmed")}
+              {name ? personName(areaCode, name, { stack: true }) : t("val-not-confirmed")}
             </strong>
             {showSince && name ? (
               <span className="mt-1.5 fs-sub text-[var(--muted)]">

@@ -13,6 +13,7 @@ import placeNames from "@/i18n/place-names-en.json";
 import { LOCALE } from "@/lib/locale";
 import { prefLabel } from "@/lib/place-names";
 import { normalizeSearchKey } from "@/lib/search-normalize";
+import { searchExample } from "@/lib/search-example";
 
 // app/search/layout.tsx — 検索（/search）共通のフッター。
 // C-2 N-4：検索画面から /about・/data・/corrections（訂正窓口・Gate 4）へ到達できなかった
@@ -76,18 +77,7 @@ function searchEnglish(): SearchEnglish {
     if (e.short_en) keys.push(normalizeSearchKey(e.short_en));
     units[r.area_code] = { name: e.en, keys };
   }
-  // 入力例：日本語版の SEARCH_EXAMPLE と同じ選び方（県が1つなら2市、複数なら各県の1市目）を英語の名前で
-  const label = (prefName: string, cityName: string) => {
-    const m = MUNICIPALITIES.find((x) => x.prefectureName === prefName && x.cityName === cityName);
-    if (!m) throw new Error(`[search] 入力例の団体が無い：${prefName}${cityName}`);
-    return m.label;
-  };
-  const example = (
-    PREFECTURES.length === 1
-      ? PREFECTURES[0].exampleCities.slice(0, 2).map((c) => label(PREFECTURES[0].prefectureName, c))
-      : PREFECTURES.map((p) => label(p.prefectureName, p.exampleCities[0]))
-  ).join(", ");
-  return { example, prefs, units };
+  return { example: searchExample("en"), prefs, units };
 }
 
 export default function SearchLayout({ children }: { children: React.ReactNode }) {

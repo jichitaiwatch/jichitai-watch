@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "@/components/SiteLink";
 import { t } from "@/lib/i18n";
+import { LOCALE } from "@/lib/locale";
 
 // components/SiteFooter.tsx
 // サイト共通フッター（ヘッダー3項目相当＋訂正・お問い合わせ）。文書ページの共通の器
@@ -46,7 +47,8 @@ export function SiteFooter() {
             {t("ui-nav-corrections")}
           </Link>
         </nav>
-        <span className="text-base" style={{ color: INK_MUTED }}>{t("ui-copyright")}</span>
+        {/* 英語版の「© Jichitai Watch」は狭い幅で途中で折れるので、英語版だけ1行に保つ（日本語版は従来どおり） */}
+        <span className="text-base" style={{ color: INK_MUTED, ...(LOCALE === "en" ? { whiteSpace: "nowrap" } : {}) }}>{t("ui-copyright")}</span>
       </div>
     </footer>
   );

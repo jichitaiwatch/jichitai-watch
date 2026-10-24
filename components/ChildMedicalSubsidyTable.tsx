@@ -39,8 +39,8 @@ function formatAge(age: string): ReactNode {
       {/* 英語の「Up to age 24」は日本語より幅を取り、スマホ幅の2列ではみ出すので、英語だけ字を少し小さくする */}
       <span className="whitespace-nowrap" style={LOCALE === "en" ? EN_AGE_STYLE : undefined}>{tf("p-cm-age-1", { n: m[1] })}</span>
       <wbr />
-      {/* 英語は「(until the end of that fiscal year)」が長く1行に収まらないので、折り返してよい形にする（日本語版は従来どおり） */}
-      <span className={LOCALE === "en" ? undefined : "whitespace-nowrap"}>{t("cm-age-2")}</span>
+      {/* 英語は「(until the end of that fiscal year)」が長いので、年齢の行と分けて小さめの字で次の行に出す（2026-10-24 運営者指摘。日本語版は従来どおり） */}
+      <span {...(LOCALE === "en" ? { style: { display: "block", fontSize: "0.6em", lineHeight: 1.3 } } : { className: "whitespace-nowrap" })}>{t("cm-age-2")}</span>
     </>
   );
 }

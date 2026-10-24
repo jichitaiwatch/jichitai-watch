@@ -9,6 +9,7 @@ import { MUNICIPALITIES } from "@/lib/municipalities";
 import { DEFAULT_SEARCH_EXAMPLE, PREFECTURES, type PrefectureConfig, SEARCH_EXAMPLE } from "@/lib/prefectures";
 import Link from "@/components/SiteLink";
 import { HomeSearchBox } from "@/components/HomeSearchBox";
+import { searchExample } from "@/lib/search-example";
 import { RegionPicker } from "@/components/RegionPicker";
 import { REGIONS } from "@/lib/regions";
 import { Brand } from "@/components/SiteFooter";
@@ -147,7 +148,7 @@ export default function Home() {
             {t("home-lead")}
           </p>
           {/* 既定（岐阜県だけ）と同じ文言のときは渡さない＝公開用ビルドの出力は変わらない */}
-          <HomeSearchBox {...(SEARCH_EXAMPLE === DEFAULT_SEARCH_EXAMPLE ? {} : { example: SEARCH_EXAMPLE })} msgs={msgsFor(HOME_SEARCH_MSG_IDS)} />
+          <HomeSearchBox {...(searchExample() === DEFAULT_SEARCH_EXAMPLE ? {} : { example: searchExample() })} msgs={msgsFor(HOME_SEARCH_MSG_IDS)} />
         </section>
 
         {PREFECTURES.length === 1 ? (
@@ -217,7 +218,8 @@ export default function Home() {
               {t("ui-nav-corrections")}
             </Link>
           </nav>
-          <span className="text-base" style={{ color: INK_MUTED }}>{t("ui-copyright")}</span>
+          {/* 英語版の「© Jichitai Watch」は狭い幅で途中で折れるので、英語版だけ1行に保つ（日本語版は従来どおり。components/SiteFooter.tsx と同じ） */}
+          <span className="text-base" style={{ color: INK_MUTED, ...(LOCALE === "en" ? { whiteSpace: "nowrap" } : {}) }}>{t("ui-copyright")}</span>
         </div>
       </footer>
     </div>

@@ -39,7 +39,7 @@ export function ChiefCard({ row }: ChiefCardProps) {
         </div>
         <div className="min-w-0">
           <p className="m-0 fs-key font-extrabold leading-tight tracking-[0.025em] text-[#17372c]">
-            {personName(row.area_code, row.氏名)}
+            {personName(row.area_code, row.氏名, { stack: true })}
           </p>
           <span className="mt-1.5 inline-flex rounded-full bg-[var(--identity-soft)] px-2.5 py-1 fs-sub font-extrabold text-[var(--identity)]">
             {tf("p-ch-times-elected", { n: `${row.回}` })}

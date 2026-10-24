@@ -1,4 +1,5 @@
 import { t, tf } from "@/lib/i18n";
+import { LOCALE } from "@/lib/locale";
 
 export type FiscalHealthIndicatorKind = "deficit" | "ratio";
 
@@ -102,6 +103,22 @@ function IndicatorBlock({ ind }: { ind: FiscalHealthIndicator }) {
 
   return (
     <section className="min-w-0 rounded-[8px] border border-[#e1e8e4] bg-[#fbfcfb] p-2.5">
+      {/* 英語版は指標の名前と状態が長く、横に並べると名前の欄が細くなって1語ずつ折れるため、
+          1行目＝状態、2行目＝指標の名前、3行目＝正式名と値、の順に組み替える（2026-10-24 運営者指摘。日本語版は従来どおり）。
+          日本語版の子要素の数と位置を変えないため、組み替えは1つ目・2つ目の子要素の中だけで行う。 */}
+      {LOCALE === "en" ? (
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "4px" }}>
+          <span
+            className="rounded-full bg-[#edf2ef] px-1.5 py-0.5 fs-source font-extrabold text-[#566660]"
+            style={over ? { color: OVER_COLOR } : undefined}
+          >
+            {statusText}
+          </span>
+          <h3 className="m-0 fs-label font-extrabold leading-[1.35] text-[#24473a]">
+            {ind.plainLabel}
+          </h3>
+        </div>
+      ) : (
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
           <h3 className="m-0 fs-label font-extrabold leading-[1.35] text-[#24473a]">
@@ -118,9 +135,28 @@ function IndicatorBlock({ ind }: { ind: FiscalHealthIndicator }) {
           {statusText}
         </span>
       </div>
+      )}
 
       {/* 値：数値は大きく独立表示。赤字なし／負担なし・確認できずはチップで示す（0と混同しない） */}
-      {s.kind === "value" ? (
+      {LOCALE === "en" ? (
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "4px 8px", margin: "6px 0 12px" }}>
+          <small className="block fs-source font-semibold text-[#566660]">{ind.formalLabel}</small>
+          {s.kind === "value" ? (
+            <p className="m-0 fs-key font-extrabold leading-none text-[#1e3b31]">
+              {s.text}
+              <span className="ml-0.5 fs-sub">%</span>
+            </p>
+          ) : s.kind === "none" ? (
+            <span className="inline-flex rounded-full border border-[#b9cfc4] bg-[#f3f7f5] px-2.5 py-1 fs-sub font-extrabold text-[#315c4b]">
+              {s.label}
+            </span>
+          ) : (
+            <span className="inline-flex rounded-full border border-[var(--line)] bg-[var(--identity-soft)] px-2.5 py-1 fs-sub font-bold text-[var(--muted)]">
+              {t("val-not-confirmed")}
+            </span>
+          )}
+        </div>
+      ) : s.kind === "value" ? (
         <p className="mb-1.5 mt-2.5 fs-key font-extrabold leading-none text-[#1e3b31]">
           {s.text}
           <span className="ml-0.5 fs-sub">%</span>
